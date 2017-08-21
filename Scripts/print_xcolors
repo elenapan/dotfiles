@@ -1,0 +1,19 @@
+#!/bin/bash
+
+XCOLOR0="$(cat ~/.Xresources | grep -m 1 color0 | awk '{print $2}')"
+XCOLOR1="$(cat ~/.Xresources | grep -m 1 color1 | awk '{print $2}')"
+XCOLOR2="$(cat ~/.Xresources | grep -m 1 color2 | awk '{print $2}')"
+XCOLOR3="$(cat ~/.Xresources | grep -m 1 color3 | awk '{print $2}')"
+XCOLOR4="$(cat ~/.Xresources | grep -m 1 color4 | awk '{print $2}')"
+XCOLOR5="$(cat ~/.Xresources | grep -m 1 color5 | awk '{print $2}')"
+XCOLOR6="$(cat ~/.Xresources | grep -m 1 color6 | awk '{print $2}')"
+XCOLOR7="$(cat ~/.Xresources | grep -m 1 color7 | awk '{print $2}')"
+
+echo 0 $XCOLOR0
+echo 1 $XCOLOR1
+echo 2 $XCOLOR2
+echo 3 $XCOLOR3
+echo 4 $XCOLOR4
+echo 5 $XCOLOR5
+echo 6 $XCOLOR6
+echo 7 $XCOLOR7

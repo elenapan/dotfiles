@@ -1,0 +1,1 @@
+rofi -show combi -combi-modi "window,run" -lines 10 -width 100 -padding 10 -fullscreen -font "Hurmit Nerd Font 18" -separator-style "none"
