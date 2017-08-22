@@ -2,60 +2,50 @@
 
 # Run like this
 # wally /path/to/wallpaper/or/directory 
-# examples: wally ~/Pictures/Wallpapers
-#			wally ~/Pictures/Wallpapers/pape.jpg
+# examples: 
+#	wally ~/Pictures/Wallpapers
+#	wally .
+#	wally ~/Pictures/Wallpapers/pape.jpg
 
 # Arguments checking
 if [ $# == 0 ]; then
-	echo "No path to wallpaper or directory specified :(" 
+	echo "> No path to wallpaper or directory specified :(" 
 	exit 0;
 fi
 
-# Grabbing current Xresources colors
-XCOLOR0_OLD="$(cat ~/.Xresources | grep -m 1 color0 | awk '{print $2}')"
-XCOLOR1_OLD="$(cat ~/.Xresources | grep -m 1 color1 | awk '{print $2}')"
-XCOLOR2_OLD="$(cat ~/.Xresources | grep -m 1 color2 | awk '{print $2}')"
-XCOLOR3_OLD="$(cat ~/.Xresources | grep -m 1 color3 | awk '{print $2}')"
-XCOLOR4_OLD="$(cat ~/.Xresources | grep -m 1 color4 | awk '{print $2}')"
-XCOLOR5_OLD="$(cat ~/.Xresources | grep -m 1 color5 | awk '{print $2}')"
-XCOLOR6_OLD="$(cat ~/.Xresources | grep -m 1 color6 | awk '{print $2}')"
-XCOLOR7_OLD="$(cat ~/.Xresources | grep -m 1 color7 | awk '{print $2}')"
+declare -a color
+declare -a XCOLOR_OLD
+declare -a XCOLOR_NEW
 
-# Calling wal to generate new colors
+# Grab old Xresources colors
+for (( i = 0; i < 8; i++ )); do
+	color[$i]="$(echo color$i)"
+	XCOLOR_OLD[$i]="$(cat ~/.Xresources | grep -m 1 ${color[$i]} | awk '{print $2}')"
+done
+
+# Call wal to generate new colors
 ARG=$1
-echo "Calling wal at $ARG... toot toot..."
+echo "> Calling wal at $ARG... toot toot..."
 wal -i $ARG
 echo "> New colorscheme generated!"
 
 # Apply new colors to Xresources
-echo "Setting .Xresources..."
+echo "> Setting .Xresources..."
 cp ~/.wally/Xresources-clean ~/.wally/Xresources-new
 cat ~/.cache/wal/colors.xresources >> ~/.wally/Xresources-new
 cp ~/.wally/Xresources-new ~/.Xresources
 reloadXr
 echo "> New .Xresources set!"
 
-# Grabbing new Xresources colors
-# Grabbing current Xresources colors
-XCOLOR0_NEW="$(cat ~/.Xresources | grep -m 1 color0 | awk '{print $2}')"
-XCOLOR1_NEW="$(cat ~/.Xresources | grep -m 1 color1 | awk '{print $2}')"
-XCOLOR2_NEW="$(cat ~/.Xresources | grep -m 1 color2 | awk '{print $2}')"
-XCOLOR3_NEW="$(cat ~/.Xresources | grep -m 1 color3 | awk '{print $2}')"
-XCOLOR4_NEW="$(cat ~/.Xresources | grep -m 1 color4 | awk '{print $2}')"
-XCOLOR5_NEW="$(cat ~/.Xresources | grep -m 1 color5 | awk '{print $2}')"
-XCOLOR6_NEW="$(cat ~/.Xresources | grep -m 1 color6 | awk '{print $2}')"
-XCOLOR7_NEW="$(cat ~/.Xresources | grep -m 1 color7 | awk '{print $2}')"
+# Grab new Xresources colors
+for (( i = 0; i < 8; i++ )); do
+	XCOLOR_NEW[$i]="$(cat ~/.Xresources | grep -m 1 ${color[$i]} | awk '{print $2}')"
+done
 
 # Replace colors to all linked files in wally's folder
-
-sed -i --follow-symlinks "s@$XCOLOR0_OLD@$XCOLOR0_NEW@gI" ~/.wally/links/*
-sed -i --follow-symlinks "s@$XCOLOR1_OLD@$XCOLOR1_NEW@gI" ~/.wally/links/*
-sed -i --follow-symlinks "s@$XCOLOR2_OLD@$XCOLOR2_NEW@gI" ~/.wally/links/*
-sed -i --follow-symlinks "s@$XCOLOR3_OLD@$XCOLOR3_NEW@gI" ~/.wally/links/*
-sed -i --follow-symlinks "s@$XCOLOR4_OLD@$XCOLOR4_NEW@gI" ~/.wally/links/*
-sed -i --follow-symlinks "s@$XCOLOR5_OLD@$XCOLOR5_NEW@gI" ~/.wally/links/*
-sed -i --follow-symlinks "s@$XCOLOR6_OLD@$XCOLOR6_NEW@gI" ~/.wally/links/*
-sed -i --follow-symlinks "s@$XCOLOR7_OLD@$XCOLOR7_NEW@gI" ~/.wally/links/*
+for (( i = 0; i < 8; i++ )); do
+	sed -i --follow-symlinks "s@${XCOLOR_OLD[$i]}@${XCOLOR_NEW[$i]}@gI" ~/.wally/links/*
+done
 
 # Restart tint2 to reload config file
 # The grep is to supress tint2 output (doesn't work very well though)
@@ -67,30 +57,12 @@ echo "> tint2 has restarted!"
 openbox --reconfigure
 echo "> Openbox is reconfigured!"
 
-# Uncomment to enable gtk and icon coloring
-# Warning: this is very slow due to the large number of files!
-# echo "Customizing gtk theme and icons... This might take a while!"
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR0_OLD@$XCOLOR0_NEW@gI" {} \;
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR1_OLD@$XCOLOR1_NEW@gI" {} \;
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR2_OLD@$XCOLOR2_NEW@gI" {} \;
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR3_OLD@$XCOLOR3_NEW@gI" {} \;
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR4_OLD@$XCOLOR4_NEW@gI" {} \;
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR5_OLD@$XCOLOR5_NEW@gI" {} \;
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR6_OLD@$XCOLOR6_NEW@gI" {} \;
-# echo -n ". "
-# find -L ~/.wally/gtk ~/.wally/icons -type f -exec sed -i -e "s@$XCOLOR7_OLD@$XCOLOR7_NEW@gI" {} \;
-# echo "!"
-# echo "> New gtk theme and icons set!"
-
-
-# Customize login screen: TODO! sos needs sudo sadly
+# Customize login screen: REQUIRES SUDO :(
+# (needs to happen after oomox has generated a gtk theme with the name wally)
+# 
+# echo "> Attempting to change login theme (you will be prompted for a password)"
+# gksu cp -r ~/.themes/oomox-wally /usr/share/themes/wally
+# gksu lightdm-gtk-greeter-settings
 
 # Copy new wallpaper path to wally's directory
 cp ~/.cache/wal/wal ~/.wally/path_to_wallpaper
