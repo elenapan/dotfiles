@@ -1,0 +1,73 @@
+/**********
+ ! Calendar
+***********/
+
+@include exports("calendar") {
+    calendar {
+        padding: 1px 3px;
+        outline-offset: -1px;
+
+        color: $text_color;
+
+        &.view {
+            &, &:backdrop { @extend %undecorated_button; }
+        }
+
+        &:selected {
+            @extend %selected_items;
+
+            border-radius: $roundness;
+        }
+
+        &.header {
+            border-bottom: 1px solid transparentize($black, .9);
+            border-radius: 0;
+
+            &:backdrop { border-color: transparentize($black, .9); }
+        }
+
+        &.button {
+            @extend %undecorated_button;
+
+            color: alpha($fg_color, .55);
+
+            &:hover {
+                @extend %undecorated_button;
+
+                color: $fg_color;
+            }
+
+            &:backdrop {
+                @extend %undecorated_button;
+
+                color: alpha($backdrop_fg_color, .55);
+            }
+
+            &:disabled {
+                @extend %undecorated_button;
+
+                color: alpha($insensitive_fg_color, .55);
+            }
+        }
+
+        &:indeterminate,
+        &:indeterminate:backdrop { color: mix($fg_color, $bg_color, .5); }
+
+        &.highlight,
+        &.highlight:backdrop {
+            font-size: smaller;
+            color: mix($selected_bg_color, $fg_color, .5);
+        }
+
+        &:backdrop {
+            color: $backdrop_text_color;
+        }
+    }
+
+    /* gnome-calendar */
+    .calendar-view {
+        background-color: $base_color;
+        color: $text_color;
+    }
+}
+

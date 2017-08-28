@@ -1,0 +1,15 @@
+{
+	"added_words":
+	[
+		"Hurmit",
+		"minimap"
+	],
+	"auto_complete_cycle": true,
+	"color_scheme": "Packages/User/My_Themes/wally.tmTheme",
+	"font_face": "Hurmit Nerd Font",
+	"font_size": 10,
+	"rulers":
+	[
+		80
+	]
+}

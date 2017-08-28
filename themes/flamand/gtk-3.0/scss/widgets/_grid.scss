@@ -1,0 +1,48 @@
+/******************
+ ! Grid and flowbox
+*******************/
+
+@include exports("grid") {
+    .list {
+        background-color: shade($bg_color, .97);
+        color: $fg_color;
+
+        &-row {
+            &, &.button {
+                border: 0;
+                border-radius: 0;
+                padding: $spacing;
+                background-image: none;
+                background-color: alpha($bg_color, 0);
+                box-shadow: none;
+
+                &:hover {
+                    background-image: none;
+                    background-color: shade($bg_color, 1.02);
+                }
+
+                &:selected {
+                    &, &:hover, &:focus {
+                        background-image: none;
+                        background-color: $selected_bg_color;
+                        color: $selected_fg_color;
+                    }
+                }
+            }
+        }
+    }
+
+    .grid-child {
+        &, GtkFlowBox & {
+            padding: $spacing;
+            border-radius: $roundness;
+
+            &:selected {
+                @extend %selected;
+
+                outline-offset: -2px;
+            }
+        }
+    }
+}
+

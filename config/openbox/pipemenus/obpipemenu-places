@@ -1,0 +1,105 @@
+#!/usr/bin/perl
+# Recursively browse filesystem through openbox3 pipe menus
+#### Usage: add
+# <menu id="browse" label="Browse" execute="obpipemenu-places ~" />
+# to your .config/openbox/menu.xml
+#### CAVEAT ####
+# This script was hacked on exclusively in stints between the hours of
+# 4 and 5 in the morning. Quality may have suffered.
+####
+# Script by dircha from ob list on 05/17/04
+# suggested improvements by John Russell on 05/17/04 implemented 
+# a year later by Kacper Wysocki.
+# 05/30/05 - Kacper Wysocki
+# - opens files with 'rox', which launches appropriate file handler
+# - hidden directories now stay hidden
+# - spaces, ampersands in dir- and filenames are escaped
+# - newlines at each entry to make output a little readable
+# 06/04/05 - Kacper Wysocki
+# - use $0 for scriptname
+# - use $ENV{'HOME'} as default path
+# - now follows symlinks
+# 09/07/16 - g00dy
+# - handle special characters in path
+# - unbroke detecting symlinked folders
+# - use xdg-open to open files
+
+use strict;
+
+# Command to lauch files with
+my $cmd = "pcmanfm";
+
+my $path = $ARGV[0];
+$path = "$ENV{'HOME'}" if $path eq "";
+$path = rpl_path($path);
+my @files = split /\n/, `ls -1pL $path`;
+mk_menu_element($path, @files);
+
+sub mk_menu_element {
+    my ($path, @files) = @_;
+
+    print "<openbox_pipe_menu>\n";
+    
+    # "Browse here..." lauches this dir
+    my $mpath = rpl_xml($path);
+    print "<item label=\"Browse here..\">".
+           "\n\t<action name=\"Execute\">".
+           "\n\t\t<execute>$cmd $mpath</execute>".
+           "\n\t</action>".
+           "\n</item>\n".
+           "<separator />";
+
+    foreach $_ (@files) {
+        my $length = length $_;
+        my $last_c = substr $_, $length - 1, 1;
+
+        if ($last_c eq "/") {
+            print mk_dir_element($path, substr $_, 0, $length - 1);
+        } else {
+            print mk_file_element($path, $_);
+        }
+    }
+    print "</openbox_pipe_menu>\n";
+}
+
+sub mk_dir_element {
+    my ($path, $name) = @_;
+    # escape ampersand and space in pathnames
+    my $lbl = rpl_xml(rpl_lbl($name));
+    my $pathname = rpl_xml($path . "/" . rpl_path($name));
+
+    return "<menu id=\"$pathname\" label=\"$lbl\" execute=\"$0 $pathname\" />\n";
+}
+
+sub mk_file_element {
+    my ($path, $name) = @_;
+    my $lbl = rpl_xml(rpl_lbl($name));
+    my $pathname = rpl_xml($path . "/" . rpl_path($name));
+
+    return "<item label=\"$lbl\">".
+           "\n\t<action name=\"Execute\">".
+           "\n\t\t<execute>xdg-open $pathname</execute>".
+           "\n\t</action>".
+           "\n</item>\n";
+}
+
+sub rpl_path {
+    my ($path) = @_;
+    $path =~ s/([ "'&\(\)\[\]])/\\$+/g;
+    return $path;
+}
+
+sub rpl_lbl {
+    my ($path) = @_;
+    $path =~ s/_/__/g;
+    return $path;
+}
+
+sub rpl_xml {
+    my ($lbl) = @_;
+    $lbl =~ s/&/&amp;/g;
+    $lbl =~ s/'/&apos;/g;
+    $lbl =~ s/\"/&quot;/g;
+    $lbl =~ s/[^\x09\x0A\x0D\x20-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/ /go;
+    return $lbl;
+}

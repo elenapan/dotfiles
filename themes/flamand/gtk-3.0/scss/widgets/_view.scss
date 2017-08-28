@@ -1,0 +1,233 @@
+/***************
+ ! Generic views
+****************/
+
+@include exports("view") {
+    * { -GtkTextView-error-underline-color: $error_color; }
+
+    .view {
+        color: $text_color;
+        background-color: $base_color;
+
+        &:insensitive, &:insensitive:insensitive {
+            background-color: shade($base_color, .9);
+            color: mix($text_color, $base_color, .5);
+        }
+
+        &:selected, &:selected:focus { @extend %selected; }
+    }
+
+    .cell {
+        border-width: 0;
+        border-radius: 0;
+
+        &:selected, &:selected:focus {
+            background-color: $selected_bg_color;
+            color: $selected_fg_color;
+        }
+    }
+
+    row {
+        &:selected {
+            &, &:hover, &:focus {
+                -GtkWidget-focus-padding: 1;
+                -GtkWidget-focus-line-width: 0;
+
+                border: 0;
+                background-color: $selected_bg_color;
+                background-image: none;
+                color: $selected_fg_color;
+            }
+        }
+    }
+
+    .content-view {
+        &.view {
+            background-color: $base_color;
+
+            &:hover { background-color: alpha($selected_bg_color, .6); }
+
+            &:selected, &:active { background-color: $selected_bg_color; }
+
+            &:insensitive { background-color: shade($base_color, .9); }
+
+            &.check {
+                &, &:active, &:hover, &:insensitive, &:selected { background-color: transparent; }
+            }
+        }
+
+        .subtitle {
+            font: smaller;
+            padding: 0 12px;
+        }
+    }
+
+    GtkIconView {
+        &.content-view.check { @extend .content-view.check; }
+
+        &.view.cell {
+            &:selected, &:selected:focus {
+                border: 0;
+                border-radius: 2px;
+                background-image: none;
+                background-color: $selected_bg_color;
+                color: $selected_fg_color;
+            }
+        }
+    }
+
+    .dim-label {
+        &, &.view { color: alpha(currentColor, .5); }
+    }
+
+    .dnd { border: 1px solid $selected_bg_color; }
+
+    .grip { background-color: transparent; }
+
+    .arrow { color: alpha(currentColor, .7); }
+
+    .rubberband {
+        &, &.view, &.content-view.view {
+            border: 1px solid $selected_bg_color;
+            border-radius: 0;
+            background-color: alpha($selected_bg_color, .3);
+        }
+    }
+
+    GdMainIconView.content-view { -GdMainIconView-icon-size: 40; }
+
+    /* this will get overridden by .view, needed by gedit line numbers */
+    GtkTextView { background-color: mix($bg_color, $base_color, .5); }
+
+    GtkHTML {
+        @extend .view;
+
+        &:insensitive { background-color: shade($base_color, .9); }
+    }
+
+    GtkDrawingArea { background-color: transparent; }
+}
+
+/************
+ ! Treeview *
+*************/
+
+@include exports("treeview") {
+    GtkTreeView {
+        -GtkTreeView-expander-size: 8;
+        -GtkTreeView-vertical-separator: 0;
+
+        outline-offset: -1px;
+        border-top-color: shade($menu_bg_color, ($contrast + .1));
+
+        &:hover, &:selected, &:selected:focus, &:backdrop:selected, &:backdrop:selected:focus { border-top-color: $selected_bg_color; }
+
+        &.dnd { border: 1px solid $selected_bg_color; }
+
+        .entry {
+            border-radius: 0;
+            background-color: $base_color;
+            background-image: none;
+        }
+
+        .progressbar {
+            @include linear-gradient($selected_bg_color);
+            border: 1px solid border_normal($selected_bg_color);
+
+            &:selected {
+                &:focus, & {
+                    @include linear-gradient($selected_bg_color);
+                    border: 1px solid border_focus($selected_bg_color);
+                    color: $selected_fg_color;
+                }
+            }
+
+            &:insensitive {
+                &:insensitive {
+                    @include linear-gradient($bg_color);
+                    border-color: border_insensitive($bg_color);
+                }
+            }
+        }
+
+        .trough {
+            background-color: mix($bg_color, $base_color, .5);
+            border: 1px solid border_normal($base_color);
+
+            &:selected {
+                &:focus, & {
+                    background-color: $base_color;
+                    border: 1px solid border_focus($bg_color);
+                    color: $text_color;
+                }
+            }
+
+            &:insensitive {
+                &:insensitive {
+                    background-color: $base_color;
+                }
+            }
+        }
+    }
+}
+
+
+/***********
+ ! Separator
+************/
+
+@include exports("separator") {
+    .view.separator, .separator {
+        color: shade($bg_color, ($contrast + .1));
+        border: 1px solid currentColor;
+    }
+}
+
+
+/*********************
+ ! Column view headers
+**********************/
+
+@include exports("columnheader") {
+    column-header {
+        .button {
+            &, &:active {
+                border-width: 0 1px 1px 0;
+                border-radius: 0;
+            }
+
+            &, &:active, &:focus, &:active:focus {
+                border-color: shade($base_color, .9);
+                border-bottom-color: shade($base_color, .8);
+                background-color: shade($base_color, .97);
+                background-image: none;
+            }
+
+            &:hover, &:active:hover, &:hover:focus, &:active:hover:focus {
+                border-color: shade($base_color, .9);
+                border-bottom-color: shade($base_color, .8);
+                background-color: shade($base_color, .99);
+                background-image: none;
+            }
+
+            &:last-child .button { border-width: 0 0 1px; }
+        }
+    }
+}
+
+
+/**********
+ ! Frames *
+***********/
+
+@include exports("frame") {
+    .frame {
+        border: 1px solid border_normal($bg_color);
+
+        &.flat { border: 0; }
+    }
+
+    /* avoid double borders when a viewport is packed into a GtkScrolledWindow */
+    GtkScrolledWindow GtkViewport.frame { border: 0; }
+}
+

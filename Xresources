@@ -1,0 +1,92 @@
+! Cursor theme
+xcursor.theme:            Vanilla-DMZ
+
+! URxvt config
+URxvt*termName:           rxvt-unicode
+
+URxvt.scrollBar:          off
+URxvt.font:               xft:Hurmit Nerd Font:size=9:antialias=true:hinting=true:autohint=true
+!URxvt.font:               xft:mononoki Nerd Font:size=10:antialias=true
+
+URxvt.letterSpace: 0
+URxvt.internalBorder:     8
+URxvt.geometry: 80x16
+URxvt*selectToClipboard:  true
+URxvt*saveLines:          10000
+
+URxvt.perl-ext-common:    default,matcher,tabbedex,searchable-scrollback
+URxvt.urlLauncher:        /usr/bin/chromium
+URxvt.matcher.button:     1
+URxvt.tabbed.tabbar-fg:   8
+URxvt.tabbed.tabbar-bg:   0
+URxvt.tabbed.tab-fg:      2
+URxvt.tabbed.tab-bg:      0
+URxvt.tabbed.new-button:  no
+URxvt.tabbed.title:       no
+
+! For Transparency
+urxvt*depth: 32
+!urxvt*background: rgba:0200/1000/1700/c700
+!URxvt*background: #050509
+!urxvt*background: rgba:0500/0500/0900/e00f
+!urxvt*background: rgba:0100/0000/0B00/e00f
+!urxvt*background: rgba:0000/0000/0b00/f00f
+!urxvt*background: rgba:0200/0000/0a00/ffff
+
+! xscreensaver
+xscreensaver.fade:        false
+xscreensaver.unfade: false
+
+rofi.font: Hurmit Nerd Font Bold 11
+rofi.bw: 2
+rofi.width: 50
+rofi.lines: 10
+rofi.scroll-method: 1
+
+!!! COLORS UNDER HERE !!!
+
+URxvt*foreground: #DBDCDF
+XTerm*foreground: #DBDCDF
+URxvt*background: #0D0D0D
+XTerm*background: #0D0D0D
+URxvt*cursorColor: #DBDCDF
+XTerm*cursorColor: #0D0D0D
+*color0: #0D0D0D
+*.color0: #0D0D0D
+*color1: #8C776C
+*.color1: #8C776C
+*color2: #657985
+*.color2: #657985
+*color3: #758892
+*.color3: #758892
+*color4: #9EA4A9
+*.color4: #9EA4A9
+*color5: #B7BDC2
+*.color5: #B7BDC2
+*color6: #BDC1C6
+*.color6: #BDC1C6
+*color7: #DBDCDF
+*.color7: #DBDCDF
+*color8: #666666
+*.color8: #666666
+*color9: #8C776C
+*.color9: #8C776C
+*color10: #657985
+*.color10: #657985
+*color11: #758892
+*.color11: #758892
+*color12: #9EA4A9
+*.color12: #9EA4A9
+*color13: #B7BDC2
+*.color13: #B7BDC2
+*color14: #BDC1C6
+*.color14: #BDC1C6
+*color15: #DBDCDF
+*.color15: #DBDCDF
+*color66: #0D0D0D
+rofi.color-window: argb:FF0D0D0D, #0D0D0D, #657985
+rofi.color-normal: argb:FF0D0D0D, #DBDCDF, #0D0D0D, #657985, #0D0D0D
+rofi.color-active: argb:FF0D0D0D, #DBDCDF, #0D0D0D, #657985, #0D0D0D
+rofi.color-urgent: argb:FF0D0D0D, #8C776C, #0D0D0D, #8C776C, #DBDCDF
+emacs*background: #0D0D0D
+emacs*foreground: #DBDCDF
