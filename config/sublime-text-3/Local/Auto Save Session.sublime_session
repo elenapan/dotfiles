@@ -1,0 +1,1319 @@
+{
+	"folder_history":
+	[
+	],
+	"last_version": 3126,
+	"last_window_id": 9,
+	"log_indexing": false,
+	"settings":
+	{
+		"new_window_height": 713.0,
+		"new_window_settings":
+		{
+			"auto_complete":
+			{
+				"selected_items":
+				[
+					[
+						"pat",
+						"path_to_wallpaper"
+					],
+					[
+						"RIGHT",
+						"right"
+					]
+				]
+			},
+			"build_system_choices":
+			[
+			],
+			"build_varint": "",
+			"command_palette":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"console":
+			{
+				"height": 0.0,
+				"history":
+				[
+				]
+			},
+			"distraction_free":
+			{
+				"menu_visible": true,
+				"show_minimap": false,
+				"show_open_files": false,
+				"show_tabs": false,
+				"side_bar_visible": false,
+				"status_bar_visible": false
+			},
+			"file_history":
+			[
+				"/home/elena/Scripts/volume.sh",
+				"/home/elena/.config/tint2/lemons",
+				"/home/elena/Scripts/flux-toggle",
+				"/home/elena/Scripts/weather.sh",
+				"/home/elena/Scripts/battery.sh",
+				"/home/elena/Scripts/keys.sh",
+				"/home/elena/Scripts/cpu.sh",
+				"/home/elena/Scripts/ram.sh",
+				"/home/elena/Scripts/disk.sh",
+				"/home/elena/.oh-my-zsh/themes/fino.zsh-theme",
+				"/home/elena/Scripts/spaceinvaders.sh",
+				"/usr/share/lightdm-webkit/themes/glitch/index.html",
+				"/home/elena/.config/lxterminal/lxterminal.conf",
+				"/home/elena/Themes/newyork/newyork",
+				"/home/elena/.oh-my-zsh/themes/mymh.zsh-theme",
+				"/home/elena/.local/share/themes/newyork/openbox-3/themerc",
+				"/home/elena/fetchy",
+				"/home/elena/.oh-my-zsh/themes/mh.zsh-theme",
+				"/home/elena/.oh-my-zsh/themes/fox.zsh-theme",
+				"/home/elena/.config/tint2/tint2rc",
+				"/home/elena/.local/share/themes/neonbox/openbox-3/themerc",
+				"/home/elena/.config/openbox/rc.xml",
+				"/home/elena/.config/openbox/menu.xml"
+			],
+			"find":
+			{
+				"height": 36.0
+			},
+			"find_in_files":
+			{
+				"height": 0.0,
+				"where_history":
+				[
+				]
+			},
+			"find_state":
+			{
+				"case_sensitive": false,
+				"find_history":
+				[
+					"browser",
+					"121319",
+					"audio",
+					"[",
+					"volume",
+					"battery",
+					"font = 4",
+					"volume",
+					"underline",
+					"undeline",
+					"<?",
+					"lxterminal",
+					"Execute",
+					"URxvt",
+					"17E962",
+					"w-u",
+					"9b0f62",
+					"5A54CE",
+					"d721a3",
+					"010113",
+					"9EC2B7",
+					"D4A7B1",
+					"222222",
+					"applications",
+					"browser",
+					"tint2",
+					"29",
+					"W-Up",
+					"w-down",
+					"\">\n",
+					"w-left",
+					"gpicview",
+					"close",
+					"win",
+					"windows",
+					"efefef",
+					"ffffff",
+					"d4a7b1",
+					"a64759",
+					"9ec2b7",
+					"222222",
+					"volume",
+					"\"",
+					"windowlist",
+					"temperature",
+					"fan[1",
+					"fan",
+					"lax",
+					"off",
+					"oblogout",
+					"keyboard",
+					"memory",
+					"ram",
+					"batter",
+					"volume",
+					"050b0b",
+					"d1a257",
+					"273233",
+					"f9c168",
+					"rofi",
+					"tab",
+					"<?",
+					"label-font = 4"
+				],
+				"highlight": true,
+				"in_selection": false,
+				"preserve_case": false,
+				"regex": false,
+				"replace_history":
+				[
+					"111012",
+					"font = 2",
+					"800058",
+					"455f57",
+					"929291",
+					"17E962",
+					"0c0c0c",
+					"17E962",
+					"929291",
+					"0C0C0C",
+					"feh",
+					"010113",
+					"5A54CE",
+					"9b0f62",
+					"d721a3",
+					"010113",
+					"222222",
+					"D4A7B1",
+					"9EC2B7",
+					"label-font = 1"
+				],
+				"reverse": false,
+				"show_context": true,
+				"use_buffer2": true,
+				"whole_word": false,
+				"wrap": true
+			},
+			"incremental_find":
+			{
+				"height": 28.0
+			},
+			"input":
+			{
+				"height": 0.0
+			},
+			"menu_visible": true,
+			"output.find_results":
+			{
+				"height": 0.0
+			},
+			"pinned_build_system": "",
+			"replace":
+			{
+				"height": 52.0
+			},
+			"save_all_on_build": true,
+			"select_file":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"select_project":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"select_symbol":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"show_minimap": true,
+			"show_open_files": false,
+			"show_tabs": true,
+			"side_bar_visible": true,
+			"side_bar_width": 150.0,
+			"status_bar_visible": true,
+			"template_settings":
+			{
+			}
+		},
+		"new_window_width": 779.0
+	},
+	"windows":
+	[
+		{
+			"auto_complete":
+			{
+				"selected_items":
+				[
+					[
+						"ico",
+						"iconified"
+					],
+					[
+						"pri",
+						"print"
+					],
+					[
+						"el",
+						"elif\telif …"
+					],
+					[
+						"po",
+						"POWER"
+					],
+					[
+						"IN",
+						"INFO"
+					],
+					[
+						"i",
+						"INFO"
+					],
+					[
+						"tem",
+						"TEMP"
+					],
+					[
+						"cu",
+						"cur_temp"
+					],
+					[
+						"c",
+						"charlimit"
+					],
+					[
+						"LE",
+						"INPUT_LENGTH"
+					],
+					[
+						"OLD",
+						"OLD_INPUT"
+					],
+					[
+						"WI",
+						"WIFI"
+					],
+					[
+						"WIRE",
+						"WIRELESS_IF"
+					],
+					[
+						"P",
+						"PANDORA"
+					],
+					[
+						"SE",
+						"SEPERATOR_LENGTH"
+					],
+					[
+						"INP",
+						"INPUTLENGTH"
+					],
+					[
+						"L",
+						"LENGTH"
+					],
+					[
+						"C",
+						"cut"
+					],
+					[
+						"fi",
+						"forin\tfor … in … done"
+					],
+					[
+						"CHA",
+						"CHARLIMITPLUS1"
+					],
+					[
+						"XCOLOR_",
+						"XCOLOR_OLD"
+					],
+					[
+						"O",
+						"OUTPUT"
+					],
+					[
+						"win",
+						"WINDOWID"
+					],
+					[
+						"XCOLOR0",
+						"XCOLOR0_NEW"
+					],
+					[
+						"TAS",
+						"TASK_CUR"
+					],
+					[
+						"DEK",
+						"DESKTOP_CUR"
+					],
+					[
+						"TINT",
+						"TINT_MINI"
+					],
+					[
+						"BAC",
+						"BACKGROUND_NEW"
+					],
+					[
+						"BACK",
+						"BACKGROUND_CUR"
+					],
+					[
+						"m",
+						"MINI_CUR"
+					],
+					[
+						"inx",
+						"indexes"
+					],
+					[
+						"pat",
+						"path_to_wallpaper"
+					],
+					[
+						"RIGHT",
+						"right"
+					]
+				]
+			},
+			"buffers":
+			[
+				{
+					"file": "/home/elena/Scripts/youtube.sh",
+					"settings":
+					{
+						"buffer_size": 2867,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/Scripts/weather.sh",
+					"settings":
+					{
+						"buffer_size": 1291,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/Scripts/battery.sh",
+					"settings":
+					{
+						"buffer_size": 714,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/Scripts/wally",
+					"settings":
+					{
+						"buffer_size": 1980,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/Scripts/wally-setlogintheme",
+					"settings":
+					{
+						"buffer_size": 431,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/.Xresources",
+					"settings":
+					{
+						"buffer_size": 2303,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/.wally/links/sublime",
+					"settings":
+					{
+						"buffer_size": 11053,
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/.local/share/themes/wally/openbox-3/themerc",
+					"settings":
+					{
+						"buffer_size": 3730,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/.config/tint2/tint2rc",
+					"settings":
+					{
+						"buffer_size": 12213,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/Themes/startpage-gh-pages/style.css",
+					"settings":
+					{
+						"buffer_size": 799,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/Scripts/temperature.sh",
+					"settings":
+					{
+						"buffer_size": 89,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/.config/openbox/autostart",
+					"settings":
+					{
+						"buffer_size": 18,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/.config/openbox/menu.xml",
+					"settings":
+					{
+						"buffer_size": 3837,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/Themes/startpage-gh-pages/index.html",
+					"settings":
+					{
+						"buffer_size": 2688,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/home/elena/.config/openbox/rc.xml",
+					"settings":
+					{
+						"buffer_size": 34359,
+						"encoding": "UTF-8",
+						"line_ending": "Unix"
+					}
+				}
+			],
+			"build_system": "",
+			"build_system_choices":
+			[
+			],
+			"build_varint": "",
+			"command_palette":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"console":
+			{
+				"height": 0.0,
+				"history":
+				[
+				]
+			},
+			"distraction_free":
+			{
+				"menu_visible": true,
+				"show_minimap": false,
+				"show_open_files": false,
+				"show_tabs": false,
+				"side_bar_visible": false,
+				"status_bar_visible": false
+			},
+			"file_history":
+			[
+				"/home/elena/Scripts/keys.sh",
+				"/home/elena/Scripts/inet.sh",
+				"/home/elena/Scripts/nvprime.sh",
+				"/home/elena/Scripts/youtube0.sh",
+				"/home/elena/.config/tint2/tint2top",
+				"/home/elena/.config/tint2/tint2bot",
+				"/home/elena/Scripts/ram.sh",
+				"/home/elena/Scripts/cpu.sh",
+				"/home/elena/Scripts/wally",
+				"/home/elena/Scripts/scrollingtext.sh",
+				"/home/elena/Scripts/focus.sh",
+				"/home/elena/Scripts/wally-dumb",
+				"/home/elena/Scripts/temperature.sh",
+				"/home/elena/Scripts/tetete.sh",
+				"/home/elena/Scripts/scrollingtext",
+				"/home/elena/Scripts/newscroll.sh",
+				"/media/elena/Data/downloaded_progs.txt",
+				"/home/elena/Scripts/youtubetest.sh",
+				"/home/elena/Scripts/focuswindow.sh",
+				"/home/elena/Scripts/focusyoutube.sh",
+				"/home/elena/Scripts/tint2restart",
+				"/home/elena/Scripts/print_xcolors",
+				"/home/elena/Scripts/volume.sh",
+				"/home/elena/Scripts/windowtest.sh",
+				"/home/elena/Scripts/youtube.sh",
+				"/home/elena/Scripts/windowtest",
+				"/home/elena/Scripts/wally0",
+				"/home/elena/.config/polybar/config",
+				"/home/elena/Documents/testfile",
+				"/home/elena/Themes/ls_colors/ls_colors_generator.py",
+				"/home/elena/Themes/Xresources-clean",
+				"/home/elena/.oh-my-zsh/themes/blood.zsh-theme",
+				"/home/elena/.oh-my-zsh/themes/elenov.zsh-theme",
+				"/home/elena/.cache/wal/colors.xresources",
+				"/home/elena/.local/share/themes/thebox/openbox-3/themerc",
+				"/home/elena/Scripts/weather.sh",
+				"/home/elena/Scripts/testargs.sh",
+				"/home/elena/.local/share/themes/kuvshinov/openbox-3/themerc",
+				"/home/elena/Scripts/random_theme",
+				"/home/elena/Scripts/wally.sh",
+				"/home/elena/.config/tint2/lemons",
+				"/home/elena/Scripts/flux-toggle",
+				"/home/elena/Scripts/battery.sh",
+				"/home/elena/Scripts/disk.sh",
+				"/home/elena/.oh-my-zsh/themes/fino.zsh-theme",
+				"/home/elena/Scripts/spaceinvaders.sh",
+				"/usr/share/lightdm-webkit/themes/glitch/index.html",
+				"/home/elena/.config/lxterminal/lxterminal.conf",
+				"/home/elena/Themes/newyork/newyork",
+				"/home/elena/.oh-my-zsh/themes/mymh.zsh-theme",
+				"/home/elena/.local/share/themes/newyork/openbox-3/themerc",
+				"/home/elena/fetchy",
+				"/home/elena/.oh-my-zsh/themes/mh.zsh-theme",
+				"/home/elena/.oh-my-zsh/themes/fox.zsh-theme",
+				"/home/elena/.config/tint2/tint2rc",
+				"/home/elena/.local/share/themes/neonbox/openbox-3/themerc",
+				"/home/elena/.config/openbox/rc.xml",
+				"/home/elena/.config/openbox/menu.xml"
+			],
+			"find":
+			{
+				"height": 36.0
+			},
+			"find_in_files":
+			{
+				"height": 0.0,
+				"where_history":
+				[
+				]
+			},
+			"find_state":
+			{
+				"case_sensitive": false,
+				"find_history":
+				[
+					"s-w",
+					"iconify",
+					"doubleclick",
+					"iconify",
+					"doubleclick",
+					"maximize",
+					"close",
+					"border_width = 1",
+					"border_width",
+					"rounded = 8",
+					"E3E2F8",
+					"#2A5553",
+					"INPUT_LENGTH",
+					"INPUT",
+					"STRINK",
+					"rounded = 0",
+					"rounded = 8",
+					"rounded = 1",
+					"rounded = 0",
+					"rounded = 8",
+					"MYSTRING",
+					"drag",
+					"nextwindow",
+					"startup",
+					"rounded = 8",
+					"#992d47",
+					"#C8C8C5",
+					"efefef",
+					"#ffffff",
+					"222222",
+					"w-r",
+					"s-r",
+					"2F3941",
+					"PATH",
+					"browser",
+					"121319",
+					"audio",
+					"[",
+					"volume",
+					"battery",
+					"font = 4",
+					"volume",
+					"underline",
+					"undeline",
+					"<?",
+					"lxterminal",
+					"Execute",
+					"URxvt",
+					"17E962",
+					"w-u",
+					"9b0f62",
+					"5A54CE",
+					"d721a3",
+					"010113",
+					"9EC2B7",
+					"D4A7B1",
+					"222222",
+					"applications",
+					"browser",
+					"tint2",
+					"29",
+					"W-Up",
+					"w-down",
+					"\">\n",
+					"w-left",
+					"gpicview",
+					"close",
+					"win",
+					"windows",
+					"efefef",
+					"ffffff",
+					"d4a7b1",
+					"a64759",
+					"9ec2b7",
+					"222222",
+					"volume",
+					"\"",
+					"windowlist",
+					"temperature",
+					"fan[1",
+					"fan",
+					"lax",
+					"off",
+					"oblogout",
+					"keyboard",
+					"memory",
+					"ram",
+					"batter",
+					"volume",
+					"050b0b",
+					"d1a257",
+					"273233",
+					"f9c168",
+					"rofi",
+					"tab",
+					"<?",
+					"label-font = 4"
+				],
+				"highlight": true,
+				"in_selection": false,
+				"preserve_case": false,
+				"regex": false,
+				"replace_history":
+				[
+					"border_width = 0",
+					"rounded = 0",
+					"3693DF",
+					"#2F3941",
+					"INPUT",
+					"rounded = 8",
+					"rounded = 0",
+					"rounded = 8",
+					"rounded = 1",
+					"rounded = 0",
+					"OUTPUT",
+					"rounded = 0",
+					"#6F7487",
+					"#94A5A1",
+					"992D47",
+					"#C8C8C5",
+					"100B10",
+					"ARG",
+					"111012",
+					"font = 2",
+					"800058",
+					"455f57",
+					"929291",
+					"17E962",
+					"0c0c0c",
+					"17E962",
+					"929291",
+					"0C0C0C",
+					"feh",
+					"010113",
+					"5A54CE",
+					"9b0f62",
+					"d721a3",
+					"010113",
+					"222222",
+					"D4A7B1",
+					"9EC2B7",
+					"label-font = 1"
+				],
+				"reverse": false,
+				"show_context": true,
+				"use_buffer2": true,
+				"whole_word": false,
+				"wrap": true
+			},
+			"groups":
+			[
+				{
+					"selected": 4,
+					"sheets":
+					[
+						{
+							"buffer": 0,
+							"file": "/home/elena/Scripts/youtube.sh",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 2867,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										1497,
+										1497
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
+									"translate_tabs_to_spaces": false
+								},
+								"translation.x": 0.0,
+								"translation.y": 480.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 4,
+							"type": "text"
+						},
+						{
+							"buffer": 1,
+							"file": "/home/elena/Scripts/weather.sh",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 1291,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										441,
+										441
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+								},
+								"translation.x": -0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 3,
+							"type": "text"
+						},
+						{
+							"buffer": 2,
+							"file": "/home/elena/Scripts/battery.sh",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 714,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										13,
+										13
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
+									"translate_tabs_to_spaces": false
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 2,
+							"type": "text"
+						},
+						{
+							"buffer": 3,
+							"file": "/home/elena/Scripts/wally",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 1980,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										1367,
+										1367
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+								},
+								"translation.x": 0.0,
+								"translation.y": 900.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 1,
+							"type": "text"
+						},
+						{
+							"buffer": 4,
+							"file": "/home/elena/Scripts/wally-setlogintheme",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 431,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										87,
+										87
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/Text/Plain text.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 0,
+							"type": "text"
+						},
+						{
+							"buffer": 5,
+							"file": "/home/elena/.Xresources",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 2303,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										442,
+										442
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/Text/Plain text.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 728.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 11,
+							"type": "text"
+						},
+						{
+							"buffer": 6,
+							"file": "/home/elena/.wally/links/sublime",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 11053,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										0,
+										0
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/XML/XML.sublime-syntax",
+									"translate_tabs_to_spaces": false
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 12,
+							"type": "text"
+						},
+						{
+							"buffer": 7,
+							"file": "/home/elena/.local/share/themes/wally/openbox-3/themerc",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 3730,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										87,
+										87
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/Text/Plain text.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 9,
+							"type": "text"
+						},
+						{
+							"buffer": 8,
+							"file": "/home/elena/.config/tint2/tint2rc",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 12213,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										2642,
+										2642
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/Text/Plain text.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 960.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 10,
+							"type": "text"
+						},
+						{
+							"buffer": 9,
+							"file": "/home/elena/Themes/startpage-gh-pages/style.css",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 799,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										595,
+										595
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/CSS/CSS.sublime-syntax",
+									"tab_size": 2,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 600.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 8,
+							"type": "text"
+						},
+						{
+							"buffer": 10,
+							"file": "/home/elena/Scripts/temperature.sh",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 89,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										2,
+										2
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 7,
+							"type": "text"
+						},
+						{
+							"buffer": 11,
+							"file": "/home/elena/.config/openbox/autostart",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 18,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										10,
+										10
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/Text/Plain text.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 14,
+							"type": "text"
+						},
+						{
+							"buffer": 12,
+							"file": "/home/elena/.config/openbox/menu.xml",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 3837,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										924,
+										924
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/XML/XML.sublime-syntax",
+									"translate_tabs_to_spaces": false
+								},
+								"translation.x": 0.0,
+								"translation.y": 330.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 13,
+							"type": "text"
+						},
+						{
+							"buffer": 13,
+							"file": "/home/elena/Themes/startpage-gh-pages/index.html",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 2688,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										1699,
+										1699
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/HTML/HTML.sublime-syntax",
+									"tab_size": 4,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 611.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 6,
+							"type": "text"
+						},
+						{
+							"buffer": 14,
+							"file": "/home/elena/.config/openbox/rc.xml",
+							"semi_transient": false,
+							"settings":
+							{
+								"buffer_size": 34359,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										8400,
+										8408
+									]
+								],
+								"settings":
+								{
+									"syntax": "Packages/XML/XML.sublime-syntax",
+									"tab_size": 2,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 5169.0,
+								"zoom_level": 1.0
+							},
+							"stack_index": 5,
+							"type": "text"
+						}
+					]
+				}
+			],
+			"incremental_find":
+			{
+				"height": 28.0
+			},
+			"input":
+			{
+				"height": 0.0
+			},
+			"layout":
+			{
+				"cells":
+				[
+					[
+						0,
+						0,
+						1,
+						1
+					]
+				],
+				"cols":
+				[
+					0.0,
+					1.0
+				],
+				"rows":
+				[
+					0.0,
+					1.0
+				]
+			},
+			"menu_visible": true,
+			"output.find_results":
+			{
+				"height": 0.0
+			},
+			"pinned_build_system": "",
+			"position": "0,0,0,0,0,10,50,780,728,1366,768",
+			"project": "",
+			"replace":
+			{
+				"height": 66.0
+			},
+			"save_all_on_build": true,
+			"select_file":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"select_project":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"select_symbol":
+			{
+				"height": 0.0,
+				"last_filter": "",
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"selected_group": 0,
+			"settings":
+			{
+			},
+			"show_minimap": true,
+			"show_open_files": false,
+			"show_tabs": true,
+			"side_bar_visible": true,
+			"side_bar_width": 150.0,
+			"status_bar_visible": true,
+			"template_settings":
+			{
+			},
+			"window_id": 4,
+			"workspace_name": ""
+		}
+	],
+	"workspaces":
+	{
+		"recent_workspaces":
+		[
+		]
+	}
+}

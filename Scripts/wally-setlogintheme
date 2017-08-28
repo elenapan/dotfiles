@@ -1,0 +1,11 @@
+# Copies the gtk theme created by oomox to /usr/share/icons
+# so that it can be used by lightdm greeter
+echo -n "> Replacing gtk theme and icons... "
+rm -rf /usr/share/themes/wally
+rm -rf /usr/share/icons/wally
+cp -r ~/.themes/oomox-wally /usr/share/themes/wally
+cp -r ~/.icons/oomox-wally-flat /usr/share/icons/wally
+echo "Done!"
+echo "> Starting lightdm-gtk-greeter-settings..."
+lightdm-gtk-greeter-settings
+echo "> All done :)"

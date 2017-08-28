@@ -1,4 +1,5 @@
 #!/bin/bash
+# Requires wal or pywal (github)
 
 # Run like this
 # wally /path/to/wallpaper/or/directory 
@@ -13,6 +14,7 @@ if [ $# == 0 ]; then
 	exit 0;
 fi
 
+# Declare arrays
 declare -a color
 declare -a XCOLOR_OLD
 declare -a XCOLOR_NEW
@@ -48,7 +50,8 @@ for (( i = 0; i < 8; i++ )); do
 done
 
 # Restart tint2 to reload config file
-# The grep is to supress tint2 output (doesn't work very well though)
+# The grep is to supress tint2 output
+# (doesn't work very well because tint2 is run in the background and can bypass this)
 tint2restart | grep shutup! &
 echo "> tint2 has restarted!"
 
@@ -56,13 +59,6 @@ echo "> tint2 has restarted!"
 # Template: ~/.local/share/themes/thebox/openbox-3/themerc
 openbox --reconfigure
 echo "> Openbox is reconfigured!"
-
-# Customize login screen: REQUIRES SUDO :(
-# (needs to happen after oomox has generated a gtk theme with the name wally)
-# 
-# echo "> Attempting to change login theme (you will be prompted for a password)"
-# gksu cp -r ~/.themes/oomox-wally /usr/share/themes/wally
-# gksu lightdm-gtk-greeter-settings
 
 # Copy new wallpaper path to wally's directory
 cp ~/.cache/wal/wal ~/.wally/path_to_wallpaper

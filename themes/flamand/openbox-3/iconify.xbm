@@ -1,0 +1,4 @@
+#define iconify_width 6
+#define iconify_height 6
+static unsigned char iconify_bits[] = {
+   0x00, 0x00, 0x00, 0x1e, 0x00, 0x00 };

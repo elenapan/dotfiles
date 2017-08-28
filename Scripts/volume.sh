@@ -1,1 +1,1 @@
-amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print " xxx\n"} else {printf " %d%%\n", $2}}'
+amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print " \n"} else {printf " %d%%\n", $2}}'

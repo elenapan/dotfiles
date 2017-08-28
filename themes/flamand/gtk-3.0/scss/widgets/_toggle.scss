@@ -1,0 +1,128 @@
+/***********************
+ ! Check and Radio items
+************************/
+
+$suffix: if($variant == "dark", "-dark", "");
+
+@mixin toggle($type) {
+    background-image: none;
+
+    -gtk-icon-source: url("../assets/#{$type}-unchecked#{$suffix}.svg");
+
+    &:insensitive { -gtk-icon-source: url("../assets/#{$type}-unchecked-insensitive#{$suffix}.svg"); }
+
+    &:checked, &:active {
+        -gtk-icon-source: url("../assets/#{$type}-checked#{$suffix}.svg");
+
+        &:insensitive { -gtk-icon-source: url("../assets/#{$type}-checked-insensitive#{$suffix}.svg"); }
+    }
+
+    &:inconsistent {
+        -gtk-icon-source: url("../assets/#{$type}-mixed#{$suffix}.svg");
+
+        &:insensitive { -gtk-icon-source: url("../assets/#{$type}-mixed-insensitive#{$suffix}.svg"); }
+    }
+
+    &.menuitem {
+        -gtk-icon-source: url("../assets/menuitem-#{$type}-unchecked.svg");
+
+        &:insensitive {
+            -gtk-icon-source: url("../assets/menuitem-#{$type}-checked-insensitive.svg");
+        }
+
+        &:checked, &:active {
+            -gtk-icon-source: url("../assets/menuitem-#{$type}-checked.svg");
+
+            &:hover { -gtk-icon-source: url("../assets/menuitem-#{$type}-checked-hover.svg"); }
+
+            &:insensitive { -gtk-icon-source: url("../assets/menuitem-#{$type}-checked-insensitive.svg"); }
+        }
+
+        &:inconsistent {
+            -gtk-icon-source: url("../assets/menuitem-#{$type}-mixed.svg");
+
+            &:hover { -gtk-icon-source: url("../assets/menuitem-#{$type}-mixed-hover.svg"); }
+
+            &:insensitive { -gtk-icon-source: url("../assets/menuitem-#{$type}-mixed-insensitive.svg"); }
+        }
+    }
+}
+
+@include exports("checkradio") {
+    * {
+        -GtkCheckButton-indicator-size: 16;
+        -GtkCheckMenuItem-indicator-size: 16;
+    }
+
+    .radio { @include toggle("radio"); }
+
+    .check { @include toggle("checkbox"); }
+
+    //selection-mode
+    @each $s,$as in ('', '-unchecked'),
+                  (':hover', '-unchecked'),
+                  (':active', '-checked'),
+                  (':backdrop', '-unchecked'),
+                  (':checked', '-checked'),
+                  (':checked:hover', '-checked'),
+                  (':checked:active', '-checked'),
+                  (':backdrop:checked', '-checked') {
+        .view.content-view.check#{$s}:not(list) {
+            icon-shadow: none;
+            -gtk-icon-source: url("../assets/grid-selection#{$as}#{$suffix}.svg");
+            background-color: transparent;
+        }
+    }
+}
+
+
+/********
+ ! Switch
+*********/
+
+@include exports("switch") {
+    GtkSwitch {
+        padding: 0;
+        border-radius: $roundness;
+        font: bold condensed;
+        outline-offset: -4px;
+
+        &.slider {
+            @include linear-gradient(shade($bg_color, 1.2));
+
+            border: 1px solid rgba(0, 0, 0, .2);
+            box-shadow: 0 1px 2px -1px alpha($dark_shadow, .12);
+
+            &:insensitive {
+                border-color: rgba(0, 0, 0, .1);
+                background-color: shade($bg_color, .9);
+                box-shadow: none;
+            }
+        }
+
+        &.trough {
+            @include linear-gradient(shade($bg_color, .95), to top);
+
+            border: 1px solid border_normal($bg_color);
+            color: $fg_color;
+            box-shadow: inset 1px 0 alpha($dark_shadow, .07),
+                        inset 0 1px alpha($dark_shadow, .08),
+                        inset -1px 0 alpha($dark_shadow, .07),
+                        inset 0 -1px alpha($dark_shadow, .05);
+
+            &:active {
+                @include linear-gradient($selected_bg_color, to top);
+
+                border-color: shade($selected_bg_color, .9);
+                color: $selected_fg_color;
+            }
+
+            &:insensitive {
+                @include linear-gradient(shade($bg_color, .9), to top);
+
+                border-color: border_insensitive($bg_color);
+                color: mix($fg_color, $bg_color, .5);
+            }
+        }
+    }
+}
