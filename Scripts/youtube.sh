@@ -29,22 +29,29 @@ SEPERATOR_LENGTH="$(echo ${#SEPERATOR})"
 i=1
 while :
 do  
+	# For debugging purposes
+	# printf "|%02d|" $i
+	
 	# Seach for youtube and pandora windows
 	YOUTUBE="$(wmctrl -l | grep -v "wmctrl" | grep -m 1 "YouTube")"
 	PANDORA="$(wmctrl -l | grep -v "wmctrl" | grep -m 1 "Pandora Radio")"
 
-	# Get input and create the full string that will be used
-	#INPUT="$(echo $YOUTUBE | awk -v skipstart=3 -v skipend=4 '{delim = ""; for (i=skipstart+1;i<=NF-skipend;i++) {printf delim "%s", $i; delim = OFS};}')"
-	INPUT="$(echo $YOUTUBE | awk -v skipstart=3 -v skipend=4 '{delim = ""; for (i=skipstart+1;i<=NF-skipend;i++) {printf delim "%s", $i; delim = OFS};}' | tr -dc '[:print:]')"	
+	# Grab youtube window title
+	INPUT="$(echo $YOUTUBE | awk -v skipstart=3 -v skipend=4 '{delim = ""; for (i=skipstart+1;i<=NF-skipend;i++) {printf delim "%s", $i; delim = OFS};}')"
+
+	# If the song has changed, start from the beginning
+	if [[ "$INPUT" != "$OLD_INPUT" ]]; then
+		i=1
+	fi
+
+	# Save old input for the next check
+	OLD_INPUT="$(echo $INPUT)"
+
+	# Optional: remove multibyte characters 
+	# (they dont show up properly while scrolling due to "cut -c" being identical to "cut -b")
+	INPUT="$(echo $INPUT | tr -dc '[:print:]')"
+
 	INPUT_LENGTH="$(echo ${#INPUT})"
-
-	# If the song has changed, start from the beginning (buggy if you use $INPUT with trimmed multibyte characters)
-	# if [[ "$INPUT" != "$OLD_INPUT" ]]; then
-	# 	i=1
-	# fi
-
-	# todo: if i > length, i=1
-	
 
 	# If no youtube window is found (+pandora)
 	if [ ${#YOUTUBE} -eq "0" ]; then
@@ -62,9 +69,10 @@ do
 		FULLSTRING="$(echo $INPUT | sed "s/$/$SEPERATOR/" | sed "s/$/$LOOPTAIL/" )"
 		
 		# This is to prevent the bug when song changes and current i is larger than current song length
-		if [ $i -gt "${#FULLSTRING}" ]; then
-			i=1
-		fi
+		# (Not needed anymore, this bug was fixed differently)
+		# if [ $i -gt "${#FULLSTRING}" ]; then
+		# 	i=1
+		# fi
 
 		echo -n " "
 		# Show only LIMIT characters, from i to i+LIMIT. Output scrolls due to incrementing i
@@ -80,9 +88,7 @@ do
 		i=$(($i+1))
 	fi
 
-	OLD_INPUT="$(echo $INPUT)"
-
-	# for fat bars, I add this newline so the previous output is not visible
+	# For fat bars/panels, I add this newline so the previous output is not visible
 	echo ""
 
 	sleep 1
