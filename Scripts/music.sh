@@ -47,7 +47,7 @@ do
 
 	# Vivaldi
 	#if [ ${#NCMPCPP} -eq "0" ] && [[ "$MPDSTATE" = "[paused]" ]]; then
-	if [[ "$MPDSTATE" = "[paused]" ]]; then
+	if [[ "$MPDSTATE" != "[playing]" ]]; then
 		# Grab youtube window title 
 		# Depending on your browser, uncomment the correct INPUT line (and comment the others)
 		# Vivaldi
@@ -75,7 +75,7 @@ do
 
 	# If no youtube window is found (+pandora)
 	#if [ ${#YOUTUBE} -eq "0" ] && [ ${#NCMPCPP} -eq "0" ]; then
-	if [ ${#YOUTUBE} -eq "0" ] && [[ "$MPDSTATE" = "[paused]" ]]; then
+	if [ ${#YOUTUBE} -eq "0" ] && [[ "$MPDSTATE" != "[playing]" ]]; then
 		if [ ${#PANDORA} -eq "0" ]; then
 			#echo "  "
 			echo "  "
