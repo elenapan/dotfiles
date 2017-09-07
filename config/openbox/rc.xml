@@ -52,54 +52,54 @@
       S: shade (roll up/down)
       D: omnipresent (on all desktops).
   -->
-    <keepBorder>no</keepBorder>
+    <keepBorder>yes</keepBorder>
     <animateIconify>no</animateIconify>
     <font place="ActiveWindow">
-      <name>Hurmit Nerd Font</name>
-      <size>8</size>
+      <name>Iosevka Nerd Font</name>
+      <size>11</size>
       <!-- font size in points -->
-      <weight>Bold</weight>
+      <weight>Normal</weight>
       <!-- 'bold' or 'normal' -->
       <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="InactiveWindow">
-      <name>Hurmit Nerd Font</name>
-      <size>8</size>
+      <name>Iosevka Nerd Font</name>
+      <size>11</size>
       <!-- font size in points -->
-      <weight>Bold</weight>
+      <weight>Normal</weight>
       <!-- 'bold' or 'normal' -->
       <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuHeader">
-      <name>Hurmit Nerd Font</name>
-      <size>8</size>
+      <name>Iosevka Nerd Font</name>
+      <size>11</size>
       <!-- font size in points -->
-      <weight>Bold</weight>
+      <weight>Normal</weight>
       <!-- 'bold' or 'normal' -->
       <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuItem">
-      <name>Hurmit Nerd Font</name>
-      <size>8</size>
+      <name>Iosevka Nerd Font</name>
+      <size>11</size>
       <!-- font size in points -->
-      <weight>Bold</weight>
+      <weight>Normal</weight>
       <!-- 'bold' or 'normal' -->
       <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="ActiveOnScreenDisplay">
-      <name>Hurmit Nerd Font</name>
-      <size>7</size>
-      <weight>Bold</weight>
+      <name>Iosevka Nerd Font</name>
+      <size>10</size>
+      <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveOnScreenDisplay">
-      <name>Hurmit Nerd Font</name>
-      <size>7</size>
-      <weight>Bold</weight>
+      <name>Iosevka Nerd Font</name>
+      <size>10</size>
+      <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
   </theme>
@@ -115,10 +115,10 @@
     <number>4</number>
     <firstdesk>1</firstdesk>
     <names>
-      <name>&#xF268;</name>
-      <name>&#xF004;</name>
-      <name>&#xF075;</name>
-      <name>&#xF0F4;</name>
+      <name>"  I"</name>
+      <name>" II"</name>
+      <name>"III"</name>
+      <name>" IV"</name>
     </names>
     <popupTime>0</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -126,7 +126,7 @@
   </desktops>
   <resize>
     <drawContents>yes</drawContents>
-    <popupShow>Nonpixel</popupShow>
+    <popupShow>Never</popupShow>
     <!-- 'Always', 'Never', or 'Nonpixel' (xterms and such) -->
     <popupPosition>Center</popupPosition>
     <!-- 'Center', 'Top', or 'Fixed' -->
@@ -343,6 +343,11 @@
         <command>openbox --reconfigure</command>
       </action>
     </keybind>
+    <keybind key="C-A-R">
+      <action name="Execute">
+        <command>pytyle_restart</command>
+      </action>
+    </keybind>
     <keybind key="W-Return">
       <action name="Execute">
         <command>urxvt</command>
@@ -353,9 +358,18 @@
         <command>lxterminal</command>
       </action>
     </keybind>
-    <keybind key="W-w">
+    <keybind key="S-W-w">
       <action name="Execute">
         <command>chromium-browser</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>Web Browser</name>
+        </startupnotify>
+      </action>
+    </keybind>
+    <keybind key="W-w">
+      <action name="Execute">
+        <command>vivaldi</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>Web Browser</name>
@@ -401,10 +415,12 @@
     <keybind key="S-W-z">
       <action name="ForEach">
         <query>
+          <desktop>current</desktop>
           <iconified>yes</iconified>
         </query>
         <then>
           <action name="Focus"/>
+          <action name="Raise"/>
         </then>
       </action>
     </keybind>
@@ -417,7 +433,7 @@
         </startupnotify>
       </action>
     </keybind> -->
-    <keybind key="W-L">
+    <keybind key="S-W-L">
       <action name="Execute">
         <command>wally ~/Pictures/Wallpapers</command>
       </action>
@@ -482,6 +498,26 @@
     </keybind>
     <keybind key="W-u">
       <action name="ToggleDecorations"/>
+    </keybind>
+    <keybind key="S-W-T">
+      <action name="ForEach">
+        <query>
+          <desktop>current</desktop>
+        </query>
+        <then>
+          <action name="Undecorate"/>
+        </then>
+      </action>
+    </keybind>
+    <keybind key="S-W-F">
+      <action name="ForEach">
+        <query>
+          <desktop>current</desktop>
+        </query>
+        <then>
+          <action name="Decorate"/>
+        </then>
+      </action>
     </keybind>
     <keybind key="S-W-a">
       <action name="GrowToFill"/>
@@ -1002,6 +1038,13 @@
       </position>
     </application>
     <application class="Gw2-64.exe">
+      <desktop>2</desktop>
+      <position force="yes">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application class="WoWCircle - 64.exe">
       <desktop>2</desktop>
       <position force="yes">
         <x>center</x>

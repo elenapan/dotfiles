@@ -1,13 +1,13 @@
 {
 	"added_words":
 	[
-		"Hurmit",
+		"Iosevka",
 		"minimap"
 	],
 	"auto_complete_cycle": true,
 	"color_scheme": "Packages/User/My_Themes/wally.tmTheme",
-	"font_face": "Hurmit Nerd Font",
-	"font_size": 10,
+	"font_face": "Iosevka Nerd Font",
+	"font_size": 12,
 	"rulers":
 	[
 		80

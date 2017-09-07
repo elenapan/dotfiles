@@ -50,9 +50,7 @@ for (( i = 0; i < 8; i++ )); do
 done
 
 # Restart tint2 to reload config file
-# The grep is to supress tint2 output
-# (doesn't work very well because tint2 is run in the background and can bypass this)
-tint2restart | grep shutup! &
+tint2restart
 echo "> tint2 has restarted!"
 
 # Reconfigure openbox to reload theme

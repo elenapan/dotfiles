@@ -1,0 +1,92 @@
+/************
+ ! Nautilus *
+*************/
+
+@include exports("nautilus") {
+    .nautilus-desktop, .nautilus-desktop * {
+        &, &:backdrop {
+            color: $white;
+            text-shadow: 1px 1px $black;
+
+            &:active { color: $fg_color; }
+
+            &:selected { color: $selected_fg_color; }
+
+            &:active, &:hover, &:selected { text-shadow: none; }
+        }
+    }
+
+    .nautilus-window {
+        toolbar {
+            border-width: 0 0 1px;
+            border-style: solid;
+            border-color: border_normal($toolbar_bg_color);
+        }
+
+        .sidebar {
+            border: 0;
+
+            frame { border: 0; }
+        }
+
+        notebook {
+            background-color: $base_color;
+            border: 0;
+
+            frame { border: 0; }
+        }
+
+        .searchbar-container {
+            margin-top: -1px;
+
+            searchbar {
+                padding-top: $spacing - 3px;
+                padding-bottom: $spacing - 2px;
+                border-bottom: 1px solid $borders_color;
+            }
+        }
+    }
+
+    button.nautilus-circular-button.image-button {
+        @extend button.circular;
+    }
+
+    $disk_space_unknown: alpha($fg_color, .5);
+    $disk_space_used: alpha($selected_bg_color, .8);
+    $disk_space_free: shade($bg_color, .95);
+
+    .disk-space-display {
+        border-style: solid;
+        border-width: 1px;
+
+        &.unknown {
+            background-color: $disk_space_unknown;
+            border-color: shade($disk_space_unknown, .9);
+        }
+
+        &.used {
+            background-color: $disk_space_used;
+            border-color: shade($disk_space_used, .9);
+        }
+
+        &.free {
+            background-color: $disk_space_free;
+            border-color: shade($disk_space_free, .9);
+        }
+    }
+
+    // Batch renaming dialog
+    .conflict-row.activatable {
+        &, &:active {
+            color: $error_fg_color;
+            background-color: $error_color;
+        }
+
+        &:hover { background-color: shade($error_color, 1.1); }
+
+        &:selected {
+            color: $selected_fg_color;
+            background-color: $selected_bg_color;
+        }
+    }
+}

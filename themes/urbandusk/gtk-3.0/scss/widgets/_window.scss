@@ -1,0 +1,60 @@
+/**************
+ ! Window frame
+***************/
+
+@include exports("window") {
+    %window {
+        box-shadow: 0 19px 38px rgba(0, 0, 0, .3), 0 15px 12px rgba(0, 0, 0, .22),
+                    0 0 0 1px $wm_border_focused;
+
+        &:backdrop {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23),
+                        0 0 0 1px $wm_border_unfocused;
+        }
+    }
+
+    .window-frame {
+        @extend %window;
+
+        border: 0;
+        border-radius: $roundness $roundness 0 0;
+        background-color: mix(shade($titlebar_bg_color, 0.7), $titlebar_fg_color, 0.21);
+        /* this is used for the resize cursor area */
+        margin: $spacing * 3;
+
+        &.tiled { border-radius: 0; }
+
+        &.solid-csd {
+            border-radius: $roundness $roundness 0 0;
+            margin: 1px;
+            background-color: mix(shade($titlebar_bg_color, 0.7), $titlebar_fg_color, 0.21);
+            box-shadow: none;
+        }
+
+        &.csd {
+            &.popup {
+                @extend %window;
+
+                border-radius: 0;
+            }
+
+            &.tooltip {
+                border-radius: $roundness;
+                box-shadow: none;
+            }
+
+            &.message-dialog {
+                @extend %window;
+
+                border-radius: $roundness;
+            }
+        }
+
+        &.ssd {
+            // Fixed gtk-3.18 Unity bug (https://github.com/numixproject/numix-gtk-theme/issues/270)
+            box-shadow: 0 0 0 1px $wm_border_focused;
+
+            &.maximized { border-radius: 0; }
+        }
+    }
+}

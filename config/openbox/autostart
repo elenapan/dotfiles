@@ -1,2 +1,5 @@
 ~/.fehbg &
 tint2 &
+pytyle &
+compton -c -f &
+mpd &
