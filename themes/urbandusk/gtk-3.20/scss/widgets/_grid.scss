@@ -1,0 +1,63 @@
+/******************
+ ! Grid and flowbox
+*******************/
+
+@include exports("grid") {
+    list {
+        color: $text_color;
+        background-color: $base_color;
+        border-color: $borders_color;
+
+        &:backdrop {
+            background-color: $backdrop_base_color;
+            border-color: $backdrop_borders_color;
+        }
+
+        row { padding: $spacing; }
+    }
+
+    row {
+        transition: all 150ms cubic-bezier(.25, .46, .45, .94);
+
+        &:hover { transition: none; }
+
+        &:backdrop { transition: 200ms ease-out; }
+
+        &.activatable {
+            &.has-open-popup, // this is for indicathing which row generated a popover see https://bugzilla.gnome.org/show_bug.cgi?id=754411
+
+            &:hover { background-color: if(variant == light, transparentize($fg_color, .9), transparentize($fg_color, .95)); }
+
+            &:active { box-shadow: inset 0 2px 2px -2px transparentize($black, .8); }
+
+            &:backdrop:hover { background-color: transparent; }
+
+            &:selected {
+                &:active { box-shadow: inset 0 2px 3px -1px transparentize($black, .5); }
+
+                &.has-open-popup,
+                &:hover { background-color: mix($selected_bg_color, $fg_color, .1); }
+
+                &:backdrop { background-color: $selected_bg_color; }
+            }
+        }
+
+        &:selected { @extend %selected_items; }
+    }
+
+    flowbox {
+        rubberband { @extend rubberband; }
+
+        flowboxchild {
+            padding: $spacing;
+            border-radius: $roundness;
+
+            &:selected {
+                @extend %selected_items;
+
+                outline-offset: -2px;
+            }
+        }
+    }
+}
+

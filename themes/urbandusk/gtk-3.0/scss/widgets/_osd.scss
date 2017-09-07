@@ -1,0 +1,132 @@
+@import "button";
+
+
+/*******
+ ! OSD *
+********/
+
+@include exports("osd") {
+    GtkOverlay.osd { background-color: transparent; }
+
+    .osd,
+    #XfceNotifyWindow {
+        &.background {
+            background-color: alpha($osd_bg, .8);
+            color: $osd_fg;
+        }
+
+        &.frame {
+            background-clip: border-box;
+            background-origin: border-box;
+        }
+
+        &.button, .button { @include button($osd_bg, $osd_fg); }
+
+
+        &.toolbar {
+            -GtkToolbar-button-relief: normal;
+
+            padding: $spacing;
+            border: 1px solid border_normal($osd_bg);
+            border-radius: $roundness;
+            background-color: $osd_bg;
+            background-image: none;
+            color: $osd_fg;
+
+            .separator { color: shade($osd_bg, ($contrast + .1)); }
+        }
+
+        /* used by gnome-settings-daemon's media-keys OSD */
+        &.trough { background-color: shade($osd_bg, .8); }
+
+        &.progressbar { background-color: $osd_fg; }
+
+        .scale {
+            &.slider {
+                @include linear-gradient(shade($osd_bg, 1.08));
+                @include border($osd_bg);
+
+                &:insensitive { @include linear-gradient(shade($osd_bg, .9)); }
+            }
+
+            &.trough {
+                border-color: shade($osd_bg, .8);
+                background-color: shade($osd_bg, 1.08);
+                background-image: none;
+
+                &.highlight {
+                    border-color: $selected_bg_color;
+                    background-color: $selected_bg_color;
+                    background-image: none;
+                }
+
+                &:insensitive, &.highlight:insensitive {
+                    border-color: shade($osd_bg, .85);
+                    background-color: shade($osd_bg, .9);
+                    background-image: none;
+                }
+            }
+        }
+
+        &.view, .view { background-color: $osd_bg; }
+
+        .scrollbar {
+            .trough { background-color: $osd_bg; }
+
+            .slider {
+                border: 1px solid mix(shade($osd_bg, .87), $osd_fg, .21);
+                border-radius: 0;
+                background-color: mix($osd_bg, $osd_fg, .21);
+
+                &:hover {
+                    border-color: mix(shade($osd_bg, .87), $osd_fg, .31);
+                    background-color: mix($osd_bg, $osd_fg, .31);
+                }
+
+                &:active {
+                    border-color: shade($selected_bg_color, .9);
+                    background-color: $selected_bg_color;
+                }
+            }
+        }
+
+        GtkIconView.cell {
+            &:selected, &:selected:focus {
+                background-color: transparent;
+                border: 3px solid mix(shade($osd_bg, .87), $osd_fg, .21);
+                border-radius: $roundness;
+                outline-color: transparent;
+            }
+        }
+
+        /* used by Documents */
+        .page-thumbnail {
+            border: 1px solid shade($osd_bg, .9);
+            /* when there's no pixbuf yet */
+            background-color: $osd_bg;
+        }
+    }
+
+    .osd GtkProgressBar, GtkProgressBar.osd {
+        -GtkProgressBar-xspacing: 0;
+        -GtkProgressBar-yspacing: 2px;
+        -GtkProgressBar-min-horizontal-bar-height: 2px;
+
+        padding: 0;
+
+        &.trough {
+            padding: 0;
+            border-style: none;
+            border-radius: 0;
+            background-image: none;
+            background-color: transparent;
+        }
+
+        &.progressbar {
+            border-style: none;
+            border-radius: 0;
+            background-color: $selected_bg_color;
+            background-image: none;
+        }
+    }
+}

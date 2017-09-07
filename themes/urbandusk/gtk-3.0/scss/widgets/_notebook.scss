@@ -1,0 +1,139 @@
+@import "button";
+
+
+/**********
+ ! Notebook
+***********/
+
+@include exports("notebook") {
+    .notebook {
+        padding: 0;
+        border-style: solid;
+        border-color: border_normal($bg_color);
+        border-radius: 0;
+        @include linear-gradient($bg_color);
+        background-clip: border-box;
+        color: $text_color;
+
+        -GtkNotebook-initial-gap: 0;
+        -GtkNotebook-arrow-spacing: 5;
+        -GtkNotebook-tab-curvature: 0;
+        -GtkNotebook-tab-overlap: 1;
+        -GtkNotebook-has-tab-gap: false;
+
+        &.frame {
+            &.top { border-width: 0 1px 1px; }
+
+            &.right { border-width: 1px 0 1px 1px; }
+
+            &.bottom { border-width: 1px 1px 0; }
+
+            &.left { border-width: 1px 1px 1px 0; }
+        }
+
+        &.header {
+            border-width: 2px;
+            background-color: transparent;
+        }
+
+        GtkViewport {
+            border-width: 0;
+            background-color: $base_color;
+            color: $text_color;
+        }
+
+        tab {
+            padding: ($spacing + 1px) ($spacing * 2);
+            border-style: solid;
+            border-color: border_normal(shade($bg_color, 0.80));
+            background-color: shade($bg_color, 0.80);
+            background-image: none;
+
+            &:active {
+                background-color: $bg_color;
+                background-image: none;
+            }
+
+            &.top {
+                border-width: 2px 1px 1px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+                
+                &:active {
+                    border-top-width: 3px;
+                    border-top-color: $selected_bg_color;
+                    border-bottom-width: 0;
+                }
+            }
+
+            &.right {
+                border-width: 1px 2px 1px 1px;
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+                
+                &:active {
+                    border-right-width: 3px;
+                    border-right-color: $selected_bg_color;
+                    border-left-width: 0;
+                }
+            }
+
+
+            &.bottom {
+                border-width: 1px 1px 2px;
+                border-top-right-radius: 0;
+                border-top-left-radius: 0;
+                
+                &:active {
+                    border-bottom-width: 3px;
+                    border-bottom-color: $selected_bg_color;
+                    border-top-width: 0;
+                }
+            }
+
+            &.left {
+                border-width: 1px 1px 1px 2px;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                
+                &:active {
+                    border-left-width: 3px;
+                    border-left-color: $selected_bg_color;
+                    border-right-width: 0;
+                }
+            }
+
+            GtkLabel { color: mix($text_color, $base_color, .3); }
+
+            &.reorderable-page {
+                &:hover {
+                    background-color: shade($base_color, .85);
+                    border-left: 0;
+                    border-right: 0;
+                    /* using box shadows instead of borders due to slanted edges */
+                    box-shadow: inset 0 3px alpha($black, .03), inset 0 2px alpha($black, .03), inset 0 1px alpha($black, .03), inset 1px 0 shade($base_color, .7), inset -1px 0 shade($base_color, .7);
+                }
+
+                &:active {
+                    background-color: shade($base_color, .9);
+                    border-left: 0;
+                    border-right: 0;
+                    box-shadow: inset 0 3px alpha($black, .03), inset 0 2px alpha($black, .03), inset 0 1px alpha($black, .03), inset 1px 0 shade($base_color, .75), inset -1px 0 shade($base_color, .75);
+                }
+            }              
+
+            /* close button styling */
+            .button { @extend %close_button; }
+
+        }
+
+        .prelight-page {
+            &, GtkLabel { color: mix($text_color, $base_color, .15); }
+        }
+
+        .active-page {
+            &, GtkLabel { color: $text_color; }
+        }
+
+    }
+}
