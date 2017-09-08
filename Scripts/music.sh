@@ -18,11 +18,11 @@
 # (where 12 is the offset (zero-based) and 5 is the length)
 
 # Limit for scrolling text
-LIMIT=16
+LIMIT=26
 #SEPERATOR=" --- "
 #SEPERATOR=" -- "
-SEPERATOR=" ~~~ "
-#SEPERATOR=" ~~ "
+#SEPERATOR=" ~~~ "
+SEPERATOR=" ~~ "
 #SEPERATOR=" <> "
 SEPERATOR_LENGTH="$(echo ${#SEPERATOR})"
 
@@ -77,14 +77,27 @@ do
 	#if [ ${#YOUTUBE} -eq "0" ] && [ ${#NCMPCPP} -eq "0" ]; then
 	if [ ${#YOUTUBE} -eq "0" ] && [[ "$MPDSTATE" != "[playing]" ]]; then
 		if [ ${#PANDORA} -eq "0" ]; then
+			#echo "  "
 			#echo "  "
-			echo "  "
+			#echo "  "
+			#echo "  "
+			echo " "
 		else
-			echo " Pandora Radio"
+			echo "  Pandora Radio"
 		fi
 	elif [ $INPUT_LENGTH -le $LIMIT ]; then
-		echo -n " "
-		echo $INPUT
+		# Song has a smaller title than the limit, so no need to scroll.
+		echo -n "  "
+		#echo -e -n "$INPUT"
+
+		#Justify - left
+		#SPACES=$(($LIMIT-$INPUT_LENGTH+1))
+		#echo -n "$INPUT" | awk -v spaces=$SPACES '{printf "%s%*.s\n", $0, spaces, " "}'
+
+		#Justify - center
+		SPACES_AFTER=$(($LIMIT-$(((${#INPUT}+$LIMIT)/2))))
+		printf "%*s\n" $(((${#INPUT}+$LIMIT)/2 + 1)) "$INPUT" | awk -v spaces=$SPACES_AFTER '{printf "%s%*.s\n", $0, spaces, " "}'
+
 	else
 		LOOPTAIL="$(echo $INPUT | cut -c -$LIMIT)"
 		FULLSTRING="$(echo $INPUT | sed "s/$/$SEPERATOR/" | sed "s/$/$LOOPTAIL/" )"
@@ -95,7 +108,7 @@ do
 		# 	i=1
 		# fi
 
-		echo -n " "
+		echo -n "  "
 		# Show only LIMIT characters, from i to i+LIMIT. Output scrolls due to incrementing i
 		echo -n $FULLSTRING | cut -c $i-$(($LIMIT+$i))
 		#echo -n $FULLSTRING | awk -v charlimit="$LIMIT" -v start="$i" '{print substr($0,start,charlimit)}'
