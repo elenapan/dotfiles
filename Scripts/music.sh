@@ -18,11 +18,12 @@
 # (where 12 is the offset (zero-based) and 5 is the length)
 
 # Limit for scrolling text
-LIMIT=26
+LIMIT=30
 #SEPERATOR=" --- "
 #SEPERATOR=" -- "
 #SEPERATOR=" ~~~ "
 SEPERATOR=" ~~ "
+#SEPERATOR="  "
 #SEPERATOR=" <> "
 SEPERATOR_LENGTH="$(echo ${#SEPERATOR})"
 
@@ -100,8 +101,10 @@ do
 
 	else
 		LOOPTAIL="$(echo $INPUT | cut -c -$LIMIT)"
-		FULLSTRING="$(echo $INPUT | sed "s/$/$SEPERATOR/" | sed "s/$/$LOOPTAIL/" )"
-		
+		FULLSTRING="$(echo "$INPUT$SEPERATOR$LOOPTAIL")"
+		#FULLSTRING="$(echo $INPUT | sed "s/$/$SEPERATOR/" | sed "s/$/$LOOPTAIL/" )"
+
+
 		# This is to prevent the bug when song changes and current i is larger than current song length
 		# (Not needed anymore, this bug was fixed differently)
 		# if [ $i -gt "${#FULLSTRING}" ]; then
