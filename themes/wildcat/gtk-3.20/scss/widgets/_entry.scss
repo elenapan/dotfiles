@@ -1,0 +1,186 @@
+/*********
+ ! Entry *
+**********/
+
+%linked_entry {
+    border-width: 1px;
+    border-radius: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+
+    &:first-child {
+        border-width: 1px;
+        border-radius: $roundness;
+        border-right-width: 0;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+
+        &:dir(rtl) {
+            border-left-width: 0;
+            border-right-width: 1px;
+        }
+    }
+
+    &:last-child {
+        border-width: 1px;
+        border-radius: $roundness;
+        border-left-width: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+
+        &:dir(rtl) {
+            border-left-width: 1px;
+            border-right-width: 0;
+        }
+    }
+
+    &:only-child, &:first-child:only-child {
+        border-width: 1px;
+    }
+
+    &:only-child {
+        border-radius: $roundness;
+    }
+}
+
+%linked_vertical_entry {
+    border-width: 1px;
+    border-radius: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+
+    &:first-child {
+        border-width: 1px;
+        border-radius: $roundness;
+        border-top-width: 1px;
+        border-bottom-width: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &:dir(rtl) {
+            border-top-width: 0;
+            border-bottom-width: 1px;
+        }
+    }
+
+    &:last-child {
+        border-width: 1px;
+        border-radius: $roundness;
+        border-top-width: 0;
+        border-bottom-width: 1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+
+        &:dir(rtl) {
+            border-top-width: 1px;
+            border-bottom-width: 0;
+        }
+    }
+
+    &:only-child, &:first-child:only-child {
+        border-width: 1px;
+    }
+
+    &:only-child {
+        border-radius: $roundness;
+    }
+}
+
+%entry {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: $roundness;
+    border-color: border_normal($bg_color);
+    transition: border 100ms ease-out;
+    &:focus, &:hover, &:active { transition: border 100ms ease-in; }
+
+    box-shadow: inset 1px 0 alpha($dark_shadow, 0.10),
+                inset 0 1px alpha($dark_shadow, 0.12),
+                inset -1px 0 alpha($dark_shadow, 0.10),
+                inset 0 -1px alpha($dark_shadow, 0.05);
+
+
+
+    &:selected {
+        &, &:selected:focus {
+            background-color: $selected_bg_color;
+            color: $selected_fg_color;
+        }
+    }
+
+    &:disabled { box-shadow: none; }
+
+    progress {
+        @include linear-gradient($selected_bg_color);
+
+        border-width: 0;
+        border-radius: $roundness;
+        color: $selected_fg_color;
+    }
+
+    image.left { padding-right: $spacing; }
+
+    image.right { padding-left: $spacing; }
+
+    selection { @extend %selected_items; }
+
+    // entry error and warning style
+    @each $e_type, $e_color, $e_fg_color in (warning, $warning_bg_color, $warning_fg_color),
+                                            (error, $error_bg_color, $error_fg_color),
+                                            // entry.search-missing for Gnome-Builder
+                                            (search-missing, $error_bg_color, $error_fg_color) {
+        &.#{$e_type} {
+            color: $e_fg_color;
+            border-color: border_normal($e_color);
+            background-color: mix($base_color, $e_color, .6);
+
+            image { color: $e_fg_color; }
+
+            &:focus {
+                color: $e_fg_color;
+                border-color: border_focus($e_color);
+                background-color: $e_color;
+                box-shadow: none;
+            }
+
+            selection {
+                background-color: $e_fg_color;
+                color: $e_color;
+            }
+        }
+    }
+}
+
+@mixin entry($bg, $fg, $border: $borders_color) {
+    @extend %entry;
+    @include linear-gradient($bg, to top);
+    @include border(mix($bg, $fg, .20));
+
+    padding: $spacing;
+
+    color: $fg;
+    caret-color: $primary_caret_color;
+    -gtk-secondary-caret-color: $secondary_caret_color;
+
+    &:focus, &:active { border-color: border_focus($border); }
+
+    &:disabled {
+		@include linear-gradient(shade($bg, .9), to top);
+		@include border(alpha(mix($bg, $fg, .20), .4));
+		/*@include border(mix($bg, $fg, .20));*/
+		/*border-color: alpha(mix($bg, $fg, .15), .8);*/
+		/*opacity: .8;*/
+
+        color: mix($bg, $fg, .5);
+    }
+}
+
+@include exports("entry") {
+    entry {
+        @include entry($base_color, $text_color);
+
+        .linked:not(.vertical) > & { @extend %linked_entry; }
+
+        .linked.vertical > & { @extend %linked_vertical_entry; }
+    }
+}

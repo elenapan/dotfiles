@@ -1,0 +1,125 @@
+/***************
+ ! Color chooser
+****************/
+
+@include exports("colorchooser") {
+    GtkColorSwatch {
+        &, &:selected {
+            border: 1px solid alpha($black, .1);
+            border-radius: $roundness;
+            background-color: transparent;
+            background-clip: border-box;
+
+            &:hover { border-color: alpha($black, .3); }
+        }
+
+        &.color-light:selected:hover, &.color-dark:selected:hover { background-image: none; }
+
+        &.left, &:first-child {
+            border-top-left-radius: $roundness;
+            border-bottom-left-radius: $roundness;
+        }
+
+        &.right, &:last-child {
+            border-top-right-radius: $roundness;
+            border-bottom-right-radius: $roundness;
+        }
+
+        &:only-child { border-radius: $roundness; }
+
+        &.top {
+            border-top-left-radius: $roundness;
+            border-top-right-radius: $roundness;
+        }
+
+        &.bottom {
+            border-bottom-left-radius: $roundness;
+            border-bottom-right-radius: $roundness;
+        }
+
+        GtkColorEditor & {
+            border-radius: $roundness;
+
+            &.color-dark:hover, &.color-light:hover {
+                background-image: none;
+                border-color: alpha($black, .3);
+            }
+        }
+    }
+
+    GtkColorChooserWidget #add-color-button {
+        background-clip: padding-box;
+        border-color: alpha($black, .1);
+        background-color: shade($bg_color, .95);
+        color: $fg_color;
+
+        &:hover {
+            border-color: alpha($black, .3);
+            background-color: shade($bg_color, .9);
+            color: $fg_color;
+        }
+    }
+
+    .color-active-badge {
+        &, &:selected {
+            border-width: 2px;
+            border-style: solid;
+            background-color: transparent;
+        }
+
+        &.color-light {
+            &, &:hover {
+                border-color: alpha($black, .3);
+                color: alpha($black, .3);
+            }
+        }
+
+        &.color-dark {
+            &, &:hover {
+                border-color: alpha($white, .3);
+                color: alpha($white, .3);
+            }
+        }
+    }
+
+    GtkColorButton.button { padding: $spacing; }
+}
+
+
+/***********************
+! Font and file choosers
+************************/
+
+@include exports("miscchoosers") {
+    GtkFontButton, GtkFileChooserButton {
+        .separator {
+            /* always disable separators */
+            -GtkWidget-wide-separators: true;
+            -GtkWidget-horizontal-separator: 0;
+            -GtkWidget-vertical-separator: 0;
+        }
+
+        GtkLabel:last-child { color: alpha(currentColor, .7); }
+
+        GtkImage:last-child { color: alpha(currentColor, .7); }
+    }
+
+    GtkFileChooser {
+        .pane-separator {
+            &, &:hover {
+                border-width: 0 1px 0 0;
+                border-style: solid;
+                border-color: currentColor;
+                background-color: $bg_color;
+                color: shade($bg_color, ($contrast + .1));
+            }
+        }
+
+        /* for fallback when header bar not used */
+        .dialog-action-box {
+            border-width: 1px 0 0;
+            border-style: solid;
+            border-color: shade($bg_color, .7);
+        }
+    }
+}

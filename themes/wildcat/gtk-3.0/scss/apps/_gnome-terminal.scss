@@ -1,0 +1,219 @@
+/**********************
+ ! Genome Terminal *
+***********************/
+
+@include exports("gnome-terminal") {
+    VteTerminal {
+	background-color: $osd_base;
+	color: $osd_fg;
+    }
+    TerminalWindow {
+	.scrollbars-junction {
+		background-color: $osd_base;
+	}
+	.scrollbar {
+		&.trough {
+			background-color: $osd_base;
+		}
+		&.button {
+			color: shade($osd_base, 0.6);
+			&:active {
+				color: shade($osd_base, 0.6);
+				&:hover {
+					color: shade($osd_base, 0.6);
+				}
+			}
+		}
+		&.slider {
+			border-color: mix(shade($osd_base, 0.87), $osd_fg, 0.21);
+			background-color: mix($osd_base, $osd_fg, 0.21);
+			&:hover {
+				border-color: mix(shade($osd_base, 0.87), $osd_fg, 0.31);
+				background-color: mix($osd_base, $osd_fg, 0.31);
+			}
+			&.vertical {
+				&:hover {
+					border-color: mix(shade($osd_base, 0.87), $osd_fg, 0.31);
+					background-color: mix($osd_base, $osd_fg, 0.31);
+				}
+				&:active {
+					border-color: shade($selected_bg_color, 0.9);
+					background-color: $selected_bg_color;
+				}
+			}
+			&:active {
+				border-color: shade($selected_bg_color, 0.9);
+				background-color: $selected_bg_color;
+			}
+		}
+	}
+	GtkNotebook.notebook {
+		border-right-width: 0;
+		border-bottom-width: 0;
+		border-left-width: 0;
+	}
+    }
+
+    TerminalNotebook.notebook { //use dark variant by default
+        padding: 0;
+        border-width: 1px 0 0;
+        border-style: solid;
+        border-color: border_active($osd_base);
+        border-radius: 0;
+        @include linear-gradient($osd_base);
+        background-clip: border-box;
+        color: $osd_fg;
+
+        -GtkNotebook-initial-gap: 0;
+        -GtkNotebook-arrow-spacing: 5;
+        -GtkNotebook-tab-curvature: 0;
+        -GtkNotebook-tab-overlap: 1;
+        -GtkNotebook-has-tab-gap: false;
+
+        &.frame { border-width: 1px; }
+
+        &.header {
+            border-width: 0;
+            background-color: shade($osd_base, .85);
+
+            &.frame {
+                border-color: border_focus($osd_base);
+
+                &.top { border-width: 1px 1px 0 1px; }
+
+                &.right { border-width: 1px 1px 1px 0; }
+
+                &.bottom { border-width: 0 1px 1px 1px; }
+
+                &.left { border-width: 1px 0 1px 1px; }
+            }
+        }
+
+        GtkViewport {
+            border-width: 0;
+            background-color: $osd_base;
+            color: $osd_fg;
+        }
+
+        tab {
+            padding: ($spacing + 1px) $spacing * 2;
+            border: 1px solid transparent;
+            background-color: transparent;
+            background-image: none;
+
+            &:active {
+                background-color: transparent;
+                background-image: none;
+            }
+
+            &.top {
+                border-bottom-width: 2px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+
+                &:hover {
+                    border-bottom-color: alpha($selected_bg_color, 0.3);
+                }
+
+                &:active {
+                    border-bottom-color: $selected_bg_color;
+                }
+            }
+
+            &.right {
+                border-left-width: 2px;
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+
+                &:hover {
+                    border-left-color: alpha($selected_bg_color, 0.3);
+                }
+
+                &:active {
+                    border-left-color: $selected_bg_color;
+                }                
+            }
+
+            &.bottom {
+                border-top-width: 2px;
+                border-top-right-radius: 0;
+                border-top-left-radius: 0;
+
+                &:hover {
+                    border-top-color: alpha($selected_bg_color, 0.3);
+                }
+
+                &:active {
+                    border-top-color: $selected_bg_color;
+                }                
+            }
+
+            &.left {
+                border-right-width: 2px;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+
+                &:hover {
+                    border-right-color: alpha($selected_bg_color, 0.3);
+                }
+
+                &:active {
+                    border-right-color: $selected_bg_color;
+                }
+            }
+
+            GtkLabel { color: mix($osd_fg, $osd_base, .3); }
+
+            &.reorderable-page {
+                &:hover {
+                    background-color: shade($osd_base, .85);
+                    border-left: 0;
+                    border-right: 0;
+                    /* using box shadows instead of borders due to slanted edges */
+                    box-shadow: inset 0 3px alpha($black, .03), inset 0 2px alpha($black, .03), inset 0 1px alpha($black, .03), inset 1px 0 shade($osd_base, .7), inset -1px 0 shade($osd_base, .7);
+                }
+
+                &:active {
+                    background-color: shade($osd_base, .9);
+                    border-left: 0;
+                    border-right: 0;
+                    box-shadow: inset 0 3px alpha($black, .03), inset 0 2px alpha($black, .03), inset 0 1px alpha($black, .03), inset 1px 0 shade($osd_base, .75), inset -1px 0 shade($osd_base, .75);
+                }
+            }              
+
+            /* close button styling */
+            .button {
+                &, &:active, &:checked, &:hover {
+                    padding: 1px;
+                    border-width: 1px;
+                    border-radius: 2px;
+                    border-style: solid;
+                    border-color: transparent;
+                    background-image: none;
+                    background-color: transparent;
+                    color: mix($osd_fg, $osd_base, 0.5);
+                }
+
+                &:hover {
+                    color: $osd_fg;
+                    border-color: shade($osd_base, 0.8);    
+                }
+
+                &:active, &:checked, &:active:hover, &:checked:hover {
+                    border-color: shade($osd_base, 0.7);
+                    background-color: shade($osd_base, 0.95);
+                }   
+            }
+
+        }
+
+        .prelight-page {
+            &, GtkLabel { color: mix($osd_fg, $osd_base, .15); }
+        }
+
+        .active-page {
+            &, GtkLabel { color: $osd_fg; }
+        }
+
+    }
+}
