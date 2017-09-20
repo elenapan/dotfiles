@@ -1,0 +1,174 @@
+/********
+ ! Nemo *
+*********/
+
+@include exports("nemo") {
+    .nemo-desktop, .nemo-desktop * {
+        &, &:backdrop {
+            color: $white;
+            text-shadow: 1px 1px $black;
+
+            &:active { color: $fg_color; }
+
+            &:selected { color: $selected_fg_color; }
+
+            &:active, &:hover, &:selected { text-shadow: none; }
+        }
+    }
+
+    .nemo-window {
+        toolbar {
+            border-width: 0 0 1px;
+            border-style: solid;
+            border-color: border_normal($toolbar_bg_color);
+
+            button {
+                @include button($bg_color, $fg_color);
+            }
+
+            .linked > button { @include linked_button($bg_color); }
+
+            separator, separator:disabled {
+                color: shade($bg_color, ($contrast + .1));
+                border-color: currentColor;
+                -GtkWidget-window-dragging: true;
+            }
+
+            &.primary-toolbar button.image-button {
+                padding: 0 ($spacing + 5px);
+            }
+
+            combobox, button {
+                padding: $spacing;
+
+                &.text-button { padding: $spacing; }
+
+                &.image-button { padding: $spacing; }
+            }
+
+            /* Path Bar */
+            toolitem stack {
+                margin-left: 15px;
+
+                widget button {
+                    @include linked_button($toolbar_bg_color);
+                    -NemoPathbarButton-border-radius: $roundness;
+                }
+            }
+        } // END toolbar
+
+        /* Status Bar */
+        grid {
+            > widget:last-child {
+                button {
+                    min-height: 16px;
+                    min-width: 16px;
+                    padding: ($spacing - 1px) (($spacing * 2) - 2px);
+                }
+
+                button:first-child {
+                    margin-left: 20px;
+                }
+
+                button:first-child + button {
+                    margin-right: 15px;
+                }
+
+                button:first-child + button + separator + button {
+                    margin-left: 15px;
+                }
+
+                > box > scale {
+                    margin-right: 12px;
+                }
+                
+                statusbar {
+                    border: 0;
+                }
+            }
+        } // END Status Bar
+
+        .sidebar {
+            .frame {
+                border: 0;
+            }
+
+            image {
+                padding-left: $spacing;
+                padding-right: $spacing;
+            }
+
+            .nemo-places-sidebar {
+                &, & .view {
+                    background-color: mix($bg_color, $base_color, .5);
+                }
+
+                .view {
+                    -NemoPlacesTreeView-disk-full-bg-color: shade($bg_color, .8);
+                    -NemoPlacesTreeView-disk-full-fg-color: $selected_bg_color;
+                    -NemoPlacesTreeView-disk-full-bar-width: 2px;
+                    -NemoPlacesTreeView-disk-full-bar-radius: 1px;
+                    -NemoPlacesTreeView-disk-full-bottom-padding: 0;
+                    -NemoPlacesTreeView-disk-full-max-length: 75px;
+
+                    &:selected {
+                        -NemoPlacesTreeView-disk-full-bg-color: $selected_fg_color;
+                        -NemoPlacesTreeView-disk-full-fg-color: shade($selected_bg_color, 1.2);
+
+                        &:focus, & {
+                            @extend %selected_items;
+                        }
+                    }
+                }
+            }
+            
+            /* Nemo Query Editor (File Search Bar) */
+            + separator + box .primary-toolbar {
+                @include linear-gradient(shade($bg_color, .98)); // Searchbar color (_actionbar.scss)
+
+                padding-top: $spacing - 3px;
+                padding-bottom: $spacing - 3px;
+                border-bottom: 1px solid $borders_color;
+
+                button:nth-child(2) {
+                    border-right: none;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                button:nth-child(3) {
+                    margin-left: -6px;
+                    border-left: none;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+                
+                button.flat {
+                    $bg: $bg_color;
+                    $fg: $fg_color;
+                    $border_strength: if(lightness($bg) > 50, 0, .1);
+                    $shadow_strength: if(lightness($bg) > 50, 0, .1);
+
+                    $button_bg: if(hue($bg) == 0deg, shade($bg, 1.2), $bg);
+
+                    @extend %button;
+                    @include linear-gradient($button_bg);
+                    @include border(rgba(0, 0, 0, .12 + $border_strength));
+
+                    color: $fg;
+                    box-shadow: 0 1px 2px -1px alpha($dark_shadow, .12 + $shadow_strength);
+                    padding: 5px 6px;
+                }
+            } // END Nemo Query Editor
+        } // END .sidebar
+
+        notebook {
+            background-color: $base_color;
+            border-width: 0;
+
+            tabs {
+                border: 0;
+            }
+        }
+    }
+}

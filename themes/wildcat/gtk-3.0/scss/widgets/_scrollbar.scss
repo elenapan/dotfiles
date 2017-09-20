@@ -1,0 +1,86 @@
+/***********
+ ! Scrollbar
+************/
+
+@include exports("scrollbar") {
+    * {
+        -GtkRange-slider-width: 8;
+        -GtkRange-stepper-spacing: 0;
+        -GtkRange-trough-border: 2;
+        -GtkRange-trough-under-steppers: 1;
+        -GtkScrollbar-has-backward-stepper: false;
+        -GtkScrollbar-has-forward-stepper: false;
+        -GtkScrollbar-min-slider-length: 80;
+        -GtkScrolledWindow-scrollbar-spacing: 0;
+        -GtkScrolledWindow-scrollbars-within-bevel: 1;
+    }
+
+    .scrollbar {
+        border: 0;
+        padding: 0;
+
+        &.button {
+            &, &:active, &:active:hover {
+                border-width: 0;
+                border-radius: 0;
+                background-color: transparent;
+                background-image: none;
+                color: alpha($fg_color, .5);
+            }
+        }
+
+        &.slider, &.slider.vertical {
+            border: 0;
+            border-radius: $roundness;
+            background-color: mix($bg_color, $fg_color, 0.21);
+
+            &:hover { background-color: mix($bg_color, $fg_color, .31); }
+
+            &:active { background-color: $selected_bg_color; }
+
+            &.fine-tune:hover:active { border: 2px solid transparent; }
+        }
+
+        // overlay scrolling indicator
+        &.overlay-indicator {
+            &:not(.dragging):not(.hovering) {
+                opacity: .5;
+
+                -GtkRange-slider-width: 4px;
+
+                .slider {
+                    margin: 0;
+                    background-color: $fg_color;
+                    background-clip: padding-box;
+                }
+
+                .trough {
+                    border-style: none;
+                    background-color: transparent;
+                }
+            }
+
+            &.dragging, &.hovering { opacity: .7; }
+        }
+    }
+
+    .scrollbars-junction,
+    .scrollbars-junction.frame,
+    .scrollbar.trough {
+        border: 0;
+        border-radius: 0;
+        background-color: $bg_color;
+        background-image: none;
+    }
+
+    // ubuntu overlay scrollbars
+    OsThumb, OsScrollbar {
+        color: shade($bg_color, .7);
+
+        &:selected { background-color: $selected_bg_color; }
+
+        &:active { background-color: $selected_bg_color; }
+
+        &:insensitive { background-color: shade($bg_color, .9); }
+    }
+}
