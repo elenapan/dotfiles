@@ -1,7 +1,7 @@
 #!/bin/bash
 # needs work
 
-CITY="Hamburg"
+CITY="Volos"
 
 # glyphs (TODO)
 #  day cloud
@@ -12,7 +12,7 @@ CITY="Hamburg"
 #  snow 
 #  sun
 #  cloud
-#  moon  star
+#  moon  star ⏾ another moon
 #   house
 #  globe
 #  bed
@@ -22,7 +22,7 @@ CITY="Hamburg"
 
 TEMP="$(curl -s -A "Mozilla/5.0" wttr.in/$CITY | grep -m 1 '°C'| awk '{print $(NF-1)}' | cut -d ">" -f2 | cut -f1 -d "<")"
 
-# NOTE: Currently weather state disabled. Uncomment to reenable
+# NOTE: Currently weather state disabled (not fully implemented). Uncomment to reenable
 # STATE="$(curl -s -A "Mozilla/5.0" wttr.in/$CITY | grep -m 1 -B 1 '°C' | sed '$d' | awk '{printf "%s %s", $(NF-1), $NF}')"
 # PRELAST="$(echo $STATE | awk '{print $1}')"
 # HOUR="$(date +%H)"
@@ -54,7 +54,10 @@ TEMP="$(curl -s -A "Mozilla/5.0" wttr.in/$CITY | grep -m 1 '°C'| awk '{print $(
 
 
 # City+degrees
-#echo $CITY $TEMP°C
+#echo " $CITY $TEMP°C"
 
 # Degrees only
-echo "$TEMP°C"
+#echo "$TEMP°C"
+
+# Leaf + degrees
+echo "  $TEMP°C"
