@@ -23,7 +23,6 @@ LIMIT=30
 #SEPERATOR=" -- "
 #SEPERATOR=" ~~~ "
 SEPERATOR=" ~~ "
-#SEPERATOR="  "
 #SEPERATOR=" <> "
 SEPERATOR_LENGTH="$(echo ${#SEPERATOR})"
 
