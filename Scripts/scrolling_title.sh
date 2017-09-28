@@ -52,7 +52,7 @@ do
 		LOOPTAIL="$(echo $INPUT | cut -c -$LIMIT)"
 		FULLSTRING="$(echo "$INPUT$SEPERATOR$LOOPTAIL")"
 
-		echo -n "  "
+		echo -n "  "
 		# Show only LIMIT characters, from i to i+LIMIT. Output scrolls due to incrementing i
 		echo -n $FULLSTRING | cut -c $i-$(($LIMIT+$i))
 		#echo -n $FULLSTRING | awk -v charlimit="$LIMIT" -v start="$i" '{print substr($0,start,charlimit)}'
