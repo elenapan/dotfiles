@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Run as follows: ./scrolling_title string
-# It will look for "string" in all active windows and display the window title that includes this string.
+# Run as follows: ./scrolling_title.sh mystring
+# It will look for "mystring" in all active windows and display the window title that includes this string.
 # Case sensitive!
 
 # Limit for scrolling text
