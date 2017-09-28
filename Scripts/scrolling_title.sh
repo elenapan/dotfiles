@@ -17,11 +17,11 @@ i=1
 while :
 do  
 	# For debugging purposes
-	printf "|%02d|" $i
+	# printf "|%02d|" $i
 
 	INPUT="$(wmctrl -l | grep -v "wmctrl" | grep -m 1 $1 | awk -v skipstart=3 -v skipend=0 '{delim = ""; for (i=skipstart+1;i<=NF-skipend;i++) {printf delim "%s", $i; delim = OFS};}')"
 
-	# If the song has changed, start from the beginning
+	# If the output has changed, start from the beginning
 	if [[ "$INPUT" != "$OLD_INPUT" ]]; then
 		i=1
 	fi
@@ -51,14 +51,6 @@ do
 	else
 		LOOPTAIL="$(echo $INPUT | cut -c -$LIMIT)"
 		FULLSTRING="$(echo "$INPUT$SEPERATOR$LOOPTAIL")"
-		#FULLSTRING="$(echo $INPUT | sed "s/$/$SEPERATOR/" | sed "s/$/$LOOPTAIL/" )"
-
-
-		# This is to prevent the bug when song changes and current i is larger than current song length
-		# (Not needed anymore, this bug was fixed differently)
-		# if [ $i -gt "${#FULLSTRING}" ]; then
-		# 	i=1
-		# fi
 
 		echo -n "  "
 		# Show only LIMIT characters, from i to i+LIMIT. Output scrolls due to incrementing i
@@ -79,6 +71,3 @@ do
 
 	sleep 1
 done
-
-# general method to exlude fields
-# awk -v skipstart=1 -v skipend=1 '{delim = ""; for (i=skipstart+1;i<=NF-skipend;i++) {printf delim "%s", $i; delim = OFS}; printf "\n"}'
