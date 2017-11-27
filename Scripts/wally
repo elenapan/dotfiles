@@ -7,12 +7,19 @@
 #	wally ~/Pictures/Wallpapers
 #	wally .
 #	wally ~/Pictures/Wallpapers/pape.jpg
+#   wally -f ~/path/to/color/file ~/path/to/wallpaper
 
 # Arguments checking
 if [ $# == 0 ]; then
 	echo "> No path to wallpaper or directory specified :(" 
 	exit 0;
 fi
+
+# Create backup of linked files
+echo "> Backing up linked files"
+TIMESTAMP="$(date +%F-%H:%M:%S)"
+cp -r -L ~/.wally/links ~/.wally/wally_backup-$TIMESTAMP
+cp ~/.wally/path_to_wallpaper ~/.wally/wally_backup-$TIMESTAMP
 
 # Declare arrays
 declare -a color
@@ -26,10 +33,19 @@ for (( i = 0; i < 8; i++ )); do
 done
 
 # Call wal to generate new colors
-ARG=$1
-echo "> Calling wal at $ARG... toot toot..."
-wal -i $ARG
-echo "> New colorscheme generated!"
+if [[ "$1" = "-f" ]]; then
+	COLORS_PATH=$2
+	echo "> Applying custom terminal colorscheme from $COLORS_PATH..."
+	wal -f $COLORS_PATH
+	PAPE_PATH=$3 
+	echo "> Setting $PAPE_PATH as wallpaper..."
+	feh --bg-fill $3
+else
+	ARG=$1
+	echo "> Calling wal at $ARG... toot toot..."
+	wal -i $ARG
+	echo "> New colorscheme generated!"
+fi
 
 # Apply new colors to Xresources
 echo "> Setting .Xresources..."
@@ -58,8 +74,18 @@ echo "> tint2 has restarted!"
 openbox --reconfigure
 echo "> Openbox is reconfigured!"
 
+# Create steam theme
+cp ~/.cache/wal/colors ~/.cache/wal/colors.steam
+python3 ~/Programs/wal_steam/mywalsteam.py -w
+echo "> Generated steam theme!"
+
 # Copy new wallpaper path to wally's directory
-cp ~/.cache/wal/wal ~/.wally/path_to_wallpaper
+if [[ "$1" = "-f" ]]; then
+	CUSTOMPAPEPATH="$(readlink -f $3)"
+	echo $CUSTOMPAPEPATH > ~/.wally/path_to_wallpaper
+else
+	cp ~/.cache/wal/wal ~/.wally/path_to_wallpaper
+fi
 WALLPAPER="$(cat ~/.wally/path_to_wallpaper)"
 
 # Display new colors with a color script
