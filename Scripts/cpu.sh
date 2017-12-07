@@ -11,8 +11,17 @@ CPU="$[100-$(vmstat 1 2|tail -1|awk '{printf "%d", $15}')]"
 # fi
 
 # Lazy whitespace padding
+# With icon
+# if [ "$CPU" -ge "10" ]; then
+# 	echo " $CPU%"
+# else
+# 	echo "  $CPU%"
+# fi
+
+# Just text
 if [ "$CPU" -ge "10" ]; then
-	echo " $CPU%"
+	echo "cpu $CPU%"
 else
-	echo "  $CPU%"
+	echo "cpu  $CPU%"
 fi
+

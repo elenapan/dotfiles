@@ -1,9 +1,0 @@
-#NEEDS WORK!
-
-redshift -p > /home/elena/redtemp
-CURRENT="$(cat /home/elena/redtemp | grep "temp" | awk '{print $3;}')"
-DAY = "5500K"
-if [ "$CURRENT" == "$DAY" ]
-then echo "REDSHIFT OFF"
-else echo "REDSHIFT ON"
-fi

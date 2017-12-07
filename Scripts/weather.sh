@@ -1,7 +1,7 @@
 #!/bin/bash
 # needs work
 
-CITY="Volos"
+CITY="Moscow"
 
 # glyphs (TODO)
 #  day cloud
@@ -54,10 +54,10 @@ TEMP="$(curl -s -A "Mozilla/5.0" wttr.in/$CITY | grep -m 1 '°C'| awk '{print $(
 
 
 # City+degrees
-#echo " $CITY $TEMP°C"
+echo " $CITY $TEMP°C"
 
 # Degrees only
 #echo "$TEMP°C"
 
 # Leaf + degrees
-echo "  $TEMP°C"
+#echo "  $TEMP°C"
