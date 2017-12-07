@@ -10,7 +10,25 @@ VOL="$(pactl list sinks | grep "Volume: " | awk '{print $5}' | head -1)"
 MUTE="$(pactl list sinks | grep -i "mute" | head -1 | awk '{print $2}')"
 
 if [[ "$MUTE" != "no" ]]; then
-	echo "  "
+	# Icon only
+	# echo "  "
+
+	# Text only
+	echo "vol off"
 else
-	echo "$VOL "
+	# Text only
+	echo "vol $VOL"
+
+	# Icon only (simple)
+	# echo "  "
+
+	#Icon only (gradual)
+	# VOL="$(echo ${VOL%?})"
+	# if [ "$VOL" -ge "85" ]; then
+	# 	echo "  "
+	# elif [ "$VOL" -ge "20" ]; then
+	# 	echo "  "
+	# else
+	# 	echo "  "
+	# fi
 fi

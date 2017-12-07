@@ -1,1 +1,3 @@
-rofi -show combi -combi-modi "window,run" -lines 12 -width 100 -padding 80 -fullscreen -font "Hurmit Nerd Font 30" -separator-style "none"
+# rofi -show combi -combi-modi "window,run" -lines 8 -width 100 -padding 150 -font "mononoki Nerd Font Regular 35" -separator-style "none"
+
+rofi -show combi -combi-modi "window,run" -lines 10 -width 50 -padding 80 -font "proggycleanttce Nerd Font Regular 12" -separator-style "none" -no-show-match

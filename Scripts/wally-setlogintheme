@@ -1,3 +1,7 @@
+# Opens oomox to let you create your gtk theme
+echo "> Opening oomox-gui so you can create your gtk theme. "
+echo "> Name of the theme should be 'wally'. Close oomox when you have exported the theme."
+oomox-gui
 # Copies the gtk theme created by oomox to /usr/share/icons
 # so that it can be used by lightdm greeter
 echo -n "> Replacing gtk theme and icons... "
@@ -6,6 +10,14 @@ rm -rf /usr/share/icons/wally
 cp -r ~/.themes/oomox-wally /usr/share/themes/wally
 cp -r ~/.icons/oomox-wally-flat /usr/share/icons/wally
 echo "Done!"
-echo "> Starting lightdm-gtk-greeter-settings..."
-lightdm-gtk-greeter-settings
+# Requires that you have setup your lightdm to have ~/.wally/login as wallpaper
+echo -n "> Setting login wallpaper... "
+PAPE="$(cat ~/.wally/path_to_wallpaper)"
+cp $PAPE ~/.wally/login
+echo "Done!"
+# echo "> Starting lightdm-gtk-greeter-settings..."
+# lightdm-gtk-greeter-settings
+
+# Create firefox icon
+# cp ~/.icons/oomox-wally-flat/apps/scalable/browser.svg ~/.icons/oomox-wally-flat/apps/scalable/firefox.svg
 echo "> All done :)"
