@@ -1,0 +1,84 @@
+/*********
+ ! Entry *
+**********/
+
+%linked_entry {
+    border-width: 1px;
+    border-radius: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+
+    &:first-child {
+        border-width: 1px;
+        border-radius: $roundness;
+        border-right-width: 0;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    &:last-child {
+        border-width: 1px;
+        border-radius: $roundness;
+        border-left-width: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    &:only-child {
+        border-width: 1px;
+        border-radius: $roundness;
+    }
+}
+
+%entry {
+    padding: ($spacing - 1px) $spacing;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: $roundness;
+    transition: border 150ms ease;
+    box-shadow: inset 1px 1px alpha($dark_shadow, .06),
+                inset -1px 0 alpha($dark_shadow, .06);
+
+    &:focus, &:hover, &:active { transition: none; }
+
+    &:selected, &:selected:focus {
+        background-color: $selected_bg_color;
+        color: $selected_fg_color;
+    }
+
+    &:insensitive { box-shadow: none; }
+
+    &.progressbar {
+        @include linear-gradient($selected_bg_color);
+
+        border-width: 0;
+        border-radius: $roundness;
+        color: $selected_fg_color;
+    }
+
+    &.image.left { padding-right: $spacing; }
+}
+
+@mixin entry($bg, $fg) {
+    @extend %entry;
+    @include linear-gradient($bg, to top);
+    @include border($bg);
+
+    color: $fg;
+
+    &:focus, &:active { border-color: $selected_bg_color; }
+
+    &:insensitive {
+        @include linear-gradient(shade($bg, .9), to top);
+
+        color: mix($bg, $fg, .5);
+    }
+}
+
+@include exports("entry") {
+    .entry {
+        @include entry($base_color, $text_color);
+
+        &.linked, .linked & { @extend %linked_entry; }
+    }
+}

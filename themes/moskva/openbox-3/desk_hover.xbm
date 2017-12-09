@@ -1,0 +1,4 @@
+#define desk_hover_width 6
+#define desk_hover_height 6
+static unsigned char desk_hover_bits[] = {
+   0x00, 0x1e, 0x1a, 0x16, 0x1e, 0x00 };

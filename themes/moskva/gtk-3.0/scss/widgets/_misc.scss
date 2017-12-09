@@ -1,0 +1,227 @@
+/***************
+! Dimmed label *
+****************/
+
+@include exports("dimlabel") {
+    .dim-label {
+        opacity: .5;
+        text-shadow: none;
+    }
+}
+
+
+/***********
+ ! Tooltip *
+************/
+
+@include exports("tooltip") {
+    .tooltip {
+        &.background {
+            @include linear-gradient($tooltip_bg_color);
+
+            border: 0;
+            border-radius: $roundness;
+            color: $tooltip_fg_color;
+        }
+
+        * {
+            background-color: transparent;
+            color: inherit;
+        }
+    }
+}
+
+
+/***********
+ ! Dialogs *
+************/
+
+@include exports("dialogs") {
+    GtkMessageDialog, .message-dialog, .prompt {
+        -GtkDialog-content-area-border: $spacing;
+        -GtkDialog-action-area-border: $spacing;
+        -GtkDialog-button-spacing: $spacing;
+
+        margin: 0;
+        padding: 0;
+    }
+}
+
+
+/*********************
+ ! App notifications *
+**********************/
+
+@include exports("notifications") {
+    .app-notification {
+        &, &.frame {
+            border-style: solid;
+            border-color: border_normal($osd_bg);
+            border-width: 0 1px 1px;
+            border-radius: 0 0 $roundness $roundness;
+            padding: $spacing * 2;
+            background-color: $osd_bg;
+            background-image: none;
+            color: $osd_fg;
+
+            .button { @include button($osd_bg, $osd_fg); }
+        }
+    }
+}
+
+
+/*************
+ ! Expanders *
+**************/
+
+@include exports("expander") {
+    GtkExpander {
+        padding: $spacing;
+        outline-offset: 1px;
+    }
+
+    .expander {
+        color: alpha(currentColor, .7);
+        border: alpha(currentColor, .7);
+
+        &:hover {
+            color: alpha(currentColor, .8);
+            border-color: alpha(currentColor, .8);
+        }
+
+        &:active {
+            color: alpha(currentColor, .9);
+            border-color: alpha(currentColor, .9);
+        }
+    }
+}
+
+
+/*******************
+ ! Symbolic images *
+********************/
+
+@include exports("symbolicimage") {
+    .image {
+        color: alpha(currentColor, .5);
+
+        &:hover { color: alpha(currentColor, .9); }
+
+        &:selected, &:selected:hover { color: $selected_fg_color; }
+    }
+}
+
+
+/****************
+ ! Floating bar *
+*****************/
+
+@include exports("floatingbar") {
+    .floating-bar {
+        @include linear-gradient($bg_color);
+
+        border: 1px solid border_normal($bg_color);
+        border-radius: $roundness;
+        color: $fg_color;
+
+        &.top {
+            border-top-width: 0;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        &.right {
+            border-right-width: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &.bottom {
+            border-bottom-width: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &.left {
+            border-left-width: 0;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        .button {
+            -GtkButton-image-spacing: 0;
+            -GtkButton-inner-border: 0;
+
+            border: 0;
+            background-color: transparent;
+            background-image: none;
+        }
+    }
+}
+
+
+/*************************
+ ! Touch text selections *
+**************************/
+
+@include exports("touchbubble") {
+    GtkBubbleWindow {
+        border-radius: $roundness;
+        background-clip: border-box;
+
+        &.osd.background { background-color: $osd_bg; }
+
+        .toolbar { background-color: transparent; }
+    }
+}
+
+/***************
+ ! Font-viewer *
+****************/
+
+@include exports("fontviewer") {
+    SushiFontWidget {
+        padding: $spacing ($spacing * 2);
+    }
+}
+
+
+/*************
+ ! Gucharmap *
+**************/
+
+@include exports("charmap") {
+    GucharmapChartable {
+        background-color: $base_color;
+        color: $text_color;
+
+        &:focus, &:hover, &:active, &:selected { @extend %selected; }
+    }
+}
+
+
+/*************
+ ! Evolution *
+**************/
+
+@include exports("evolution") {
+    EPreviewPane .entry {
+        background-color: $base_color;
+        color: $text_color;
+    }
+}
+
+
+/*******************
+ ! Gnome Bluetooth *
+********************/
+
+@include exports("gnome-bluetooth") {
+    GtkEntry.entry.pin-entry {
+        font: regular 50;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    GtkLabel.pin-label { font: regular 50; }
+}
