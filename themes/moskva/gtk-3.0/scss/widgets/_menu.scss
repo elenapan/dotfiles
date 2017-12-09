@@ -1,0 +1,267 @@
+@import "entry";
+
+
+/*********
+ ! Menubar
+**********/
+
+@include exports("menubar") {
+    .menubar {
+        -GtkWidget-window-dragging: true;
+
+        border: 0;
+        background-color: $menubar_bg_color;
+        background-image: none;
+        color: $menubar_fg_color;
+
+
+        &.menuitem, .menuitem {
+            padding: $spacing ($spacing * 2);
+            border: 1px solid transparent;
+            background-color: transparent;
+            background-image: none;
+            color: $menubar_fg_color;
+
+            &:hover {
+                border-color: mix($menubar_bg_color, $menubar_fg_color, .21);
+                background-color: mix($menubar_bg_color, $menubar_fg_color, .21);
+                background-image: none;
+                color: shade($menubar_fg_color, 1.08);
+            }
+
+            *:hover { color: shade($menubar_fg_color, 1.08); }
+        }
+    }
+}
+
+
+/******
+ ! Menu
+*******/
+
+@include exports("menu") {
+    * {
+        -GtkMenu-horizontal-padding: 0;
+        -GtkMenu-vertical-padding: 0;
+    }
+
+    GtkTreeMenu, GtkMenuToolButton, GtkComboBox {
+        &.menu, .menu {
+            background-color: $menu_bg_color;
+            margin: $spacing;
+        }
+    }
+
+    #toolbar-popup, .menu {
+        padding: 0;
+        border-radius: 0;
+        border: 0;
+        background-color: $menu_bg_color;
+        color: $menu_fg_color;
+
+        &:selected { background-color: $selected_bg_color; }
+
+        .button {
+            &, &:hover, &:active, &:active *:insensitive, &:insensitive {
+                border-width: 0;
+                background-color: transparent;
+                background-image: none;
+            }
+        }
+    }
+
+    .context-menu { font: initial; }
+
+    .menuitem {
+        GtkTreeMenu & {
+            padding: 0;
+            border-width: 0;
+        }
+
+        &, .menu & {
+            margin: $spacing;
+            padding: $spacing;
+            border: 0;
+            border-radius: 0;
+            background-color: transparent;
+            background-image: none;
+
+            -GtkMenuItem-arrow-scaling: .5;
+
+            &:active, &:hover {
+                border: 0;
+                background-color: $selected_bg_color;
+                background-image: none;
+                color: $selected_fg_color;
+            }
+
+            *:active, *:hover { color: $selected_fg_color; }
+
+            &:insensitive, *:insensitive { color: mix($menu_fg_color, $menu_bg_color, .5); }
+        }
+
+        &.check, &.radio {
+            &, &:focus, &:hover, &:insensitive { background-image: none; }
+
+            &, &:focus, &:hover, &:active, &:insensitive {
+                border-style: none;
+                background-color: transparent;
+            }
+        }
+
+        &.separator {
+            -GtkMenuItem-horizontal-padding: 0;
+            -GtkWidget-separator-height: 1;
+
+            border-style: none;
+            color: shade($menu_bg_color, ($contrast + .1));
+        }
+
+        &.button, &.button.flat {
+            &, &:focus, &:active, &:insensitive, &:active:insensitive {
+                background-color: transparent;
+                background-image: none;
+                border: 0;
+                box-shadow: none;
+                color: currentColor;
+            }
+
+            &:hover, &:focus:hover, &:active:hover, &:selected {
+                background-image: none;
+                background-color: $selected_bg_color;
+                color: $selected_fg_color;
+            }
+        }
+
+        GtkCalendar {
+            &:inconsistent { color: mix($menu_fg_color, $menu_bg_color, .5); }
+
+            .button {
+                border-style: none;
+                background-color: transparent;
+                background-image: none;
+            }
+        }
+
+        .accelerator {
+            color: alpha($menu_fg_color, .6);
+
+            &:hover { color: alpha($selected_fg_color, .8); }
+
+            &:insensitive { color: alpha(mix($menu_fg_color, $menu_bg_color, .5), .4); }
+        }
+
+        .entry { @include entry($menu_bg_color, $menu_fg_color); }
+    }
+
+    GtkModelMenuItem GtkBox GtkImage { padding-right: $spacing; }
+}
+
+
+/*********
+ ! Popover
+**********/
+
+@include exports("popover") {
+    GtkPopover {
+        @include border($menu_bg_color);
+
+        margin: 10px;
+        padding: $spacing;
+        border-radius: $roundness;
+        border-width: 1px;
+        border-style: solid;
+        background-clip: border-box;
+        background-color: $menu_bg_color;
+        background-image: none;
+        color: $menu_fg_color;
+        box-shadow: 0 3px 6px alpha($black, .16);
+
+        &.background {
+            background-image: none;
+            background-color: $menu_bg_color;
+            color: $menu_fg_color;
+        }
+
+        &:backdrop { box-shadow: none; }
+
+        &.osd {
+            box-shadow: 0 2px 7px 3px alpha($black, .5);
+
+            > .toolbar .button {
+                border-radius: 0;
+                border-width: 0;
+                background-color: transparent;
+                background-image: none;
+            }
+        }
+
+        .view, .list {
+            background-color: shade($menu_bg_color, ($contrast + .5));
+            background-image: none;
+            color: $menu_fg_color;
+
+            &:hover {
+                background-image: none;
+                background-color: $selected_bg_color;
+                color: $selected_fg_color;
+            }
+        }
+
+        .list-row {
+            &, &.button {
+                background-color: transparent;
+                background-image: none;
+                color: $menu_fg_color;
+
+                &:focus, &:hover, &:active {
+                    background-image: none;
+                    background-color: $selected_bg_color;
+                    color: $selected_fg_color;
+                }
+            }
+        }
+
+        .frame {
+            border-color: border_normal($menu_bg_color);
+            border-radius: $roundness;
+        }
+
+        .entry { @include entry($base_color, $text_color);  }
+
+        .button { @include button($header_button_bg_color, $header_button_fg_color);  }
+
+        > .list, > .view, > .toolbar { background-color: transparent; }
+
+        .separator {
+            border: 0;
+            background-color: transparent;
+            color: shade($menu_bg_color, ($contrast + .1));
+            font-size: 80%;
+            font-weight: bold;
+        }
+    }
+
+    GtkModelButton.button {
+        &, &:backdrop {
+            @include button(transparent, currentColor);
+
+            &:focus:hover, &.flat:checked:hover, &:active:hover, &:hover, &:selected {
+                background-image: none;
+                background-color: $selected_bg_color;
+                color: $selected_fg_color;
+                box-shadow: none;
+            }
+
+            &.flat {
+                &:checked {
+                    box-shadow: none;
+                }
+
+                &, &:hover {
+                    transition: none;
+                }
+            }
+        }
+    }
+}

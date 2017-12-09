@@ -1,0 +1,354 @@
+/***************
+ ! Generic views
+****************/
+
+@include exports("view") {
+    .view,
+    %view {
+        color: $text_color;
+        background-color: $base_color;
+        caret-color: $primary_caret_color;
+        -gtk-secondary-caret-color: $secondary_caret_color;
+
+        &:backdrop {
+            color: $backdrop_text_color;
+            background-color: $backdrop_base_color;
+        }
+
+        &:selected {
+            &:focus, & {
+                @extend %selected_items;
+
+                border-radius: $roundness;
+            }
+        }
+    }
+
+    .view,
+    textview {
+        text {
+            @extend %view;
+
+            selection { &:focus, & { @extend %selected_items; } }
+        }
+    }
+
+    textview border { background-color: mix($bg_color, $base_color, .5); }
+
+    iconview { @extend .view; }
+}
+
+
+/************
+! Treeview
+*************/
+
+@include exports("treeview") {
+    .rubberband,
+    rubberband {
+        border: 1px solid darken($selected_bg_color, .1);
+        background-color: transparentize(darken($selected_bg_color, .1), .8);
+    }
+
+    treeview entry {
+        &:focus {
+            &:dir(rtl), &:dir(ltr) { // specificity bump hack
+                background-color: $base_color;
+                transition-property: color, background;
+            }
+        }
+
+        &.flat, & {
+            border-radius: 0;
+            background-image: none;
+            background-color: $base_color;
+
+            &:focus { border-color: $selected_bg_color; }
+        }
+    }
+
+    %column_header_button {
+        padding: ($spacing - 2px) ($spacing + 1px);
+        border-radius: 0;
+        background-image: none;
+        text-shadow: none;
+        border-style: none solid solid none;
+        border-color: $bg_color;
+
+        &:disabled {
+            border-color: $bg_color;
+            background-image: none;
+        }
+
+        &:backdrop {
+            border-color: $backdrop_bg_color;
+            border-style: none solid solid none;
+            color: mix($backdrop_fg_color, $backdrop_bg_color, .5);
+            background-image: none;
+            background-color: $backdrop_base_color;
+
+            &:disabled {
+                border-color: $backdrop_bg_color;
+                background-image: none;
+            }
+        }
+    }
+
+    treeview.view {
+        -GtkTreeView-grid-line-width: 1;
+        -GtkTreeView-grid-line-pattern: '';
+        -GtkTreeView-tree-line-width: 1;
+        -GtkTreeView-tree-line-pattern: '';
+
+        border-left-color: mix($fg_color, $base_color, .5); // this is actually the tree lines color,
+        border-top-color: $bg_color;                        // while this is the grid lines color, better then nothing
+
+        rubberband { @extend rubberband; } // to avoid borders being overridden by the previously set props
+
+        &:selected {
+            &:focus, & {
+                @extend %selected_items;
+
+                border-radius: 0;
+            }
+
+            &:backdrop, & {
+                border-left-color: mix($selected_fg_color, $selected_bg_color, .5);
+                border-top-color: transparentize($fg_color, .9); // doesn't work unfortunatelly
+            }
+        }
+
+        &:disabled {
+            color: $insensitive_fg_color;
+
+            &:selected {
+                color: mix($selected_fg_color, $selected_bg_color, .4);
+
+                &:backdrop { color: mix($backdrop_selected_fg_color, $selected_bg_color, .3); }
+            }
+
+            &:backdrop { color: $backdrop_insensitive_color; }
+        }
+
+        &.separator {
+            min-height: 2px;
+            color: $bg_color;
+
+            &:backdrop { color: transparentize($bg_color, .9); }
+        }
+
+        &:backdrop {
+            border-left-color: mix($backdrop_fg_color, $backdrop_bg_color, .5);
+            border-top: $backdrop_bg_color;
+        }
+
+        &:drop(active) {
+            border-style: solid none;
+            border-width: 1px;
+            border-color: $selected_borders_color;
+
+            &.after { border-top-style: none; }
+
+            &.before { border-bottom-style: none; }
+        }
+
+        &.expander {
+            -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+            color: mix($base_color, $fg_color, .7);
+
+            &:dir(rtl) { -gtk-icon-source: -gtk-icontheme('pan-end-symbolic-rtl'); }
+
+            &:hover { color: $fg_color; }
+
+            &:selected {
+                color: mix($selected_bg_color, $selected_fg_color, .7);
+
+                &:hover { color: $selected_fg_color; }
+
+                &:backdrop { color: mix($selected_bg_color, $backdrop_selected_fg_color, .7); }
+            }
+
+            &:checked { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
+
+            &:backdrop { color: mix($backdrop_base_color, $backdrop_fg_color, .7); }
+        }
+
+        &.progressbar { // progress bar in treeviews
+            @if $variant == light { color: $base_color; }
+
+            border-radius: $roundness;
+            border: 1px solid $selected_borders_color;
+            background-color: $selected_bg_color;
+            //background-image: linear-gradient(to bottom, $selected_bg_color, darken($selected_bg_color, .1));
+            //box-shadow: inset 0 1px $fg_color,
+            //0 1px if($variant == 'light', transparentize($black, .8), transparentize($black, .9));
+
+            &:selected {
+                &:focus, & {
+                    @if $variant == 'light' {
+                        color: $selected_fg_color;
+                        box-shadow: none;
+                    } @else {
+                        box-shadow: inset 0 1px transparentize($white, .95);
+                    }
+
+                    @include linear-gradient($selected_bg_color);
+                    border-radius: $roundness;
+
+                    &:backdrop {
+                        @if $variant == 'light' {
+                            color: $backdrop_selected_fg_color;
+                            border-color: $selected_borders_color; // otherwise it gets inherited by .view(?!?)
+                        } @else {
+                            border-color: $backdrop_base_color;
+                        }
+
+                        background-color: mix($backdrop_base_color, $selected_bg_color, .9);
+                    }
+                }
+                border: 1px solid mix($selected_bg_color, $selected_fg_color, .2);
+            }
+
+            &:disabled {
+                @include linear-gradient($bg_color);
+                border-color: border_insensitive($bg_color);
+            }
+
+            &:backdrop {
+                @if $variant == 'light' {
+                    color: $backdrop_base_color;
+                } @else {
+                    border-color: $backdrop_base_color;
+                }
+
+                background-image: none;
+                box-shadow: none;
+            }
+        }
+
+        &.trough { // progress bar trough in treeviews
+            background-color: transparentize($fg_color, .9);
+            border-radius: $roundness;
+
+            &:selected {
+                &:focus, & {
+                    background-color: if($variant == 'light', transparentize($selected_fg_color, .7), darken($selected_bg_color, .1));
+
+                    @if $variant == 'light' {
+                        border-width: 1px 0;
+                        border-style: solid;
+                        border-color: $selected_bg_color;
+                    }
+                    border-radius: $roundness;
+                }
+            }
+        }
+
+        header {
+            button {
+                $_column_header_color: mix($fg_color, $base_color, .5);
+
+                @extend %column_header_button;
+
+                color: $_column_header_color;
+                background-color: $base_color;
+                font-weight: bold;
+                text-shadow: none;
+                box-shadow: none;
+
+                &:hover {
+                    @extend %column_header_button;
+
+                    color: mix($_column_header_color, $fg_color, .5);
+                    box-shadow: none;
+                    transition: none; //I shouldn't need this
+                }
+
+                &:active {
+                    @extend %column_header_button;
+
+                    color: $fg_color;
+                    transition: none; //I shouldn't need this
+                }
+            }
+
+            button:last-child { &:backdrop, & { border-right-style: none; } }
+        }
+
+        button.dnd,
+        header.button.dnd { // for treeview-like derive widgets
+            &:active, &:selected, &:hover, & {
+                padding: 0 6px;
+                transition: none;
+                background-image: none;
+                background-color: $selected_bg_color;
+                color: $base_color;
+                border-radius: 0;
+                border-style: none;
+                box-shadow: inset 0 0 0 1px $base_color;
+                text-shadow: none;
+            }
+        }
+
+        acceleditor > label { background-color: $selected_bg_color; }
+    }
+}
+
+
+/***********
+ ! Separator
+************/
+
+@include exports("separator") {
+    separator { // vbox and hbox separators
+        background: transparentize($black, .9);
+        min-width: 1px;
+        min-height: 1px;
+    }
+}
+
+
+/**********
+ ! Frames *
+***********/
+
+@include exports("frame") {
+    frame > border, .frame {
+        border: 1px solid $borders_color;
+
+        &.flat { border-style: none; }
+
+        &:backdrop { border-color: $backdrop_borders_color; }
+    }
+
+    /* avoid double borders when a viewport is packed into a GtkScrolledWindow */
+    scrolledwindow viewport.frame { border: 0; }
+}
+
+
+/***************
+ ! Places view *
+****************/
+
+@include exports("placesview") {
+    placesview {
+        .server-list-button > image {
+            transition: 200ms cubic-bezier(.25, .46, .45, .94);
+            -gtk-icon-transform: rotate(0turn);
+        }
+
+        .server-list-button:checked > image {
+            transition: 200ms cubic-bezier(.25, .46, .45, .94);
+            -gtk-icon-transform: rotate(-0.5turn);
+        }
+
+        row.activatable:hover { background-color: transparent; }
+
+        // this selects the "connect to server" label
+        > actionbar > revealer > box > label {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    }
+}
+

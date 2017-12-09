@@ -1,0 +1,26 @@
+@import "panel";
+
+/***************
+ ! Xfce styles *
+****************/
+
+@include exports("xfce") {
+    XfceHeading {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-image: none;
+        background-color: $base_color;
+        color: $text_color;
+    }
+
+    .xfce4-panel {
+        @extend %panel;
+
+        font: normal;
+
+        .button { @extend %panelbutton; }
+
+        .menu { -gtk-image-effect: none; }
+    }
+}

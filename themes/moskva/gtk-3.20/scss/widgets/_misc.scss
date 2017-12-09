@@ -1,0 +1,320 @@
+/***************
+! Dimmed label *
+****************/
+
+@include exports("dimlabel") {
+    .dim-label {
+        opacity: .5;
+        text-shadow: none;
+    }
+}
+
+
+/***********
+ ! Tooltip *
+************/
+
+@include exports("tooltip") {
+    .tooltip, // Firefox fix
+    tooltip {
+        &.background {
+            &, &.csd {
+                background-color: $tooltip_bg_color;
+                background-clip: padding-box;
+                border: 1px solid border_normal($tooltip_bg_color);
+                border-radius: $roundness;
+                color: $tooltip_fg_color;
+            }
+        }
+
+        * {
+            background-color: transparent;
+            color: inherit;
+        }
+    }
+}
+
+
+/***********
+ ! Dialogs *
+************/
+
+@include exports("dialogs") {
+    messagedialog, .message-dialog, .prompt {
+        -GtkDialog-content-area-border: 0;
+        -GtkDialog-action-area-border: 0;
+        -GtkDialog-button-spacing: $spacing;
+
+        margin: 0;
+        padding: 0;
+    }
+
+    printdialog {
+        paper {
+            color: $fg_color;
+            border: 1px solid $borders_color;
+            background: $white;
+            padding: 0;
+
+            &:backdrop {
+                color: $backdrop_fg_color;
+                border-color: $backdrop_borders_color;
+            }
+        }
+
+        .dialog-action-box { margin: $spacing * 2; }
+    }
+}
+
+
+/*********************
+ ! App notifications *
+**********************/
+
+@include exports("notifications") {
+    frame.app-notification {
+        border-style: solid;
+        border-color: border_normal($osd_bg);
+        border-width: 0 1px 1px;
+        border-radius: 0 0 $roundness $roundness;
+        padding: $spacing * 2;
+        background-color: $osd_bg;
+        background-image: none;
+        color: $osd_fg;
+
+        button {
+            @include button($osd_bg, $osd_fg);
+        }
+
+        border {
+            border: 0;
+        }
+    }
+}
+
+
+/*************
+ ! Expanders *
+**************/
+
+@include exports("expander") {
+    expander {
+        arrow {
+            min-width: 16px;
+            min-height: 16px;
+            -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+
+            &:dir(rtl) { -gtk-icon-source: -gtk-icontheme('pan-end-symbolic-rtl'); }
+
+            &:hover { color: alpha(currentColor, .8); } //only lightens the arrow
+
+            &:checked { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
+        }
+    }
+}
+
+
+/*******************
+ ! Symbolic images *
+********************/
+
+@include exports("symbolicimage") {
+    .image {
+        color: alpha(currentColor, .5);
+
+        &:hover { color: alpha(currentColor, .9); }
+
+        &:selected, &:selected:hover { color: $selected_fg_color; }
+    }
+}
+
+
+/****************
+ ! Floating bar *
+*****************/
+
+@include exports("floatingbar") {
+    .floating-bar {
+        @include linear-gradient($bg_color);
+
+        border: 1px solid border_normal($bg_color);
+        border-radius: $roundness;
+        color: $fg_color;
+
+        &.top {
+            border-top-width: 0;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        &.right {
+            border-right-width: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &.bottom {
+            border-bottom-width: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &.left {
+            border-left-width: 0;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        button {
+            border: 0;
+            background-color: transparent;
+            background-image: none;
+        }
+    }
+}
+
+
+/*************************
+ ! Touch text selections *
+**************************/
+
+@include exports("touchbubble") {
+    GtkBubbleWindow {
+        border-radius: $roundness;
+        background-clip: border-box;
+
+        &.osd.background { background-color: $osd_bg; }
+
+        .toolbar { background-color: transparent; }
+    }
+}
+
+/***************
+ ! Font-viewer *
+****************/
+
+@include exports("fontviewer") {
+    SushiFontWidget {
+        padding: $spacing ($spacing * 2);
+    }
+}
+
+
+/*************
+ ! Gucharmap *
+**************/
+
+@include exports("charmap") {
+    GucharmapChartable {
+        background-color: $base_color;
+        color: $text_color;
+
+        &:focus, &:hover, &:active, &:selected { @extend %selected; }
+    }
+}
+
+
+/*************
+ ! Evolution *
+**************/
+
+@include exports("evolution") {
+    EPreviewPane .entry {
+        background-color: $base_color;
+        color: $text_color;
+    }
+}
+
+
+/*******************
+ ! Gnome Bluetooth *
+********************/
+
+@include exports("gnome-bluetooth") {
+    // Base code: https://github.com/GNOME/gnome-bluetooth/blob/a93575c4b590e2b831da32f739294bb2f197d420/lib/bluetooth-settings.css
+    entry.entry.pin-entry {
+        font-style: normal;
+        font-size: 50px;
+        padding-left: $spacing * 5;
+        padding-right: $spacing * 5;
+    }
+
+    label.pin-label {
+        font-style: normal;
+        font-size: 50px;
+    }
+}
+
+
+/************************
+ ! Shortcut window keys *
+*************************/
+
+@include exports("keycap") {
+    // shortcut window keys
+    .keycap {
+        min-width: 20px;
+        min-height: 24px;
+        margin-top: 2px;
+        padding-bottom: $spacing / 2;
+        padding-left: $spacing;
+        padding-right: $spacing;
+
+        color: $fg_color;
+        background-color: $base_color;
+        border: 1px solid;
+        border-color: if($variant == 'light', mix($borders_color, $bg_color, .5), $borders_color);
+        border-radius: $roundness;
+        box-shadow: if($variant == 'light', inset 0 -3px mix($base_color, $bg_color, .2), inset 0 -3px mix($borders_color, $base_color, .6));
+        font-size: smaller;
+
+        &:backdrop {
+            background-color: $backdrop_base_color;
+            color: $backdrop_fg_color;
+            transition: 200ms ease-out;
+        }
+    }
+}
+
+
+/*****************
+ ! Stackswitcher *
+******************/
+
+@include exports("stackswitcher") {
+    stackswitcher button {
+        &.text-button { min-width: 80px; } // FIXME aggregate with buttons
+
+        &.circular {  // FIXME aggregate with buttons
+            min-width: 28px;
+            min-height: 28px;
+            padding: 0;
+        }
+    }
+}
+
+
+/*******************
+ ! Selected Items  *
+********************/
+
+@include exports("selected_items") {
+    %selected_items {
+        background-color: $selected_bg_color;
+
+        @at-root %nobg_selected_items, & {
+            color: $selected_fg_color;
+
+            @if $variant == 'light' { outline-color: transparentize($selected_fg_color, .7); }
+
+            &:disabled { color: mix($selected_fg_color, $selected_bg_color, .5); }
+
+            &:backdrop {
+                background-color: $backdrop_selected_bg_color; // Fixed Issue #430
+                color: $backdrop_selected_fg_color;
+
+                &:disabled { color: mix($backdrop_selected_fg_color, $selected_bg_color, .3); }
+            }
+        }
+    }
+}

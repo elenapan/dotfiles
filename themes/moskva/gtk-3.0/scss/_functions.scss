@@ -1,0 +1,79 @@
+$modules: () !default;
+
+@mixin exports($name) {
+    @if (not index($modules, $name)) {
+        $modules: append($modules, $name) !global;
+
+        @content;
+    }
+}
+
+@function alpha($color, $amount) {
+    @if type-of($color) == "color" {
+        @return fade-out($color, (1 - $amount));
+    } @else {
+        @return unquote("alpha(#{$color},#{$amount})");
+    }
+}
+
+@function shade($color, $amount) {
+    @if type-of($color) == "color" {
+        @if ($amount > 1) {
+            @return lighten($color, ($amount - 1) * lightness($color))
+        } @else {
+            @return darken($color, (1 - $amount) * lightness($color))
+        }
+    } @else {
+        @return unquote("shade(#{$color},#{$amount})");
+    }
+}
+
+@function mix($color1, $color2, $amount) {
+    @return unquote("mix(#{$color1},#{$color2},#{$amount})");
+}
+
+@function border_normal($color) {
+    @return shade($color, $contrast);
+}
+
+@function border_focus($color) {
+    @return shade($color, ($contrast - .05));
+}
+
+@function border_active($color) {
+    @return shade($color, ($contrast - .1));
+}
+
+@function border_insensitive($color) {
+    @return shade($color, ($contrast + .05));
+}
+
+@mixin linear-gradient($color, $direction: to bottom) {
+    @if $gradient == 0 {
+        background-color: $color;
+        background-image: none;
+    } @else {
+        $amount: $gradient / 2;
+
+        background-color: $color;
+        background-image: linear-gradient($direction,
+            shade($color, (1 + $amount)),
+            shade($color, (1 - $amount))
+        );
+    }
+}
+
+@mixin border($color) {
+    border-color: border_normal($color);
+
+    &:focus, &:hover { border-color: border_focus($color); }
+
+    &:active, &:active:hover,
+    &:active:focus, &:active:hover:focus,
+    &:checked, &:checked:hover,
+    &:checked:focus, &:checked:hover:focus { border-color: border_active($color); }
+
+    &:insensitive { border-color: border_insensitive($color); }
+
+    &:active:insensitive, &:checked:insensitive { border-color: border_normal($color); }
+}

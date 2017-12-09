@@ -1,0 +1,36 @@
+/********
+ ! Nemo *
+*********/
+
+@include exports("nemo") {
+    .nemo-desktop.nemo-canvas-item {
+        color: $white;
+        text-shadow: 1px 1px $black;
+
+        &:active { color: $fg_color; }
+
+        &:selected { color: $selected_fg_color; }
+
+        &:active, &:hover, &:selected { text-shadow: none; }
+    }
+
+    NemoPathbarButton {
+        @include button($toolbar_bg_color, $toolbar_fg_color);
+
+        -NemoPathbarButton-border-radius: $roundness;
+    }
+
+    NemoPlacesTreeView {
+        -NemoPlacesTreeView-disk-full-bg-color: shade($toolbar_bg_color, .8);
+        -NemoPlacesTreeView-disk-full-fg-color: $selected_bg_color;
+        -NemoPlacesTreeView-disk-full-bar-width: 1px;
+        -NemoPlacesTreeView-disk-full-bar-radius: 1px;
+        -NemoPlacesTreeView-disk-full-bottom-padding: 2px;
+        -NemoPlacesTreeView-disk-full-max-length: 70px;
+
+        &:selected {
+            -NemoPlacesTreeView-disk-full-bg-color: $selected_fg_color;
+            -NemoPlacesTreeView-disk-full-fg-color: shade($selected_bg_color, 1.2);
+        }
+    }
+}

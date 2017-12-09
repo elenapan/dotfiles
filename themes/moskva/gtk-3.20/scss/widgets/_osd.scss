@@ -1,0 +1,268 @@
+@import "button";
+
+
+/*******
+ ! OSD *
+********/
+
+@include exports("osd") {
+    overlay.osd { background-color: transparent; }
+
+    colorchooser .popover.osd { border-radius: $roundness; }
+
+    button.color {
+        .osd colorswatch:only-child { box-shadow: none; }
+
+        @if $variant == 'light' {
+            .osd & {
+                &:disabled,
+                &:backdrop,
+                &:active,
+                &:checked { colorswatch:only-child { box-shadow: none; } }
+            }
+        }
+    }
+
+    button.osd,
+    #XfceNotifyWindow button {
+        @include button($osd_bg, $osd_fg);
+
+        &.image-button {
+            padding: 0;
+            min-height: 36px;
+            min-width: 36px;
+        }
+    }
+
+    // stand-alone OSD toolbars
+    toolbar.osd {
+        -GtkToolbar-button-relief: normal;
+
+        padding: $spacing;
+        border: 1px solid border_normal($osd_bg);
+        border-radius: $roundness;
+        background-color: $osd_bg;
+        background-image: none;
+        color: $osd_fg;
+
+        separator { color: shade($osd_bg, ($contrast + .1)); }
+
+        &.left,
+        &.right,
+        &.top,
+        &.bottom { border-radius: 0; } // positional classes for `attached` osd toolbars
+    }
+
+    progressbar.osd { // progressbar.osd used for epiphany page loading progress
+        margin: 2px;
+        min-height: 2px;
+        min-width: 2px;
+
+        trough {
+            border-style: none;
+            border-radius: 0;
+            background-image: none;
+            background-color: transparent;
+        }
+
+        progress {
+            border-style: none;
+            border-radius: 0;
+            background-color: $selected_bg_color;
+            background-image: none;
+        }
+    }
+
+    .osd,
+    #XfceNotifyWindow {
+        background-color: $osd_bg;
+        color: $osd_fg;
+
+        &.background {
+            background-color: alpha($osd_bg, .8);
+            color: $osd_fg;
+        }
+
+        .frame {
+            background-clip: border-box;
+            background-origin: border-box;
+        }
+
+        button { @include button($osd_bg, $osd_fg); }
+
+        entry { @include entry($osd_base, $osd_text_color, $osd_borders_color); }
+
+        /* used by gnome-settings-daemon's media-keys OSD */
+        trough,
+        &.trough {
+            background-color: alpha($osd_fg, .3);
+        }
+
+        progressbar,
+        &.progressbar {
+            background-color: $osd_fg;
+        }
+
+        // Old GTK 3.0 code
+        scale {
+            slider {
+                @include linear-gradient(shade($osd_bg, 1.08));
+                @include border($osd_bg);
+
+                &:disabled { @include linear-gradient(shade($osd_bg, .9)); }
+            }
+
+            trough {
+                border-color: shade($osd_bg, .8);
+                background-color: shade($osd_bg, 1.08);
+                background-image: none;
+
+                &.highlight {
+                    border-color: $selected_bg_color;
+                    background-color: $selected_bg_color;
+                    background-image: none;
+                }
+
+                &:disabled, &.highlight:disabled {
+                    border-color: shade($osd_bg, .85);
+                    background-color: shade($osd_bg, .9);
+                    background-image: none;
+                }
+            }
+        }
+
+        // New GTK 3.20 code
+        scale {
+            //OSD troughs
+            trough {
+                background-color: lighten($osd_bg, 7%);
+
+                highlight { background-color: $selected_bg_color; }
+            }
+
+            // OSD sliders
+            slider {
+                background-clip: border-box;
+                background-color: $selected_bg_color;
+                border-color: $selected_bg_color;
+
+                &:hover {
+                    background-color: lighten($selected_bg_color, 10%);
+                    border-color: lighten($selected_bg_color, 10%);
+                }
+
+                &:active {
+                    background-color: darken($selected_bg_color, 10%);
+                    border-color: darken($selected_bg_color, 10%);
+                }
+            }
+        }
+
+        &.view, .view, view { background-color: $osd_bg; }
+
+        scrollbar {
+            trough { background-color: $osd_bg; }
+
+            slider {
+                border: 1px solid mix(shade($osd_bg, .87), $osd_fg, .21);
+                border-radius: 0;
+                background-color: mix($osd_bg, $osd_fg, .21);
+
+                &:hover {
+                    border-color: mix(shade($osd_bg, .87), $osd_fg, .31);
+                    background-color: mix($osd_bg, $osd_fg, .31);
+                }
+
+                &:active {
+                    border-color: shade($selected_bg_color, .9);
+                    background-color: $selected_bg_color;
+                }
+            }
+        }
+
+        iconview.cell {
+            &:selected, &:selected:focus {
+                background-color: transparent;
+                border: 3px solid mix(shade($osd_bg, .87), $osd_fg, .21);
+                border-radius: $roundness;
+                outline-color: transparent;
+            }
+        }
+
+        /* used by Documents */
+        .page-thumbnail {
+            border: 1px solid shade($osd_bg, .9);
+            /* when there's no pixbuf yet */
+            background-color: $osd_bg;
+        }
+
+        popover.background {
+            box-shadow: 0 2px 7px 3px alpha($black, .5);
+
+            > toolbar button {
+                border-radius: 0;
+                border-width: 0;
+                background-color: transparent;
+                background-image: none;
+            }
+        }
+
+        spinbutton {
+            // OSD horizontal
+            &:not(.vertical) {
+                @include linear-gradient($osd_base, to top);
+                @include border($osd_base);
+
+                padding: 0;
+
+                color: $osd_text_color;
+                caret-color: $osd_text_color;
+
+                &:focus, &:active { border-color: border_focus($osd_borders_color); }
+
+                &:disabled {
+                    @include linear-gradient(shade($osd_base, .9), to top);
+
+                    color: mix($osd_base, $osd_text_color, .5);
+                }
+
+                button {
+                    @include button($osd_bg, $osd_fg);
+
+                    border-radius: 0;
+                    border-color: transparentize($osd_borders_color, .3);
+                    border-style: none none none solid;
+                    background-image: none;
+                    box-shadow: none;
+
+                    &:dir(rtl) { border-style: none solid none none; }
+
+                    &:active, &:checked, &:hover { color: $osd_text_color; }
+
+                    &:disabled { color: alpha($osd_insensitive_fg_color, .8); }
+
+                    &:backdrop { color: mix($backdrop_base_color, $backdrop_fg_color, .9); }
+
+                    &:active { box-shadow: inset 0 2px 3px -1px transparentize($black, .8); }
+
+                    &:backdrop:disabled {
+                        color: alpha($backdrop_insensitive_color, .8);
+
+                        border-style: none none none solid; // It is needed or it gets overridden
+
+                        &:dir(rtl) { border-style: none solid none none; }
+                    }
+
+                    &:dir(rtl):first-child { border-radius: $roundness 0 0 $roundness; }
+
+                    &:dir(ltr):last-child { border-radius: 0 $roundness $roundness 0; }
+                }
+            }
+
+            // OSD vertical
+            &.vertical button:first-child {
+                @include button($osd_bg, $osd_fg);
+            }
+        }
+    }
+}
