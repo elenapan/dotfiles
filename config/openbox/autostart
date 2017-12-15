@@ -1,5 +1,6 @@
 ~/.fehbg &
 tint2 &
 pytyle &
-compton -c -f &
 mpd &
+~/Scripts/toggle_compositor.sh &
+setxkbmap -layout "us,gr,ru" -option "grp:alt_shift_toggle"

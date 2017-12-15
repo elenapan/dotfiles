@@ -40,8 +40,8 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>wally</name>
-    <titleLayout/>
+    <name>nightmare_wally</name>
+    <titleLayout>L</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
       N: window icon
@@ -55,7 +55,7 @@
     <keepBorder>yes</keepBorder>
     <animateIconify>no</animateIconify>
     <font place="ActiveWindow">
-      <name>Iosevka Nerd Font</name>
+      <name>Tewi</name>
       <size>11</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -64,7 +64,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="InactiveWindow">
-      <name>Iosevka Nerd Font</name>
+      <name>Tewi</name>
       <size>11</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -73,7 +73,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuHeader">
-      <name>Iosevka Nerd Font</name>
+      <name>Tewi</name>
       <size>11</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -82,7 +82,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuItem">
-      <name>Iosevka Nerd Font</name>
+      <name>Tewi</name>
       <size>11</size>
       <!-- font size in points -->
       <weight>Normal</weight>
@@ -91,14 +91,14 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="ActiveOnScreenDisplay">
-      <name>Iosevka Nerd Font</name>
-      <size>10</size>
+      <name>Tewi</name>
+      <size>11</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveOnScreenDisplay">
-      <name>Iosevka Nerd Font</name>
-      <size>10</size>
+      <name>Tewi</name>
+      <size>11</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
@@ -112,13 +112,14 @@
 
        use obconf if you want to change these without having to log out
        and back in -->
-    <number>4</number>
+    <number>5</number>
     <firstdesk>1</firstdesk>
     <names>
-      <name>"  I"</name>
-      <name>" II"</name>
-      <name>"III"</name>
-      <name>" IV"</name>
+      <name>&gt;&gt; 1</name>
+      <name>&gt;&gt; 2</name>
+      <name>&gt;&gt; 3</name>
+      <name>&gt;&gt; 4</name>
+      <name>&gt;&gt; 5</name>
     </names>
     <popupTime>0</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -145,10 +146,10 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
   <margins>
-    <top>50</top>
-    <bottom>10</bottom>
-    <left>10</left>
-    <right>10</right>
+    <top>54</top>
+    <bottom>12</bottom>
+    <left>14</left>
+    <right>14</right>
   </margins>
   <dock>
     <position>BottomRight</position>
@@ -220,26 +221,52 @@
       </action>
     </keybind> -->
     <keybind key="W-F1">
+      <action name="Execute">
+        <command>urxvt --geometry 110x28 -e htop</command>
+      </action>
+    </keybind>
+    <keybind key="W-F2">
+      <action name="Execute">
+        <command>urxvt -e calcurse</command>
+      </action>
+    </keybind>
+    <keybind key="W-F3">
+      <action name="Execute">
+        <command>urxvt -e ncmpcpp</command>
+      </action>
+    </keybind>
+    <keybind key="W-F4">
+      <action name="Execute">
+        <command>urxvt -e cava</command>
+      </action>
+    </keybind>
+    <keybind key="S-W-1">
       <action name="SendToDesktop">
         <desktop>1</desktop>
         <follow>no</follow>
       </action>
     </keybind>
-    <keybind key="W-F2">
+    <keybind key="S-W-2">
       <action name="SendToDesktop">
         <desktop>2</desktop>
         <follow>no</follow>
       </action>
     </keybind>
-    <keybind key="W-F3">
+    <keybind key="S-W-3">
       <action name="SendToDesktop">
         <desktop>3</desktop>
         <follow>no</follow>
       </action>
     </keybind>
-    <keybind key="W-F4">
+    <keybind key="S-W-4">
       <action name="SendToDesktop">
         <desktop>4</desktop>
+        <follow>no</follow>
+      </action>
+    </keybind>
+    <keybind key="S-W-5">
+      <action name="SendToDesktop">
+        <desktop>5</desktop>
         <follow>no</follow>
       </action>
     </keybind>
@@ -258,6 +285,9 @@
         <desktop>3</desktop>
       </action>
     </keybind>
+    <keybind key="W-S">
+      <action name="ToggleShade"/>
+    </keybind>
     <keybind key="W-d">
       <action name="Execute">
         <!-- <command>rofi -levenshtein-sort -show run</command> -->
@@ -275,6 +305,11 @@
         <desktop>4</desktop>
       </action>
     </keybind>
+    <keybind key="W-5">
+      <action name="Desktop">
+        <desktop>5</desktop>
+      </action>
+    </keybind>
     <keybind key="S-W-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
@@ -284,18 +319,25 @@
     <keybind key="S-W-q">
       <action name="Close"/>
     </keybind>
+    <keybind key="Print">
+      <action name="Execute">
+        <execute>
+    			scrot '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/Pictures/Screenshots/ &amp;'
+    		</execute>
+      </action>
+    </keybind>
     <keybind key="W-Print">
       <action name="Execute">
         <execute>
-			scrot '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/Pictures/Screenshots/ &amp; pcmanfm ~/Pictures/Screenshots/'
-		</execute>
+          thunar ~/Pictures/Screenshots/
+        </execute>
       </action>
     </keybind>
     <keybind key="S-W-Print">
       <action name="Execute">
         <execute>
-			scrot -s '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/Pictures/Screenshots/ &amp; pcmanfm ~/Pictures/Screenshots/'
-		</execute>
+    			scrot -s '%Y-%m-%d--%s_$wx$h_scrot.png' -e 'mv $f ~/Pictures/Screenshots/ &amp;'
+    		</execute>
       </action>
     </keybind>
     <keybind key="A-F2">
@@ -331,11 +373,16 @@
     </keybind>
     <keybind key="W-f">
       <action name="Execute">
-        <command>pcmanfm</command>
+        <command>thunar</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>File Manager</name>
         </startupnotify>
+      </action>
+    </keybind>
+    <keybind key="S-W-S">
+      <action name="Execute">
+        <command>urxvt --geometry 20x8 -e ~/Scripts/show_tray</command>
       </action>
     </keybind>
     <keybind key="S-W-R">
@@ -353,14 +400,54 @@
         <command>urxvt</command>
       </action>
     </keybind>
-    <keybind key="S-W-Return">
+    <keybind key="W-F8">
       <action name="Execute">
-        <command>lxterminal</command>
+        <command>mpc -q toggle</command>
       </action>
     </keybind>
+    <keybind key="W-F10">
+      <action name="Execute">
+        <command>mpc -q next</command>
+      </action>
+    </keybind>
+    <keybind key="W-F9">
+      <action name="Execute">
+        <command>mpc -q prev</command>
+      </action>
+    </keybind>
+    <keybind key="A-F8">
+      <action name="Execute">
+        <command>mpc -q toggle</command>
+      </action>
+    </keybind>
+    <keybind key="A-F10">
+      <action name="Execute">
+        <command>mpc -q next</command>
+      </action>
+    </keybind>
+    <keybind key="A-F9">
+      <action name="Execute">
+        <command>mpc -q prev</command>
+      </action>
+    </keybind>
+    <keybind key="S-W-Return">
+      <action name="Execute">
+        <command>urxvt --geometry 110x33</command>
+      </action>
+    </keybind>
+    <!-- <keybind key="W-Tab">
+      <action name="Execute">
+        
+        <command>firefox file:///home/elena/Themes/startpage-gh-pages/index.html</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>Web Browser</name>
+        </startupnotify>
+      </action>
+    </keybind> -->
     <keybind key="S-W-w">
       <action name="Execute">
-        <command>chromium-browser</command>
+        <command>firefox -private-window</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>Web Browser</name>
@@ -369,7 +456,7 @@
     </keybind>
     <keybind key="W-w">
       <action name="Execute">
-        <command>vivaldi</command>
+        <command>firefox</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>Web Browser</name>
@@ -433,12 +520,12 @@
         </startupnotify>
       </action>
     </keybind> -->
-    <keybind key="S-W-L">
+    <!-- <keybind key="S-W-L">
       <action name="Execute">
         <command>wally ~/Pictures/Wallpapers</command>
       </action>
-    </keybind>
-    <keybind key="W-x">
+    </keybind> -->
+    <keybind key="S-W-x">
       <action name="Execute">
         <command>lxsession-logout</command>
         <startupnotify>
@@ -485,10 +572,18 @@
     <keybind key="W-c">
       <action name="MoveToCenter"/>
     </keybind>
-    <keybind key="XF86AudioRaiseVolume">
-      <action name="Execute">
-        <command>amixer set Master 5%+ unmute</command>
+    <keybind key="S-W-c">
+      <action name="MoveResizeTo">
+        <x>center</x>
+        <y>center</y>
+        <width>900</width>
+        <height>550</height>
       </action>
+    </keybind>
+    <keybind key="XF86AudioRaiseVolume">
+      <!-- <action name="Execute">
+        <command>amixer set Master 5%+ unmute</command>
+      </action> -->
       <action name="Execute">
         <command>pactl set-sink-mute 0 0</command>
       </action>
@@ -715,12 +810,15 @@
         <action name="Unshade"/>
         <action name="Raise"/>
       </mousebind>
-      <mousebind action="Press" button="Right">
+      <!-- <mousebind action="Press" button="Right">
         <action name="Focus"/>
         <action name="Raise"/>
         <action name="ShowMenu">
           <menu>client-menu</menu>
         </action>
+      </mousebind> -->
+      <mousebind action="Press" button="Right">
+        <action name="Iconify"/>
       </mousebind>
     </context>
     <context name="Top">
@@ -1004,26 +1102,48 @@
         <monitor>1</monitor>
       </position>
       <focus>yes</focus>
+      <!-- global decorations -->
+      <!-- <decor>no</decor> -->
       <maximized>no</maximized>
     </application>
     <application role="browser">
       <decor>no</decor>
-      <desktop>1</desktop>
-    </application>
-    <application class="Polybar">
-      <layer>bottom</layer>
+      <position force="yes">
+        <x>center</x>
+        <y>center</y>
+      </position>
+      <!-- <desktop>1</desktop> -->
     </application>
     <application class="Tint2">
-      <layer>top</layer>
+      <layer>bottom</layer>
     </application>
     <application class="discord">
       <desktop>3</desktop>
+      <decor>no</decor>
+      <position force="yes">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application class="Vivaldi-stable">
+      <desktop>1</desktop>
+    </application>
+    <application class="insurgency_linux">
+      <desktop>2</desktop>
+      <decor>no</decor>
       <position force="yes">
         <x>center</x>
         <y>center</y>
       </position>
     </application>
     <application class="LeagueClientUx.exe">
+      <desktop>2</desktop>
+      <position force="yes">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application class="leagueclientux.exe">
       <desktop>2</desktop>
       <position force="yes">
         <x>center</x>
@@ -1064,6 +1184,23 @@
         <x>center</x>
         <y>center</y>
       </position>
+    </application>
+    <application class="Terraria.bin.x86">
+      <desktop>2</desktop>
+      <position force="yes">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application class="battle.net.exe">
+      <desktop>2</desktop>
+      <position force="yes">
+        <x>center</x>
+        <y>center</y>
+      </position>
+    </application>
+    <application class="dota2">
+      <desktop>2</desktop>
     </application>
     <application class="Wine">
       <desktop>2</desktop>
