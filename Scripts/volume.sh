@@ -14,10 +14,43 @@ if [[ "$MUTE" != "no" ]]; then
 	# echo "  "
 
 	# Text only
-	echo "vol off"
+	echo "VOL OFF"
+
+	# Line
+	# echo "-----------"
 else
 	# Text only
-	echo "vol $VOL"
+	if [ "${VOL%?}" -ge "10" ]; then
+		echo "VOL $VOL"
+	else	
+		echo "VOL  $VOL"
+	fi
+
+	# Line (with siji icons)
+	# VOL="$(echo ${VOL%?})"
+	# if [ "$VOL" -ge "100" ]; then
+	# 	echo " ----------| "
+	# elif [ "$VOL" -ge "90" ]; then
+	# 	echo " ---------|- "
+	# elif [ "$VOL" -ge "80" ]; then
+	# 	echo " --------|-- "
+	# elif [ "$VOL" -ge "70" ]; then
+	# 	echo " -------|--- "
+	# elif [ "$VOL" -ge "60" ]; then
+	# 	echo " ------|---- "
+	# elif [ "$VOL" -ge "50" ]; then
+	# 	echo " -----|----- "
+	# elif [ "$VOL" -ge "40" ]; then
+	# 	echo " ----|------ "
+	# elif [ "$VOL" -ge "30" ]; then
+	# 	echo " ---|------- "
+	# elif [ "$VOL" -ge "20" ]; then
+	# 	echo " --|-------- "
+	# elif [ "$VOL" -ge "10" ]; then
+	# 	echo " -|--------- "
+	# else
+	# 	echo " |---------- "
+	# fi
 
 	# Icon only (simple)
 	# echo "  "
