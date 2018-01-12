@@ -1,0 +1,103 @@
+! Font antialiasing
+Xft.antialias: 1
+
+! Cursor theme
+xcursor.theme:            Vanilla-DMZ
+
+! URxvt config
+URxvt*termName:           rxvt-unicode
+URxvt*iconFile:			  /home/elena/.icons/oomox-wally-flat/apps/scalable/xfce4-workspaces.svg
+
+URxvt.scrollBar:          off
+!URxvt.font:               xft:Hurmit Nerd Font:size=9:antialias=true:hinting=true:autohint=true
+!URxvt.font:               xft:mononoki Nerd Font:size=10:antialias=true
+!URxvt.font:               xft:proggycleanttce Nerd Font:size=11:antialias=false
+!URxvt.boldFont:               xft:proggycleanttce Nerd Font:size=11:antialias=false
+
+!URxvt.font:               xft:tewi:size=8:antialias=false
+!URxvt.boldFont:               xft:tewi:size=8:antialias=false
+
+URxvt.font:               xft:pxplus ibm vga8:size=11:antialias=false
+URxvt.boldFont:               xft:pxplus ibm vga8:size=11:antialias=false
+
+URxvt.letterSpace: 0
+URxvt.internalBorder:     8
+URxvt.geometry: 80x21
+URxvt*selectToClipboard:  true
+URxvt*saveLines:          10000
+
+URxvt.perl-ext-common:    default,matcher,tabbedex,searchable-scrollback
+URxvt.urlLauncher:        /usr/bin/chromium
+URxvt.matcher.button:     1
+URxvt.tabbed.tabbar-fg:   8
+URxvt.tabbed.tabbar-bg:   0
+URxvt.tabbed.tab-fg:      2
+URxvt.tabbed.tab-bg:      0
+URxvt.tabbed.new-button:  no
+URxvt.tabbed.title:       no
+
+! For Transparency
+urxvt*depth: 32
+!urxvt*background: rgba:0200/1000/1700/c700
+!URxvt*background: #050509
+!urxvt*background: rgba:0500/0500/0900/e00f
+!urxvt*background: rgba:0100/0000/0B00/e00f
+!urxvt*background: rgba:0000/0000/0b00/f00f
+!urxvt*background: rgba:0200/0000/0a00/ffff
+
+! xscreensaver
+xscreensaver.fade:        false
+xscreensaver.unfade: false
+
+rofi.bw: 4
+rofi.width: 50
+rofi.lines: 10
+rofi.scroll-method: 1
+
+!!! COLORS UNDER HERE !!!
+
+URxvt*foreground: #AAAAAA
+XTerm*foreground: #AAAAAA
+URxvt*background: #050505
+XTerm*background: #050505
+URxvt*cursorColor: #AAAAAA
+XTerm*cursorColor: #050505
+*color0: #050505
+*.color0: #050505
+*color1: #AA0000
+*.color1: #AA0000
+*color2: #00AA00
+*.color2: #00AA00
+*color3: #FFFF55
+*.color3: #FFFF55
+*color4: #0000AA
+*.color4: #0000AA
+*color5: #AA00AA
+*.color5: #AA00AA
+*color6: #00AAAA
+*.color6: #00AAAA
+*color7: #AAAAAA
+*.color7: #AAAAAA
+*color8: #666666
+*.color8: #666666
+*color9: #AA0000
+*.color9: #AA0000
+*color10: #00AA00
+*.color10: #00AA00
+*color11: #FFFF55
+*.color11: #FFFF55
+*color12: #0000AA
+*.color12: #0000AA
+*color13: #AA00AA
+*.color13: #AA00AA
+*color14: #00AAAA
+*.color14: #00AAAA
+*color15: #AAAAAA
+*.color15: #AAAAAA
+*color66: #050505
+rofi.color-window: argb:FF050505, #050505, #00AA00
+rofi.color-normal: argb:FF050505, #AAAAAA, #050505, #00AA00, #050505
+rofi.color-active: argb:FF050505, #AAAAAA, #050505, #00AA00, #050505
+rofi.color-urgent: argb:FF050505, #AA0000, #050505, #AA0000, #AAAAAA
+emacs*background: #050505
+emacs*foreground: #AAAAAA
