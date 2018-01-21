@@ -1,1 +1,0 @@
-gksu "cpufreq-set -g powersave"

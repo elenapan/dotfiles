@@ -1,3 +1,9 @@
-# rofi -show combi -combi-modi "window,run" -lines 8 -width 100 -padding 150 -font "mononoki Nerd Font Regular 35" -separator-style "none"
+# rofi -show combi -combi-modi "window,run" -lines 10 -width 100 -padding 150 -font "iosevka Nerd Font Regular 30" -separator-style "none"
 
-rofi -show combi -combi-modi "window,run" -lines 10 -width 50 -padding 80 -font "proggycleanttce Nerd Font Regular 12" -separator-style "none" -no-show-match
+# rofi -show combi -combi-modi "window,run" -lines 15 -width 50 -padding 20 -font "proggycleanttce Nerd Font Regular 12" -separator-style "none" -no-show-match
+
+rofi -show combi -combi-modi "window,run" -lines 15 -width 60 -padding 20 -font "iosevka Nerd Font Bold 12" -separator-style "none" -no-show-match
+
+# rofi -show combi -combi-modi "window,run" -lines 15 -width 100 -padding 300 -font "tewi 11" -separator-style "none" -no-show-match
+
+# rofi -show combi -combi-modi "window,run" -lines 15 -width 50 -padding 20 -font "pxplus ibm ega8 12" -separator-style "none" -no-show-match

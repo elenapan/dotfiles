@@ -38,7 +38,8 @@ Config.MISC = {
                # This is a list of all available tilers. If a tiler
                # is not listed here, it cannot be used. They are
                # loaded when PyTyle starts.
-               'tilers': ['Vertical', 'Horizontal', 'HorizontalRows', 'Maximal', 'Cascade'],
+               # 'tilers': ['Vertical', 'Horizontal', 'HorizontalRows', 'Maximal', 'Cascade'],
+               'tilers': ['Vertical', 'Horizontal', 'HorizontalRows', 'Cascade'],
 
                # Enables tiling for all desktops/viewports/screens upon
                # PyTyle startup. Desktops et al can still be disabled from
@@ -191,7 +192,7 @@ Config.KEYMAP = {
                  # included here for completeness. (In other words, you
                  # can close a window any way you like, minimize to
                  # tray, etc.)
-                 'Alt-Shift-C': 'win_close',
+                 #'Alt-Shift-C': 'win_close',
 
                  # The following two will cycle focus to the previous or
                  # next windows. (The algorithm for this is determined
@@ -248,7 +249,15 @@ Config.CALLBACKS = {
 #
 # Note: If you have this set and you only have one screen, it will override
 # the workarea reported by your window manager.
-Config.WORKAREA = {}
+
+Config.WORKAREA = {
+                  0: {
+                      'top': 32,
+                      'bottom': 72,
+                      'left': 2,
+                      'right': 12,
+                      }
+                  }
 
 # Pretty straight forward here. Just use the screen number as your key,
 # (starting from zero) and specify *all four* of the configuration

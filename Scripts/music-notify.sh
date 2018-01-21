@@ -42,9 +42,9 @@ do
 		i=1
 
 		# Uncomment this to enable notifying every time the song changes
-		# if [ ${#INPUT} -ne "0" ]; then
-		# 	notify-send " Now playing:" "$INPUT"
-		# fi
+		if [ ${#INPUT} -ne "0" ]; then
+			notify-send "Now playing:" "$INPUT" -i ~/.icons/oomox-wally-flat/actions/scalable/player_play.svg
+		fi
 	fi
 
 	# Save old input for the next check
@@ -60,15 +60,18 @@ do
 	#if [ ${#YOUTUBE} -eq "0" ] && [ ${#NCMPCPP} -eq "0" ]; then
 	if [ ${#YOUTUBE} -eq "0" ] && [[ "$MPDSTATE" != "[playing]" ]]; then
 		#echo "  "
-		echo "  "
+		#echo "  "
 		#echo "  "
 		#echo "  "
 		#echo " "
+		echo " ·| "
 	else
 		if [[ "$MPDSTATE" != "[playing]" ]]; then
-			echo "  "
+			echo " ·@ "
+			#echo "  "
 		else
-			echo "  "
+			echo " ·> "
+			#echo "  "
 		fi
 	fi
 

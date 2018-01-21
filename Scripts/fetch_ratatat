@@ -1,0 +1,2 @@
+# needs work
+neofetch --backend w3m ~/Pictures/Wallpapers/ratatatGradientCon.jpg --crop_offset northeast --crop_mode fill --size 200px --disable gpu cpu memory icons theme wm model

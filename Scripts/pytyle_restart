@@ -1,1 +1,0 @@
-killall pytyle && sleep 1 && pytyle &

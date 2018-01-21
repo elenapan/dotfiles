@@ -1,10 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
 	<menu id="root-menu" label="Openbox 3.5">
+		<separator label="Start Menu"/>
+		<item label=" Firefox">
+			<action name="Execute">
+				<execute>
+					firefox
+				</execute>
+			</action>
+		</item>
+		<item label=" Terminal">
+			<action name="Execute">
+				<execute>
+					urxvt
+				</execute>
+			</action>
+		</item>
+		<item label=" Sublime">
+			<action name="Execute">
+				<execute>
+					subl
+				</execute>
+			</action>
+		</item>
+		<item label=" Files">
+			<action name="Execute">
+				<execute>
+					thunar
+				</execute>
+			</action>
+		</item>
+		<item label=" Discord">
+			<action name="Execute">
+				<execute>
+					discord
+				</execute>
+			</action>
+		</item>
+		<item label=" Evince">
+			<action name="Execute">
+				<execute>
+					evince
+				</execute>
+			</action>
+		</item>
+		<item label=" Lutris">
+			<action name="Execute">
+				<execute>
+					lutris
+				</execute>
+			</action>
+		</item>
+		<item label=" Steam">
+			<action name="Execute">
+				<execute>
+					steam
+				</execute>
+			</action>
+		</item>
+		<item label=" GIMP">
+			<action name="Execute">
+				<execute>
+					gimp
+				</execute>
+			</action>
+		</item>
+		<item label=" Compositor">
+			<action name="Execute">
+				<execute>
+					compositor	
+				</execute>
+			</action>
+		</item>
 		<!-- <menu id="openbox-menu" label="Applications" execute="/usr/bin/openbox-menu lxde-applications.menu"/> -->
-		<menu execute="~/.config/openbox/pipemenus/obpipemenu-places ~/" id="places" label="Places"/>
-		<menu execute="~/.config/openbox/pipemenus/obrecent.sh ~/" id="recent" label="Recent Files"/>
-		<menu id="Preferences" label="Preferences">
+		<!-- <menu execute="~/.config/openbox/pipemenus/obpipemenu-places ~/" id="places" label="Places"/> -->
+		<menu execute="~/.config/openbox/pipemenus/obrecent.sh ~/" id="recent" label=" Recent Files"/>
+		<menu id="Preferences" label=" Preferences">
 			<menu id="root-menu-525118" label="Openbox Config">
 				<item label="Edit autostart">
 					<action name="Execute">
@@ -126,10 +197,9 @@
 				</action>
 			</item>
 		</menu>
-		<separator/>
-		<item label="Exit">
+		<item label=" Exit">
 			<action name="Execute">
-                        <execute>
+				<execute>
                         lxsession-logout
                         </execute>
 			</action>

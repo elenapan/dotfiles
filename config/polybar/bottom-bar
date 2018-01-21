@@ -1,0 +1,17 @@
+bottom = true
+height = 25
+width = 100%
+offset-x = 0
+offset-y = 0
+background = ${colors.background}
+foreground = ${colors.foreground}
+wm-restack = i3
+override-redirect = true
+fixed-center = true
+font-0 = NotoSans-Regular:size=6;2
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = "Material Icons:antialias=false:size=9;5"
+padding-left = 30%
+padding-right = 50%
+module-margin-left = 2
+module-margin-right = 2
