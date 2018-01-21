@@ -1,2 +1,2 @@
 gksu "prime-select nvidia"
-lxsession-logout
+#lxsession-logout

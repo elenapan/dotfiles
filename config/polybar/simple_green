@@ -1,0 +1,187 @@
+;=======================================;
+;                                       ;
+;   Clean and green polybar config      ;
+;                                       ;
+;=======================================;
+
+;
+; Colors
+;
+
+[colors]
+graphite = #2e3440
+gray = #707f9c
+green = #50fa7b
+white = #ffffff
+
+;
+; Bar
+;
+
+[bar/top]
+
+width = 98%
+height = 38
+offset-x = 1%
+offset-y = 1%
+radius = 0.0
+
+background = ${colors.graphite}
+foreground = ${colors.white}
+
+border-size = 3
+border-color = ${colors.graphite}
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Iosevka:pixelsize=13;3
+font-1 = Iosevka:weight=bold:pixelsize=18;3
+font-2 = FontAwesome:pixelsize=16;3
+font-3 = Iosevka:pixelsize=20
+
+modules-left = bspwm windowlist
+modules-right = xkeyboard wired volume date powermenu
+
+wm-restack = bspwm
+
+;
+; xkeyboard
+;
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+label-layout = %layout%
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+
+;
+; Bspwm
+;
+                                             
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = "%{T4} %{T-}%{T2}%index%%{T-}%{T4} %{T-}"
+label-focused-background = ${colors.green}
+label-focused-foreground = ${colors.graphite}
+label-focused-underline= #fff
+label-focused-padding = 0
+
+label-occupied = "%{T4} %{T-}%{T2}%index%%{T-}%{T4} %{T-}"
+label-occupied-foreground = ${colors.white}
+label-occupied-padding = 0
+
+label-urgent = "%{T4} %{T-}%{T2}%index%!%{T-}%{T4} %{T-}"
+label-urgent-foreground = ${colors.green}
+label-urgent-padding = 0
+
+label-empty = "%{T4} %{T-}%{T2}%index%%{T-}%{T4} %{T-}"
+label-empty-foreground = ${colors.gray}
+label-empty-padding = 0
+
+;
+; Network
+;  
+
+[module/wired]
+type = internal/network
+interface = enp3s0
+interval = 3.0
+
+format-connected = <label-connected>
+
+format-connected-foreground = ${colors.green}
+label-connected =""
+
+format-disconnected = <label-disconnected>
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.white}
+
+;
+; DateTime
+;                                                                               
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = ""
+date-alt = " %a %d %b"
+
+time = %H:%M
+time-alt = %H:%M
+
+label = %date% %time%
+
+;
+; Volume
+;                                                    
+
+[module/volume]
+type = internal/volume
+
+format-volume = <ramp-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${colors.white}
+
+format-muted-prefix = " "
+format-muted-foreground = ${colors.graphite}
+format-muted-background = 
+label-muted = sound muted
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+;
+; Powermenu
+;                                                      
+
+[module/powermenu]
+type = custom/menu
+
+label-open = "%{T4} %{T-}%{T4} %{T-}"
+label-close = 
+format = <label-toggle><menu>
+label-separator = " : "
+
+format-foreground = ${colors.graphite}
+format-background = ${colors.green}
+
+menu-0-0 = 
+menu-0-0-exec = menu-open-1
+menu-0-1 = 
+menu-0-1-exec = menu-open-2
+menu-0-2 = 
+menu-0-2-exec = menu-open-3
+menu-0-3 = "  "
+
+menu-1-0 = 
+menu-1-0-exec = systemctl suspend -i
+menu-1-1 = "  "
+
+menu-2-0 = 
+menu-2-0-exec = systemctl reboot -i
+menu-2-1 = ""
+
+menu-3-0 = 
+menu-3-0-exec = systemctl poweroff -i
+menu-3-1 = ""
+
+;
+; Window-list
+;
+
+[module/windowlist]
+type = custom/script
+exec = ~/.config/polybar/windowlist.sh
+
+;zero interval causes high cpu load
+interval = 0.5
+
+;scroll-up = bspc node -f prev.local
+;scroll-down = bspc node -f next.local

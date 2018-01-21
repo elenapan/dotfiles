@@ -2,7 +2,7 @@
 TEMP="$(sensors | grep "Package" | awk '{print $4}' | cut -c 2-3,6-8)"
 
 # With icon
-# echo " $TEMP"
+echo " $TEMP"
 
 # Just text
-echo "temp $TEMP"
+# echo "HEAT $TEMP"

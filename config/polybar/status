@@ -1,0 +1,10 @@
+#!/bin/sh
+
+arg=$1
+cmd=""
+
+if [ $arg ] ; then
+    cmd=$(systemctl status $arg | grep Active | awk '{print $1}' | cut -d ':' -f -1)
+fi
+
+echo "$arg - $cmd"

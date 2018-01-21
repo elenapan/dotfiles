@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# This program will automatically search your mails.
+# And print number of new messages.
+# Require another prog for doing this, offlineimap, msmtp or isync.
+
+gmaildir=/home/user/.mails/Gmail/\[Gmail\].All\ Mail/new
+prog=/usr/bin/offlineimap
+count=0
+log=/tmp/mails.log
+
+if [ -x $prog ] ; then 
+
+    $prog 2>/dev/null &
+    wait
+    
+    if [ $? = 0 ] ; then 
+        echo "$(date) - $prog success" >> $log
+    elif [ $? = 1 ] ; then
+        echo "$(date) - $prog has fail" >> $log
+    else
+        echo "$(date) - unknown prob" >> $log
+    fi
+fi
+
+if [[ ! -d ${gmaildir} ]] ; then 
+    echo "$(date) - $gmaildir does not exist" >> $log
+elif [[ ! -n $(ls "${gmaildir}") ]] ; then
+    echo "$(date) - $gmaildir no new mail found" >> $log
+else
+    count=$(ls -1 "${gmaildir}" | wc -l)
+fi
+
+echo "${count}"

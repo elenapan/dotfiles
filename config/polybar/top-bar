@@ -1,0 +1,23 @@
+width = 98%
+height = 36
+offset-x = 1%
+offset-y = 4
+fixed-center = true
+bottom = false 
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 0
+line-color = #f00
+border-size = 0
+border-color = #00000000
+padding-left = 3
+padding-right = 3
+module-margin-left = 2
+module-margin-right = 2
+font-0 = NotoSans-Regular:size=6;2
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = "Material Icons:antialias=false:size=8;5"
+wm-restack = i3
+override-redirect = true
+cursor-click = pointer
+cursor-scroll = ns-resize

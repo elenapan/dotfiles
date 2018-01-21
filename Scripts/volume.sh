@@ -11,20 +11,20 @@ MUTE="$(pactl list sinks | grep -i "mute" | head -1 | awk '{print $2}')"
 
 if [[ "$MUTE" != "no" ]]; then
 	# Icon only
-	# echo "  "
+	echo " off"
 
 	# Text only
-	echo "VOL OFF"
+	# echo "VOL OFF"
 
 	# Line
 	# echo "-----------"
 else
 	# Text only
-	if [ "${VOL%?}" -ge "10" ]; then
-		echo "VOL $VOL"
-	else	
-		echo "VOL  $VOL"
-	fi
+	# if [ "${VOL%?}" -ge "10" ]; then
+	# 	echo "VOL $VOL"
+	# else	
+	# 	echo "VOL  $VOL"
+	# fi
 
 	# Line (with siji icons)
 	# VOL="$(echo ${VOL%?})"
@@ -53,15 +53,19 @@ else
 	# fi
 
 	# Icon only (simple)
-	# echo "  "
+	if [ "${VOL%?}" -ge "10" ]; then
+		echo " $VOL"
+	else	
+		echo "  $VOL"
+	fi
 
 	#Icon only (gradual)
 	# VOL="$(echo ${VOL%?})"
-	# if [ "$VOL" -ge "85" ]; then
-	# 	echo "  "
+	# if [ "$VOL" -ge "60" ]; then
+	# 	echo " $VOL%"
 	# elif [ "$VOL" -ge "20" ]; then
-	# 	echo "  "
+	# 	echo " $VOL%"
 	# else
-	# 	echo "  "
+	# 	echo " $VOL%"
 	# fi
 fi

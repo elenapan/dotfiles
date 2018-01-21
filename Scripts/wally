@@ -17,7 +17,7 @@ fi
 
 if [[ "$1" = "-c" ]]; then
 	echo "> Cleaning backups and exiting."
-	rm -rf wally_backup-*
+	rm -rf ~/.wally/wally_backup-*
 	exit 0;
 fi
 
@@ -26,6 +26,10 @@ echo "> Backing up linked files"
 TIMESTAMP="$(date +%F-%H:%M:%S)"
 cp -r -L ~/.wally/links ~/.wally/wally_backup-$TIMESTAMP
 cp ~/.wally/path_to_wallpaper ~/.wally/wally_backup-$TIMESTAMP
+
+# TODO!
+# To restore backups "cp -L desired_backup_dir/* ~/.wally/links"
+# And then "wally wallpaper_of_backed_up_dir"
 
 # Declare arrays
 declare -a color
@@ -80,6 +84,9 @@ echo "> tint2 has restarted!"
 # Template: ~/.local/share/themes/thebox/openbox-3/themerc
 openbox --reconfigure
 echo "> Openbox is reconfigured!"
+
+# Restarting dunst so it reloads config file
+dunst_restart
 
 # Create steam theme
 python3 ~/Programs/wal_steam/mywalsteam.py -w
