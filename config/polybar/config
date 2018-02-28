@@ -1,334 +1,861 @@
+;=====================================================
+
 [colors]
-background = #364A45 
-background-alt = ${xrdb:color0}
-foreground = #F9F9F6
-foreground-alt = ${xrdb:color7}
-primary = ${xrdb:color6}
-secondary = ${xrdb:color13}
-alert = ${xrdb:color9}
+background = ${xrdb:color0:#222}
+;background-alt = #DDD
+background-alt = #444
 
-[bar/top]
-dpi = 133
-;monitor = ${env:MONITOR:HDMI-1} 
-include-file = ~/.config/polybar/top-bar
-modules-left = hostname tor ip mpd volume
-modules-center = i3
-modules-right = mail memory cpu temperature battery wlan eth date lock
+foreground = ${xrdb:color7}
+foreground-alt = ${xrdb:color8}
 
-[bar/bottom]
-dpi = 133
-monitor = "eDP-1"
-include-file = ~/.config/polybar/bottom-bar
-modules-left = torDaemon dnsDaemon firewallDaemon
-modules-center = webbrowser wallpapers tchat wireshark
-modules-right = uptime last
+; for light theme
+;foreground-alt = #DDD
+;for dark theme
+;foreground-alt = #222
 
-[module/lock]
-type = custom/text
-content = " "
-content-foreground = ${colors.alert}
-click-left = i3lock -i ~/images/i3lock-gentoo-1366.png -e
+primary = #ffb52a
+alert = #bd2c40
 
-[module/uptime]
+color0 = ${xrdb:color0} 
+color1 = ${xrdb:color1} 
+color2 = ${xrdb:color2} 
+color3 = ${xrdb:color3} 
+color4 = ${xrdb:color4} 
+color5 = ${xrdb:color5} 
+color6 = ${xrdb:color6} 
+color7 = ${xrdb:color7}
+color8 = ${xrdb:color8}
+color9 = ${xrdb:color9}
+color10 = ${xrdb:color10}
+color11 = ${xrdb:color11}
+color12 = ${xrdb:color12}
+color13 = ${xrdb:color13}
+color14 = ${xrdb:color14}
+color15 = ${xrdb:color15}
+
+boxbg = ${xrdb:color0}
+boxfg = ${xrdb:color7}
+boxaccent = ${xrdb:color5}
+
+focused = ${xrdb:color4}
+unfocused = ${xrdb:color8}
+urgent = ${xrdb:color1}
+
+accent = ${xrdb:color1}
+accentmusic = ${xrdb:color7}
+
+;=================================================
+; General bar settings
+; (to be used on both bars)
+[barsettings]
+height = 25
+border_width = 0
+
+
+;border_color = ${colors.color8} 
+; transparent
+border_color = #00000000
+
+;;;;;;;;;;;;;;;;;; polybar
+[bar/bar]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+;width = 1000
+height = ${barsettings.height}
+;offset-x = 10%
+;offset-y = 20
+;override-redirect = true
+;wm-restack = i3
+radius = 0.0
+fixed-center = true
+tray-detached = false
+tray-background = ${colors.color0}
+;disable tray position to hide tray.
+;currently tray is on bottom bar
+tray-position = 
+;tray-position = right
+tray-padding = 2
+; set maxsize to 0 to disable tray
+; maxsize is icon size
+tray-maxsize = 16;
+;tray-transparent = true
+
+background = ${colors.color0}
+foreground = ${colors.color7}
+
+line-size = 2
+line-color = ${colors.color5}
+
+;border-size = 0
+;top bar borders
+border-bottom-size = ${barsettings.border_width} 
+;border-top-size = ${barsettings.border_width} 
+;border-left-size = ${barsettings.border_width} 
+;border-right-size = ${barsettings.border_width} 
+border-color =  ${barsettings.border_color} 
+
+spacing = 0
+
+padding-left = 0
+padding-right = 0
+
+module-margin = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = FuraCode Nerd Font:pixelsize=9:bold;2
+;font-0 = terminus:pixelsize=15;1
+;font-0 = tewi:pixelsize=10;1
+;font-0 = terminus:pixelsize=10;1
+;font-0 = pxplus ibm vga8:size=12:antialias=false;2
+font-1 = tewi:fontformat=truetype:size=9:antialias=false;1
+font-2 = siji:pixelsize=12;2
+font-3 = Iosevka Nerd Font:pixelsize=13;3
+font-4 = Weather Icons:size=12;1
+;;;;;;;;;;;;;;;;;;;;; MODULES TOP;;;;;;;;;;;;;;;;;;;;;;
+
+; minimal blocks
+modules-left = pad xwindow 
+modules-center= i3 
+modules-right = xkeyboard pad divider pad accuweather pad divider pad date 
+
+; ~~~~ minimal with triangles ~~~~
+;modules-left = rtriangle_inv mympd pad_alt rtriangle pad pad volume
+;modules-center= rtriangle_inv i3 rtriangle pad pad 
+;modules-right = xkeyboard pad pad battery pad rtriangle_inv date rtriangle pad 
+
+
+
+; ~~~ full with triangles ~~~
+;modules-left = rtriangle_inv i3 rtriangle pad pad xwindow
+;modules-center= wave rtriangle_inv mympd pad_alt rtriangle pad pad wave
+;modules-right = xkeyboard pad pad volume pad pad battery pad rtriangle_inv date rtriangle pad 
+;modules-right = xkeyboard pad pad volume pad pad cpu pad pad battery pad pad temperature pad rtriangle_inv date rtriangle pad 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+click-right = ~/Scripts/fullrofi
+;scroll-up = i3-msg workspace next_on_output
+;scroll-down = i3-msg workspace prev_on_output
+
+
+# Enable cursor changing when hovering over clickable / scrollable modules
+;cursor-click = pointer
+;cursor-scroll = ns-resize
+
+
+;;;;;;;;;;;;;;;;;;;;;; bottom bar ;;;;;;;;;;;;;;;;;;;;;;;;
+
+[bar/bot]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+;width = 1000
+height = ${barsettings.height}
+;offset-x = 10%
+;offset-y = 20
+;override-redirect = true
+;wm-restack = i3
+radius = 0.0
+fixed-center = true
+tray-detached = false
+tray-background = ${colors.color0}
+tray-position = center
+tray-padding = 2
+; set maxsize to 0 to disable tray
+; maxsize is icon size
+tray-maxsize = 16;
+;tray-transparent = true
+
+background = ${colors.color0}
+foreground = ${colors.color7}
+
+line-size = 2
+line-color = ${colors.color5}
+
+;border-size = 0
+; bottom bar borders
+;border-bottom-size = ${barsettings.border_width} 
+border-top-size = ${barsettings.border_width} 
+;border-left-size = ${barsettings.border_width} 
+;border-right-size = ${barsettings.border_width} 
+border-color =  ${barsettings.border_color}
+
+spacing = 0
+
+padding-left = 0
+padding-right = 0
+
+module-margin = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = FuraCode Nerd Font:pixelsize=9:bold;3
+;font-0 = terminus:pixelsize=15;1
+;font-0 = tewi:pixelsize=10;2
+;font-0 = terminus:pixelsize=10;2
+;font-0 = pxplus ibm vga8:size=12:antialias=false;2
+font-1 = tewi:fontformat=truetype:size=9:antialias=false;1
+font-2 = siji:pixelsize=12;2
+font-3 = Iosevka Nerd Font:pixelsize=13;3
+font-4 = Weather Icons:size=12;1
+;;;;;;;;;;;;;;;;;;;;; MODULES BOTTOM ;;;;;;;;;;;;;;;;;;;;;;
+
+bottom = true
+
+; minimal blocks
+modules-left = pad volume pad divider pad mympd
+modules-center= 
+modules-right = cpu pad divider pad memory pad divider pad temperature pad divider pad battery pad
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+click-right = ~/Scripts/fullrofi &
+;scroll-up = i3-msg workspace next_on_output
+;scroll-down = i3-msg workspace prev_on_output
+
+
+# Enable cursor changing when hovering over clickable / scrollable modules
+;cursor-click = pointer
+;cursor-scroll = ns-resize
+
+;;;;;;;;;;;;;;;;;;;;;;;;;; CUSTOM MODULES ;;;;;;;;;;;;;;;;;;;
+
+[module/accuweather]
 type = custom/script
-exec = uptime|awk '{print $2 " " $3 " " $4 " " $5 " " $6}'|cut -d ',' -f -2
-interval = 5
-format-prefix=" "
-format-prefix-foreground = ${colors.primary}
-format-foreground = ${colors.secondary}
+exec = ~/Scripts/accuweather.sh
+interval = 1200
+format-foreground = ${colors.color7}
+format-background = ${colors.color0}
+; fontawesome
+format-prefix = " "
+;format-prefix = "home » "
+;format-prefix = "HOME » "
 
-[module/last]
+;siji ???
+;format-prefix = " "
+;siji waterdrop
+;format-prefix = " "
+format-prefix-foreground = ${colors.accent}
+click-left = urxvt -e ~/Scripts/weather_details.sh &
+click-right= urxvt -e ~/Scripts/weather_forecast.sh &
+
+[module/mympd]
 type = custom/script
-exec = last -s yesterday |head -n1 | awk '{print $1 " " $2 " " $6 " " $7 " " $8 " " $9}'
-interval = 5
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-format-foreground = ${colors.secondary}
+exec = ~/Scripts/mpd-query-song.sh
+format-foreground = ${colors.boxfg}
+format-background = ${colors.boxbg}
+;siji
+;format-prefix = " "
 
-[module/wallpapers]
-type = custom/text
-content = " "
-content-foreground = ${colors.secondary}
-click-left = feh --draw-tinted -x -g 640x480 -B black -D 2.0 ~/images
+;fontawesome
+format-prefix = " "
 
-[module/webbrowser]
-type = custom/text
-content = " "
-content-foreground = ${colors.primary}
-click-left = vivaldi --proxy-server='phaeton:39901' --host-resolver-rules='MAP * 0.0.0.0 , EXCLUDE localhost' -incognito
+;format-prefix = "MPD » "
+;format-prefix = "music » "
+;format-prefix = "mpd » "
+format-prefix-foreground = ${colors.accent}
+label = %output:0:30:...%
 
-[module/tchat]
-type = custom/text
-content = " "
-content-foreground = ${colors.primary}
-click-left = termite -e weechat &
+; Will the script output continous content?
+; Default: false
+tail = true
+click-left = mpc toggle
+click-right = pavucontrol &
+click-middle = music &
+scroll-up = mpc prev
+scroll-down = mpc next
 
-[module/wireshark]
-type = custom/text
-content = " "
-content-foreground = ${colors.secondary}
-click-left = wireshark-gtk &
-
-[module/torDaemon]
+[module/openweathermap_simple]
 type = custom/script
-exec = ~/.config/polybar/status tor
-interval = 4
-format = <label>
-format-padding = 4
-format-foreground = ${colors.secondary}
-format-prefix= " "
-format-prefix-foreground = ${colors.primary}
+exec = ~/Themes/Polybar/custom-scripts/openweathermap-simple/openweathermap-simple.sh
+interval = 1200
+label-foreground = ${colors.accent}
+label-font = 3
 
-[module/dnsDaemon]
-type = custom/script
-exec = ~/.config/polybar/status dnscrypt-proxy
-interval = 4
-format = <label>
-format-padding = 4
-format-foreground = ${colors.secondary}
-format-prefix= " "
-format-prefix-foreground = ${colors.primary}
+; Weather icons
+;exec = echo "               "
+;label-font = 5
+; Siji icons
+;exec = echo "               "
+;label-font = 3
 
-[module/firewallDaemon]
-type = custom/script
-exec = ~/.config/polybar/status nftables
-interval = 4
-format = <label>
-format-padding = 4
-format-foreground = ${colors.secondary}
-format-prefix= " "
-format-prefix-foreground = ${colors.primary}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[module/bspwm]
-[module/bspwm]
-type = internal/bspwm
+[module/xwindow]
+type = internal/xwindow
+; fontawesome
+format-prefix = " "
+;format-prefix = "X » "
 
-label-focused = %icon%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
-label-focused-padding = 2
+; siji
+;format-prefix = " "
 
-label-occupied = %icon%
-label-occupied-padding = 2
+format-prefix-foreground = ${colors.accent}
+label = %title:0:40:...%
 
-label-urgent = %icon%
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
 
-label-empty = %icon%
-label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 2
+format = <label-layout><label-indicator>
+;format = <label-indicator> <label-layout> 
+
+; fontawesome
+format-prefix = " "
+;format-prefix = "KEYS » "
+;format-prefix = "keys » "
+; siji
+;format-prefix = " "
+format-prefix-foreground = ${colors.accent}
+format-prefix-underline = ${colors.color0}
+
+label-layout = %layout%
+label-layout-underline = ${colors.color0}
+
+;siji
+;
+
+
+;label-indicator = " •"
+;label-indicator = %{T3}%{T-}
+label-indicator = " "
+;label-indicator = " !"
+label-indicator-padding = 0
+label-indicator-margin = 0
+label-indicator-foreground = ${colors.focused}
+label-indicator-background = ${colors.color0}
+label-indicator-underline = ${colors.color0}
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.color3}
+
+
+;;;;;;;;;;;;;;;;;;;; i3wm module ;;;;;;;;;;;;;;;
 
 [module/i3]
 type = internal/i3
-format = <label-state> <label-mode>
-wrapping-scroll = false
+; put whitespace between labels to seperate them if needed
+format = <label-state><label-mode>
+index-sort = true
+wrapping-scroll = true
 
-; find icon name : fc-match -a |grep -i Material
-; to find icon: xfd -fa MaterialIcons,
-; echo "\ueXXX" to print and paste here
-ws-icon-0 = mail;
-ws-icon-1 = web;
-ws-icon-2 = code;
-ws-icon-3 = media;
-ws-icon-4 = gimp;
-ws-icon-5 = focus;
+; Only show workspaces on the same output as the bar 
+;pin-workspaces = true
+
+
+;;;;;;;; workspace icons ;;;;;;;
+
+; ~~~ numbers ~~~
+ws-icon-0 = 1;1
+ws-icon-1 = 2;2
+ws-icon-2 = 3;3
+ws-icon-3 = 4;4
+ws-icon-4 = 5;5
+ws-icon-5 = 6;6
+ws-icon-6 = 7;7
+ws-icon-7 = 8;8
+ws-icon-8 = 9;9
+ws-icon-9 = 10;10
+ws-icon-default = lol
+
+
+; ~~~ roman ~~~
+;ws-icon-0 = 1;I
+;ws-icon-1 = 2;II
+;ws-icon-2 = 3;III
+;ws-icon-3 = 4;IV
+;ws-icon-4 = 5;V
+;ws-icon-5 = 6;VI
+;ws-icon-6 = 7;VII
+;ws-icon-7 = 8;VIII
+;ws-icon-8 = 9;IX
+;ws-icon-9 = 10;X
+;ws-icon-default = lol
+
+; ~~~ english ~~~
+;ws-icon-0 = 1;one
+;ws-icon-1 = 2;two
+;ws-icon-2 = 3;three
+;ws-icon-3 = 4;four
+;ws-icon-4 = 5;five
+;ws-icon-5 = 6;six
+;ws-icon-6 = 7;seven
+;ws-icon-7 = 8;eight
+;ws-icon-8 = 9;nine
+;ws-icon-9 = 10;ten
+
+label-mode-padding = 1 
+label-mode-foreground = ${colors.urgent}
+label-mode-background = ${colors.boxbg}
+label-mode-underline = ${colors.boxbg}
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
 
 ; focused = Active workspace on focused monitor
 label-focused = %icon%
-label-focused-background = ${module/bspwm.label-focused-background}
-label-focused-underline = ${module/bspwm.label-focused-underline}
-label-focused-padding = ${module/bspwm.label-focused-padding}
+;label-focused = ~ %icon% ~
+;label-focused = • %icon% •
+label-focused-background = ${colors.boxbg}
+label-focused-foreground = ${colors.focused}
+label-focused-underline = ${colors.boxbg}
+;label-focused-overline= ${colors.color6}
+label-focused-padding = 1
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
-label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+label-unfocused-background = ${colors.boxbg}
+label-unfocused-foreground = ${colors.unfocused}
+label-unfocused-underline = ${colors.boxbg}
+label-unfocused-padding = 1 
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %iconx%
-label-visible-background = ${self.label-focused-background}
-label-visible-underline = ${self.label-focused-underline}
-label-visible-padding = ${self.label-focused-padding}
+label-visible = %icon%
+label-visible-background = ${colors.color3}
+label-visible-foreground = ${colors.color0}
+label-visible-underline = ${colors.color3}
+label-visible-padding = 1
 
-; urgent = Workspace with urgency hint set
-label-urgent = %icon%
-label-urgent-background = ${module/bspwm.label-urgent-background}
-label-urgent-padding = ${module/bspwm.label-urgent-padding}
-
-[module/ip]
-type = custom/script
-interval = 2
-format = "<label> "
-format-prefix-foreground = ${colors.primary}
-exec = echo "$(curl --limit-rate 1k -s https://ifcfg.me)" || echo ""
-
-[module/hostname]
-type = custom/script
-interval = 256
-format = "<label> "
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-exec = echo "$(uname -n)"
-
-[module/mail]
-type = custom/script
-; 600s = 10min
-interval = 600
-format = " <label> "
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-exec = ~/.config/polybar/mails
-
-[module/tor]
-type = custom/text
-content = " "
-content-foreground = ${colors.secondary}
-; need into /etc/sudoers line bellow to work
-; username ALL=(ALL) NOPASSWD: /bin/systemctl restart tor
-click-left = "sudo systemctl restart tor"
+; urgent = Workspace with urgency hint set 
+label-urgent= %icon%
+;label-urgent= • %icon% •
+label-urgent-background = ${colors.boxbg}
+label-urgent-foreground = ${colors.urgent}
+label-urgent-underline = ${colors.boxbg}
+label-urgent-padding = 1
 
 [module/mpd]
 type = internal/mpd
-host = 127.0.0.1
-port = 6600
-format-online = <icon-prev> <icon-pause> <icon-play> <icon-next> <label-song>
+format-online = <label-song> <icon-prev><icon-stop><toggle><icon-next>
+format-online-background = ${colors.boxbg}
 
-icon-prev = 
-icon-play = 
-icon-pause = 
-icon-next = 
-label-song = %{F#7a1B54}   %{F-} %{F#215d76}%artist:0:20% %{F-} %{F#B8eadb}*%{F-} %{F#602976} %title:0:32% %{F-}
+click-left = notify-send hi
 
-toggle-on-foreground = ${colors.primary}
-toggle-off-foreground = ${colors.secondary}
+icon-prev-background = ${colors.boxbg}
+icon-stop-background = ${colors.boxbg}
+icon-pause-background = ${colors.boxbg}
+icon-play-background = ${colors.boxbg}
+icon-next-background = ${colors.boxbg}
 
-label-offline = no sound
+icon-prev = " "
+icon-stop = " "
+icon-play = " "
+icon-pause = " "
+icon-next = ""
+icon-prev-foreground = ${colors.accentmusic}
+icon-stop-foreground = ${colors.accentmusic}
+icon-pause-foreground = ${colors.accentmusic}
+icon-play-foreground = ${colors.accentmusic}
+icon-next-foreground = ${colors.accentmusic}
+
+label-song-foreground = ${colors.boxfg}
+label-song = %artist% - %title%
+label-song-maxlen = 35
+label-song-ellipsis = true
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;; symbols ;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/divider]
+type = custom/text
+;content = /
+content = :
+;content = »
+;content = ::
+;content = |
+content-foreground = ${colors.color8}
+
+[module/wave]
+type = custom/text
+content = .:*~*:.
+content-foreground = ${colors.boxbg}
+
+[module/wave_full]
+type = custom/text
+content = .:*~*:._.:*~*:. 
+content-foreground = ${colors.accent}
+
+[module/pad]
+type = custom/text
+content = " "
+
+[module/pad_alt]
+type = custom/text
+content = " "
+content-background = ${colors.boxbg}
+
+[module/rarrow]
+type = custom/text
+content = %{T4}%{T-}
+content-foreground = ${colors.boxbg}
+content-background = ${colors.color0}
+
+[module/rarrow_inv]
+type = custom/text
+content = %{T4}%{T-}
+content-foreground = ${colors.color0}
+content-background = ${colors.boxbg}
+
+;[module/larrow]
+;type = custom/text
+;content = %{T4}%{T-}
+;content-foreground = ${colors.boxbg}
+;content-background = ${colors.color0}
+
+[module/rtriangle]
+type = custom/text
+content = %{T4}%{T-}
+content-foreground = ${colors.boxbg}
+content-background = ${colors.color0}
+
+[module/rtriangle_inv]
+type = custom/text
+content = %{T4} %{T-}
+content-foreground = ${colors.color0}
+content-background = ${colors.boxbg}
+
+[module/ltriangle]
+type = custom/text
+content = %{T4}%{T-}
+content-foreground = ${colors.boxbg}
+content-background = ${colors.color0}
+
+[module/ltriangle_inv]
+type = custom/text
+content = %{T4}%{T-}
+content-foreground = ${colors.color0}
+content-background = ${colors.boxbg}
+
+[module/musicalnote]
+type = custom/text
+content = ""
+content-foreground = ${colors.accent}
+content-background = ${colors.boxbg}
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = BL
+
+bar-width = 10
+bar-indicator = |
+bar-indicator-foreground = #ff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.color3}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
 
 [module/cpu]
 type = internal/cpu
-interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-format-underline = #f90000
-label = %percentage%%
+interval = 5
+;format-prefix = "CPU » "
+;format-prefix = "cpu » "
+; fontawesome
+format-prefix = " "
+; siji
+;format-prefix = " "
+format-prefix-foreground = ${colors.accent}
+format-underline = ${colors.color0}
+label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
-interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-format-underline = #4bffdc
+interval = 10
+; siji
+;format-prefix = " "
+
+; fontawesome
+;format-prefix = " "
+;format-prefix = " "
+format-prefix = " "
+
+;format-prefix = "ram » "
+;format-prefix = "RAM » "
+format-prefix-foreground = ${colors.accent}
+format-underline = ${colors.color0}
 label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlp2s0
-interval = 3.0
+interface = wlp3s0
+interval = 5.0
+
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
-label-connected = "%essid% -> %{F#aca074}%signal% %{F-}"
+label-connected = %essid%
 
-;format-disconnected = offline
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = %ifname% disconnected
-label-disconnected-foreground = ${colors.foreground-alt}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.secondary}
-
-[module/eth]
-type = internal/network
-interface = enp1s0f2
-interval = 3.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected = 
+format-disconnected =
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+;label-disconnected-foreground = ${colors.color6}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.accent}
+
+[module/eth]
+type = internal/network
+interface = enp2s0f0
+interval = 5.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.accent}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.color6}
 
 [module/date]
 type = internal/date
 interval = 5
 
-date = " %A %d %b %Y"
-date-alt = " %d-%m-%Y"
+date = " %a %d %B"
+;date-alt = " %Y-%m-%d"
 
-time = %H:%M
-time-alt = %H:%M:%S
+time = "%H:%M "
+;time-alt = %H:%M:%S
 
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-format-underline = #0a6cf5
+format-background = ${colors.boxbg}
+format-foreground = ${colors.boxfg}
+format-underline = ${colors.boxbg}
 
-label = %time% %date%
+;siji
+;format-prefix = ""
+
+;format-prefix = "NOW »"
+
+;fontawesome
+;clock
+format-prefix = ""
+
+format-prefix-foreground = ${colors.accent}
+
+label = %date% %time%
 
 [module/volume]
-type = custom/script
-interval = 2
-format = "<label> "
-format-prefix = " "
-format-prefix-foreground = ${colors.primary}
-exec = echo "$(mpc volume | awk '{print $2}')"
+type = internal/volume
+
+format-volume = <label-volume> <bar-volume>
+; siji
+;label-volume = 
+
+;fontawesome
+;label-volume = ""
+label-volume = ""
+
+;label-volume = "vol »"
+;label-volume = "VOL »"
+label-volume-foreground = ${colors.accent}
+
+;format-muted-prefix = "vol » "
+;format-muted-prefix = "VOL » "
+
+; siji
+;format-muted-prefix = " "
+
+;fontawesome
+;format-muted-prefix = " "
+format-muted-prefix = " "
+
+
+
+format-muted-foreground = ${colors.color8}
+;label-muted = ▸▸▸▸▸▸▸▸▸▸
+;label-muted = ••••••••••
+;label-muted = >>>>>
+label-muted = •••••
+;label-muted = ▸▸▸▸▸
+label-muted-foreground = ${colors.color0}
+bar-volume-width = 5
+bar-volume-foreground-0 = ${colors.accentmusic}
+bar-volume-foreground-1 = ${colors.accentmusic}
+bar-volume-foreground-2 = ${colors.accentmusic}
+bar-volume-foreground-3 = ${colors.accentmusic}
+bar-volume-foreground-4 = ${colors.accentmusic}
+bar-volume-foreground-5 = ${colors.accentmusic}
+bar-volume-foreground-6 = ${colors.accentmusic}
+bar-volume-gradient = false
+bar-volume-indicator = •
+bar-volume-indicator-foreground = ${colors.accentmusic}
+bar-volume-indicator-font = 1
+bar-volume-fill = •
+bar-volume-fill-font = 1
+bar-volume-empty = •
+bar-volume-empty-font = 1
+bar-volume-empty-foreground = ${colors.color0}
+
+;indicators -> ▸ ─ | •
 
 [module/battery]
 type = internal/battery
 battery = BAT0
-adapter = AC
+adapter = ACAD
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+format-charging = <animation-charging><label-charging>
+format-charging-underline = ${colors.color0}
 
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging = <ramp-capacity><label-discharging>
+format-discharging-underline = ${colors.color0}
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground}
-format-full-underline = ${self.format-charging-underline}
+;fontawesome
+format-full-prefix = " "
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+;format-full-prefix = "bat » "
+;format-full-prefix = "BAT » "
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
+;siji battery full + lightning
+;format-full-prefix = " "
+;siji battery full
+;format-full-prefix = " "
+
+format-full-prefix-foreground = ${colors.accent}
+;format-full-underline = ${self.format-charging-underline}
+format-full-underline = ${colors.color0}
+
+;ramp-capacity-0 = "BAT » *"
+;ramp-capacity-0 = "bat » *"
+
+;fontawesome 
+ramp-capacity-0 = " "
+ramp-capacity-1 = " "
+ramp-capacity-2 = " "
+ramp-capacity-3 = " "
+
+;siji
+;ramp-capacity-0 = " "
+;ramp-capacity-1 = " "
+;ramp-capacity-2 = " "
+
+ramp-capacity-foreground = ${colors.accent}
+
+;animation-charging-0 = "BAT » +"
+;animation-charging-0 = "bat » +"
+
+;siji lightning
+;animation-charging-0 =" "
+
+;siji plug vertical
+;animation-charging-0 =" "
+
+;siji plug horizontal
+;animation-charging-0 =" "
+
+; siji
+;animation-charging-0 =" "
+;animation-charging-1 =" "
+;animation-charging-2 =" "  
+
+; fontawesome
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
+
+;animation-charging-0 = " "
+
+animation-charging-foreground = ${colors.accent}
+;animation-charging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
-warn-temperature = 60
+warn-temperature = 70
+interval = 15
 
 format = <ramp> <label>
-format-underline = #f50a4d
 format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
+format-underline = ${colors.color0}
+format-warn-underline = ${colors.color0}
 
 label = %temperature%
 label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
+label-warn-foreground = ${colors.accent}
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
+; fontawesome
+ramp-0 = ""
+
+;siji
+;ramp-0 = ""
+
+;ramp-0 = "heat »"
+;ramp-0 = "HEAT »"
+;ramp-1 = "HEAT »"
+;ramp-2 = "HEAT »"
+ramp-foreground = ${colors.accent}
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.color5}
+label-close =  cancel
+label-close-foreground = ${colors.color5}
+label-separator = |
+label-separator-foreground = ${colors.accent}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
 
 [settings]
 screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
 
 [global/wm]
 margin-top = 0
 margin-bottom = 0
+
+; vim:ft=dosini
