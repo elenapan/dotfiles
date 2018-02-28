@@ -1,0 +1,90 @@
+! Font antialiasing
+!Xft.antialias: 1
+!Xft.autohint: 0
+!Xft.hinting: 0
+
+! DPI
+!Xft.dpi: 102
+!Xft.dpi: 96
+
+! Cursor theme
+xcursor.theme:            Vanilla-DMZ
+
+! URxvt config
+URxvt*termName:           rxvt-unicode
+URxvt*iconFile:			  /home/elena/.icons/oomox-wally-flat/apps/scalable/xfce4-workspaces.svg
+URxvt.scrollBar:          off
+
+! Copy-Paste
+!URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+!URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
+URxvt.font:               xft:FuraCode Nerd Font:size=9:antialias=true:hinting=true:autohint=true:bold
+!URxvt.font:               xft:Iosevka Nerd Font:size=9:antialias=true:hinting=true:autohint=true:bold
+
+!URxvt.font:               xft:terminus:size=12:antialias=false
+!URxvt.boldFont:               xft:terminus:size=12:antialias=false
+
+!URxvt.font:               xft:tewi:size=8:antialias=false
+!URxvt.boldFont:               xft:tewi:size=8:antialias=false
+
+!URxvt.font:               xft:pxplus ibm vga8:size=11:antialias=false
+!URxvt.boldFont:               xft:pxplus ibm vga8:size=11:antialias=false
+
+URxvt.letterSpace: 0
+URxvt.internalBorder:     8
+URxvt.geometry: 80x18
+URxvt*selectToClipboard:  true
+URxvt*saveLines:          10000
+
+URxvt.perl-ext-common:    default,matcher,tabbedex,searchable-scrollback
+URxvt.urlLauncher:        /usr/bin/firefox
+URxvt.matcher.button:     1
+URxvt.tabbed.tabbar-fg:   8
+URxvt.tabbed.tabbar-bg:   0
+URxvt.tabbed.tab-fg:      2
+URxvt.tabbed.tab-bg:      0
+URxvt.tabbed.new-button:  no
+URxvt.tabbed.title:       no
+
+! For Transparency
+urxvt*depth: 32
+!urxvt*background: rgba:0200/1000/1700/c700
+!URxvt*background: #050509
+!urxvt*background: rgba:0500/0500/0900/e00f
+!urxvt*background: rgba:0100/0000/0B00/e00f
+!urxvt*background: rgba:0000/0000/0b00/f00f
+!urxvt*background: rgba:0200/0000/0a00/ffff
+
+! xscreensaver
+xscreensaver.fade:        false
+xscreensaver.unfade: false
+
+rofi.bw: 0
+rofi.width: 50
+rofi.lines: 10
+rofi.scroll-method: 1
+
+*background:  	#F8F8F8
+*foreground:  	#737373
+*cursorColor:  	#737373
+*color0:  	#F8F8F8
+*color1:  	#B5407B
+*color2:  	#7BB540
+*color3:  	#B57B40
+*color4:  	#407BB5
+*color5:  	#7B40B5
+*color6:  	#40B57B
+*color7:  	#737373
+*color8:  	#A6A6A6
+*color9:  	#CD73A0
+*color10:  	#A0CD73
+*color11:  	#CDA073
+*color12:  	#73A0CD
+*color13:  	#A073CD
+*color14:  	#73CDA0
+*color15:  	#737373
+rofi.color-window: #F8F8F8, #B5407B, #40B57B
+rofi.color-normal: #F8F8F8, #737373, #F8F8F8, #40B57B, #F8F8F8
+rofi.color-active: #F8F8F8, #737373, #F8F8F8, #40B57B, #F8F8F8
+rofi.color-urgent: #F8F8F8, #B5407B, #F8F8F8, #B5407B, #737373
