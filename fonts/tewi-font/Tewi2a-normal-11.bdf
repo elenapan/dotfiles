@@ -1,0 +1,65 @@
+STARTFONT 2.1
+COMMENT Double story a, for use with normal Tewi as a fallback.
+COMMENT 
+COMMENT This file is part of bdf-tewi.
+COMMENT 
+COMMENT Tewi is free software: you can redistribute it and/or modify
+COMMENT it under the terms of the GNU General Public License as published by
+COMMENT the Free Software Foundation, either version 3 of the License, or
+COMMENT (at your option) any later version.
+COMMENT 
+COMMENT Tewi is distributed in the hope that it will be useful,
+COMMENT but WITHOUT ANY WARRANTY; without even the implied warranty of
+COMMENT MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+COMMENT GNU General Public License for more details.
+COMMENT 
+COMMENT You should have received a copy of the GNU General Public License
+COMMENT along with bdf-tewi.  If not, see <http://www.gnu.org/licenses/>.
+COMMENT 
+COMMENT As a special exception, if you create a document which uses this
+COMMENT font, and embed this font or unaltered portions of this font into
+COMMENT the document, this font does not by itself cause the resulting
+COMMENT document to be covered by the GNU General Public License. This
+COMMENT exception does not however invalidate any other reasons why the
+COMMENT document might be covered by the GNU General Public License. If you
+COMMENT modify this font, you may extend this exception to your version of
+COMMENT the font, but you are not obligated to do so. If you do not wish to
+COMMENT do so, delete this exception statement from your version.
+FONT -lucy-Tewi2a-medium-R-Normal--11-90-75-75-P-58-ISO10646-1
+SIZE 9 75 75
+FONTBOUNDINGBOX 5 5 0 0
+STARTPROPERTIES 19
+CHARSET_COLLECTIONS "ISO8859-2 ISO8859-5 ISO8859-9 ISO8859-4 ISO10646-1"
+COPYRIGHT "© lucy <ne.tetewi@gmail.com>"
+FOUNDRY "lucy"
+FAMILY_NAME "Tewi2a"
+WEIGHT_NAME "medium"
+SLANT "R"
+SETWIDTH_NAME "Normal"
+ADD_STYLE_NAME ""
+PIXEL_SIZE 11
+POINT_SIZE 90
+RESOLUTION_X 75
+RESOLUTION_Y 75
+SPACING "P"
+AVERAGE_WIDTH 60
+CHARSET_REGISTRY "ISO10646"
+CHARSET_ENCODING "1"
+FONT_ASCENT 9
+FONT_DESCENT 3
+_GBDFED_INFO "Edited with gbdfed 1.6."
+ENDPROPERTIES
+CHARS 1
+STARTCHAR LATIN SMALL LETTER A
+ENCODING 97
+SWIDTH 640 0
+DWIDTH 6 0
+BBX 5 5 0 0
+BITMAP
+70
+08
+78
+88
+78
+ENDCHAR
+ENDFONT
