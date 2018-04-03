@@ -1,13 +1,14 @@
 shadow-exclude = [ 
-    # Covered by no-dock-shadow
-    #"class_g ?= 'Polybar'",
+    "class_g ?= 'Polybar'",
     "class_g ?= 'slop'",
-    # For i3wm tabbed/stacked layout
+    # Disable i3wm titlebar shadows
+    #"class_g ?= 'i3-frame'",
+    # For i3wm tabbed/stacked layout transparency/shadows
     "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
 ];
 
 opacity-rule = [ 
-    # For i3wm tabbed/stacked layout
+    # For i3wm tabbed/stacked layout transparency/shadows
     "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
 ];
 
