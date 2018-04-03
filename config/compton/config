@@ -49,6 +49,5 @@ fade-delta = 5;
 
 # Specify a list of conditions of windows that should not be faded.
 #fade-exclude = [
-#    "name = 'poniesbox'"
+#    "name = '???'"
 #];
-  #compton -c --shadow-exclude "class_g = 'Polybar'" --focus-exclude "name = 'rofi'" -o 0.2 -r 1 -l -1 -t 0 -f -z -D 5 &
