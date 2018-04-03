@@ -1,0 +1,54 @@
+shadow-exclude = [ 
+    # Covered by no-dock-shadow
+    #"class_g ?= 'Polybar'",
+    "class_g ?= 'slop'",
+    # For i3wm tabbed/stacked layout
+    "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+];
+
+opacity-rule = [ 
+    # For i3wm tabbed/stacked layout
+    "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+];
+
+
+focus-exclude = [
+    "name = 'rofi'"
+
+];
+
+
+# Enabled client-side shadows on windows.
+shadow = true;
+# Don't draw shadows on DND windows.
+no-dnd-shadow = true;
+# Avoid drawing shadows on dock/panel windows.
+no-dock-shadow = false;
+# Zero the part of the shadow's mask behind the window. Fix some weirdness with ARGB windows.
+clear-shadow = true;
+# The blur radius for shadows. (default 12)
+shadow-radius = 1;
+# The left offset for shadows. (default -15)
+shadow-offset-x = -1;
+# The top offset for shadows. (default -15)
+shadow-offset-y = 0;
+# The translucency for shadows. (default .75)
+shadow-opacity = 0.2;
+
+
+# Fade windows during opacity changes.
+fading = true;
+# The time between steps in a fade in milliseconds. (default 10).
+fade-delta = 5;
+# Opacity change between steps while fading in. (default 0.028).
+#fade-in-step = 0.03;
+# Opacity change between steps while fading out. (default 0.03).
+#fade-out-step = 0.03;
+# Fade windows in/out when opening/closing
+# no-fading-openclose = true;
+
+# Specify a list of conditions of windows that should not be faded.
+#fade-exclude = [
+#    "name = 'poniesbox'"
+#];
+  #compton -c --shadow-exclude "class_g = 'Polybar'" --focus-exclude "name = 'rofi'" -o 0.2 -r 1 -l -1 -t 0 -f -z -D 5 &
