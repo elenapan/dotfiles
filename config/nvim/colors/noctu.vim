@@ -44,7 +44,7 @@ hi Folded              ctermfg=6     ctermbg=0     cterm=bold
 hi Conceal             ctermfg=6     ctermbg=NONE
 hi Directory           ctermfg=12
 hi Title               ctermfg=3     cterm=bold
-hi ErrorMsg            ctermfg=15    ctermbg=1
+hi ErrorMsg            ctermfg=1     ctermbg=0
 hi DiffAdd             ctermfg=0     ctermbg=2
 hi DiffChange          ctermfg=0     ctermbg=3
 hi DiffDelete          ctermfg=0     ctermbg=1
@@ -72,7 +72,7 @@ hi! link SpecialKey    NonText
 "}}}
 " Generic syntax {{{
 hi Delimiter       ctermfg=7
-hi Comment         ctermfg=8
+hi Comment         ctermfg=8   cterm=italic
 hi Underlined      ctermfg=4   cterm=underline
 hi Type            ctermfg=4
 hi String          ctermfg=11
