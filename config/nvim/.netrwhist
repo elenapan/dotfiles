@@ -1,10 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/home/elena/Scripts'
-let g:netrw_dirhist_2='/home/elena/.config/ncmpcpp'
-let g:netrw_dirhist_3='/home/elena/.config/cava'
-let g:netrw_dirhist_4='/home/elena/.config/i3'
-let g:netrw_dirhist_5='/home/elena/.config/dunst'
-let g:netrw_dirhist_6='/home/elena/Scripts'
-let g:netrw_dirhist_7='/home/elena/.config/ncmpcpp'
-let g:netrw_dirhist_8='/home/elena/.config/nvim/plugged/vim-airline/autoload/airline'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/data/Scripts/Rofi'
+let g:netrw_dirhist_2='/data/Documents/Uni/Object Oriented Programming/JavaPractice/Lab1/ce325/lab1test'
+let g:netrw_dirhist_3='/home/elena/.oh-my-zsh'
