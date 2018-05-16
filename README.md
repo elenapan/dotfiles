@@ -1,10 +1,8 @@
 # dotfiles
 
-OS: Ubuntu 17.04
+OS: Ubuntu 16.04
 
-WM: Openbox
-
-Bar: tint2
+WM: awesome
 
 ![Alt text](./screenshot.png?raw=true "Current desktop")
 
