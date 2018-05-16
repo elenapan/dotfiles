@@ -1,0 +1,10 @@
+map S toggle_statusbar
+set toggle_statusbar
+set window-title-basename true
+set statusbar-home-tilde true
+set font "Iosevka Nerd Font 11"
+set default-bg "#F8F8F8"
+set recolor-lightcolor "#F8F8F8"
+set recolor-darkcolor "#737373"
+set recolor-keephue true
+set recolor
