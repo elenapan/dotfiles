@@ -15,7 +15,9 @@ shadow-exclude = [
 
 opacity-rule = [ 
     # For i3wm tabbed/stacked layout transparency
-    "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+    "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+    # i3 titlebar transparency
+    "60:class_g = 'i3-frame'"
 ];
 
 
