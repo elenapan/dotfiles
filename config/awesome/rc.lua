@@ -249,7 +249,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag(names, s, layouts)
 
     -- Create a promptbox for each screen
-    s.mypromptbox = awful.widget.prompt({prompt = "Run: ", fg = beautiful.accent})
+    s.mypromptbox = awful.widget.prompt({prompt = " Run: ", fg = beautiful.accent})
     -- Create a textbox widget which will contain a short string representing
     -- the layout we're using.  We need one layoutbox per screen.
     s.mytextlayoutbox = wibox.widget.textbox()
@@ -498,7 +498,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "r",
               function ()
                   awful.prompt.run {
-                    prompt       = "Lua: ",
+                    prompt       = " Lua: ",
                     textbox      = awful.screen.focused().mypromptbox.widget,
                     exe_callback = awful.util.eval,
                     history_path = awful.util.get_cache_dir() .. "/history_eval"
