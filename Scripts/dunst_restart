@@ -1,1 +1,0 @@
-killall dunst && notify-send 'Hello world!' 'Dunst has restarted.' --icon=/home/elena/.icons/oomox-wally-flat/apps/scalable/gtk-info.svg

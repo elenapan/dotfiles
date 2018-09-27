@@ -1,1 +1,0 @@
-neofetch --backend w3m --source "$(cat ~/.wally/cat .wally/path_to_wallpaper)" --crop_offset northeast --crop_mode fill --disable gpu cpu memory icons theme wm model --block_range 1 7 --color_blocks on --size 190px

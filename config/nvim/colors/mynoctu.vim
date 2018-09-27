@@ -1,1 +1,0 @@
-/home/elena/Themes/Vim/mynoctu.vim
