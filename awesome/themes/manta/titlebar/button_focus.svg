@@ -1,0 +1,11 @@
+<svg viewBox="0 0 100 100">
+    <rect
+        style="fill:#F0719B; fill-opacity:1; stroke:#1E2541; stroke-width:0; stroke-opacity:1"
+        width="50"
+        height="50"
+        x="25"
+        y="25"
+        ry="25"
+        rx="25"
+    />
+</svg>
