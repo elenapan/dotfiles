@@ -1,0 +1,43 @@
+/* List context items from https://redd.it/8j9t5n */
+
+#context-back image,
+#context-forward image,
+#context-reload image,
+#context-stop image,
+#context-bookmarkpage image {
+display: none !important;
+}
+
+#context-navigation .menu-iconic-left {
+-moz-margin-start: 15px !important;
+/*adjust this for your OS/theme*/
+}
+
+#context-back:after,
+#context-forward:after,
+#context-reload:after,
+#context-stop:after,
+#context-bookmarkpage:after {
+content: attr(aria-label) !important;
+}
+
+#context-navigation {
+-moz-box-orient: vertical !important;
+}
+
+#context-navigation>.menuitem-iconic {
+-moz-box-pack: start !important;
+}
+
+/* End list context items */
+
+
+
+menupopup {
+  -moz-appearance: none !important;;
+  background-color: var(--menu-bg) !important;
+}
+
+#context-navigation{
+  background-color: var(--menu-bg) !important;
+}

@@ -1,0 +1,150 @@
+.tab-line,
+.titlebar-placeholder[type='pre-tabs'],
+#alltabs-button {
+    display: none !important;
+}
+
+.tabbrowser-tab[beforehovered]:after,
+.tabbrowser-tab:hover:after,
+.tabbrowser-tab[beforeselected-visible]:after,
+last-visible-tab,
+.tabbrowser-tab[last-visible-tab]:after,
+.tabbrowser-tab[selected]:after,
+.tabbrowser-tab[selected]:before {
+    border-color: var(--secondary) !important;
+}
+
+.tabbrowser-tab:after {
+    transform: scaleY(0.6) !important;
+}
+
+#main-window[sizemode='normal'] #new-tab-button {
+    margin-top: 0px !important;
+}
+
+#main-window[sizemode='normal'] #tabbrowser-tabs {
+    margin-top: 0px !important;
+}
+
+#new-tab-button {
+    margin: 0px -2px 0 8px !important;
+}
+
+/* Background behind tabs */
+#TabsToolbar
+{
+  -moz-appearance: none !important;
+  background: var(--secondary) !important;
+  color: inherit !important;
+  padding-inline-end: 2px !important;
+}
+
+.tabbrowser-tab[selected='true'] .tab-background {
+    background: var(--main) !important;
+    color: var(--selected-fg) !important;
+    min-height: 36px !important;
+    z-index: 100 !important;
+}
+
+#tabbrowser-tabs {
+    min-height: 36px !important;
+    max-height: 36px !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    background: var(--secondary) !important;
+    color: var(--unselected-fg) !important;
+}
+
+.arrowscrollbox-scrollbox {
+    padding: 0 8px 0 8px !important;
+    overflow: visible !important;
+}
+
+/* Tab curves */
+.tabbrowser-tab .tab-background {
+    height: 36px !important;
+    border-radius: 8px 8px 0 0 !important;
+    background: var(--secondary) !important;
+    position: relative !important;
+    -moz-transition: 10.25s filter ease-in-out;
+}
+
+.tab-background:before,
+.tab-background:after {
+    content: '';
+    position: absolute;
+    height: 8px;
+    width: 20px;
+    bottom: 0;
+    z-index: 50 !important;
+}
+
+.tab-background:after {
+    right: -20px;
+    border-radius: 0 0 0 8px;
+    box-shadow: -8px 0 0 0 var(--secondary);
+}
+
+.tab-background:before {
+    left: -20px;
+    border-radius: 0 0 8px 0;
+    box-shadow: 8px 0 0 0 var(--secondary);
+}
+
+.tab-background[selected]:after {
+    box-shadow: -8px 0 0 0 var(--main);
+}
+
+.tab-background[selected]:before {
+    box-shadow: 8px 0 0 0 var(--main);
+}
+
+.tabbrowser-tab:not([selected]):hover .tab-background {
+    filter: brightness(1.10) !important;
+    /*background: var(--hover) !important;*/
+    z-index: 100 !important;
+}
+
+.tabbrowser-tab:not(:hover):not([selected]) .tab-close-button {
+    display: none !important;
+}
+/* no close button */
+.tabbrowser-tab .tab-close-button {
+    display: none !important;
+}
+
+/*no scrolling*/
+
+.tabbrowser-tab {
+    min-width: initial !important;
+}
+.tab-content {
+    overflow: hidden !important;
+}
+
+/* No flash on load */
+
+.tab-loading-burst {
+    display: none !important;
+}
+
+/* greyscale icons in toolbar, not tabs*/
+toolbar#PersonalToolbar > toolbaritem#personal-bookmarks toolbarbutton.bookmark-item .toolbarbutton-icon {
+	filter: grayscale(100%);
+}
+
+/* favicons */
+.tab-icon-image {
+    /*Disable*/
+    display: none !important;
+
+    /*filter: grayscale(100%);*/
+    /*filter: contrast(10%);*/
+    /*filter: brightness(76%);*/
+
+    /*Add backdrop*/
+    /*With big enough padding, the favicon can be hidden*/
+    /*background-color: var(--favicon-backdrop) !important;*/
+    /*border-radius: 25%;*/
+    /*padding: 8px;*/
+}
