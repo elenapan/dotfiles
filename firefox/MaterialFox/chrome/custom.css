@@ -1,0 +1,179 @@
+/* Global font */
+/** {*/
+  /*font-size: 12pt !important;*/
+  /*font-family: sans-serif !important;*/
+  /*font-weight: normal !important;*/
+/*}*/
+
+#navigator-toolbox:after,
+.scrollbutton-down,
+.scrollbutton-up {
+    display: none !important;
+}
+
+#toolbar-menubar {
+    height: 30px !important;
+    background-color: var(--secondary) !important;
+}
+
+/*#main-menubar * {*/
+    /*color: var(--menu-fg) !important;*/
+    /*background: var(--menu-bg) !important;*/
+/*}*/
+
+#urlbar {
+    border-radius: 20px !important;
+    height: 28px !important;
+    border: none !important;
+    background-color: var(--urlbar-bg) !important;
+    color: var(--urlbar-fg) !important;
+    box-shadow: none !important;
+}
+
+/* No 'i' icon in urlbar */
+#identity-icon {
+    display: none !important;
+}
+/* No lock icon in urlbar */
+#identity-box {
+    display: none !important;
+}
+
+/* Center URL */
+#urlbar .urlbar-input-box {
+    text-align: center;
+    margin-bottom: 1px;
+}
+
+/* Remove Three Dots */
+#pageActionButton {
+  display: none !important;
+}
+
+#nav-bar {
+    background-image: none !important;
+    background-color: var(--main) !important;
+    height: 37px !important;
+    box-shadow: none !important;
+}
+
+/*#navigator-toolbox > toolbar:not(#toolbar-menubar):not(#TabsToolbar):not(#nav-bar) {*/
+    /*background-image: none;*/
+/*}*/
+
+#main-window[sizemode='normal'] #TabsToolbar {
+    height: 54px !important;
+}
+
+#main-window[sizemode='normal'] #titlebar-buttonbox {
+    height: 29px !important;
+    margin-bottom: 14px !important;
+}
+
+#main-window[sizemode='normal'] .private-browsing-indicator {
+    margin-top: 0px !important;
+}
+
+#PersonalToolbar {
+    height: 30px !important;
+    background-color: var(--main) !important;
+}
+
+.toolbarbutton-badge-stack,
+toolbarbutton:not(.bookmark-item):not(.titlebar-button):not(.subviewbutton)
+    > .toolbarbutton-icon,
+.tab-close-button,
+.bookmark-item {
+    background: unset !important;
+    border-radius: 20px !important;
+    transition: background 0.25s ease-in-out !important;
+}
+
+toolbarbutton:hover .toolbarbutton-badge-stack,
+toolbarbutton:not([disabled]):not(.bookmark-item):not(.titlebar-button):not(.subviewbutton):hover
+    > .toolbarbutton-icon,
+.bookmark-item:hover {
+    background: var(--hover) !important; /*darken on hover*/
+}
+
+.browserContainer {
+    background-color: var(--main) !important;
+}
+
+
+
+#reload-button > .toolbarbutton-icon{
+    border-radius: 8px !important;
+}
+
+#PanelUI-menu-button {
+    list-style-image: url('chrome://browser/skin/page-action.svg') !important;
+    transform: rotate(90deg);
+}
+
+
+/*#downloads-button[attention="success"] #downloads-indicator-icon {*/
+  /*display: visible !important;*/
+/*}*/
+
+/* During a download, force display of progress bar */
+#downloads-button[attention="success"] #downloads-indicator-progress-area 
+{
+  display: -moz-box !important;
+  visibility: visible !important;
+}
+
+/* After something have successfully completed downloading, set the color of the download icon*/
+#downloads-button[attention="success"] > #downloads-indicator-anchor > #downloads-indicator-icon,
+#downloads-button[attention="success"] > #downloads-indicator-anchor > #downloads-indicator-progress-outer
+{
+  fill: var(--download-button-finished) !important;
+}
+
+/* Sets the color of the animated arrow that appears when a download is starting*/
+#downloads-button[notification="start"] > #downloads-indicator-anchor > #downloads-indicator-icon,
+#downloads-notification-anchor[notification="start"] > #downloads-indicator-notification {
+   fill: var(--download-button-progress) !important;
+}
+
+/*Set the color of the download icon as something is downloading*/
+#downloads-button[progress] > #downloads-indicator-anchor > #downloads-indicator-icon,
+#downloads-button[progress] > #downloads-indicator-anchor > #downloads-indicator-progress-outer {
+  fill: var(--download-button-progress) !important;
+}
+
+/* Set the color for the progress bar as something is downloading */
+#downloads-button > #downloads-indicator-anchor > #downloads-indicator-progress-outer > #downloads-indicator-progress-inner {
+  fill: var(--download-button-progress) !important;
+}
+
+/* The default color of the download button */
+#downloads-button,
+#downloads-button[indicator="true"]:not([attention="success"]) #downloads-indicator-icon
+{
+  display: -moz-box !important;
+  /*visibility: visible !important;*/
+  fill: var(--download-button-default) !important;
+}
+
+/*#downloads-button[attention="success"] > #downloads-indicator-anchor > #downloads-indicator-icon,*/
+/*#downloads-button[attention="success"] > #downloads-indicator-anchor > #downloads-indicator-progress-outer {*/
+  /*-moz-context-properties: fill, fill-opacity;*/
+  /*fill: var(--toolbarbutton-icon-fill-attention);*/
+  /*fill-opacity: 1;*/
+/*}*/
+
+/*No zoom button*/
+#urlbar-zoom-button {display:none!important}
+
+/*Tab loading animation*/
+.tab-throbber::before {
+    fill: var(--tab-loading-dots) !important;
+    opacity: 1 !important;
+}
+
+
+/*No "saved to library" animation*/
+#confirmation-hint {
+    display: none !important;
+}

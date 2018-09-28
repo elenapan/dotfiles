@@ -1,0 +1,77 @@
+/* Based off of https://redd.it/7fxtdm*/
+
+@keyframes scale-out {
+    0% {
+        transform: scaleY(1);
+    }
+    100% {
+        transform: scaleY(0);
+    }
+}
+
+@keyframes scale-in {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+.browserContainer {
+    position: relative;
+}
+
+findbar {
+    animation: 0.2s scale-in;
+    transform-origin: top center;
+    padding: 4px 6px 6px 6px;
+    height: 55px !important;
+    line-height: 30px !important;
+    background: var(--findbar-bg) !important;
+    color: var(--findbar-fg) !important;
+    position: absolute;
+    top: 5px;
+    right: 35px;
+    border-radius: 3px !important;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
+    min-width: 300px !important;
+}
+
+findbar[hidden='true'] {
+    animation: 0.2s scale-out;
+}
+
+.findbar-closebutton .toolbarbutton-icon {
+    transform: scale(1.35);
+    padding: 2px !important;
+}
+.findbar-closebutton {
+    background: none !important;
+}
+
+.close-icon:hover {
+    fill-opacity: 0 !important;
+}
+
+.findbar-container > hbox > * {
+    border: none !important;
+    background: var(--findbar-bg) !important;
+    color: var(--findbar-fg) !important;
+}
+
+.findbar-container > hbox > toolbarbutton{
+  outline: 0 !important;
+}
+
+.findbar-container > hbox > toolbarbutton:hover:active {
+    box-shadow: none !important;
+}
+
+.findbar-container > hbox > toolbarbutton > .toolbarbutton-icon {
+    padding: 5px !important;
+}
+
+.findbar-find-status {
+    display: none !important;
+}

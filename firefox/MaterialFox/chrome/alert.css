@@ -1,0 +1,100 @@
+@keyframes scale-in {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+.browserContainer {
+    position: relative;
+}
+
+tabmodalprompt {
+    animation: 0.2s scale-in;
+    transform-origin: top center;
+    background-color: transparent !important;
+}
+
+
+.mainContainer{
+    position: relative !important;
+    transform: translateY(20px);
+    width: 450px !important;
+    height: 175px !important;
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: 0px 0px 6px 0 rgba(0,0,0,0.5) !important;
+}
+
+
+
+
+tabmodalprompt > spacer[flex='1'] {
+    display: none;
+}
+
+
+.buttonContainer{
+    background-color: transparent !important;
+    border: none !important;
+}
+
+
+.buttonContainer > button{
+    height: 33px !important;
+    width: 65px !important;
+    -moz-appearance: none !important;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.75) !important;
+    border-radius: 5px !important;
+    transition: background-color 0.3s linear, box-shadow 0.1s linear !important;
+}
+
+
+.buttonContainer > button[label="Leave Page"],
+.buttonContainer > button[label="OK"],
+.buttonContainer > button[label="Resend"]{
+    background-color: rgb(67,133,242) !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+.buttonContainer > button[label="Leave Page"] .button-text,
+.buttonContainer > button[label="OK"] .button-text,
+.buttonContainer > button[label="Resend"] .button-text{
+    color: white !important;
+}
+
+
+.buttonContainer > button:hover{
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75) !important;
+}
+
+
+.buttonContainer > button[label="OK"]:hover{
+    background-color: rgb(77, 100, 255) !important;
+}
+
+.topContainer  vbox {
+    text-align: left !important;
+}
+
+
+.buttonContainer > button:not([label="OK"]){
+    color: gray !important;
+}
+
+.checkbox-label-box, .checkbox-check{
+    display: none !important;
+}
+
+
+.topContainer textbox{
+    -moz-appearance: none !important;
+    border-radius: 3px !important;
+    border: 1px solid #B0B0B0 !important;
+    height: 35px !important;
+    
+}
+

@@ -1,0 +1,21 @@
+/*@-moz-document url("about:newtab") {  */
+    /*body {*/
+        /*background-color: #08070C !important;*/
+    /*}*/
+/*}*/
+
+/*@-moz-document url(about:blank) {*/
+    /*html,body { background: #08070C !important; }*/
+/*}*/
+
+
+/*fix dark text on dark inputbox*/
+input:not(.urlbar-input):not(.textbox-input):not(.form-control):not([type='checkbox']):not([type='radio']), textarea, select {
+    -moz-appearance: none !important;
+    background-color: white;
+    color: black;
+}
+
+#downloads-indicator-counter {
+    color: white;
+}

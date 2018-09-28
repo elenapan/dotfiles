@@ -1,0 +1,42 @@
+/* Manta Theme */
+:root {
+    /* .Xresources colors */
+    --color0:      #1E2541;
+    --color1:      #F0719B;
+    --color2:      #5AF7B0;
+    --color3:      #FFA56B;
+    --color4:      #57C7FF;
+    --color5:      #C792EA;
+    --color6:      #89DDFF;
+    --color7:      #EEFFFF;
+    --color8:      #354274;
+    --color9:      #F02E6E;
+    --color10:     #2CE592;
+    --color11:     #FF8537;
+    --color12:     #1DA0E2;
+    --color13:     #A742EA;
+    --color14:     #47BAE8;
+    --color15:     #DEE6E7;
+
+    --color16:	   #2A335A;
+
+    --main: var(--color0); /*selected tab and rest of navbar*/
+    --secondary: var(--color16); /* top background and all non-selected tabs*/
+    /*--secondary: hsla(0, 0%, 0%, 0%);*/
+    --selected-fg: var(--color7);
+    --unselected-fg: var(--color7);
+    --search: var(--color4);
+    --tab-loading-dots: var(--color7);
+    --findbar-bg: var(--color8);
+    --findbar-fg: var(--color7);
+    --urlbar-bg: var(--main);
+    --urlbar-fg: var(--color7);
+    --menu-bg: var(--color7);
+    --menu-fg: var(--color0);
+    --favicon-backdrop: var(--color4);
+    /*TODO: Download button needs work*/
+    --download-button-default: var(--color0);
+    --download-button-progress: var(--color3);
+    --download-button-finished: var(--color4);
+    --hover: hsla(0, 0%, 80%, 0.2);
+}
