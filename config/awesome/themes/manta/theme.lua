@@ -33,7 +33,7 @@ theme.font          = "monospace 12"
 local accent_color = xrdb.color14
 local focused_color = xrdb.color14
 local unfocused_color = xrdb.color7
-local urgent_color = xrdb.color1
+local urgent_color = xrdb.color11
 local backdrop_color = awesome.xrdb_get_value("", "color16")
 
 theme.bg_dark       = xrdb.background
