@@ -30,23 +30,43 @@ theme.wallpaper = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name 
 theme.font          = "monospace 12"
 --theme.font          = "sans-serif 12"
 
-local accent_color = xrdb.color14
-local focused_color = xrdb.color14
-local unfocused_color = xrdb.color7
-local urgent_color = xrdb.color11
-local backdrop_color = awesome.xrdb_get_value("", "color16")
+local xbackground = xrdb.background or	"#1E2541"
+local xforeground = xrdb.foreground or	"#EEFFFF"
+local xcolor0 = xrdb.color0 or	"#1E2541"
+local xcolor1 = xrdb.color1 or	"#F0719B"
+local xcolor2 = xrdb.color2 or	"#5AF7B0"
+local xcolor3 = xrdb.color3 or	"#FFA56B"
+local xcolor4 = xrdb.color4 or	"#57C7FF"
+local xcolor5 = xrdb.color5 or	"#C792EA"
+local xcolor6 = xrdb.color6 or	"#89DDFF"
+local xcolor7 = xrdb.color7 or	"#EEFFFF"
+local xcolor8 = xrdb.color8 or	"#354274"
+local xcolor9 = xrdb.color9 or	"#F02E6E"
+local xcolor10 = xrdb.color10 or	"#2CE592"
+local xcolor11 = xrdb.color11 or	"#FF8537"
+local xcolor12 = xrdb.color12 or	"#1DA0E2"
+local xcolor13 = xrdb.color13 or	"#A742EA"
+local xcolor14 = xrdb.color14 or	"#47BAE8"
+local xcolor15 = xrdb.color15 or	"#DEE6E7"
+local xcolor16 = awesome.xrdb_get_value("", "color16") or	"#2A335A"
 
-theme.bg_dark       = xrdb.background
-theme.bg_normal     = xrdb.background
-theme.bg_focus      = xrdb.background
-theme.bg_urgent     = xrdb.background
-theme.bg_minimize   = xrdb.color8
+local accent_color = xcolor14
+local focused_color = xcolor14
+local unfocused_color = xcolor7
+local urgent_color = xcolor11
+local backdrop_color = xcolor16
+
+theme.bg_dark       = xbackground
+theme.bg_normal     = xbackground
+theme.bg_focus      = xbackground
+theme.bg_urgent     = xbackground
+theme.bg_minimize   = xcolor8
 theme.bg_systray    = bg_dark
 
-theme.fg_normal     = xrdb.color7
+theme.fg_normal     = xcolor7
 theme.fg_focus      = focused_color
 theme.fg_urgent     = urgent_color
-theme.fg_minimize   = xrdb.color8
+theme.fg_minimize   = xcolor8
 
 -- Gaps
 theme.useless_gap   = dpi(5)
@@ -56,8 +76,8 @@ theme.screen_margin = dpi(5)
 
 -- Borders
 theme.border_width  = dpi(0)
-theme.border_normal = xrdb.color0
-theme.border_focus  = xrdb.color0
+theme.border_normal = xcolor0
+theme.border_focus  = xcolor0
 -- Rounded corners
 theme.border_radius = dpi(6)
 
@@ -72,12 +92,12 @@ theme.titlebar_title_align = "center"
 theme.titlebar_position = "top"
 -- Use 4 titlebars around the window to imitate borders
 theme.titlebars_imitate_borders = false
-theme.titlebar_bg = xrdb.color7
--- theme.titlebar_bg_focus = xrdb.color5
--- theme.titlebar_bg_normal = xrdb.color13
-theme.titlebar_fg_focus = xrdb.color7
-theme.titlebar_fg_normal = xrdb.color15
---theme.titlebar_fg = xrdb.color7
+theme.titlebar_bg = xcolor7
+-- theme.titlebar_bg_focus = xcolor5
+-- theme.titlebar_bg_normal = xcolor13
+theme.titlebar_fg_focus = xcolor7
+theme.titlebar_fg_normal = xcolor15
+--theme.titlebar_fg = xcolor7
 
 -- Variables set for theming notifications:
 -- notification_font
@@ -90,11 +110,11 @@ theme.titlebar_fg_normal = xrdb.color15
 theme.notification_position = "top_right"
 theme.notification_border_width = 0
 theme.notification_border_radius = theme.border_radius
-theme.notification_border_color = xrdb.color10
-theme.notification_bg = xrdb.color7
-theme.notification_fg = xrdb.color0
+theme.notification_border_color = xcolor10
+theme.notification_bg = xcolor7
+theme.notification_fg = xcolor0
 theme.notification_crit_bg = urgent_color
-theme.notification_crit_fg = xrdb.color0
+theme.notification_crit_fg = xcolor0
 theme.notification_margin = dpi(15)
 theme.notification_icon_size = dpi(50)
 --theme.notification_height = dpi(80)
@@ -134,17 +154,17 @@ theme.tagnames = { symb, symb, symb, symb, symb, symb, symb, symb, symb, symb }
 --theme.separator_text = " •• "
 --theme.separator_text = "  "
 theme.separator_text = "  "
-theme.separator_fg = xrdb.color8
+theme.separator_fg = xcolor8
 
 -- Wibar
 -- (The panel items can be customized in rc.lua)
 theme.wibar_position = "bottom"
 theme.wibar_detached = true
 theme.wibar_height = dpi(40)
-theme.wibar_fg = xrdb.color0
-theme.wibar_bg = xrdb.color7
+theme.wibar_fg = xcolor0
+theme.wibar_bg = xcolor7
 --theme.wibar_opacity = 0.7
-theme.wibar_border_color = xrdb.color0
+theme.wibar_border_color = xcolor0
 theme.wibar_border_width = 0
 theme.wibar_border_radius = theme.border_radius
 --theme.wibar_width = screen_width - theme.screen_margin * 4 -theme.wibar_border_width * 2
@@ -160,10 +180,10 @@ theme.wibar_alt_enabled = false
 theme.wibar_alt_position = "left" --fake position so it does not increase screen margin
 theme.wibar_alt_detached = false
 theme.wibar_alt_height = dpi(40)
-theme.wibar_alt_fg = xrdb.color7
-theme.wibar_alt_bg = xrdb.color0
+theme.wibar_alt_fg = xcolor7
+theme.wibar_alt_bg = xcolor0
 --theme.wibar_alt_opacity = 0.7
-theme.wibar_alt_border_color = xrdb.color0
+theme.wibar_alt_border_color = xcolor0
 theme.wibar_alt_border_width = 0
 theme.wibar_alt_border_radius = theme.border_radius
 theme.wibar_alt_width = 420
@@ -173,7 +193,7 @@ theme.wibar_alt_y = theme.screen_margin * 2
 --theme.wibar_alt_y = screen_height - theme.screen_margin * 2 - theme.wibar_alt_height - theme.wibar_alt_border_width * 2
 
 -- Widgets
-theme.prefix_fg = xrdb.color8
+theme.prefix_fg = xcolor8
 
  --There are other variable sets
  --overriding the default one when
@@ -191,13 +211,13 @@ theme.prefix_fg = xrdb.color8
  --Tasklist
 theme.tasklist_disable_icon = true
 theme.tasklist_plain_task_name = true
-theme.tasklist_bg_focus = xrdb.color0 .. "00"
+theme.tasklist_bg_focus = xcolor0 .. "00"
 theme.tasklist_fg_focus = focused_color
-theme.tasklist_bg_normal = xrdb.color0 .. "00"
+theme.tasklist_bg_normal = xcolor0 .. "00"
 theme.tasklist_fg_normal = unfocused_color
-theme.tasklist_bg_minimize = xrdb.color0 .. "00"
+theme.tasklist_bg_minimize = xcolor0 .. "00"
 theme.tasklist_fg_minimize = theme.fg_minimize
-theme.tasklist_bg_urgent = xrdb.color0 .. "00"
+theme.tasklist_bg_urgent = xcolor0 .. "00"
 theme.tasklist_fg_urgent = urgent_color
 theme.tasklist_spacing = 5
 theme.tasklist_align = "center"
@@ -207,13 +227,13 @@ theme.prompt_fg = accent_color
 
 -- Taglist
 theme.taglist_font = theme.font
-theme.taglist_bg_focus = xrdb.color0 .. "00"
-theme.taglist_fg_focus = xrdb.color9
-theme.taglist_bg_occupied = xrdb.color0 .. "00"
-theme.taglist_fg_occupied = xrdb.color1
-theme.taglist_bg_empty = xrdb.color0 .. "00"
-theme.taglist_fg_empty = xrdb.color15
-theme.taglist_bg_urgent = xrdb.color0 .. "00"
+theme.taglist_bg_focus = xcolor0 .. "00"
+theme.taglist_fg_focus = xcolor9
+theme.taglist_bg_occupied = xcolor0 .. "00"
+theme.taglist_fg_occupied = xcolor1
+theme.taglist_bg_empty = xcolor0 .. "00"
+theme.taglist_fg_empty = xcolor15
+theme.taglist_bg_urgent = xcolor0 .. "00"
 theme.taglist_fg_urgent = urgent_color
 theme.taglist_disable_icon = true
 theme.taglist_spacing = dpi(0)
@@ -302,20 +322,20 @@ theme.layout_cornersw = icon_path .. "cornersw.png"
 theme.layout_cornerse = icon_path .. "cornerse.png"
 
 -- Recolor layout icons
---theme = theme_assets.recolor_layout(theme, xrdb.color1)
+--theme = theme_assets.recolor_layout(theme, xcolor1)
 
 -- Desktop mode widget variables
 -- Symbols     
-theme.desktop_mode_color_floating = xrdb.color4
-theme.desktop_mode_color_tile = xrdb.color4
-theme.desktop_mode_color_max = xrdb.color3
+theme.desktop_mode_color_floating = xcolor4
+theme.desktop_mode_color_tile = xcolor4
+theme.desktop_mode_color_max = xcolor3
 theme.desktop_mode_text_floating = ""
 theme.desktop_mode_text_tile = ""
 theme.desktop_mode_text_max = ""
 -- Minimal tasklist widget variables
 theme.minimal_tasklist_visible_clients_color = focused_color
 theme.minimal_tasklist_visible_clients_text = "  "
-theme.minimal_tasklist_hidden_clients_color = xrdb.color8
+theme.minimal_tasklist_hidden_clients_color = xcolor8
 theme.minimal_tasklist_hidden_clients_text = "  "
 
 
