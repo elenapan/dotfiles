@@ -1,0 +1,32 @@
+# Based on Bridge by ScionicSpectre and Adwaita by GNOME
+# vim:set ts=2 sw=2 sts=2 ai et:
+#
+# This is the GTK+ 2 version of lovelace. It's whole purpose is to look as the
+# GTK+ 3 version as much as possible until GTK+ 2 dies completely.
+#
+# Note: comments for explaining styles are on the bottom of each file beside the
+# widget matches.
+
+# Declare the colours used throughout the theme.
+# There shouldn't be any fiddling with them in the theme files themselves in
+# order to not mess up the dark theme.
+
+# Text/base
+gtk-color-scheme = "text_color:#FDFDFD\nbase_color:#282A36"
+# Foreground/background
+gtk-color-scheme = "fg_color:#FDFDFD\nbg_color:#282A36"
+# Selected foreground/background
+gtk-color-scheme = "selected_fg_color:#282A36\nselected_bg_color:#C574DD"
+# Titlebar foreground/background
+gtk-color-scheme = "titlebar_fg_color:#FDFDFD\ntitlebar_bg_color:#282A36"
+# Links
+gtk-color-scheme = "link_color:#C574DD\nvisited_link_color:#E040FB"
+
+# Set GTK settings
+gtk-auto-mnemonics              = 1
+gtk-primary-button-warps-slider = 1
+
+# And hand over the control to the theme files
+include "main.rc"
+include "apps.rc"
+include "hacks.rc"
