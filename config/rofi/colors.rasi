@@ -1,0 +1,20 @@
+* {
+    xbg:    #1D1F28;
+    xfg:    #FDFDFD;
+    x0:     #282A36;
+    x1:     #F37F97;
+    x2:     #5ADECD;
+    x3:     #F2A272;
+    x4:     #8897F4;
+    x5:     #C574DD;
+    x6:     #79E6F3;
+    x7:     #FDFDFD;
+    x8:     #414458;
+    x9:     #FF4971;
+    x10:    #18E3C8;
+    x11:    #FF8037;
+    x12:    #556FFF;
+    x13:    #B043D1;
+    x14:    #3FDCEE;
+    x15:    #FDFDFD;
+}
