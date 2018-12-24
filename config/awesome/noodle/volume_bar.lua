@@ -7,6 +7,8 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+-- local xresources = require("beautiful.xresources")
+-- local xrdb = xresources.get_current_theme()
 
 -- Set colors
 local active_color = beautiful.volume_bar_active_color or "#5AA3CC"
@@ -46,17 +48,12 @@ local function update_widget()
         fill_color = active_color
         bg_color = active_background_color
       end
-      volume_bar.value = volume
+      volume_bar.value = tonumber(volume)
       volume_bar.color = fill_color
       volume_bar.background_color = bg_color
     end
   )
 end
-
--- Signals
--- volume_bar:connect_signal("mouse::enter", function ()
---     update_widget()
--- end)
 
 update_widget()
 

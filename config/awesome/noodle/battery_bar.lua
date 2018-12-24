@@ -29,17 +29,16 @@ local battery_bar = wibox.widget{
 }
 
 local function update_widget(bat)
-  battery_bar.value = bat
+  battery_bar.value = tonumber(bat)
 end
 
 local bat_script = [[
-  bash -c '
-  upower -i $(upower -e | grep BAT) | grep percentage
-  ']]
+  bash -c "
+  upower -i $(upower -e | grep BAT) | grep percentage | awk '{print $2}'
+  "]]
 
 awful.widget.watch(bat_script, update_interval, function(widget, stdout)
-                     local bat = stdout:match(':%s*(.*)..')
-                     -- bat = string.gsub(bat, '^%s*(.-)%s*$', '%1')
+                     local bat = stdout:gsub("%%", "")
                      update_widget(bat)
 end)
 
