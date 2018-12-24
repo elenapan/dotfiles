@@ -8,8 +8,8 @@
 + **Editors**: Spacemacs and Vim
 + **Browsers**: Firefox and Qutebrowser
 
-<!--## Latest preview-->
-<!--![Alt text](./screenshot.png?raw=true "Current desktop")-->
+## Latest preview
+![Alt text](./screenshot.png?raw=true "Current desktop")
 
 ## Tips / Notes
 + You can open an issue if you have any questions / problems.
