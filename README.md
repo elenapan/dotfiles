@@ -7,6 +7,7 @@
 + **Launcher**: Rofi
 + **Editors**: Spacemacs and Vim
 + **Browsers**: Firefox and Qutebrowser
++ **Icons**: [Linebit](https://play.google.com/store/apps/details?id=com.edzondm.linebit) for Android
 
 ## Latest preview
 ![Alt text](./screenshot.png?raw=true "Current desktop")
