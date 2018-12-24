@@ -8,11 +8,22 @@ local helpers = {}
 -- Create rounded rectangle shape
 helpers.rrect = function(radius)
     return function(cr, width, height)
-        --gears.shape.partially_rounded_rect(cr, width, height, true, true, false, false, 12)
         gears.shape.rounded_rect(cr, width, height, radius)
         --gears.shape.octogon(cr, width, height, radius)
         --gears.shape.rounded_bar(cr, width, height)
     end
+end
+
+helpers.rbar = function()
+  return function(cr, width, height)
+    gears.shape.rounded_bar(cr, width, height)
+  end
+end
+
+helpers.prrect = function(radius, tl, tr, br, bl)
+  return function(cr, width, height)
+    gears.shape.partially_rounded_rect(cr, width, height, tl, tr, br, bl, radius)
+  end
 end
 
 -- Create info bubble shape
@@ -86,6 +97,26 @@ function helpers.create_titlebar(c, titlebar_buttons, titlebar_position, titleba
         },
         layout = wibox.layout.align.horizontal
     }
+end
+
+
+local double_tap_timer = nil
+function helpers.single_double_tap(single_tap_function, double_tap_function)
+  if double_tap_timer then
+    double_tap_timer:stop()
+    double_tap_timer = nil
+    double_tap_function()
+    -- naughty.notify({text = "We got a double tap"})
+    return
+  end
+  
+  double_tap_timer =
+    gears.timer.start_new(0.20, function()
+                            double_tap_timer = nil
+                            -- naughty.notify({text = "We got a single tap"})
+                            single_tap_function()
+                            return false
+    end)
 end
 
 return helpers
