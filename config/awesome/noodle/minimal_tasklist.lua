@@ -11,13 +11,11 @@ local hidden_clients_color = beautiful.minimal_tasklist_hidden_clients_color or 
 local hidden_clients_text = beautiful.minimal_tasklist_hidden_clients_text or "h: "
 
 local minimal_tasklist = wibox.widget{
-    font = beautiful.font,
-    text = "placeholder",
+    text = "minimal_tasklist widget",
     align  = 'center',
     valign = 'center',
     widget = wibox.widget.textbox
 }
-    --TODO forced_width = ?
 
 -- Mouse control
 minimal_tasklist:buttons(gears.table.join(
@@ -90,19 +88,12 @@ local function update_widget()
     minimal_tasklist.text = txt
     minimal_tasklist.markup =
             "<span foreground='" .. visible_clients_color .."'>"
-            .. visible_clients_text .. "</span>" .. vpad .. #clients .. " ·~"
+            .. visible_clients_text .. "</span>" .. vpad .. #clients
             .. "<span foreground='" .. hidden_clients_color .."'>"
             .. hidden_clients_text .. "</span>" .. hpad .. #hidden_clients
 end
 
 -- Signals
---minimal_tasklist:connect_signal("mouse::enter", function ()
-    --awful.spawn.with_shell("notify-send hello")
---end)
---minimal_tasklist:connect_signal("mouse::leave", function ()
-    --awful.spawn.with_shell("notify-send bye")
---end)
-
 client.connect_signal("unmanage", function(c)
     update_widget()
 end)

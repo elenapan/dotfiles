@@ -10,13 +10,24 @@ local pad = helpers.pad
 -- Mouse buttons
 titlebars.buttons = gears.table.join(
     -- Left button - move
+    -- (Double tap - Toggle maximize) -- A little BUGGY
     awful.button({ }, 1, function()
-        c = mouse.object_under_pointer()
+        local c = mouse.object_under_pointer()
         client.focus = c
         c:raise()
-        awful.mouse.client.move(c)
+        -- awful.mouse.client.move(c)
+        local function single_tap()
+          awful.mouse.client.move(c)
+        end
+        local function double_tap()
+          gears.timer.delayed_call(function()
+              c.maximized = not c.maximized
+          end)
+        end
+        helpers.single_double_tap(single_tap, double_tap)
+        -- helpers.single_double_tap(nil, double_tap)
     end),
-    -- Middle button - close 
+    -- Middle button - close
     awful.button({ }, 2, function ()
         window_to_kill = mouse.object_under_pointer()
         window_to_kill:kill()
@@ -28,18 +39,6 @@ titlebars.buttons = gears.table.join(
         c:raise()
         awful.mouse.client.resize(c)
     end),
-    -- Scroll up - toggle ontop
-    awful.button({ }, 4, function()
-        c = mouse.object_under_pointer()
-        --c.maximized = not c.maximized
-        c.ontop = not c.ontop
-        c:raise()
-    end),
-    -- Scroll down - minimize
-    awful.button({ }, 5, function()
-        c = mouse.object_under_pointer()
-        c.minimized = true
-    end),
     -- Side button up - toggle floating
     awful.button({ }, 9, function()
         c = mouse.object_under_pointer()
@@ -48,10 +47,10 @@ titlebars.buttons = gears.table.join(
         c.floating = not c.floating
         c:raise()
     end),
-    -- Side button down - toggle sticky
+    -- Side button down - toggle ontop
     awful.button({ }, 8, function()
-        c = mouse.object_under_pointer()
-        c.sticky = not c.sticky
+        local c = mouse.object_under_pointer()
+        c.ontop = not c.ontop
     end)
 )
 
@@ -96,13 +95,12 @@ client.connect_signal("request::titlebars", function(c)
                 --awful.titlebar.widget.closebutton    (c),
                 --awful.titlebar.widget.maximizedbutton(c),
                 --awful.titlebar.widget.minimizebutton   (c),
-                --awful.titlebar.widget.ontopbutton    (c),
-                --awful.titlebar.widget.stickybutton   (c),
-                --awful.titlebar.widget.floatingbutton (c),
-
+                -- awful.titlebar.widget.ontopbutton    (c),
+                -- awful.titlebar.widget.stickybutton   (c),
+                -- awful.titlebar.widget.floatingbutton (c),
                 buttons = buttons,
                 --awful.titlebar.widget.iconwidget(c),
-                
+
                 layout  = titlebar_item_layout
             },
             { -- Middle
