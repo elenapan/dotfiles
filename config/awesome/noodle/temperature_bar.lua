@@ -29,7 +29,7 @@ local temperature_bar = wibox.widget{
 }
 
 local function update_widget(temp)
-  temperature_bar.value = temp
+  temperature_bar.value = tonumber(temp)
 end
 
 local temp_script = [[
@@ -39,7 +39,6 @@ local temp_script = [[
 
 awful.widget.watch(temp_script, update_interval, function(widget, stdout)
                      local temp = stdout
-                     temp = string.gsub(temp, '^%s*(.-)%s*$', '%1')
                      update_widget(temp)
 end)
 
