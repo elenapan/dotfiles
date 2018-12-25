@@ -34,12 +34,12 @@ desktop_control:buttons(gears.table.join(
         awful.client.focus.byidx(1)
     end),
     -- Side buttons - Minimize and restore minimized
-    awful.button({ }, 9, function ()
+    awful.button({ }, 8, function ()
         if client.focus ~= nil then
           client.focus.minimized = true
         end
     end),
-    awful.button({ }, 8, function ()
+    awful.button({ }, 9, function ()
         local c = awful.client.restore()
         if c then
           client.focus = c
