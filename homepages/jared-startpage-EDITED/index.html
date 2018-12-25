@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="favicon.png" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+    <div id="search">
+        <input id="search-field" type="text" name="search-field" onkeypress="return search(event)"/>
+    </div>
+    <div class="container">
+        <div id="clock"></div>
+        <div class="welcome-container">
+            <div class="row">
+                <div id="welcome-description"class="inline"></div>
+                <div class="inline"> Welcome Elena</div>
+                <div id="temp" class="inline"></div>
+            </div>
+        </div>
+        <div class="bookmark-container">
+            <div class="bookmark-set">
+                <div class="bookmark-title">Daily</div>
+                <div class="bookmark-inner-container">
+                    <a class="bookmark" href="https://youtube.com" target="_blank">Youtube</a>
+                    <a class="bookmark" href="https://inbox.google.com/" target="_blank">Inbox</a>
+                    <a class="bookmark" href="https://github.com/" target="_blank">Github</a>
+                    <a class="bookmark" href="https://drive.google.com/" target="_blank">Drive</a>
+                </div>
+            </div>
+            <div class="bookmark-set">
+            <div class="bookmark-title">Reddit</div>
+                <div class="bookmark-inner-container">
+                    <a class="bookmark" href="https://reddit.com/r/all" target="_blank">/r/all</a>
+                    <a class="bookmark" href="https://reddit.com/r/linux" target="_blank">/r/linux</a>
+                    <a class="bookmark" href="https://reddit.com/r/unixporn" target="_blank">/r/unixporn</a>
+                    <a class="bookmark" href="https://reddit.com/r/linuxgaming" target="_blank">/r/linuxgaming</a>
+                </div>
+            </div>
+            <div class="bookmark-set">
+                <div class="bookmark-title">4chan</div>
+                <div class="bookmark-inner-container">
+                    <a class="bookmark" href="https://4chan.org/g/" target="_blank">/g/ - Technology</a>
+                    <a class="bookmark" href="https://4chan.org/v/" target="_blank">/v/ - Video Games</a>
+                    <a class="bookmark" href="https://4chan.org/wg/" target="_blank">/wg/ - Wallpapers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Get current time and format
+        function getTime() {
+            let date = new Date(),
+                min = date.getMinutes(),
+                sec = date.getSeconds(),
+                hour = date.getHours();
+
+            return "" + 
+                (hour < 10 ? ("0" + hour) : hour) + ":" + 
+                (min < 10 ? ("0" + min) : min) + ":" + 
+                (sec < 10 ? ("0" + sec) : sec);
+        }
+
+        window.onload = () => {
+            // Set up the clock
+            document.getElementById("clock").innerHTML = getTime();
+            // Set clock interval to tick clock
+            setInterval( () => {
+                document.getElementById("clock").innerHTML = getTime();
+            },100);
+        }
+    </script>
+</body>
+</html>
