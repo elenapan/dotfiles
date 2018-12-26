@@ -10,7 +10,7 @@
 + **Icons**: [Linebit](https://play.google.com/store/apps/details?id=com.edzondm.linebit) for Android
 
 ## Latest preview
-![Alt text](./screenshot.png?raw=true "Current desktop")
+![Screenshot](./previews/lovelace.png?raw=true "Latest")
 
 ## Tips / Notes
 + You can open an issue if you have any questions / problems.
@@ -115,7 +115,7 @@ I use `super` AKA Windows key as my main modifier.
 
 ## Theme previews
 ### Manta
-![Alt text](./previews/manta.png?raw=true "manta theme")
+![Screenshot](./previews/manta.png?raw=true "manta theme")
 
 ### Reasons
-![Alt text](./previews/reasons.png?raw=true "reasons theme")
+![Screenshot](./previews/reasons.png?raw=true "reasons theme")
