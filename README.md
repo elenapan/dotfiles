@@ -34,6 +34,14 @@
 
    Such a directory should include at least a `theme.lua` and optionally icons, wallpaper, and whatever asset you need that is theme-specific.
 
+### Some recommended applications (in my order of preference)
++ **Terminals**: Termite / Kitty / urxvt / st
++ **File managers**: Nemo / Thunar
++ **Launchers**: Rofi / dmenu
++ **Browsers**: Firefox / Qutebrowser / Chromium
++ **Editors**: Spacemacs / Vim / Sublime Text (with NeoVintageous plugin)
++ **Music players**: mpd (with ncmpcpp as a client) / cmus
+
 ### Things to do before trying out these dotfiles
 + Configure default applications
 
@@ -88,10 +96,19 @@ I use `super` AKA Windows key as my main modifier.
 + ... And many many more.
 
 #### Mouse on desktop
++ `left click` - Dismiss all notifications, close sidebar and main menu
++ `double left click` - Jump to urgent client (or back to last tag if there is no such client)
 + `right click` - Main menu
 + `middle click` - Sidebar
 + `scroll up/down` - Cycle through tags
-+ `double left click` - Jump to urgent client (or back to last tag if there is no such client)
++ `move to left/right edge` - Show sidebar
++ ... And more.
+
+#### Mouse on titlebars
++ `left click` - Focus and raise
++ `left click (drag)` - Move
++ `right click (drag)` - Resize
++ `middle click` - Close
 + ... And more.
 
 ### More details about the sidebar
