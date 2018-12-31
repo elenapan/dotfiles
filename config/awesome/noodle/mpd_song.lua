@@ -14,7 +14,7 @@ local title_color =  beautiful.mpd_song_title_color or beautiful.wibar_fg
 local artist_color = beautiful.mpd_song_artist_color or beautiful.wibar_fg
 local paused_color = beautiful.mpd_song_paused_color or beautiful.normal_fg
 -- Set notification icon path
-local notification_icon = beautiful.mpd_icon
+local notification_icon = beautiful.music_icon
 
 local mpd_title = wibox.widget{
   text = "---------",
@@ -47,7 +47,7 @@ local function send_notification(artist, title)
       -- text = title .. " -- " .. artist,
       title = title,
       text = artist,
-      icon = beautiful.music_icon,
+      icon = notification_icon,
       -- width = 360,
       -- height = 90,
       icon_size = 60,
