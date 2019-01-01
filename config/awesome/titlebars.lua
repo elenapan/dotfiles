@@ -64,6 +64,7 @@ client.connect_signal("request::titlebars", function(c)
     local title_widget
     if beautiful.titlebar_title_enabled then
         title_widget = awful.titlebar.widget.titlewidget(c)
+        title_widget.font = beautiful.titlebar_font
         title_widget:set_align(beautiful.titlebar_title_align)
     else
         title_widget = wibox.widget.textbox("")

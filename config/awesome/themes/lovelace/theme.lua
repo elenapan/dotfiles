@@ -99,7 +99,7 @@ theme.border_radius = dpi(6)
 theme.titlebars_enabled = true
 theme.titlebar_size = dpi(35)
 theme.titlebar_title_enabled = false
-theme.titlebar_font = theme.font -- BUG: Uses theme.font regardless
+theme.titlebar_font = theme.font
 -- Window title alignment: left, right, center
 theme.titlebar_title_align = "center"
 -- Titlebar position: top, bottom, left, right
