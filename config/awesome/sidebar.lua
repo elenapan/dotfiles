@@ -219,7 +219,7 @@ date.align = "center"
 date.valign = "center"
 date.font = "sans medium 15"
 
-local fancy_date = wibox.widget.textclock("%j days around the sun")
+local fancy_date = wibox.widget.textclock("%-j days around the sun")
 fancy_date.align = "center"
 fancy_date.valign = "center"
 fancy_date.font = "sans 11"
