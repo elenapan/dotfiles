@@ -14,23 +14,23 @@ MUTED_ICON=~/.config/awesome/themes/lovelace/icons/muted.png
 NOTIF_ID=/tmp/volume-daemon-notification
 
 if [[ "$1" = "up" ]]; then
-    pactl set-sink-mute 0 0 && pactl set-sink-volume @DEFAULT_SINK@ +$STEP%
+    pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +$STEP%
 elif [[ "$1" = "UP" ]]; then
-    pactl set-sink-mute 0 0 && pactl set-sink-volume @DEFAULT_SINK@ +$BIG_STEP%
+    pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +$BIG_STEP%
 elif [[ "$1" = "down" ]]; then
-    pactl set-sink-mute 0 0 && pactl set-sink-volume @DEFAULT_SINK@ -$STEP%
+    pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -$STEP%
 elif [[ "$1" = "DOWN" ]]; then
-    pactl set-sink-mute 0 0 && pactl set-sink-volume @DEFAULT_SINK@ -$BIG_STEP%
+    pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ -$BIG_STEP%
 elif [[ "$1" = "toggle" ]]; then
-    pactl set-sink-mute 0 toggle
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
 elif [[ "$1" = "reset" ]]; then
-    pactl set-sink-mute 0 0 && pactl set-sink-volume @DEFAULT_SINK@ 50%
+    pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ 50%
 else
     echo "No argument."
 fi
 
 SIDEBAR_VISIBLE="$(awesome-client 'return sidebar.visible' | awk '{print $2}')"
-echo $SIDEBAR_VISIBLE
+# echo $SIDEBAR_VISIBLE
 if [[ "$SIDEBAR_VISIBLE" == "false" ]]; then
     var=$(pactl list sinks)
 
