@@ -77,8 +77,8 @@ local function update_widget()
       end
 
       -- Escape &'s
-      title = title:gsub("%&", "%&amp;")
-      artist = artist:gsub("%&", "%&amp;")
+      title = string.gsub(title, "&", "&amp;")
+      artist = string.gsub(artist, "&", "&amp;")
 
       -- naughty.notify({text = artist .. " - " .. title})
       mpd_title.markup =
