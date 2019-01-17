@@ -113,8 +113,8 @@ I use `super` AKA Windows key as my main modifier.
 
 ### More details about the sidebar
 + Can be toggled with `super+grave`, middle clicking anywhere on the desktop, or clicking the left icon on the bottom bar.
-+ Can be activated by moving the mouse to the edge of the screen and hidden by moving the mouse out of it (these settings can be easily enabled/disabled in your `theme.lua`.
-+ By default it is always above windows, and does not grab your keyboard (so you can have it open while doing something else, or just toggle it for a second to check your battery while you are watching something in fullscreen)
++ Can be activated by moving the mouse to the edge of the screen and hidden by moving the mouse out of it (these settings can be easily enabled/disabled in your `theme.lua`).
++ By default it is always above windows, and does not grab your keyboard (so you can have it open while doing something else, or just toggle it for a second to check your battery while you are watching something in fullscreen).
 + Most widgets (volume, search, exit, music...) are clickable. 
 + Volume and music update only when they need to, as they are subscribed to pulse and mpd events respectively.
 + For the weather widget I modified this [polybar custom script](https://github.com/x70b1/polybar-scripts/tree/master/polybar-scripts/openweathermap-simple). It uses the [openweathermap API](https://openweathermap.org/api). If you want this to work, you will need to create an account there, get your key, look for your city ID, and place them in `noodle/weather.lua`.
