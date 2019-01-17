@@ -1,0 +1,40 @@
+/* Dark Theme */
+:root {
+    /* .Xresources colors */
+    --background:	 #282A36;
+    --color0:      #1D1F28;
+    --color1:      #F37F97;
+    --color2:      #5ADECD;
+    --color3:      #F2A272;
+    --color4:      #8897F4;
+    --color5:      #C574DD;
+    --color6:      #79E6F3;
+    --color7:      #FDFDFD;
+    --color8:      #414458;
+    --color9:      #FF4971;
+    --color10:     #18E3C8;
+    --color11:     #FF8037;
+    --color12:     #556FFF;
+    --color13:     #B043D1;
+    --color14:     #3FDCEE;
+    --color15:     #BEBEC1;
+
+    --main: var(--color0); /*selected tab and rest of navbar*/
+    --secondary: var(--background); /* top background and all non-selected tabs*/
+    /*--secondary: hsla(0, 0%, 0%, 0%);*/
+    --selected-fg: var(--color7);
+    --unselected-fg: var(--color7);
+    --search: var(--color4);
+    --tab-loading-dots: var(--color7);
+    --findbar-bg: var(--color8);
+    --findbar-fg: var(--color7);
+    --urlbar-bg: var(--main);
+    --urlbar-fg: var(--color7);
+    --menu-bg: var(--background);
+    --menu-fg: var(--color7);
+    --favicon-backdrop: var(--color4);
+    --download-button-default: var(--color0);
+    --download-button-progress: var(--color3);
+    --download-button-finished: var(--color4);
+    --hover: hsla(0, 0%, 80%, 0.2);
+}
