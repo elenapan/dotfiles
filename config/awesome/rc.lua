@@ -774,15 +774,14 @@ client.connect_signal('property::geometry',
 )
 
 -- Make rofi able to unminimize minimized clients
--- Note: causes clients to unminimize after restarting awesome
-client.connect_signal("request::activate",
-    function(c, context, hints)
+client.connect_signal("request::activate", function(c, context, hints)
+    if not awesome.startup then
         if c.minimized then
             c.minimized = false
         end
         awful.ewmh.activate(c, context, hints)
     end
-)
+end)
 
 -- Startup applications
 awful.spawn.with_shell( os.getenv("HOME") .. "/.config/awesome/autostart.sh")
