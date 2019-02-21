@@ -5,12 +5,6 @@ local wibox = require("wibox")
 local naughty = require("naughty")
 local capi = { screen = screen, client = client }
 
--- Get theme variables
-local visible_clients_color = beautiful.icon_taglist_visible_clients_color or "#1D8CD2"
-local visible_clients_text = beautiful.icon_taglist_visible_clients_text or "v: "
-local hidden_clients_color = beautiful.icon_taglist_hidden_clients_color or "#2DD283"
-local hidden_clients_text = beautiful.icon_taglist_hidden_clients_text or "h: "
-
 local ntags = 10
 local s = awful.screen.focused()
 local tag_icons = {}
@@ -28,6 +22,7 @@ for i = 1, ntags do
           else
             clicked_tag:view_only()
           end
+          -- naughty.notify({ text = tostring(i) })
       end),
       -- Right click - Move focused client to tag
       awful.button({ }, 3, function ()
@@ -35,13 +30,6 @@ for i = 1, ntags do
           if client.focus then
             client.focus:move_to_tag(clicked_tag)
           end
-      end),
-      -- Scroll - Cycle through tags
-      awful.button({ }, 4, function ()
-          awful.tag.viewprev()
-      end),
-      awful.button({ }, 5, function ()
-          awful.tag.viewnext()
       end)
   ))
 end
@@ -59,6 +47,17 @@ local icon_taglist = wibox.widget{
   tag_icons[10],
   layout = wibox.layout.fixed.horizontal
 }
+
+icon_taglist:buttons(
+gears.table.join(
+  -- Scroll - Cycle through tags
+  awful.button({ }, 4, function ()
+      awful.tag.viewprev()
+  end),
+  awful.button({ }, 5, function ()
+      awful.tag.viewnext()
+  end)
+))
 
 local function update_widget()
   for i = 1, ntags do
@@ -79,6 +78,13 @@ local function update_widget()
 end
 
 -- Signals
+--icon_taglist:connect_signal("mouse::enter", function ()
+    --awful.spawn.with_shell("notify-send hello")
+--end)
+--icon_taglist:connect_signal("mouse::leave", function ()
+    --awful.spawn.with_shell("notify-send bye")
+--end)
+
 client.connect_signal("unmanage", function(c)
     update_widget()
 end)

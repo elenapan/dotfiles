@@ -1,22 +1,22 @@
 # dotfiles
 ## Some details
-+ **OS**: Ubuntu 16.04
++ **OS**: Antergos
 + **WM**: Awesome
-+ **Terminal**: Termite
++ **Terminal**: xst (fork of Suckless terminal)
 + **File Manager**: Nemo for GUI, Ranger for terminal
++ **Bar Icons**: Typicons Font
 + **Launcher**: Rofi
-+ **Editors**: Spacemacs and Vim
-+ **Browsers**: Firefox and Qutebrowser
-+ **Icons**: [Linebit](https://play.google.com/store/apps/details?id=com.edzondm.linebit) for Android
++ **Editor**: Vim
++ **Browser**: Firefox
 
 ## Latest preview
-![Screenshot](./previews/lovelace.png?raw=true "Latest")
+![Screenshot](./previews/skyfall.png?raw=true "Latest")
 
 ## Tips / Notes
 + You can open an issue if you have any questions / problems.
-+ Are you new to AwesomeWM?
-
-   Then I suggest you start from the default configuration and add pieces you like to it instead of trying to modify someone else's configuration even if you feel really comfortable with that specific config.  
++ If you are new to AwesomeWM...
+   
+   I suggest you start from the default configuration and add pieces you like to it instead of trying to modify someone else's configuration even if you feel really comfortable with that specific config.
    Otherwise you will have no idea how anything works and how you can modify things to your own liking. Trust me, I've been there.
 
 + Don't forget to use the [API Documentation for AwesomeWM](https://awesomewm.org/apidoc/index.html).
@@ -34,18 +34,22 @@
 
    Such a directory should include at least a `theme.lua` and optionally icons, wallpaper, and whatever asset you need that is theme-specific.
 
-### Some recommended applications (in my order of preference)
++ In `bar_themes` you can find a `.lua` file for each available bar or bar group.
+
+   Multiple bars can be created in one file.
+
+### Some recommended applications
 + **Terminals**: Termite / Kitty / urxvt / st
 + **File managers**: Nemo / Thunar
 + **Launchers**: Rofi / dmenu
-+ **Browsers**: Firefox / Qutebrowser / Chromium
-+ **Editors**: Spacemacs / Vim / Sublime Text (with NeoVintageous plugin)
-+ **Music players**: mpd (with ncmpcpp as a client) / cmus
++ **Browsers**: Firefox (with Vimium extension) / Qutebrowser
++ **Editors**: Vim / Sublime Text (with NeoVintageous plugin) / Spacemacs
++ **Music players**: mpd (with ncmpcpp)
 
 ### Things to do before trying out these dotfiles
 + Configure default applications
 
-   In `rc.lua` there is a section where default applications such as terminal, editor and file manager are defined.  
+   In `rc.lua` there is a section where default applications such as terminal, editor and file manager are defined.
    You should change those to your liking.
 
 + Configure autostart applications in `autostart.sh`
@@ -56,12 +60,12 @@
 
 + Install a Nerd Font
 
-   [Nerd Fonts](https://nerdfonts.com/#downloads) are monospace fonts with a ton of icons included.  
+   [Nerd Fonts](https://nerdfonts.com/#downloads) are monospace fonts with a ton of icons included.
    I use them quite a lot in my bars as icons.
 
 + Have a general idea of what my keybinds do
 
-   My keybinds will most probably not suit you, but on your first login you might need to know how to navigate the desktop.  
+   My keybinds will most probably not suit you, but on your first login you might need to know how to navigate the desktop.
 
    See the next section for more details.
 
@@ -99,7 +103,7 @@ I use `super` AKA Windows key as my main modifier.
 + `left click` - Dismiss all notifications, close sidebar and main menu
 + `double left click` - Jump to urgent client (or back to last tag if there is no such client)
 + `right click` - Main menu
-+ `middle click` - Sidebar
++ `middle click` - Start screen
 + `scroll up/down` - Cycle through tags
 + `move to left/right edge` - Show sidebar
 + ... And more.
@@ -111,13 +115,38 @@ I use `super` AKA Windows key as my main modifier.
 + `middle click` - Close
 + ... And more.
 
+### Custom titlebars per class / name / whatever
++ For the custom titlebars to work your terminal or application needs to be able to set its own class or name
+
+   Example: For the mpd titlebar it needs to have class "music" or name "Music Terminal". You can change this in `titlebars.lua`.
+   You can find an example script that launches a terminal like this in `bin/music_terminal`
+    ```shell
+    # Termite
+    termite --class music --exec ncmpcpp
+    # st / xst
+    st -c music -e ncmpcpp
+    # urxvt (untested but should work)
+    urxvt -t "Music Terminal" -e ncmpcpp
+    ```
++ Of course you can set your own custom titlebars for any application as long as you know its class, name, instance, whatever and then creating a custom titlebar setup in the existing if-else block in `titlebars.lua`. For example `if c.class == "Thunar" ...`
++ You can find details such as class, name, and others for any client with the `xprop` utility.
+
+### More details about the start screen
++ Activate it with `super+F1`, or by middle clicking anywhere on the desktop.
++ Dismiss with `escape`, `q` or `F1` or `middle click`.
++ You can scroll on the calendar to switch to the previous / next month. Left click to reset.
++ The fortune box requires `fortune`. Clicking it gives you a new fortune cookie :)
++ The brightness bar requires `xbacklight`.
++ The bell icon suspends / re-enables notifications on click.
++ The camera icon takes a screenshot instantly on left click and with a 5 second delay on right click. Requires "screenshot.sh" from my repo. Alternatively you can set your own screenshot command.
+
 ### More details about the sidebar
-+ Can be toggled with `super+grave`, middle clicking anywhere on the desktop, or clicking the left icon on the bottom bar.
++ Can be toggled with `super+grave`.
 + Can be activated by moving the mouse to the edge of the screen and hidden by moving the mouse out of it (these settings can be easily enabled/disabled in your `theme.lua`).
 + By default it is always above windows, and does not grab your keyboard (so you can have it open while doing something else, or just toggle it for a second to check your battery while you are watching something in fullscreen).
 + Most widgets (volume, search, exit, music...) are clickable. 
 + Volume and music update only when they need to, as they are subscribed to pulse and mpd events respectively.
-+ For the weather widget I modified this [polybar custom script](https://github.com/x70b1/polybar-scripts/tree/master/polybar-scripts/openweathermap-simple). It uses the [openweathermap API](https://openweathermap.org/api). If you want this to work, you will need to create an account there, get your key, look for your city ID, and place them in `noodle/weather.lua`.
++ For the weather widget I modified this [polybar custom script](https://github.com/x70b1/polybar-scripts/tree/master/polybar-scripts/openweathermap-simple). It uses the [openweathermap API](https://openweathermap.org/api). If you want this to work, you will need to create an account there, get your key, look for your city ID, and place them in `noodle/weather.lua`. (Same goes for `text_weather.lua`)
 
 ### More details about the exit screen
 + Activate it with `super+escape`, by clicking Exit on the sidebar, or in the right click menu (awesome -> quit)
@@ -131,6 +160,9 @@ I use `super` AKA Windows key as my main modifier.
   + `l` to lock
 
 ## Theme previews
+### Lovelace
+![Screenshot](./previews/lovelace.png?raw=true "lovelace theme")
+
 ### Manta
 ![Screenshot](./previews/manta.png?raw=true "manta theme")
 

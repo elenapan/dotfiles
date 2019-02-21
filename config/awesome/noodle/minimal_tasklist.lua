@@ -85,7 +85,6 @@ local function update_widget()
         --hpad = "_"
     end
 
-    minimal_tasklist.text = txt
     minimal_tasklist.markup =
             "<span foreground='" .. visible_clients_color .."'>"
             .. visible_clients_text .. "</span>" .. vpad .. #clients
@@ -94,6 +93,13 @@ local function update_widget()
 end
 
 -- Signals
+--minimal_tasklist:connect_signal("mouse::enter", function ()
+    --awful.spawn.with_shell("notify-send hello")
+--end)
+--minimal_tasklist:connect_signal("mouse::leave", function ()
+    --awful.spawn.with_shell("notify-send bye")
+--end)
+
 client.connect_signal("unmanage", function(c)
     update_widget()
 end)
