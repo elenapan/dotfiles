@@ -26,38 +26,29 @@ run mpd ~/.config/mpd/mpd.conf
 #run urxvtd -q -o -f
 
 # Mpv input file
-#mkfifo /tmp/mpv.fifo
+if [ ! -e /tmp/mpv.fifo ]; then
+    mkfifo /tmp/mpv.fifo
+fi
 
-# For desktop effects
-run compton --config ~/.config/compton/compton.conf
+# Desktop effects
+#run compton --config ~/.config/compton/compton.conf
 
 # Enable numlock on login
 run numlockx
 
-# For battery notifications
-# run xfce4-power-manager
+# Battery notifications
+# run battery_daemon
 
 # Network manager tray icon
 run nm-applet
 
-# Keyboard
-#setxkbmap -layout "us,gr" -option "grp:alt_shift_toggle"
-#setxkbmap -layout "us,gr,ru" -option "grp:alt_shift_toggle"
+# Keyboard layout
+# setxkbmap -layout "us,gr" -option "grp:alt_shift_toggle" &
+# setxkbmap -layout "us,de" -option "grp:alt_shift_toggle" &
+# setxkbmap -layout "us,gr,ru" -option "grp:alt_shift_toggle"
 
 # Caps Lock is Escape (Escape remains as is)
 # setxkbmap -option caps:escape
 
-# Kill redshift processes
-# pkill redshift
-
 # Scratchpad
-#scratchpad
-
-# Update battery status and send signals
-CHARGING="$(udevadm info --path=/sys/class/power_supply/BAT0 | grep POWER_SUPPLY_STATUS | grep Charging)"
-if [ ${#CHARGING} -eq "0" ]; then
-    AWESOME_SIGNAL="charger_unplugged"
-else
-    AWESOME_SIGNAL="charger_plugged"
-fi
-awesome-client "awesome.emit_signal(\"$AWESOME_SIGNAL\")"
+# scratchpad

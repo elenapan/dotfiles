@@ -2,17 +2,25 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 
 local helpers = require("helpers")
 local pad = helpers.pad
 
+-- Some commonly used variables
+local playerctl_button_size = dpi(48)
+local icon_size = dpi(36)
+local progress_bar_width = dpi(215)
+-- local progress_bar_margins = dpi(9)
+
 -- Item configuration
 local exit_icon = wibox.widget.imagebox(beautiful.poweroff_icon)
 exit_icon.resize = true
-exit_icon.forced_width = 40
-exit_icon.forced_height = 40
+exit_icon.forced_width = icon_size
+exit_icon.forced_height = icon_size
 local exit_text = wibox.widget.textbox("Exit")
-exit_text.font = "sans 13"
+exit_text.font = "sans 14"
 
 local exit = wibox.widget{
   exit_icon,
@@ -26,42 +34,61 @@ exit:buttons(gears.table.join(
                  end)
 ))
 
-local weather_widget = require("noodle.weather")
-local weather_widget_text = weather_widget:get_all_children()[2]
-weather_widget_text.font = "sans 13"
+-- local weather_widget = require("noodle.weather")
+-- local weather_widget_icon = weather_widget:get_all_children()[1]
+-- weather_widget_icon.forced_width = icon_size
+-- weather_widget_icon.forced_height = icon_size
+-- local weather_widget_text = weather_widget:get_all_children()[2]
+-- weather_widget_text.font = "sans 14"
+
 -- Dummy weather_widget for testing
 -- (avoid making requests with every awesome restart)
--- local weather_widget = wibox.widget.textbox("[icon] clear sky 8oC")
-local weather = wibox.widget{
-    pad(0),
-    weather_widget,
-    pad(0),
-    layout = wibox.layout.align.horizontal,
-    expand = "none"
-}
+-- local weather_widget = wibox.widget.textbox("[i] bla bla bla!")
+
+-- local weather = wibox.widget{
+--     nil,
+--     weather_widget,
+--     nil,
+--     layout = wibox.layout.align.horizontal,
+--     expand = "none"
+-- }
 
 local temperature_icon = wibox.widget.imagebox(beautiful.temperature_icon)
 temperature_icon.resize = true
-temperature_icon.forced_width = 40
-temperature_icon.forced_height = 40
+temperature_icon.forced_width = icon_size
+temperature_icon.forced_height = icon_size
 local temperature_bar = require("noodle.temperature_bar")
+temperature_bar.forced_width = progress_bar_width
+-- temperature_bar.margins.top = progress_bar_margins
+-- temperature_bar.margins.bottom = progress_bar_margins
 local temperature = wibox.widget{
-  pad(0),
+  nil,
   {
     temperature_icon,
     pad(1),
     temperature_bar,
+    pad(1),
     layout = wibox.layout.fixed.horizontal
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.horizontal
 }
+temperature:buttons(
+  gears.table.join(
+    awful.button({ }, 1, function ()
+        -- local matcher = function (c)
+        --   return awful.rules.match(c, {name = 'watch sensors'})
+        -- end
+        -- awful.client.run_or_raise(terminal .." -e 'watch sensors'", matcher)
+        awful.spawn(terminal .. " -e 'watch sensors'", {floating = true})
+    end)
+))
 
 local battery_icon = wibox.widget.imagebox(beautiful.battery_icon)
 battery_icon.resize = true
-battery_icon.forced_width = 40
-battery_icon.forced_height = 40
+battery_icon.forced_width = icon_size
+battery_icon.forced_height = icon_size
 awesome.connect_signal(
   "charger_plugged", function(c)
     battery_icon.image = beautiful.battery_charging_icon
@@ -71,33 +98,41 @@ awesome.connect_signal(
     battery_icon.image = beautiful.battery_icon
 end)
 local battery_bar = require("noodle.battery_bar")
+battery_bar.forced_width = progress_bar_width
+-- battery_bar.margins.top = progress_bar_margins
+-- battery_bar.margins.bottom = progress_bar_margins
 local battery = wibox.widget{
-  pad(0),
+  nil,
   {
     battery_icon,
     pad(1),
     battery_bar,
+    pad(1),
     layout = wibox.layout.fixed.horizontal
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.horizontal
 }
 
 local cpu_icon = wibox.widget.imagebox(beautiful.cpu_icon)
 cpu_icon.resize = true
-cpu_icon.forced_width = 40
-cpu_icon.forced_height = 40
+cpu_icon.forced_width = icon_size
+cpu_icon.forced_height = icon_size
 local cpu_bar = require("noodle.cpu_bar")
+cpu_bar.forced_width = progress_bar_width
+-- cpu_bar.margins.top = progress_bar_margins
+-- cpu_bar.margins.bottom = progress_bar_margins
 local cpu = wibox.widget{
-  pad(0),
+  nil,
   {
     cpu_icon,
     pad(1),
     cpu_bar,
+    pad(1),
     layout = wibox.layout.fixed.horizontal
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.horizontal
 }
@@ -120,18 +155,22 @@ cpu:buttons(
 
 local ram_icon = wibox.widget.imagebox(beautiful.ram_icon)
 ram_icon.resize = true
-ram_icon.forced_width = 40
-ram_icon.forced_height = 40
+ram_icon.forced_width = icon_size
+ram_icon.forced_height = icon_size
 local ram_bar = require("noodle.ram_bar")
+ram_bar.forced_width = progress_bar_width
+-- ram_bar.margins.top = progress_bar_margins
+-- ram_bar.margins.bottom = progress_bar_margins
 local ram = wibox.widget{
-  pad(0),
+  nil,
   {
     ram_icon,
     pad(1),
     ram_bar,
+    pad(1),
     layout = wibox.layout.fixed.horizontal
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.horizontal
 }
@@ -153,8 +192,8 @@ ram:buttons(
 ))
 
 
-local playerctl_button_size = 50
 local playerctl_toggle_icon = wibox.widget.imagebox(beautiful.playerctl_toggle_icon)
+-- local playerctl_toggle_icon = wibox.widget.imagebox(beautiful.playerctl_toggle_icon)
 playerctl_toggle_icon.resize = true
 playerctl_toggle_icon.forced_width = playerctl_button_size
 playerctl_toggle_icon.forced_height = playerctl_button_size
@@ -164,6 +203,13 @@ playerctl_toggle_icon:buttons(gears.table.join(
                          end),
                          awful.button({ }, 3, function ()
                              awful.spawn.with_shell("mpvc toggle")
+                         end),
+                         awful.button({ }, 8, function ()
+                             sidebar.visible = false
+                             awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube")
+                         end),
+                         awful.button({ }, 9, function ()
+                             awful.spawn.with_shell("~/scr/info/mpv-query.sh")
                          end)
 ))
 
@@ -194,7 +240,7 @@ playerctl_next_icon:buttons(gears.table.join(
 ))
 
 local playerctl_buttons = wibox.widget {
-  pad(0),
+  nil,
   {
     playerctl_prev_icon,
     pad(1),
@@ -203,7 +249,7 @@ local playerctl_buttons = wibox.widget {
     playerctl_next_icon,
     layout  = wibox.layout.fixed.horizontal
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.horizontal,
 }
@@ -211,36 +257,64 @@ local playerctl_buttons = wibox.widget {
 local time = wibox.widget.textclock("%H %M")
 time.align = "center"
 time.valign = "center"
-time.font = "sans 50"
+time.font = "sans 55"
+time:buttons(gears.table.join(
+                awful.button({ }, 1, function ()
+                    calendar_toggle()
+                end),
+                awful.button({ }, 3, function ()
+                    calendar_toggle()
+                end)
+))
 
-local date = wibox.widget.textclock("%A, %B %d")
+local date = wibox.widget.textclock("%B %d")
+-- local date = wibox.widget.textclock("%A, %B %d")
 -- local date = wibox.widget.textclock("%A, %B %d, %Y")
 date.align = "center"
 date.valign = "center"
-date.font = "sans medium 15"
+date.font = "sans medium 16"
+date:buttons(gears.table.join(
+                awful.button({ }, 1, function ()
+                    calendar_toggle()
+                end),
+                awful.button({ }, 3, function ()
+                    calendar_toggle()
+                end)
+))
 
-local fancy_date = wibox.widget.textclock("%-j days around the sun")
+-- local fancy_date = wibox.widget.textclock("%-j days around the sun")
+local fancy_date = wibox.widget.textclock("Knowing that today is %A fills you with determination.")
 fancy_date.align = "center"
 fancy_date.valign = "center"
-fancy_date.font = "sans 11"
+fancy_date.font = "sans italic 11"
+fancy_date:buttons(gears.table.join(
+                awful.button({ }, 1, function ()
+                    calendar_toggle()
+                end),
+                awful.button({ }, 3, function ()
+                    calendar_toggle()
+                end)
+))
 
 local mpd_song = require("noodle.mpd_song")
 local mpd_widget_children = mpd_song:get_all_children()
 local mpd_title = mpd_widget_children[1]
 local mpd_artist = mpd_widget_children[2]
-mpd_title.font = "sans medium 13"
+mpd_title.font = "sans medium 14"
 mpd_artist.font = "sans 11"
+
 -- Set forced height in order to limit the widgets to one line.
 -- Might need to be adjusted depending on the font.
-mpd_title.forced_height = 22
-mpd_artist.forced_height = 22
+mpd_title.forced_height = dpi(24)
+mpd_artist.forced_height = dpi(16)
 
 mpd_song:buttons(gears.table.join(
                 awful.button({ }, 1, function ()
                     awful.spawn.with_shell("mpc toggle")
                 end),
                 awful.button({ }, 3, function ()
-                    awful.spawn(terminal .. " -e ncmpcpp", {floating = true})
+                    -- Spawn music terminal
+                    awful.spawn("music_terminal")
                 end),
                 awful.button({ }, 4, function ()
                     awful.spawn.with_shell("mpc prev")
@@ -251,19 +325,19 @@ mpd_song:buttons(gears.table.join(
 ))
 
 local disk_space = require("noodle.disk")
-disk_space.font = "sans 13"
+disk_space.font = "sans 14"
 local disk_icon = wibox.widget.imagebox(beautiful.files_icon)
 disk_icon.resize = true
-disk_icon.forced_width = 40
-disk_icon.forced_height = 40
+disk_icon.forced_width = icon_size
+disk_icon.forced_height = icon_size
 local disk = wibox.widget{
-  pad(0),
+  nil,
   {
     disk_icon,
     disk_space,
     layout = wibox.layout.fixed.horizontal
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.horizontal
 }
@@ -279,10 +353,10 @@ disk:buttons(gears.table.join(
 
 local search_icon = wibox.widget.imagebox(beautiful.search_icon)
 search_icon.resize = true
-search_icon.forced_width = 40
-search_icon.forced_height = 40
+search_icon.forced_width = icon_size
+search_icon.forced_height = icon_size
 local search_text = wibox.widget.textbox("Search")
-search_text.font = "sans 13"
+search_text.font = "sans 14"
 
 local search = wibox.widget{
   search_icon,
@@ -292,26 +366,33 @@ local search = wibox.widget{
 search:buttons(gears.table.join(
                  awful.button({ }, 1, function ()
                      awful.spawn.with_shell("rofi -show combi")
+                     sidebar.visible = false
                  end),
                  awful.button({ }, 3, function ()
                      awful.spawn.with_shell("rofi -show run")
+                     sidebar.visible = false
                  end)
 ))
 
 local volume_icon = wibox.widget.imagebox(beautiful.volume_icon)
 volume_icon.resize = true
-volume_icon.forced_width = 40
-volume_icon.forced_height = 40
+volume_icon.forced_width = icon_size
+volume_icon.forced_height = icon_size
 local volume_bar = require("noodle.volume_bar")
+volume_bar.forced_width = progress_bar_width
+-- volume_bar.shape = gears.shape.circle
+-- volume_bar.margins.top = progress_bar_margins
+-- volume_bar.margins.bottom = progress_bar_margins
 local volume = wibox.widget{
-  pad(0),
+  nil,
   {
     volume_icon,
     pad(1),
     volume_bar,
+    pad(1),
     layout = wibox.layout.fixed.horizontal
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.horizontal
 }
@@ -337,30 +418,34 @@ volume:buttons(gears.table.join(
                  end)
 ))
 
-
 -- Create the sidebar
 sidebar = wibox({x = 0, y = 0, visible = false, ontop = true, type = "dock"})
-
 sidebar.bg = beautiful.sidebar_bg or beautiful.wibar_bg or "#111111"
 sidebar.fg = beautiful.sidebar_fg or beautiful.wibar_fg or "#FFFFFF"
 sidebar.opacity = beautiful.sidebar_opacity or 1
 sidebar.height = beautiful.sidebar_height or awful.screen.focused().geometry.height
-sidebar.width = beautiful.sidebar_width or 300
+sidebar.width = beautiful.sidebar_width or dpi(300)
 sidebar.y = beautiful.sidebar_y or 0
 local radius = beautiful.sidebar_border_radius or 0
 if beautiful.sidebar_position == "right" then
   sidebar.x = awful.screen.focused().geometry.width - sidebar.width
   sidebar.shape = helpers.prrect(radius, true, false, false, true)
 else
-  sidebar.x = 0
+  sidebar.x = beautiful.sidebar_x or 0
   sidebar.shape = helpers.prrect(radius, false, true, true, false)
 end
+-- sidebar.shape = helpers.rrect(radius)
 
 sidebar:buttons(gears.table.join(
                   -- Middle click - Hide sidebar
                   awful.button({ }, 2, function ()
                       sidebar.visible = false
                   end)
+                  -- Right click - Hide sidebar
+                  -- awful.button({ }, 3, function ()
+                  --     sidebar.visible = false
+                  --     -- mymainmenu:show()
+                  -- end)
 ))
 
 -- Hide sidebar when mouse leaves
@@ -371,7 +456,9 @@ if beautiful.sidebar_hide_on_mouse_leave then
 end
 -- Activate sidebar by moving the mouse at the edge of the screen
 if beautiful.sidebar_hide_on_mouse_leave then
-  local sidebar_activator = wibox({y = 0, width = 1, height = awful.screen.focused().geometry.height, visible = true, ontop = false, opacity = 0, below = true})
+  local sidebar_activator = wibox({y = sidebar.y, width = 1, visible = true, ontop = false, opacity = 0, below = true})
+  sidebar_activator.height = sidebar.height
+  -- sidebar_activator.height = sidebar.height - beautiful.wibar_height
   sidebar_activator:connect_signal("mouse::enter", function ()
                                      sidebar.visible = true
   end)
@@ -384,9 +471,10 @@ if beautiful.sidebar_hide_on_mouse_leave then
 
   sidebar_activator:buttons(
     gears.table.join(
-      awful.button({ }, 2, function ()
-          sidebar.visible = not sidebar.visible
-      end),
+      -- awful.button({ }, 2, function ()
+      --     start_screen_show()
+      --     -- sidebar.visible = not sidebar.visible
+      -- end),
       awful.button({ }, 4, function ()
           awful.tag.viewprev()
       end),
@@ -403,9 +491,10 @@ sidebar:setup {
     pad(1),
     time,
     date,
-    fancy_date,
     pad(1),
-    weather,
+    fancy_date,
+    -- pad(1),
+    -- weather,
     pad(1),
     pad(1),
     layout = wibox.layout.fixed.vertical
@@ -435,7 +524,7 @@ sidebar:setup {
   },
   { ----------- BOTTOM GROUP -----------
     { -- Search and exit screen
-      pad(0),
+      nil,
       {
         search,
         pad(5),
@@ -443,7 +532,7 @@ sidebar:setup {
         pad(2),
         layout = wibox.layout.fixed.horizontal
       },
-      pad(0),
+      nil,
       layout = wibox.layout.align.horizontal,
       expand = "none"
     },

@@ -2,7 +2,6 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local naughty = require("naughty")
 
 local helpers = require("helpers")
 local pad = helpers.pad
@@ -22,7 +21,8 @@ local reboot_command = function()
   awful.keygrabber.stop(exit_screen_grabber)
 end
 local suspend_command = function()
-  awful.spawn.with_shell("i3lock & systemctl suspend")
+  awful.spawn.with_shell("systemctl suspend")
+  -- awful.spawn.with_shell("i3lock & systemctl suspend")
   exit_screen_hide()
 end
 local exit_command = function()
@@ -36,7 +36,7 @@ end
 local username = os.getenv("USER")
 -- Capitalize username
 local goodbye_widget = wibox.widget.textbox("Goodbye " .. username:sub(1,1):upper()..username:sub(2))
-goodbye_widget.font = "sans 50"
+goodbye_widget.font = "sans 70"
 
 local poweroff_icon = wibox.widget.imagebox(beautiful.poweroff_icon)
 poweroff_icon.resize = true
@@ -47,9 +47,9 @@ poweroff_text.font = text_font
 
 local poweroff = wibox.widget{
   {
-    pad(0),
+    nil,
     poweroff_icon,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
@@ -60,6 +60,7 @@ local poweroff = wibox.widget{
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
+  -- forced_width = 100,
   layout = wibox.layout.fixed.vertical
 }
 poweroff:buttons(gears.table.join(
@@ -77,19 +78,20 @@ reboot_text.font = text_font
 
 local reboot = wibox.widget{
   {
-    pad(0),
+    nil,
     reboot_icon,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
   {
-    pad(0),
+    nil,
     reboot_text,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
+  -- forced_width = 100,
   layout = wibox.layout.fixed.vertical
 }
 reboot:buttons(gears.table.join(
@@ -107,19 +109,20 @@ suspend_text.font = text_font
 
 local suspend = wibox.widget{
   {
-    pad(0),
+    nil,
     suspend_icon,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
   {
-    pad(0),
+    nil,
     suspend_text,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
+  -- forced_width = 100,
   layout = wibox.layout.fixed.vertical
 }
 suspend:buttons(gears.table.join(
@@ -138,19 +141,20 @@ exit_text.font = text_font
 
 local exit = wibox.widget{
   {
-    pad(0),
+    nil,
     exit_icon,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
   {
-    pad(0),
+    nil,
     exit_text,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
+  -- forced_width = 100,
   layout = wibox.layout.fixed.vertical
 }
 exit:buttons(gears.table.join(
@@ -168,9 +172,9 @@ lock_text.font = text_font
 
 local lock = wibox.widget{
   {
-    pad(0),
+    nil,
     lock_icon,
-    pad(0),
+    nil,
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
@@ -181,6 +185,7 @@ local lock = wibox.widget{
     expand = "none",
     layout = wibox.layout.align.horizontal
   },
+  -- forced_width = 100,
   layout = wibox.layout.fixed.vertical
 }
 lock:buttons(gears.table.join(
@@ -199,18 +204,24 @@ exit_screen = wibox({x = 0, y = 0, visible = false, ontop = true, type = "dock",
 exit_screen.bg = beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111"
 exit_screen.fg = beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
+-- Create an container box
+-- local exit_screen_box = wibox.container.background()
+-- exit_screen_box.bg = exit_screen.bg
+-- exit_screen_box.shape = gears.shape.rounded_rect
+-- exit_screen_box.shape_border_radius = 20
+
 local exit_screen_grabber
 function exit_screen_hide()
   awful.keygrabber.stop(exit_screen_grabber)
   exit_screen.visible = false
 end
 function exit_screen_show()
-  -- naughty.notify({text = "starting the keygrabber"})
   exit_screen_grabber = awful.keygrabber.run(function(_, key, event)
       if event == "release" then return end
 
       if     key == 's'    then
         suspend_command()
+      -- 'e' for exit
       elseif key == 'e'    then
         exit_command()
       elseif key == 'l'    then
@@ -220,7 +231,6 @@ function exit_screen_show()
       elseif key == 'r'    then
         reboot_command()
       elseif key == 'Escape' or key == 'q' or key == 'x' then
-        -- naughty.notify({text = "Cancel"})
         exit_screen_hide()
       -- else awful.keygrabber.stop(exit_screen_grabber)
       end
@@ -241,17 +251,17 @@ exit_screen:buttons(gears.table.join(
 
 -- Item placement
 exit_screen:setup {
-  pad(0),
+  nil,
   {
     {
-      pad(0),
+      nil,
       goodbye_widget,
-      pad(0),
+      nil,
       expand = "none",
       layout = wibox.layout.align.horizontal
     },
     {
-      pad(0),
+      nil,
       {
         -- {
           poweroff,
@@ -267,14 +277,14 @@ exit_screen:setup {
         -- },
         -- widget = exit_screen_box
       },
-      pad(0),
+      nil,
       expand = "none",
       layout = wibox.layout.align.horizontal
       -- layout = wibox.layout.fixed.horizontal
     },
     layout = wibox.layout.fixed.vertical
   },
-  pad(0),
+  nil,
   expand = "none",
   layout = wibox.layout.align.vertical
 }

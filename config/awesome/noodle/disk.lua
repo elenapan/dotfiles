@@ -13,6 +13,24 @@ local disk = wibox.widget{
     widget = wibox.widget.textbox
 }
 
+-- Mouse control
+-- disk:buttons(gears.table.join(
+--     -- 
+--     awful.button({ }, 1, function ()
+--     end),
+--     -- 
+--     awful.button({ }, 2, function () 
+--     end),
+--     -- 
+--     awful.button({ }, 3, function () 
+--     end),
+--     -- 
+--     awful.button({ }, 4, function () 
+--     end),
+--     awful.button({ }, 5, function () 
+--     end)
+-- ))
+
 local function update_widget(disk_space)
   disk.markup = disk_space .. "B free"
 end
@@ -20,7 +38,7 @@ end
 -- Use /dev/sdXY according to your setup
 local disk_script = [[
   bash -c "
-  df -k -h /dev/sda1 | tail -1 | awk '{print $4}'
+  df -k -h /dev/sda2 | tail -1 | awk '{print $4}'
   "]]
 
 awful.widget.watch(disk_script, update_interval, function(widget, stdout)

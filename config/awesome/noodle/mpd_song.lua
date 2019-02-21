@@ -13,6 +13,7 @@ local naughty = require("naughty")
 local title_color =  beautiful.mpd_song_title_color or beautiful.wibar_fg
 local artist_color = beautiful.mpd_song_artist_color or beautiful.wibar_fg
 local paused_color = beautiful.mpd_song_paused_color or beautiful.normal_fg
+
 -- Set notification icon path
 local notification_icon = beautiful.music_icon
 
@@ -37,6 +38,24 @@ local mpd_song = wibox.widget{
   layout = wibox.layout.fixed.vertical
 }
 
+-- Mouse control
+-- mpd_song:buttons(gears.table.join(
+--     -- 
+--     awful.button({ }, 1, function ()
+--     end),
+--     -- 
+--     awful.button({ }, 2, function () 
+--     end),
+--     -- 
+--     awful.button({ }, 3, function () 
+--     end),
+--     -- 
+--     awful.button({ }, 4, function () 
+--     end),
+--     awful.button({ }, 5, function () 
+--     end)
+-- ))
+
 local artist_fg
 local artist_bg
 
@@ -50,7 +69,7 @@ local function send_notification(artist, title)
       icon = notification_icon,
       -- width = 360,
       -- height = 90,
-      icon_size = 60,
+      -- icon_size = 60,
       timeout = 4,
       replaces_id = last_notification_id
   })
@@ -58,8 +77,14 @@ local function send_notification(artist, title)
 end
 
 local function update_widget()
+  -- awful.spawn.easy_async({"sh", "-c", "mpc"},
   awful.spawn.easy_async({"mpc", "-f", "[[%artist%@@%title%@]]"},
     function(stdout)
+      -- naughty.notify({text = stdout})
+      -- local artist = stdout:match('(.*)-.*$')
+      -- artist = string.gsub(artist, '^%s*(.-)%s*$', '%1')
+      -- local title = stdout:match('- (.*)%[')
+      -- title = string.gsub(title, '^%s*(.-)%s*$', '%1')
       local artist = stdout:match('(.*)@@')
       local title = stdout:match('@@(.*)@')
       title = string.gsub(title, '^%s*(.-)%s*$', '%1')
@@ -92,16 +117,21 @@ local function update_widget()
 
 end
 
+-- Signals
+-- mpd_song:connect_signal("mouse::enter", function ()
+--     blablabla()
+-- end)
+
 update_widget()
 
--- Sleeps until mpd changes state (pause/play/next/prev)
 local mpd_script = [[
   bash -c '
-  mpc idleloop player
+    mpc idleloop player
   ']]
 
 awful.spawn.with_line_callback(mpd_script, {
                                  stdout = function(line)
+                                   -- naughty.notify { text = "LINE:"..line }
                                    update_widget()
                                  end
 })

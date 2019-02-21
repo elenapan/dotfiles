@@ -37,7 +37,7 @@ theme.wallpaper = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name 
 
 -- Set the theme font. This is the font that will be used by default in menus, bars, titlebars etc.
 -- theme.font          = "sans 11"
-theme.font          = "monospace bold 11"
+theme.font          = "monospace 11"
 
 -- Get colors from .Xresources and set fallback colors
 local xbackground = xrdb.background or "#1D1F28"
@@ -117,14 +117,14 @@ theme.titlebar_fg_normal = xcolor15
 -- Position: bottom_left, bottom_right, bottom_middle,
 --         top_left, top_right, top_middle
 theme.notification_position = "top_right" -- BUG: some notifications appear at top_right regardless
-theme.notification_border_width = 0
+theme.notification_border_width = dpi(0)
 theme.notification_border_radius = theme.border_radius
 theme.notification_border_color = xcolor10
 theme.notification_bg = xbackground
 theme.notification_fg = xcolor7
 theme.notification_crit_bg = urgent_color
 theme.notification_crit_fg = xcolor0
-theme.notification_icon_size = dpi(60)
+theme.notification_icon_size = dpi(100)
 -- theme.notification_height = dpi(80)
 -- theme.notification_width = dpi(300)
 theme.notification_margin = dpi(15)
@@ -138,7 +138,7 @@ theme.snap_bg = theme.bg_focus
 if theme.border_width == 0 then
     theme.snap_border_width = dpi(8)
 else
-    theme.snap_border_width = theme.border_width * 2
+    theme.snap_border_width = dpi(theme.border_width * 2)
 end
 -- Doesnt work with 4.2, need awesome-git?
 --theme.snapper_gap = theme.useless_gap
@@ -147,13 +147,13 @@ end
 theme.tagnames = {
   "1",    -- tag 1
   "2",    -- tag 2
-  "3",		-- tag 3
-  "4",		-- tag 4
-  "5",		-- tag 5
-  "6",		-- tag 6
-  "7",		-- tag 7
-  "8",		-- tag 8
-  "9",		-- tag 9
+  "3",    -- tag 3
+  "4",    -- tag 4
+  "5",    -- tag 5
+  "6",    -- tag 6
+  "7",    -- tag 7
+  "8",    -- tag 8
+  "9",    -- tag 9
   "10"    -- tag 10
 }
 
@@ -173,11 +173,11 @@ theme.wibar_fg = xcolor7
 theme.wibar_bg = xcolor0 .. "00"
 --theme.wibar_opacity = 0.7
 theme.wibar_border_color = xcolor0
-theme.wibar_border_width = 0
-theme.wibar_border_radius = 0
+theme.wibar_border_width = dpi(0)
+theme.wibar_border_radius = dpi(0)
 theme.wibar_border_radius = theme.border_radius
 --theme.wibar_width = screen_width - theme.screen_margin * 4 -theme.wibar_border_width * 2
-theme.wibar_width = 620
+theme.wibar_width = dpi(565)
 --theme.wibar_x = screen_width / 2 - theme.wibar_width - theme.screen_margin * 2
 --theme.wibar_x = theme.screen_margin * 2
 --theme.wibar_x = screen_width - theme.wibar_width - theme.wibar_border_width * 2 - theme.screen_margin * 2
@@ -210,7 +210,7 @@ theme.tasklist_bg_minimize = xcolor0 .. "00"
 theme.tasklist_fg_minimize = theme.fg_minimize
 theme.tasklist_bg_urgent = xcolor0 .. "00"
 theme.tasklist_fg_urgent = urgent_color
-theme.tasklist_spacing = 5
+theme.tasklist_spacing = dpi(5)
 theme.tasklist_align = "center"
 
 -- Sidebar
@@ -220,18 +220,18 @@ theme.sidebar_bg_alt = xcolor0
 theme.sidebar_fg = xcolor7
 theme.sidebar_opacity = 1
 theme.sidebar_position = "left" -- left or right
-theme.sidebar_width = 300
+theme.sidebar_width = dpi(300)
 theme.sidebar_height = screen_height
 theme.sidebar_y = 0
-theme.sidebar_border_radius = 0
+theme.sidebar_border_radius = dpi(0)
 theme.sidebar_hide_on_mouse_leave = true
 theme.sidebar_show_on_mouse_edge = true
 
 -- Exit screen
 theme.exit_screen_bg = xcolor0 .. "CC"
 theme.exit_screen_fg = xcolor7
-theme.exit_screen_font = "sans 14"
-theme.exit_screen_icon_size = 140
+theme.exit_screen_font = "sans 20"
+theme.exit_screen_icon_size = dpi(180)
 
 -- Other icons (mostly used in sidebar and menu)
 theme.playerctl_toggle_icon = icon_path .. "playerctl_toggle.png"
@@ -254,6 +254,7 @@ theme.manual_icon = icon_path .. "manual.png"
 theme.keyboard_icon = icon_path .. "keyboard.png"
 theme.appearance_icon = icon_path .. "appearance.png"
 theme.editor_icon = icon_path .. "editor.png"
+theme.redshift_icon = icon_path .. "redshift.png"
 theme.gimp_icon = icon_path .. "gimp.png"
 theme.terminal_icon = icon_path .. "terminal.png"
 theme.mail_icon = icon_path .. "mail.png"
@@ -263,10 +264,11 @@ theme.battery_icon = icon_path .. "battery.png"
 theme.battery_charging_icon = icon_path .. "battery_charging.png"
 theme.cpu_icon = icon_path .. "cpu.png"
 theme.compositor_icon = icon_path .. "compositor.png"
-theme.sidebar_icon = icon_path .. "sidebar.png"
+theme.start_icon = icon_path .. "start.png"
 theme.ram_icon = icon_path .. "ram.png"
 theme.screenshot_icon = icon_path .. "screenshot.png"
 theme.home_icon = icon_path .. "home.png"
+theme.alarm_icon = icon_path .. "alarm.png"
 
 -- Weather icons
 theme.cloud_icon = weather_icon_path .. "cloud.png"
@@ -337,7 +339,7 @@ theme.menu_bg_normal = xcolor0
 theme.menu_fg_normal= xcolor7
 theme.menu_bg_focus = xcolor8 .. "55"
 theme.menu_fg_focus= xcolor7
-theme.menu_border_width = 0
+theme.menu_border_width = dpi(0)
 theme.menu_border_color = xcolor0
 
 -- You can add as many variables as
@@ -452,6 +454,10 @@ theme.cpu_bar_background_color = xcolor2 .. "33"
 -- RAM bar
 theme.ram_bar_active_color = xcolor12
 theme.ram_bar_background_color = xcolor12 .. "33"
+
+-- Brightness bar
+theme.brightness_bar_active_color = xcolor11
+theme.brightness_bar_background_color = xcolor11 .. "33"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(

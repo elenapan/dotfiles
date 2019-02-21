@@ -7,7 +7,7 @@
 #   This script cleans up the old processes.
 
 # Mpd widget
-#ps aux | grep "mpc idle player" | grep -v grep | awk '{print $2}' | xargs kill
 ps aux | grep "mpc idleloop player" | grep -v grep | awk '{print $2}' | xargs kill
+#ps aux | grep "mpc idle player" | grep -v grep | awk '{print $2}' | xargs kill
 # Volume widget
 ps aux | grep "pactl subscribe" | grep -v grep | awk '{print $2}' | xargs kill

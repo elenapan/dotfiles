@@ -7,8 +7,8 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
--- local xresources = require("beautiful.xresources")
--- local xrdb = xresources.get_current_theme()
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 
 -- Set colors
 local active_color = beautiful.volume_bar_active_color or "#5AA3CC"
@@ -19,12 +19,12 @@ local muted_background_color = beautiful.volume_bar_muted_background_color or "#
 local volume_bar = wibox.widget{
     max_value     = 100,
     value         = 50,
-    forced_height = 10,
+    forced_height = dpi(10),
     margins       = {
-      top = 10,
-      bottom = 10,
+      top = dpi(8),
+      bottom = dpi(8),
     },
-    forced_width  = 200,
+    forced_width  = dpi(200),
     shape         = gears.shape.rounded_bar,
     bar_shape     = gears.shape.rounded_bar,
     color         = active_color,
@@ -68,6 +68,5 @@ awful.spawn.with_line_callback(volume_script, {
                                    update_widget()
                                  end
 })
-
 
 return volume_bar

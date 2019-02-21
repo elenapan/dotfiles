@@ -57,7 +57,11 @@ local function update_widget(icon_code, weather_details)
     weather_icon.image = beautiful.whatever_icon
   end
 
-  -- Set text
+  -- Set text --
+  -- Replace -0 with 0 degrees
+  weather_details = string.gsub(weather_details, '%-0', '0')
+  -- Capitalize first letter of the description
+  weather_details = weather_details:sub(1,1):upper()..weather_details:sub(2)
   weather_text.markup = weather_details
 end
 
