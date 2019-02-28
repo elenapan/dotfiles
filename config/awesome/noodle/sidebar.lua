@@ -258,14 +258,6 @@ local time = wibox.widget.textclock("%H %M")
 time.align = "center"
 time.valign = "center"
 time.font = "sans 55"
-time:buttons(gears.table.join(
-                awful.button({ }, 1, function ()
-                    calendar_toggle()
-                end),
-                awful.button({ }, 3, function ()
-                    calendar_toggle()
-                end)
-))
 
 local date = wibox.widget.textclock("%B %d")
 -- local date = wibox.widget.textclock("%A, %B %d")
@@ -273,28 +265,12 @@ local date = wibox.widget.textclock("%B %d")
 date.align = "center"
 date.valign = "center"
 date.font = "sans medium 16"
-date:buttons(gears.table.join(
-                awful.button({ }, 1, function ()
-                    calendar_toggle()
-                end),
-                awful.button({ }, 3, function ()
-                    calendar_toggle()
-                end)
-))
 
 -- local fancy_date = wibox.widget.textclock("%-j days around the sun")
 local fancy_date = wibox.widget.textclock("Knowing that today is %A fills you with determination.")
 fancy_date.align = "center"
 fancy_date.valign = "center"
 fancy_date.font = "sans italic 11"
-fancy_date:buttons(gears.table.join(
-                awful.button({ }, 1, function ()
-                    calendar_toggle()
-                end),
-                awful.button({ }, 3, function ()
-                    calendar_toggle()
-                end)
-))
 
 local mpd_song = require("noodle.mpd_song")
 local mpd_widget_children = mpd_song:get_all_children()
