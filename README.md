@@ -16,6 +16,7 @@
 + You can open an issue if you have any questions / problems.
    
    Do not forget to search through old issues first. They could already contain an answer to your question.
+   Also make sure you have the latest version of the repo. Little fixes happen all the time.
 
 + If you are new to AwesomeWM...
    
