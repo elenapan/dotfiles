@@ -14,6 +14,9 @@
 
 ## Tips / Notes
 + You can open an issue if you have any questions / problems.
+   
+   Do not forget to search through old issues first. They could already contain an answer to your question.
+
 + If you are new to AwesomeWM...
    
    I suggest you start from the default configuration and add pieces you like to it instead of trying to modify someone else's configuration even if you feel really comfortable with that specific config.
