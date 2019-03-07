@@ -16,22 +16,22 @@
 Here is a list of dependencies needed for making these themes work.
 If you install all of them you will have a (mostly) smooth out of the box experience.
 Of course, not all of them actually do something useful (see `fortune-mod` dependency).
-Also if you are willing to edit a few configuration files, *which you will have to do* at some point, most of these dependencies can be replaced. For example you can replace `i3lock` with your own command, `rofi` with `dmenu`, my `screenshot.sh` script with `scrot`.
+Also if you are willing to edit a few configuration files, **which you will have to do** at some point, most of these dependencies can be replaced. For example you can replace `i3lock` with your own command, `rofi` with `dmenu`, my `screenshot.sh` script with `scrot`.
 
 If you notice that something is missing, please open an issue so I can add the dependency to this table.
 
 | Dependency | Description | Why/Where is it needed? |
-| :--- | :---: | ---: |
+| --- | --- | --- |
 | `awesome` v4.2+ | Window manager | (explains itself) |
 | `rofi` | Window switcher, application launcher and dmenu replacement | (explains itself) |
 | `xorg-xbacklight` | Gets/Sets screen brightness (intel GPU only) | brightness widget |
 | `lm_sensors` | CPU temperature sensor | CPU temperature widget |
-| `pulseaudio`, `libpulse` | Sound system *You probably already have these* | volume widget, [bin/volume-control.sh](./bin/volume-control.sh) script |
+| `pulseaudio`, `libpulse` | Sound system **You probably already have these** | volume widget, [bin/volume-control.sh](./bin/volume-control.sh) script |
 | [bin/volume-control.sh](./bin/volume-control.sh) in your `$PATH` | Commands to control your volume | volume buttons, volume widget |
 | `jq` | Parses `json` output | weather widget |
 | `fortune-mod` | Displays random quotations (fortune cookies) | fortune widget |
-| `mpd` | Server-side application for playing music | *sidebar* music widget |
-| `mpc` | Minimalist command line interface to MPD | *sidebar* music widget |
+| `mpd` | Server-side application for playing music | **sidebar** music widget |
+| `mpc` | Minimalist command line interface to MPD | **sidebar** music widget |
 | `i3lock` | Screen locker | exit screen lock command |
 | `feh` | image viewer | screenshot previews |
 | `maim` | Takes screenshots (improved `scrot`) | [bin/screenshot.sh](./bin/screenshot.sh) script |
@@ -51,13 +51,29 @@ If you notice that something is missing, please open an issue so I can add the d
 
 + Configure autostart applications in `autostart.sh`
 
++ *(Optional)* Load any `Xresources` colorscheme (`xrdb -merge <colorscheme file>`). In the [.xfiles](.xfiles) directory I provide you with a few of my own colorschemes, but you can also use your favorite one. All of my AwesomeWM themes take their colors from `xrdb`.
+
 + Have a general idea of what my keybinds do
 
    My keybinds will most probably not suit you, but on your first login you might need to know how to navigate the desktop.
 
-   See the *Basic keybinds* section for more details.
+   See the **Basic keybinds** section for more details.
 
-*You are now ready to login with AwesomeWM!*
+**You are now ready to login with AwesomeWM!**
+
+## Some recommended applications
++ **Terminals**: Termite / Kitty / urxvt / st
++ **File managers**: Nemo / Thunar
++ **Launchers**: Rofi / dmenu
++ **Browsers**: Firefox (with Vimium extension) / Qutebrowser
++ **Editors**: Vim / Sublime Text (with NeoVintageous plugin) / Spacemacs
++ **Music players**: mpd (with ncmpcpp)
+
+### Eye-candy suggestions
+- [bin/bunnyfetch](./bin/bunnyfetch) script - Display some system info
+- `neofetch` - Display a ton of system info
+- [even-better-ls](https://github.com/illinoisjackson/even-better-ls) - Icons for the `ls` command
+- `cava` - Audio visualizer
 
 ## AwesomeWM configuration: File structure
 + I have split my `rc.lua` into multiple files for organization purposes.
@@ -73,20 +89,6 @@ If you notice that something is missing, please open an issue so I can add the d
 + In `bar_themes` you can find a `.lua` file for each available bar or bar group.
 
    Multiple bars can be created in one file.
-
-## Some recommended applications
-+ **Terminals**: Termite / Kitty / urxvt / st
-+ **File managers**: Nemo / Thunar
-+ **Launchers**: Rofi / dmenu
-+ **Browsers**: Firefox (with Vimium extension) / Qutebrowser
-+ **Editors**: Vim / Sublime Text (with NeoVintageous plugin) / Spacemacs
-+ **Music players**: mpd (with ncmpcpp)
-
-### Eye-candy suggestions
-- [bin/bunnyfetch](./bin/bunnyfetch) script - Display some system info
-- `neofetch` - Display a ton of system info
-- [even-better-ls](https://github.com/illinoisjackson/even-better-ls) - Icons for the `ls` command
-- `cava` - Audio visualizer
 
 ## Basic keybinds
 
