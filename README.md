@@ -33,7 +33,6 @@ If you notice that something is missing, please open an issue so I can add the d
 | `mpd` | Server-side application for playing music | **sidebar** music widget |
 | `mpc` | Minimalist command line interface to MPD | **sidebar** music widget |
 | `i3lock` | Screen locker | exit screen lock command |
-| `feh` | image viewer | screenshot previews |
 | `maim` | Takes screenshots (improved `scrot`) | [bin/screenshot.sh](./bin/screenshot.sh) script |
 | [bin/screenshot.sh](./bin/screenshot.sh) in your `$PATH` | Commands to take/view screenshots | screenshot button |
 | `feh` | Image viewer and wallpaper setter | screenshot previews, wallpapers |
