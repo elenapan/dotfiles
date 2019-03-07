@@ -10,7 +10,7 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="garyblessington"
 
 # Autojump
-. /usr/share/autojump/autojump.zsh
+#. /usr/share/autojump/autojump.zsh
 
 # Import colorscheme from wal
 #(wal -r &)
@@ -225,21 +225,21 @@ alias gameon="sudo cpufreq-set -g performance"
 alias t='trans -brief'
 
 # --- even-better-ls ---  
-LS_COLORS=$(ls_colors_generator)
-run_ls() {
-        ls-i --color=auto --group-directories-first -w $(tput cols) "$@"
-}
+# LS_COLORS=$(ls_colors_generator)
+# run_ls() {
+#         ls-i --color=auto --group-directories-first -w $(tput cols) "$@"
+# }
 
-run_dir() {
-        dir-i --color=auto --group-directories-first -w $(tput cols) "$@"
-}
+# run_dir() {
+#         dir-i --color=auto --group-directories-first -w $(tput cols) "$@"
+# }
 
-run_vdir() {
-        vdir-i --color=auto --group-directories-first -w $(tput cols) "$@"
-}
-alias ls="run_ls"
-alias dir="run_dir"
-alias vdir="run_vdir"
+# run_vdir() {
+#         vdir-i --color=auto --group-directories-first -w $(tput cols) "$@"
+# }
+# alias ls="run_ls"
+# alias dir="run_dir"
+# alias vdir="run_vdir"
 # --- ---
 
 # urxvt
