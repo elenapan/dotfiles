@@ -80,9 +80,9 @@ local function update_widget()
     if s.tags[i] then
       tag_clients = s.tags[i]:clients()
     end
-    if s.tags[i] == s.selected_tag then
+    if s.tags[i] and s.tags[i].selected then
       tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_focused[i], beautiful.taglist_text_color_focused[i])
-    elseif awful.tag.getproperty(s.tags[i], "urgent") then
+    elseif s.tags[i] and s.tags[i].urgent then
       tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_urgent[i], beautiful.taglist_text_color_urgent[i])
     elseif tag_clients and #tag_clients > 0 then
       tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_occupied[i], beautiful.taglist_text_color_occupied[i])
