@@ -146,8 +146,8 @@ I use `super` AKA Windows key as my main modifier.
     termite --class music --exec ncmpcpp
     # st / xst
     st -c music -e ncmpcpp
-    # urxvt (untested but should work)
-    urxvt -t "Music Terminal" -e ncmpcpp
+    # urxvt
+    urxvt -T "Music Terminal" -e ncmpcpp
     ```
 + Of course you can set your own custom titlebars for any application as long as you know its class, name, instance, whatever and then creating a custom titlebar setup in the existing if-else block in `titlebars.lua`. For example `if c.class == "Thunar" ...`
 + You can find details such as class, name, and others for any client with the `xprop` utility.

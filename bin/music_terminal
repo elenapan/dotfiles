@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # Launch ncmpcpp in a terminal with class "music" or with name "Music Terminal"
 
@@ -6,3 +7,6 @@ xst -c music -e ncmpcpp -c ~/.config/ncmpcpp/config_fancy
 
 # Termite
 # termite --class music --exec ncmpcpp
+
+# Urxvt
+# urxvt -T "Music Terminal" -e ncmpcpp -c ~/.config/ncmpcpp/config_fancy
