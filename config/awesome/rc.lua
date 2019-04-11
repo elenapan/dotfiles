@@ -762,14 +762,18 @@ if beautiful.border_radius ~= 0 then
         end
     end)
 
-    -- Fullscreen clients should not have rounded corners
-    client.connect_signal("property::fullscreen", function (c)
-        if c.fullscreen then
+    -- Fullscreen & maximised clients should not have rounded corners
+    local function no_round_corners (c)
+        if c.fullscreen or c.maximized then
             c.shape = helpers.rect()
         else
             c.shape = helpers.rrect(beautiful.border_radius)
         end
-    end)
+    end
+
+    client.connect_signal("property::fullscreen", no_round_corners)
+    client.connect_signal("property::maximized", no_round_corners)
+
 end
 
 -- When a client starts up in fullscreen, resize it to cover the fullscreen a short moment later
