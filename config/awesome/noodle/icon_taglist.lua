@@ -65,14 +65,15 @@ local function update_widget()
     if s.tags[i] then
       tag_clients = s.tags[i]:clients()
     end
+
     if s.tags[i] and s.tags[i].selected then
-      tag_icons[i].image = beautiful.taglist_icons_focused[i]
+      tag_icons[i].image = beautiful.taglist_icons_focused[i] or beautiful.awesome_icon
     elseif s.tags[i] and s.tags[i].urgent then
-      tag_icons[i].image = beautiful.taglist_icons_urgent[i]
+      tag_icons[i].image = beautiful.taglist_icons_urgent[i] or beautiful.awesome_icon
     elseif tag_clients and #tag_clients > 0 then
-      tag_icons[i].image = beautiful.taglist_icons_occupied[i]
+      tag_icons[i].image = beautiful.taglist_icons_occupied[i] or beautiful.awesome_icon
     else
-      tag_icons[i].image = beautiful.taglist_icons_empty[i]
+      tag_icons[i].image = beautiful.taglist_icons_empty[i] or beautiful.awesome_icon
     end
   end
 end
