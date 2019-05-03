@@ -73,7 +73,6 @@ gears.table.join(
   end)
 ))
 
-
 local function update_widget()
   for i = 1, ntags do
     local tag_clients
@@ -81,13 +80,13 @@ local function update_widget()
       tag_clients = s.tags[i]:clients()
     end
     if s.tags[i] and s.tags[i].selected then
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_focused[i], beautiful.taglist_text_color_focused[i])
+      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_focused[i] or tostring(i), beautiful.taglist_text_color_focused[i] or beautiful.fg_focus)
     elseif s.tags[i] and s.tags[i].urgent then
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_urgent[i], beautiful.taglist_text_color_urgent[i])
+      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_urgent[i] or tostring(i), beautiful.taglist_text_color_urgent[i] or beautiful.fg_urgent)
     elseif tag_clients and #tag_clients > 0 then
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_occupied[i], beautiful.taglist_text_color_occupied[i])
+      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_occupied[i] or tostring(i), beautiful.taglist_text_color_occupied[i] or beautiful.fg_normal)
     else
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_empty[i], beautiful.taglist_text_color_empty[i])
+      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_empty[i] or tostring(i), beautiful.taglist_text_color_empty[i] or beautiful.fg_minimize)
     end
   end
 end
