@@ -73,6 +73,36 @@ gears.table.join(
   end)
 ))
 
+-- Shorter names (eg. tf = text_focused) to save space
+local tf, tu, to, te, tcf, tcu, tco, tce;
+-- Set fallback values if needed
+if beautiful.taglist_text_focused then
+    tf = beautiful.taglist_text_focused
+    tu = beautiful.taglist_text_urgent
+    to = beautiful.taglist_text_occupied
+    te = beautiful.taglist_text_empty
+    cf = beautiful.taglist_text_color_focused
+    cu = beautiful.taglist_text_color_urgent
+    co = beautiful.taglist_text_color_occupied
+    ce = beautiful.taglist_text_color_empty
+else
+   -- Fallback values
+    tf = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}
+    tu = tf
+    to = tf
+    te = tf
+
+    local ff = beautiful.fg_focus
+    local fu = beautiful.fg_urgent
+    local fo = beautiful.fg_normal
+    local fe = beautiful.fg_minimize
+
+    cf = {ff, ff, ff, ff, ff, ff, ff, ff, ff, ff}
+    cu = {fu, fu, fu, fu, fu, fu, fu, fu, fu, fu}
+    co = {fo, fo, fo, fo, fo, fo, fo, fo, fo, fo}
+    ce = {fe, fe, fe, fe, fe, fe, fe, fe, fe, fe}
+end
+
 local function update_widget()
   for i = 1, ntags do
     local tag_clients
@@ -80,16 +110,17 @@ local function update_widget()
       tag_clients = s.tags[i]:clients()
     end
     if s.tags[i] and s.tags[i].selected then
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_focused[i] or tostring(i), beautiful.taglist_text_color_focused[i] or beautiful.fg_focus)
+        tag_text[i].markup = helpers.colorize_text(tf[i], cf[i])
     elseif s.tags[i] and s.tags[i].urgent then
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_urgent[i] or tostring(i), beautiful.taglist_text_color_urgent[i] or beautiful.fg_urgent)
+        tag_text[i].markup = helpers.colorize_text(tu[i], cu[i])
     elseif tag_clients and #tag_clients > 0 then
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_occupied[i] or tostring(i), beautiful.taglist_text_color_occupied[i] or beautiful.fg_normal)
+        tag_text[i].markup = helpers.colorize_text(to[i], co[i])
     else
-      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_empty[i] or tostring(i), beautiful.taglist_text_color_empty[i] or beautiful.fg_minimize)
+        tag_text[i].markup = helpers.colorize_text(te[i], ce[i])
     end
   end
 end
+
 
 client.connect_signal("unmanage", function(c)
     update_widget()
