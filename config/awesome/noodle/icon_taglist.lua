@@ -59,21 +59,39 @@ gears.table.join(
   end)
 ))
 
+
+-- Shorter names (eg. f = focused) to save space
+local f, u, o, e;
+-- Set fallback values if needed
+if beautiful.taglist_icons_focused then
+    f = beautiful.taglist_icons_focused
+    u = beautiful.taglist_icons_urgent
+    o = beautiful.taglist_icons_occupied
+    e = beautiful.taglist_icons_empty
+else
+   -- Fallback values (very useless ones though)
+    local i = beautiful.awesome_icon
+    f = {i, i, i, i, i, i, i, i, i, i}
+    u = f
+    o = f
+    e = f
+end
+
+
 local function update_widget()
   for i = 1, ntags do
     local tag_clients
     if s.tags[i] then
       tag_clients = s.tags[i]:clients()
     end
-
     if s.tags[i] and s.tags[i].selected then
-      tag_icons[i].image = beautiful.taglist_icons_focused[i] or beautiful.awesome_icon
+      tag_icons[i].image = f[i]
     elseif s.tags[i] and s.tags[i].urgent then
-      tag_icons[i].image = beautiful.taglist_icons_urgent[i] or beautiful.awesome_icon
+      tag_icons[i].image = u[i]
     elseif tag_clients and #tag_clients > 0 then
-      tag_icons[i].image = beautiful.taglist_icons_occupied[i] or beautiful.awesome_icon
+      tag_icons[i].image = o[i]
     else
-      tag_icons[i].image = beautiful.taglist_icons_empty[i] or beautiful.awesome_icon
+      tag_icons[i].image = e[i]
     end
   end
 end
