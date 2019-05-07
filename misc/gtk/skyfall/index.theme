@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Materia-dark-compact
+Comment=A Material Design theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Materia-dark-compact
+MetacityTheme=Materia-dark-compact
+IconTheme=Adwaita
+CursorTheme=Adwaita
+CursorSize=24

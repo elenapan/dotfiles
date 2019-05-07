@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54">
+  <defs>
+    <filter id="a" color-interpolation-filters="sRGB" x="-0.5" y="-0.5" width="2" height="2">
+      <!-- <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#20262C" flood-opacity="0.12"/> -->
+      <!-- <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#20262C" flood-opacity="0.24"/> -->
+
+      <feFlood flood-color="#20262C" flood-opacity="0.12" result="flood"/>
+      <feComposite operator="in" in="flood" in2="SourceGraphic" result="composite1"/>
+      <feGaussianBlur stdDeviation="1.5" in="composite1" result="blur"/>
+      <feOffset dx="0" dy="1" result="offset"/>
+      <feComposite in="SourceGraphic" in2="offset" result="fbSourceGraphic"/>
+
+      <feFlood flood-color="#20262C" flood-opacity="0.24" result="flood"/>
+      <feComposite operator="in" in="flood" in2="fbSourceGraphic" result="composite1"/>
+      <feGaussianBlur stdDeviation="1" in="composite1" result="blur"/>
+      <feOffset dx="0" dy="1" result="offset"/>
+      <feComposite in="fbSourceGraphic" in2="offset" result="composite2"/>
+    </filter>
+  </defs>
+  <rect x="4" y="23" width="46" height="8" rx="2" ry="2" fill="#F1FCF9" filter="url(#a)"/>
+  <rect x="6" y="25" width="42" height="4" fill="#20262C" opacity="0.12"/>
+</svg>
