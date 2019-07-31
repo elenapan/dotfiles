@@ -1,0 +1,16 @@
+#!/bin/bash
+
+SCRATCHPAD_SESSION="$(tmux ls | grep scratchpad)"
+SCRATCHPAD_WINDOW="$(xdotool search --classname scratchpad)"
+
+# If there is no such window
+# (Checking for the window should not be necessary if AwesomeWM does it already)
+if [ ${#SCRATCHPAD_WINDOW} -eq "0" ]; then
+    # If the session does not exist, create a new one
+    if [ ${#SCRATCHPAD_SESSION} -eq "0" ]; then 
+        kitty -1 --class scratchpad -e tmux new-session -s scratchpad &
+    # Else attach to the session
+    else
+        kitty -1 --class scratchpad -e tmux attach -t scratchpad &
+    fi
+fi

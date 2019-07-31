@@ -1,0 +1,51 @@
+/* Some settings added by hand */
+.text-button {
+  font-weight: bold;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  border-radius: 25px;
+  transition: 0.3s;
+}
+
+.text-button:checked {
+  color: #BD99FF;
+  background: #3D4C5F;
+  border-radius: 25px;
+}
+
+.text-button:hover {
+  background: #56687E;
+  color: #BD99FF;
+  transition: 0.3s;
+}
+
+.image-button {
+  color: #87DFEB;
+  margin-left: 4px;
+  margin-right: 4px;
+  padding-left: 12px;
+  padding-right: 12px;
+  transition: 0.3s;
+  border-radius: 99px;
+}
+
+.image-button:hover {
+  background: #56687E;
+  transition: 0.3s;
+}
+
+.image-button:checked {
+  color: #24D1E7;
+  background: #3D4C5F;
+}
+
+.image-button:disabled {
+  color: #56687E;
+}
+
+.titlebar {
+  min-height: 48px;
+  box-shadow: none;
+}

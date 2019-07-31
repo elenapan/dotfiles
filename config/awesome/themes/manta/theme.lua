@@ -1,11 +1,3 @@
---  _               _ _ _
--- | |__   _____  _| (_) | _____
--- | '_ \ / _ \ \/ / | | |/ / _ \
--- | |_) | (_) >  <| | |   <  __/
--- |_.__/ \___/_/\_\_|_|_|\_\___|
---
--- A *box lookalike
-
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
@@ -159,7 +151,6 @@ theme.separator_fg = theme.xcolor8
 -- Wibar
 -- (The panel items can be customized in rc.lua)
 theme.wibar_position = "bottom"
-theme.wibar_detached = true
 theme.wibar_height = dpi(40)
 theme.wibar_fg = theme.xcolor0
 theme.wibar_bg = theme.xcolor7
@@ -173,24 +164,6 @@ theme.wibar_width = 885
 --theme.wibar_x = theme.screen_margin * 2
 --theme.wibar_x = screen_width - theme.wibar_width - theme.wibar_border_width * 2 - theme.screen_margin * 2
 --theme.wibar_y = theme.screen_margin * 2
-
--- Another wibar (optional)
-theme.wibar_alt_enabled = false
---theme.wibar_alt_position = "bottom"
-theme.wibar_alt_position = "left" --fake position so it does not increase screen margin
-theme.wibar_alt_detached = false
-theme.wibar_alt_height = dpi(40)
-theme.wibar_alt_fg = theme.xcolor7
-theme.wibar_alt_bg = theme.xcolor0
---theme.wibar_alt_opacity = 0.7
-theme.wibar_alt_border_color = theme.xcolor0
-theme.wibar_alt_border_width = 0
-theme.wibar_alt_border_radius = theme.border_radius
-theme.wibar_alt_width = 420
-theme.wibar_alt_x = screen_width / 2 + theme.screen_margin
---theme.wibar_alt_x = screen_width - theme.wibar_alt_width - theme.wibar_alt_border_width * 2 - theme.screen_margin * 2
-theme.wibar_alt_y = theme.screen_margin * 2
---theme.wibar_alt_y = screen_height - theme.screen_margin * 2 - theme.wibar_alt_height - theme.wibar_alt_border_width * 2
 
 -- Widgets
 theme.prefix_fg = theme.xcolor8

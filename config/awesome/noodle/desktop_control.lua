@@ -18,7 +18,7 @@ desktop_control:buttons(gears.table.join(
     end),
     -- Right click - Show clients in the current tag with rofi
     awful.button({ }, 3, function ()
-        awful.spawn.with_shell("rofi -show windowcd")
+        awful.spawn.with_shell("rofi -matching fuzzy -show windowcd")
     end),
     -- Middle click - Close focused client
     awful.button({ }, 2, function ()
@@ -49,12 +49,12 @@ desktop_control:buttons(gears.table.join(
 ))
 
 local function update_widget()
-    local current_layout = awful.layout.getname(awful.layout.get(awful.screen.focused()))
-    if current_layout == "max" then
+    local current_layout = awful.layout.get(mouse.screen)
+    if current_layout == awful.layout.suit.max then
       desktop_control.image = max_icon
-    elseif current_layout == "tile" then
+    elseif current_layout == awful.layout.suit.tile then
       desktop_control.image = tile_icon
-    elseif current_layout == "floating" then
+    elseif current_layout == awful.layout.suit.floating then
       desktop_control.image = floating_icon
     else
       desktop_control.image = tile_icon
