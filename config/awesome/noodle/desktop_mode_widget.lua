@@ -28,7 +28,8 @@ desktop_mode_widget:buttons(gears.table.join(
     awful.button({ }, 1, function ()
         --switch_modes()
         if client.focus ~= nil then
-            awful.titlebar.toggle(c)
+            decorations.toggle(c)
+            -- awful.titlebar.toggle(c)
         end
     end),
     -- Right click: Toggle titlebars in all visible clients
@@ -37,7 +38,8 @@ desktop_mode_widget:buttons(gears.table.join(
         for _, c in pairs(clients) do
             -- Don't toggle if titlebars are used as borders
             if not beautiful.titlebars_imitate_borders then
-                awful.titlebar.toggle(c)
+                decorations.toggle(c)
+                -- awful.titlebar.toggle(c)
             end
         end
     end),
@@ -49,42 +51,17 @@ desktop_mode_widget:buttons(gears.table.join(
     end)
 ))
 
-function switch_modes()
-    local current_layout = awful.layout.getname(awful.layout.get(awful.screen.focused()))
-    if current_layout == "floating" then
-        local clients = awful.screen.focused().clients
-        for _, c in pairs(clients) do
-            -- Don't hide if titlebars are used as borders
-            if not beautiful.titlebars_imitate_borders then
-                awful.titlebar.hide(c)
-            end
-        end
-        awful.layout.set(awful.layout.suit.tile)
-    else
-    --elseif current_layout == "tile" then
-        local clients = awful.screen.focused().clients
-        for _, c in pairs(clients) do
-            awful.titlebar.show(c)
-        end
-        -- Delay so that the windows will first be resized properly
-        -- by the tiling layout
-        gears.timer.delayed_call(function()
-          awful.layout.set(awful.layout.suit.floating)
-        end)
-    end
-end
-
 local function update_widget()
-    local current_layout = awful.layout.getname(awful.layout.get(awful.screen.focused()))
+    local current_layout = awful.layout.get(mouse.screen)
     local color
     local txt
-    if current_layout == "max" then
+    if current_layout == awful.layout.suit.max then
         color = max_color
         txt = max_text
-    elseif current_layout == "tile" then
+    elseif current_layout == awful.layout.suit.tile then
         color = tile_color
         txt = tile_text
-    elseif current_layout == "floating" then
+    elseif current_layout == awful.layout.suit.floating then
         color = floating_color
         txt = floating_text
     else

@@ -2,8 +2,6 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
 local naughty = require("naughty")
 
 local keygrabber = require("awful.keygrabber")
@@ -20,19 +18,29 @@ local screen_width = awful.screen.focused().geometry.width
 local screen_height = awful.screen.focused().geometry.height
 
 -- Create the widget
-start_screen = wibox({x = 0, y = 0, visible = false, ontop = true, type = "dock", height = screen_height, width = screen_width})
+start_screen = wibox({visible = false, ontop = true, type = "dock"})
+awful.placement.maximize(start_screen)
 
 start_screen.bg = beautiful.start_screen_bg or beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111"
 start_screen.fg = beautiful.start_screen_fg or beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
 start_screen:buttons(gears.table.join(
-                 -- Middle click - Hide start_screen
-                 awful.button({ }, 2, function ()
-                     start_screen_hide()
-                 end)
+    -- Left click - Hide start_screen
+    awful.button({ }, 1, function ()
+        start_screen_hide()
+    end),
+    -- Middle click - Hide start_screen
+    awful.button({ }, 2, function ()
+        start_screen_hide()
+    end),
+    -- Right click - Hide start_screen
+    awful.button({ }, 3, function ()
+        start_screen_hide()
+    end)
 ))
 
 -- Helper function that puts a widget inside a box with a specified background color
+-- TODO also accept buttons and signals?
 -- Invisible margins are added so that the boxes created with this function are evenly separated
 -- The widget_to_be_boxed is vertically and horizontally centered inside the box
 local function create_boxed_widget(widget_to_be_boxed, width, height, bg_color)
@@ -41,8 +49,6 @@ local function create_boxed_widget(widget_to_be_boxed, width, height, bg_color)
     box_container.forced_height = height
     box_container.forced_width = width
     box_container.shape = helpers.rrect(box_radius)
-    -- box_container.shape = helpers.prrect(20, true, true, true, true)
-    -- box_container.shape = helpers.prrect(30, true, true, false, true)
 
     local boxed_widget = wibox.widget {
         -- Add margins
@@ -56,11 +62,9 @@ local function create_boxed_widget(widget_to_be_boxed, width, height, bg_color)
                     nil,
                     -- The actual widget goes here
                     widget_to_be_boxed,
-                    nil,
                     layout = wibox.layout.align.vertical,
                     expand = "none"
                 },
-                nil,
                 layout = wibox.layout.align.horizontal,
                 expand = "none"
             },
@@ -74,12 +78,13 @@ local function create_boxed_widget(widget_to_be_boxed, width, height, bg_color)
     return boxed_widget
 end
 
+
+
 -- User widget
 local user_picture_container = wibox.container.background()
 user_picture_container.shape = gears.shape.circle
--- user_picture_container.shape = helpers.prrect(30, true, true, false, true)
-user_picture_container.forced_height = dpi(130)
-user_picture_container.forced_width = dpi(130)
+user_picture_container.forced_height = dpi(140)
+user_picture_container.forced_width = dpi(140)
 local user_picture = wibox.widget {
     wibox.widget.imagebox(os.getenv("HOME").."/.config/awesome/profile.png"),
     widget = user_picture_container
@@ -118,23 +123,25 @@ local user_box = create_boxed_widget(user, dpi(300), dpi(340), beautiful.xbackgr
 -- Create the calendar
 local styles = {}
 styles.month   = { padding      = 20,
-                   fg_color     = beautiful.xcolor7,
-                   bg_color     = beautiful.xbackground.."00",
-                   border_width = 0,
+    fg_color     = beautiful.xcolor7,
+    bg_color     = beautiful.xbackground.."00",
+    border_width = 0,
 }
 styles.normal  = {}
 styles.focus   = { fg_color = beautiful.xcolor1,
-                   bg_color = beautiful.xcolor5.."00",
-                   markup   = function(t) return '<b>' .. t .. '</b>' end,
+    bg_color = beautiful.xcolor5.."00",
+    markup   = function(t) return '<b>' .. t .. '</b>' end,
+    -- markup   = function(t) return '<span foreground="'..beautiful.xcolor1..'"><b>' .. t .. '</b></span>' end,
 }
 styles.header  = { fg_color = beautiful.xcolor7,
-                   bg_color = beautiful.xcolor1.."00",
-                   markup   = function(t) return '<span font_desc="sans bold 24">' .. t .. '</span>' end,
+    bg_color = beautiful.xcolor1.."00",
+    -- markup   = function(t) return '<b>' .. t .. '</b>' end,
+    markup   = function(t) return '<span font_desc="sans bold 24">' .. t .. '</span>' end,
 }
 styles.weekday = { fg_color = beautiful.xcolor7,
-                   bg_color = beautiful.xcolor1.."00",
-                   padding  = 3,
-                   markup   = function(t) return '<b>' .. t .. '</b>' end,
+    bg_color = beautiful.xcolor1.."00",
+    padding  = 3,
+    markup   = function(t) return '<b>' .. t .. '</b>' end,
 }
 local function decorate_cell(widget, flag, date)
     if flag=='monthheader' and not styles.monthheader then
@@ -144,15 +151,12 @@ local function decorate_cell(widget, flag, date)
     if props.markup and widget.get_text and widget.set_markup then
         widget:set_markup(props.markup(widget:get_text()))
     end
-
     -- Change bg color for weekends
-    -- local d = {year=date.year, month=(date.month or 1), day=(date.day or 1)}
-    -- local weekday = tonumber(os.date('%w', os.time(d)))
-    -- local default_bg = (weekday==0 or weekday==6) and beautiful.xcolor6 or beautiful.xcolor14
-
+    local d = {year=date.year, month=(date.month or 1), day=(date.day or 1)}
+    local weekday = tonumber(os.date('%w', os.time(d)))
     local default_fg = beautiful.xcolor7
     local default_bg = beautiful.xcolor0.."00"
-
+    -- local default_bg = (weekday==0 or weekday==6) and beautiful.xcolor6 or beautiful.xcolor14
     local ret = wibox.widget {
         {
             widget,
@@ -171,7 +175,7 @@ end
 
 calendar_widget = wibox.widget {
     date     = os.date('*t'),
-    font     = "sans 16",
+    font     = "sans 14",
     long_weekdays = false,
     spacing  = dpi(3),
     fn_embed = decorate_cell,
@@ -180,30 +184,31 @@ calendar_widget = wibox.widget {
 
 local current_month = os.date('*t').month
 calendar_widget:buttons(gears.table.join(
-                -- Left Click - Reset date to current date
-                awful.button({ }, 1, function ()
-                  calendar_widget.date = os.date('*t')
-                end),
-                -- Scroll - Move to previous or next month
-                awful.button({ }, 4, function ()
-                  new_calendar_month = calendar_widget.date.month - 1
-                  if new_calendar_month == current_month then
-                      calendar_widget.date = os.date('*t')
-                  else
-                      calendar_widget.date = {month = new_calendar_month, year = calendar_widget.date.year} 
-                  end
-                end),
-                awful.button({ }, 5, function ()
-                  new_calendar_month = calendar_widget.date.month + 1
-                  if new_calendar_month == current_month then
-                      calendar_widget.date = os.date('*t')
-                  else
-                      calendar_widget.date = {month = new_calendar_month, year = calendar_widget.date.year} 
-                  end
-                end)
+    -- Left Click - Reset date to current date
+    awful.button({ }, 1, function ()
+        calendar_widget.date = os.date('*t')
+    end),
+    -- Scroll - Move to previous or next month
+    awful.button({ }, 4, function ()
+        new_calendar_month = calendar_widget.date.month - 1
+        if new_calendar_month == current_month then
+            calendar_widget.date = os.date('*t')
+        else
+            calendar_widget.date = {month = new_calendar_month, year = calendar_widget.date.year} 
+        end
+    end),
+    awful.button({ }, 5, function ()
+        new_calendar_month = calendar_widget.date.month + 1
+        if new_calendar_month == current_month then
+            calendar_widget.date = os.date('*t')
+        else
+            calendar_widget.date = {month = new_calendar_month, year = calendar_widget.date.year} 
+        end
+    end)
 ))
 
 local calendar_box = create_boxed_widget(calendar_widget, dpi(300), dpi(400), beautiful.xbackground)
+-- local calendar_box = create_boxed_widget(calendar, 380, 540, beautiful.xcolor0)
 
 -- Time widget
 local hours = wibox.widget.textclock("%H  ")
@@ -235,6 +240,10 @@ day_of_the_week.align = "center"
 day_of_the_week.valign = "center"
 day_of_the_week.align = "center"
 day_of_the_week.valign = "center"
+-- day_of_the_week.markup = "<span foreground='" .. beautiful.xcolor7 .."'>" .. day_of_the_week.text .. "</span>"
+-- day_of_the_week:connect_signal("widget::redraw_needed", function () 
+--     day_of_the_week.markup = "<span foreground='" .. beautiful.xcolor7 .."'>" .. day_of_the_week.text .. "</span>"
+-- end)
 local day_of_the_month = wibox.widget.textclock("%d")
 day_of_the_month.font = "sans bold 30"
 day_of_the_month.fg = beautiful.xcolor0
@@ -265,20 +274,18 @@ local function create_bookmark(name, path)
 
     local bookmark = wibox.widget.textbox()
     bookmark.font = "sans bold 16"
+    -- bookmark.text = wibox.widget.textbox(name:sub(1,1):upper()..name:sub(2))
     bookmark.markup = helpers.colorize_text(name, original_color)
     bookmark.align = "center"
     bookmark.valign = "center"
 
     -- Buttons
-    bookmark:buttons(
-      gears.table.join(
+    bookmark:buttons(gears.table.join(
         awful.button({ }, 1, function ()
-            awful.spawn.with_shell(filemanager.." "..path)
-            start_screen_hide()
+            awful.spawn.with_shell(user.file_manager.." "..path)
         end),
         awful.button({ }, 3, function ()
-            awful.spawn.with_shell(terminal.." -e 'ranger' "..path)
-            start_screen_hide()
+            awful.spawn.with_shell(user.terminal.." -e 'ranger' "..path)
         end)
     ))
 
@@ -290,7 +297,7 @@ local function create_bookmark(name, path)
         bookmark.markup = helpers.colorize_text(name, original_color)
     end)
 
-    helpers.add_clickable_effect(bookmark)
+    helpers.add_hover_cursor(bookmark, "hand1")
 
     return bookmark
 end
@@ -317,21 +324,22 @@ local function create_url(name, path)
 
     local url = wibox.widget.textbox()
     url.font = "sans bold 16"
+    -- url.text = wibox.widget.textbox(name:sub(1,1):upper()..name:sub(2))
     url.markup = helpers.colorize_text(name, original_color)
     url.align = "center"
     url.valign = "center"
 
     -- Buttons
     url:buttons(
-      gears.table.join(
-        awful.button({ }, 1, function ()
-            awful.spawn(browser.." "..path)
-            start_screen_hide()
-        end),
-        awful.button({ }, 3, function ()
-            awful.spawn(browser.." -new-window "..path)
-            start_screen_hide()
-        end)
+        gears.table.join(
+            awful.button({ }, 1, function ()
+                awful.spawn(user.browser.." "..path)
+                start_screen_hide()
+            end),
+            awful.button({ }, 3, function ()
+                awful.spawn(user.browser.." -new-window "..path)
+                start_screen_hide()
+            end)
     ))
 
     -- Hover effect
@@ -342,7 +350,7 @@ local function create_url(name, path)
         url.markup = helpers.colorize_text(name, original_color)
     end)
 
-    helpers.add_clickable_effect(url)
+    helpers.add_hover_cursor(url, "hand1")
 
     return url
 end
@@ -359,13 +367,14 @@ local urls = wibox.widget {
 local urls_box = create_boxed_widget(urls, dpi(200), dpi(180), beautiful.xbackground)
 
 -- Fortune
-local fortune_command = "fortune -n 140 -s computers"
+local fortune_command = "fortune -n 140 -s"
+-- local fortune_command = "fortune -n 140 -s computers"
 local fortune = wibox.widget.textbox()
 fortune.font = "sans 12"
 local fortune_update_interval = 3600
 awful.widget.watch(fortune_command, fortune_update_interval, function(widget, stdout)
     -- Remove trailing whitespaces
-    stdout = stdout:gsub('^%s*(.-)%s*$', '%1')
+    -- stdout = stdout:gsub('^%s*(.-)%s*$', '%1')
     fortune.markup = "<i>"..stdout.."</i>"
 end)
 
@@ -376,22 +385,22 @@ local fortune_widget = wibox.widget {
     widget = wibox.container.margin
 }
 
+
 local fortune_box = create_boxed_widget(fortune_widget, dpi(300), dpi(140), beautiful.xbackground)
 fortune_box:buttons(gears.table.join(
-                 -- Left click - New fortune
-                 awful.button({ }, 1, function ()
-                    awful.spawn.easy_async_with_shell(fortune_command, function(out)
-                        -- Remove trailing whitespaces
-                        out = out:gsub('^%s*(.-)%s*$', '%1')
-                        fortune.markup = "<i>"..out.."</i>"
-                    end)
-                 end)
+    -- Left click - New fortune
+    awful.button({ }, 1, function ()
+        awful.spawn.easy_async_with_shell(fortune_command, function(out)
+            -- Remove trailing whitespaces
+            out = out:gsub('^%s*(.-)%s*$', '%1')
+            fortune.markup = "<i>"..out.."</i>"
+        end)
+    end)
 ))
-helpers.add_clickable_effect(fortune_box)
+helpers.add_hover_cursor(fortune_box, "hand1")
 
 local icon_size = dpi(40)
-
-local brightness_icon = wibox.widget.imagebox(beautiful.redshift_icon)
+local brightness_icon = wibox.widget.imagebox(icons.redshift)
 brightness_icon.resize = true
 brightness_icon.forced_width = icon_size
 brightness_icon.forced_height = icon_size
@@ -410,34 +419,28 @@ local brightness = wibox.widget {
 local brightness_box = create_boxed_widget(brightness, dpi(300), dpi(80), beautiful.xbackground)
 
 brightness_box:buttons(
-  gears.table.join(
-    -- Left click - Toggle redshift
-    awful.button({ }, 1, function ()
-        awful.spawn.with_shell("flux")
-    end),
-    -- Right click - Reset brightness (Set to max)
-    awful.button({ }, 3, function ()
-        awful.spawn.easy_async_with_shell("xbacklight -set 100", function()
-            awesome.emit_signal("brightness_changed")
+    gears.table.join(
+        -- Left click - Toggle redshift
+        awful.button({ }, 1, function ()
+            helpers.toggle_night_mode()
+        end),
+        -- Right click - Reset brightness (Set to max)
+        awful.button({ }, 3, function ()
+            awful.spawn.with_shell("light -S 100")
+        end),
+        -- Scroll up - Increase brightness
+        awful.button({ }, 4, function ()
+            awful.spawn.with_shell("light -A 10")
+        end),
+        -- Scroll down - Decrease brightness
+        awful.button({ }, 5, function ()
+            awful.spawn.with_shell("light -U 10")
         end)
-    end),
-    -- Scroll up - Increase brightness
-    awful.button({ }, 4, function ()
-        awful.spawn.easy_async_with_shell("xbacklight -inc 10", function()
-            awesome.emit_signal("brightness_changed")
-        end)
-    end),
-    -- Scroll down - Decrease brightness
-    awful.button({ }, 5, function ()
-        awful.spawn.easy_async_with_shell("xbacklight -dec 10", function()
-            awesome.emit_signal("brightness_changed")
-        end)
-    end)
 ))
 
-helpers.add_clickable_effect(brightness_box)
+helpers.add_hover_cursor(brightness_box, "hand1")
 
-local notification_state = wibox.widget.imagebox(beautiful.alarm_icon)
+local notification_state = wibox.widget.imagebox(icons.alarm)
 notification_state.resize = true
 notification_state.forced_width = icon_size
 notification_state.forced_height = icon_size
@@ -445,24 +448,24 @@ notification_state.forced_height = icon_size
 -- notification_state.font = "Material Design Icons 30"
 local function update_notification_state_icon()
     if naughty.is_suspended() then
-        notification_state.image = beautiful.alarm_off_icon
+        notification_state.image = icons.alarm_off
     else
-        notification_state.image = beautiful.alarm_icon
+        notification_state.image = icons.alarm
     end
 end
 update_notification_state_icon()
 local notification_state_box = create_boxed_widget(notification_state, dpi(150), dpi(78), beautiful.xbackground)
 notification_state_box:buttons(gears.table.join(
-                 -- Left click - Toggle notification state
-                 awful.button({ }, 1, function ()
-                     naughty.toggle()
-                     update_notification_state_icon()
-                 end)
+    -- Left click - Toggle notification state
+    awful.button({ }, 1, function ()
+        naughty.toggle()
+        update_notification_state_icon()
+    end)
 ))
 
-helpers.add_clickable_effect(notification_state_box)
+helpers.add_hover_cursor(notification_state_box, "hand1")
 
-local screenshot = wibox.widget.imagebox(beautiful.screenshot_icon)
+local screenshot = wibox.widget.imagebox(icons.screenshot)
 screenshot.resize = true
 screenshot.forced_width = icon_size
 screenshot.forced_height = icon_size
@@ -470,18 +473,18 @@ screenshot.forced_height = icon_size
 -- screenshot.font = "Material Design Icons 30"
 local screenshot_box = create_boxed_widget(screenshot, dpi(150), dpi(78), beautiful.xbackground)
 screenshot_box:buttons(gears.table.join(
-                 -- Left click - Take screenshot
-                 awful.button({ }, 1, function ()
-                     awful.spawn.with_shell("screenshot.sh")
-                 end),
-                 -- Right click - Take screenshot in 5 seconds
-                 awful.button({ }, 3, function ()
-                     naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = beautiful.screenshot_icon})
-                     awful.spawn.with_shell("sleep 5 && screenshot.sh")
-                 end)
+    -- Left click - Take screenshot
+    awful.button({ }, 1, function ()
+        helpers.screenshot("full")
+    end),
+    -- Right click - Take screenshot in 5 seconds
+    awful.button({ }, 3, function ()
+        naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = icons.screenshot})
+        helpers.screenshot("full", 5)
+    end)
 ))
 
-helpers.add_clickable_effect(screenshot_box)
+helpers.add_hover_cursor(screenshot_box, "hand1")
 
 -- Item placement
 start_screen:setup {
@@ -533,18 +536,20 @@ start_screen:setup {
 
 local start_screen_grabber
 function start_screen_hide()
-  awful.keygrabber.stop(start_screen_grabber)
-  start_screen.visible = false
+    awful.keygrabber.stop(start_screen_grabber)
+    start_screen.visible = false
 end
 
 
 local original_cursor = "left_ptr"
 function start_screen_show()
     -- Fix cursor sometimes turning into "hand1" right after showing the start_screen
-    local w = _G.mouse.current_wibox
+    -- Sigh... This fix does not always work
+    local w = mouse.current_wibox
     if w then
         w.cursor = original_cursor
     end
+    -- naughty.notify({text = "starting the keygrabber"})
     start_screen_grabber = awful.keygrabber.run(function(_, key, event)
         if event == "release" then return end
         -- Press Escape or q or F1 to hide it

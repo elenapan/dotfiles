@@ -4,10 +4,8 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
-local icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/icons/"
 local layout_icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/layout/"
 local titlebar_icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/titlebar/"
-local weather_icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/weather/"
 local taglist_icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/taglist/"
 local tip = titlebar_icon_path --alias to save time/space
 local xrdb = xresources.get_current_theme()
@@ -124,6 +122,8 @@ if theme.border_width == 0 then
 else
     theme.snap_border_width = dpi(theme.border_width * 2)
 end
+-- Doesnt work with 4.2, need awesome-git?
+--theme.snapper_gap = theme.useless_gap
 
 -- Tag names
 theme.tagnames = {
@@ -149,7 +149,7 @@ theme.separator_fg = theme.xcolor8
 -- Wibar(s)
 -- (Bar items can be customized in bars.lua)
 theme.wibar_position = "bottom"
-theme.wibar_detached = false
+theme.wibar_ontop = false
 theme.wibar_height = dpi(35)
 theme.wibar_fg = theme.xcolor7
 theme.wibar_bg = theme.xcolor0
@@ -205,65 +205,12 @@ theme.sidebar_x = 0
 theme.sidebar_y = 0
 theme.sidebar_border_radius = 0
 -- theme.sidebar_border_radius = theme.border_radius
-theme.sidebar_hide_on_mouse_leave = true
-theme.sidebar_show_on_mouse_edge = true
 
 -- Exit screen
 theme.exit_screen_bg = theme.xcolor0 .. "CC"
 theme.exit_screen_fg = theme.xcolor7
 theme.exit_screen_font = "sans 20"
 theme.exit_screen_icon_size = dpi(180)
-
--- Other icons (mostly used in sidebar and menu)
-theme.playerctl_toggle_icon = icon_path .. "playerctl_toggle.png"
-theme.playerctl_prev_icon = icon_path .. "playerctl_prev.png"
-theme.playerctl_next_icon = icon_path .. "playerctl_next.png"
-theme.stats_icon = icon_path .. "stats.png"
-theme.search_icon = icon_path .. "search.png"
-theme.volume_icon = icon_path .. "volume.png"
-theme.muted_icon = icon_path .. "muted.png"
-theme.mpd_icon = icon_path .. "mpd.png"
-theme.firefox_icon = icon_path .. "firefox.png"
-theme.youtube_icon = icon_path .. "youtube.png"
-theme.reddit_icon = icon_path .. "reddit.png"
-theme.discord_icon = icon_path .. "discord.png"
-theme.telegram_icon = icon_path .. "telegram.png"
-theme.steam_icon = icon_path .. "steam.png"
-theme.lutris_icon = icon_path .. "lutris.png"
-theme.files_icon = icon_path .. "files.png"
-theme.manual_icon = icon_path .. "manual.png"
-theme.keyboard_icon = icon_path .. "keyboard.png"
-theme.appearance_icon = icon_path .. "appearance.png"
-theme.editor_icon = icon_path .. "editor.png"
-theme.redshift_icon = icon_path .. "redshift.png"
-theme.gimp_icon = icon_path .. "gimp.png"
-theme.terminal_icon = icon_path .. "terminal.png"
-theme.mail_icon = icon_path .. "mail.png"
-theme.music_icon = icon_path .. "music.png"
-theme.temperature_icon = icon_path .. "temperature.png"
-theme.battery_icon = icon_path .. "battery.png"
-theme.battery_charging_icon = icon_path .. "battery_charging.png"
-theme.cpu_icon = icon_path .. "cpu.png"
-theme.compositor_icon = icon_path .. "compositor.png"
-theme.start_icon = icon_path .. "start.png"
-theme.ram_icon = icon_path .. "ram.png"
-theme.screenshot_icon = icon_path .. "screenshot.png"
-theme.home_icon = icon_path .. "home.png"
-theme.alarm_icon = icon_path .. "alarm.png"
-theme.alarm_off_icon = icon_path .. "alarm_off.png"
-theme.alert_icon = icon_path .. "alert.png"
-
--- Weather icons
-theme.cloud_icon = weather_icon_path .. "cloud.png"
-theme.dcloud_icon = weather_icon_path .. "dcloud.png"
-theme.ncloud_icon = weather_icon_path .. "ncloud.png"
-theme.sun_icon = weather_icon_path .. "sun.png"
-theme.star_icon = weather_icon_path .. "star.png"
-theme.rain_icon = weather_icon_path .. "rain.png"
-theme.snow_icon = weather_icon_path .. "snow.png"
-theme.mist_icon = weather_icon_path .. "mist.png"
-theme.storm_icon = weather_icon_path .. "storm.png"
-theme.whatever_icon = weather_icon_path .. "whatever.png"
 
 -- Exit screen icons
 theme.exit_icon = icon_path .. "exit.png"
@@ -273,12 +220,13 @@ theme.suspend_icon = icon_path .. "suspend.png"
 theme.lock_icon = icon_path .. "lock.png"
 -- theme.hibernate_icon = icon_path .. "hibernate.png"
 
--- Noodle Icon Taglist
+-- Icon taglist
 local ntags = 10
 theme.taglist_icons_empty = {}
 theme.taglist_icons_occupied = {}
 theme.taglist_icons_focused = {}
 theme.taglist_icons_urgent = {}
+-- table.insert(tag_icons, tag)
 for i = 1, ntags do
   theme.taglist_icons_empty[i] = taglist_icon_path .. tostring(i) .. "_empty.png"
   theme.taglist_icons_occupied[i] = taglist_icon_path .. tostring(i) .. "_occupied.png"
@@ -326,7 +274,7 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 )
 
 -- Variables set for theming the menu:
-theme.menu_submenu_icon = icon_path.."submenu.png"
+-- theme.menu_submenu_icon = icon_path.."submenu.png"
 theme.menu_height = dpi(35)
 theme.menu_width  = dpi(180)
 theme.menu_bg_normal = theme.xcolor0
@@ -406,6 +354,7 @@ theme.layout_cornerse = layout_icon_path .. "cornerse.png"
 -- Recolor layout icons
 --theme = theme_assets.recolor_layout(theme, theme.xcolor1)
 
+-- Noodle widgets customization --
 -- Desktop mode widget variables
 -- Symbols     
 -- theme.desktop_mode_color_floating = theme.xcolor4

@@ -4,7 +4,8 @@
 # Use "program &" to run it regardless
 # ---
 # NOTE: This script runs with every restart of AwesomeWM
-# TODO: run_once
+# If you would like to run a command *once* on login,
+# you can use ~/.xprofile
 
 function run {
     if ! pgrep $1 > /dev/null ;
@@ -14,16 +15,17 @@ function run {
 }
 
 # Music
-run mpd ~/.config/mpd/mpd.conf
+# run mpd
+# (Alternatively, enable the mpd service so mpd runs on login)
 
 # Emacs daemon
 #run emacs --daemon
 
 # Load terminal colorscheme and settings
-#xrdb ~/.Xresources
+xrdb ~/.Xresources
 
 # Urxvt daemon
-#run urxvtd -q -o -f
+# run urxvtd -q -o -f
 
 # Mpv input file
 if [ ! -e /tmp/mpv.fifo ]; then
@@ -34,21 +36,15 @@ fi
 #run compton --config ~/.config/compton/compton.conf
 
 # Enable numlock on login
+# Required numlockx to be installed
 run numlockx
-
-# Battery notifications
-# run battery_daemon
 
 # Network manager tray icon
 run nm-applet
 
-# Keyboard layout
-# setxkbmap -layout "us,gr" -option "grp:alt_shift_toggle" &
-# setxkbmap -layout "us,de" -option "grp:alt_shift_toggle" &
-# setxkbmap -layout "us,gr,ru" -option "grp:alt_shift_toggle"
+# Kill redshift processes
+# pkill redshift
 
-# Caps Lock is Escape (Escape remains as is)
-# setxkbmap -option caps:escape
-
-# Scratchpad
-# scratchpad
+# Wallpaper
+# (Already set to run in rc.lua)
+# ~/.fehbg

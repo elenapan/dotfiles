@@ -1,55 +1,71 @@
 # dotfiles
 ## Some details
-+ **OS**: Antergos
-+ **WM**: Awesome
-+ **Terminal**: xst (fork of Suckless terminal)
++ **OS**: Ubuntu 18.04
++ **WM**: AwesomeWM
++ **Terminal**: Kitty
 + **File Manager**: Nemo for GUI, Ranger for terminal
-+ **Bar Icons**: Typicons Font
 + **Launcher**: Rofi
 + **Editor**: Vim
++ **Org editor**: [Remacs](https://github.com/remacs/remacs)
 + **Browser**: Firefox
 
 ## Latest preview
-![Screenshot](./previews/skyfall.png?raw=true "Latest")
+![Screenshot](https://i.redd.it/ddrd1bbxzpd31.png)
 
 ## Dependencies
-Here is a list of dependencies needed for making these themes work.
+Here is a complete list of dependencies needed for making these themes work.
 If you install all of them you will have a (mostly) smooth out of the box experience.
 Of course, not all of them actually do something useful (see `fortune-mod` dependency).
-Also if you are willing to edit a few configuration files, **which you will have to do** at some point, most of these dependencies can be replaced. For example you can replace `i3lock` with your own command, `rofi` with `dmenu`, my `screenshot.sh` script with `scrot`.
+Also if you are willing to edit a few configuration files, **which you will have to do** at some point, most of these dependencies can be replaced. For example you can replace `rofi` with `dmenu`,`maim` with `scrot`.
 
 If you notice that something is missing, please open an issue so I can add the dependency to this table.
 
 | Dependency | Description | Why/Where is it needed? |
 | --- | --- | --- |
-| `awesome` v4.2+ | Window manager | (explains itself) |
+<!-- | `awesome` v4.3+ | Window manager | (explains itself) | -->
+| `awesome` (git `master` branch) | Window manager | (explains itself) |
 | `rofi` | Window switcher, application launcher and dmenu replacement | (explains itself) |
-| `xorg-xbacklight` | Gets/Sets screen brightness (intel GPU only) | brightness widget |
-| `lm_sensors` | CPU temperature sensor | CPU temperature widget |
-| `upower` | Abstraction for enumerating power devices, listening to device events and more | battery widget |
-| `pulseaudio`, `libpulse` | Sound system **(You probably already have these)** | volume widget, [bin/volume-control.sh](./bin/volume-control.sh) script |
-| [bin/volume-control.sh](./bin/volume-control.sh) in your `$PATH` | Commands to control your volume | volume buttons, volume widget |
-| `jq` | Parses `json` output | weather widget |
-| `fortune-mod` | Displays random quotations (fortune cookies) | fortune widget |
-| `mpd` | Server-side application for playing music | **sidebar** music widget |
-| `mpc` | Minimalist command line interface to MPD | **sidebar** music widget |
-| `i3lock` | Screen locker | exit screen lock command |
-| `maim` | Takes screenshots (improved `scrot`) | [bin/screenshot.sh](./bin/screenshot.sh) script |
-| [bin/screenshot.sh](./bin/screenshot.sh) in your `$PATH` | Commands to take/view screenshots | screenshot button |
-| `feh` | Image viewer and wallpaper setter | screenshot previews, wallpapers |
-| *Typicons* font | Icon font | text exit screen, text weather icons, *skyfall* bar |
-| Any *Nerd Font* | Icon font | *manta* bar icons, *skyfall* taglist icons |
-| [openweathermap](https://openweathermap.org/) key | Provides weather data | weather widgets |
+| `light` | Gets/Sets screen brightness | Brightness keybinds |
+| `lm_sensors` | CPU temperature sensor | CPU temperature widgets |
+| `upower` | Abstraction for enumerating power devices, listening to device events and more | Battery widgets |
+| `acpid` | Daemon for delivering ACPI events | Charger notifications |
+| `pulseaudio`, `libpulse` | Sound system **(Installed by default on most distros)** | Volume widgets and keybinds |
+| `jq` | Parses `json` output | Weather widgets |
+| `fortune-mod` | Displays random quotations (fortune cookies) | Fortune widget |
+| `redshift` | Controls screen temperature | Night mode command |
+| `mpd` | Server-side application for playing music | Music widgets |
+| `mpc` | Minimalist command line interface to MPD | Music widgets |
+| `maim` | Takes screenshots (improved `scrot`) | Screenshot keybinds |
+| `feh` | Image viewer and wallpaper setter | Screenshot previews, wallpapers |
+| [openweathermap](https://openweathermap.org/) key | Provides weather data | Weather widgets |
+
+### Fonts
+##### Icon fonts
++ **Typicons**
++ **Material Icons**
++ **Icomoon**
++ **Nerd Fonts**
+##### Monospace
++ **Iosevka**
++ **Anka/Coder**
+##### Fancy
++ **Scriptina**
+##### Sans
++ **Google Sans**
++ **Roboto Condensed**
++ **San Francisco Display**
 
 ## Things to do after you set up dependencies
 + Backup your current `~/.config/awesome` directory if you have one and copy this repo's `config/awesome` directory in its place.
 
-+ Configure default applications
++ Configure user preferences
 
-   In `rc.lua` there is a section where default applications such as terminal, editor and file manager are defined.
+   In `rc.lua` there is a *User variables and preferences* section where user preferences and default applications are defined. There include the terminal, editor, file manager, screenshot directory, weather widget configuration and more.
    You should change those to your liking.
 
 + Configure autostart applications in `autostart.sh`
+
+   The commands in `autostart.sh` will run every time AwesomeWM restarts. If you would like to run something only once on login, I suggest you create the file `~/.xprofile`, make it executable and put the commands you want there.
 
 + *(Optional)* Load any `Xresources` colorscheme (`xrdb -merge <colorscheme file>`). In the [.xfiles](.xfiles) directory I provide you with a few of my own colorschemes, but you can also use your favorite one. All of my AwesomeWM themes take their colors from `xrdb`.
 
@@ -57,7 +73,8 @@ If you notice that something is missing, please open an issue so I can add the d
 
    My keybinds will most probably not suit you, but on your first login you might need to know how to navigate the desktop.
 
-   See the **Basic keybinds** section for more details.
+   See the [Basic keybinds](#basic-keybinds) section for more details.
+
 
 **You are now ready to login with AwesomeWM!**
 
@@ -76,19 +93,25 @@ If you notice that something is missing, please open an issue so I can add the d
 - `cava` - Audio visualizer
 
 ## AwesomeWM configuration: File structure
-+ I have split my `rc.lua` into multiple files for organization purposes.
+I have split my `rc.lua` into multiple files for organization purposes.
 
 + The `noodle` directory contains widgets that usually take up more than 50 lines of code.
 
-   I prefer not filling my `bars.lua` with a ton of widget configurations, but also not making a seperate file for every widget.
+   I prefer not filling my files with a ton of widget configurations, but also not making a seperate file for every widget.
+
++ The `evil` directory contains daemons (processes that run in the background) which emit system info.
+
+   They provide an easy way of writing widgets that rely on external information. All you need to do is subscribe to the signal a daemon provides.
+   No need to remember which shell command gives you the necessary info or bother about killing orphan processes. Evil takes care of everything.
 
 + In `themes` you can find a directory for each available theme.
 
    Such a directory should include at least a `theme.lua` and optionally icons, wallpaper, and whatever asset you need that is theme-specific.
 
-+ In `bar_themes` you can find a `.lua` file for each available bar or bar group.
++ In `bars` you can find a `.lua` file for each available bar or bar group.
 
    Multiple bars can be created in one file.
+   Every bar theme provides the global functions `toggle_wibars()` and `toggle_tray()` which you can bind to any keys you want.
 
 ## Basic keybinds
 
@@ -105,9 +128,7 @@ I use `super` AKA Windows key as my main modifier.
 + `super + s` - Tiling layout
 + `super + shift + s` - Floating layout
 + `super + w` - Maximized / Monocle layout
-+ `super + [arrow keys]` - Change focus by direction
-+ `super + j/k` - Cycle through clients
-+ `super + h/l` - Add / remove clients to / from master area
++ `super + [arrow keys] / hjkl` - Change focus by direction
 + `super + shift + [arrow keys] / [hjkl]` - Move client by direction. Move to edge if it is floating.
 + `super + control + [arrow keys] / [hjkl]` - Resize
 + `super + f` - Toggle fullscreen
@@ -163,7 +184,7 @@ I use `super` AKA Windows key as my main modifier.
 
 ## More details about the sidebar
 + Can be toggled with `super+grave`.
-+ Can be activated by moving the mouse to the edge of the screen and hidden by moving the mouse out of it (these settings can be easily enabled/disabled in your `theme.lua`).
++ Can be activated by moving the mouse to the edge of the screen and hidden by moving the mouse out of it (these settings can be easily enabled/disabled in your `user` preferences in rc.lua).
 + By default it is always above windows, and does not grab your keyboard (so you can have it open while doing something else, or just toggle it for a second to check your battery while you are watching something in fullscreen).
 + Most widgets (volume, search, exit, music...) are clickable.
 + Volume and music update only when they need to, as they are subscribed to pulse and mpd events respectively.
@@ -188,19 +209,19 @@ I use `super` AKA Windows key as my main modifier.
 
 + If you are new to AwesomeWM...
    
-   I suggest you start from the default configuration and add pieces you like to it instead of trying to modify someone else's configuration even if you feel really comfortable with that specific config.
-   Otherwise you will have no idea how anything works and how you can modify things to your own liking. Trust me, I've been there.
+   I suggest you start from the default configuration and add pieces you like to it instead of trying to modify someone else's configuration.
+   Even if you feel really comfortable with that specific config, you will realize that you have no idea how anything works and how you can modify things to your own liking. Trust me, I've been there.
 
 + Don't forget to use the [API Documentation for AwesomeWM](https://awesomewm.org/apidoc/index.html).
    
    It is well written and has plenty of examples.
 
-## Theme previews
-### Lovelace
-![Screenshot](./previews/lovelace.png?raw=true "lovelace theme")
++ You can also post your questions on [/r/awesomewm](https://www.reddit.com/r/awesomewm/)
 
-### Manta
-![Screenshot](./previews/manta.png?raw=true "manta theme")
-
-### Reasons
-![Screenshot](./previews/reasons.png?raw=true "reasons theme")
+## Older theme previews
+| Theme | Preview | Reddit post |
+| --- | --- | --- |
+| Skyfall | ![Screenshot](https://i.redd.it/kobla5v7r5i21.png "Skyfall theme") | [Skyfall](https://www.reddit.com/r/unixporn/comments/atkn5b) |
+| Lovelace | ![Screenshot](https://i.redd.it/glzrkk83f4621.png "Lovelace theme") | [Mechanical Love](https://www.reddit.com/comments/a900p7) |
+| Manta | ![Screenshot](https://i.imgur.com/5pV3Xxa.png "Manta theme") | [Cake Day](https://www.reddit.com/r/unixporn/comments/9ji6uu/awesome_cake_day/) |
+| Reasons | ![Screenshot](https://i.imgur.com/MdAN8jT.png "Reasons theme") | [25 reasons why you need a tiling WM](https://www.reddit.com/r/unixporn/comments/8jxpxc) |
