@@ -22,7 +22,6 @@ If you notice that something is missing, please open an issue so I can add the d
 
 | Dependency | Description | Why/Where is it needed? |
 | --- | --- | --- |
-<!-- | `awesome` v4.3+ | Window manager | (explains itself) | -->
 | `awesome` (git `master` branch) | Window manager | (explains itself) |
 | `rofi` | Window switcher, application launcher and dmenu replacement | (explains itself) |
 | `light` | Gets/Sets screen brightness | Brightness keybinds |
