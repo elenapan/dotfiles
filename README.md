@@ -45,10 +45,10 @@ If you notice that something is missing, please open an issue so I can add the d
 ##### Icon fonts
 + **Typicons**
 + **Material Icons**
-+ **Icomoon**
++ **Icomoon** - [download](https://transfer.sh/yDUzi/icomoon.zip)
 + **Nerd Fonts**
 ##### Monospace
-+ **Iosevka**
++ **Iosevka** - [download my custom build](https://transfer.sh/feYsR/myosevka.zip)
 + **Anka/Coder**
 ##### Fancy
 + **Scriptina**
