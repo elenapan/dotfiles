@@ -9,8 +9,11 @@
 + **Org editor**: [Remacs](https://github.com/remacs/remacs)
 + **Browser**: Firefox
 
-## Latest preview
-![Screenshot](https://i.redd.it/ddrd1bbxzpd31.png)
+## New features
+
+| Anti-aliased rounded corners | App drawer | Lock screen |
+| --- | --- | --- |
+| ![Screenshot](https://i.imgur.com/PXwQc87.png) | ![Screenshot](https://i.imgur.com/Z5rYUvI.png) | ![Screenshot](https://i.imgur.com/BL0USAH.png) |
 
 ## Dependencies
 Here is a complete list of dependencies needed for making these themes work.
