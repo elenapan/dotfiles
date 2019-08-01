@@ -199,7 +199,7 @@ local exit_screen = require("noodle.exit_screen_v2")
 -- Start screen
 -- Have not used/tested it in a long time.
 -- Some things might not work properly.
--- local start_screen = require("noodle.start_screen")
+local start_screen = require("noodle.start_screen")
 
 -- Lock screen
 -- Make sure to configure your password in the 'user' section above
