@@ -159,6 +159,51 @@ I use `super` AKA Windows key as my main modifier.
 + `middle click` - Close
 + ... And more.
 
+## Anti-aliasing
+AwesomeWM can anti-alias titlebars, but not the client content itself.
+
+If `user.anti_aliasing` is enabled in the configuration, the top titlebar corners are antialiased and a small titlebar is also added at the bottom in order to round the bottom corners.
+If it is disabled, the client shape will STILL be rounded, just without anti-aliasing, according to your theme's `border_radius` variable.
+
+In some cases, (check `wants_equal_padding(c)` function in `titlebars.lua`) 4 titlebars are added instead of 2 in order to create equal padding around all client sides.
+
+Anti-aliasing can be applied to any wibox by making its background color transparent and putting all its items in a shaped container with the desired background color.
+
+Here is an example of an anti-aliased wibox.
+
+```lua
+-- Load these libraries (if you haven't already)
+local awful = require("awful")
+local gears = require("gears")
+local wibox = require("wibox")
+
+-- Create the box
+local anti_aliased_wibox = wibox({visible = true, ontop = true, type = "normal", height = 100, width = 100})
+
+-- Place it at the center of the screen
+awful.placement.centered(anti_aliased_wibox)
+
+-- Set transparent bg
+anti_aliased_wibox.bg = "#00000000"
+
+-- Put its items in a shaped container
+anti_aliased_wibox:setup {
+    -- Container
+    {
+        -- Items go here
+        wibox.widget.textbox("Hello!"),
+        -- ...
+        layout = wibox.layout.fixed.vertical
+    },
+    -- The real background color
+    bg = "#111111",
+    -- The real shape
+    shape = gears.shape.rounded_rect,
+    widget = wibox.container.background()
+}
+
+```
+
 ## Custom titlebars per class / name / whatever
 + For the custom titlebars to work your terminal or application needs to be able to set its own class or name
 
