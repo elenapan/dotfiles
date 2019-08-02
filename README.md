@@ -13,7 +13,7 @@
 
 | Anti-aliased rounded corners | App drawer | Lock screen |
 | --- | --- | --- |
-| ![Screenshot](https://i.imgur.com/PXwQc87.png) | ![Screenshot](https://i.imgur.com/Z5rYUvI.png) | ![Screenshot](https://i.imgur.com/BL0USAH.png) |
+| ![Screenshot](https://i.imgur.com/PXwQc87.png) | ![Screenshot](https://i.imgur.com/Z5rYUvI.png) | ![Gif](https://user-images.githubusercontent.com/31134749/62258852-d5279f00-b414-11e9-8d6b-046cd826da87.gif) |
 
 ## Dependencies
 Here is a complete list of dependencies needed for making these themes work.
@@ -146,7 +146,7 @@ I use `super` AKA Windows key as my main modifier.
 #### Mouse on desktop
 + `left click` - Dismiss all notifications, close sidebar and main menu
 + `double left click` - Jump to urgent client (or back to last tag if there is no such client)
-+ `right click` - Main menu
++ `right click` - App drawer
 + `middle click` - Start screen
 + `scroll up/down` - Cycle through tags
 + `move to left/right edge` - Show sidebar
@@ -225,7 +225,7 @@ anti_aliased_wibox:setup {
 + Dismiss with `escape`, `q` or `F1` or `middle click`.
 + You can scroll on the calendar to switch to the previous / next month. Left click to reset.
 + The fortune box requires `fortune-mod`. Clicking it gives you a new fortune cookie :)
-+ The brightness bar requires `xorg-xbacklight`.
++ The brightness bar requires `light`.
 + The bell icon suspends / re-enables notifications on click.
 + The camera icon takes a screenshot instantly on left click and with a 5 second delay on right click. Requires "screenshot.sh" from my repo. Alternatively you can set your own screenshot command.
 
