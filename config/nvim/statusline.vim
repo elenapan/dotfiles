@@ -1,5 +1,7 @@
-" Make sure to source this file somewhere at the bottom of your config.
 " ====================================================================
+" Make sure to:
+" 1. source this file somewhere at the bottom of your config.
+" 2. disable any statusline plugins, as they will override this.
 " ====================================================================
 
 " Do not show mode under the statusline since the statusline itself changes
