@@ -786,6 +786,11 @@ awful.rules.rules = {
                 -- "Subl3",
             },
         },
+        except_any = {
+            class = {
+                "Nm-connection-editor",
+            },
+        },
         properties = { screen = 1, tag = awful.screen.focused().tags[4] }
     },
 

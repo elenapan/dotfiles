@@ -11,9 +11,9 @@
 
 ## New features
 
-| Anti-aliased rounded corners | App drawer | Lock screen |
+| Anti-aliased rounded corners | App drawer | Lock screen - [See it in action here](https://streamable.com/d2t8f) |
 | --- | --- | --- |
-| ![Screenshot](https://i.imgur.com/PXwQc87.png) | ![Screenshot](https://i.imgur.com/Z5rYUvI.png) | ![Gif](https://user-images.githubusercontent.com/31134749/62258852-d5279f00-b414-11e9-8d6b-046cd826da87.gif) |
+| ![Screenshot](https://i.imgur.com/PXwQc87.png) | ![Screenshot](https://i.imgur.com/Z5rYUvI.png) | ![Screenshot](https://i.imgur.com/BL0USAH.png) |
 
 ## Dependencies
 Here is a complete list of dependencies needed for making these themes work.
@@ -45,10 +45,10 @@ If you notice that something is missing, please open an issue so I can add the d
 ##### Icon fonts
 + **Typicons**
 + **Material Icons**
-+ **Icomoon** - [download](https://transfer.sh/yDUzi/icomoon.zip)
++ **Icomoon** - [download](https://www.dropbox.com/s/hrkub2yo9iapljz/icomoon.zip?dl=0)
 + **Nerd Fonts**
 ##### Monospace
-+ **Iosevka** - [download my custom build](https://transfer.sh/feYsR/myosevka.zip)
++ **Iosevka** - [download my custom build](https://www.dropbox.com/s/nqyurzy8wcupkkz/myosevka.zip?dl=0)
 + **Anka/Coder**
 ##### Fancy
 + **Scriptina**
