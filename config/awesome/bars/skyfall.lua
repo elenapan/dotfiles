@@ -74,7 +74,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create text weather widget
     local text_weather = require("noodle.text_weather")
->   local weather_widget_icon = text_weather:get_all_children()[1]
+    local weather_widget_icon = text_weather:get_all_children()[1]
     weather_widget_icon.font = "Typicons 11"
     local weather_widget_text = text_weather:get_all_children()[2]
     weather_widget_text.font = "sans 9"
