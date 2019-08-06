@@ -266,7 +266,7 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     -- Create the wibox
-    s.mywibox = awful.wibar({visible = true, ontop = true, type = "dock", position = "bottom"})
+    s.mywibox = awful.wibar({screen = s, visible = true, ontop = true, type = "dock", position = "bottom"})
     s.mywibox.height = beautiful.wibar_height
     -- s.mywibox.width = beautiful.wibar_width
 
@@ -293,7 +293,7 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     -- Create the top bar
-    s.mytopwibox = awful.wibar({visible = true, ontop = false, type = "dock", position = "top", height = dpi(5)})
+    s.mytopwibox = awful.wibar({screen = s, visible = true, ontop = false, type = "dock", position = "top", height = dpi(5)})
     -- Bar placement
     awful.placement.maximize_horizontally(s.mytopwibox)
     s.mytopwibox.bg = "#00000000"
