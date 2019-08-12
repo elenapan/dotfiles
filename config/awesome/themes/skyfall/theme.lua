@@ -212,14 +212,6 @@ theme.exit_screen_fg = theme.xcolor7
 theme.exit_screen_font = "sans 20"
 theme.exit_screen_icon_size = dpi(180)
 
--- Exit screen icons
-theme.exit_icon = icon_path .. "exit.png"
-theme.poweroff_icon = icon_path .. "poweroff.png"
-theme.reboot_icon = icon_path .. "reboot.png"
-theme.suspend_icon = icon_path .. "suspend.png"
-theme.lock_icon = icon_path .. "lock.png"
--- theme.hibernate_icon = icon_path .. "hibernate.png"
-
 -- Icon taglist
 local ntags = 10
 theme.taglist_icons_empty = {}
