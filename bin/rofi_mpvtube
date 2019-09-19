@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# ~·~·~·~·~·~·~·~·~·~·~·~·~
+# Author: elenapan @ github
+# ~·~·~·~·~·~·~·~·~·~·~·~·~
+# Rofi menu for playing a youtube video, playlist or stream on mpv
+# Requirements:
+#    - youtube-dl
+#    - mpv
+#    - notify-send (optionally for notifications)
+#
+# The playlist file format should be as follows (example):
+#     Your Playlist @<some youtube url>
+#     Your Other Playlist @<some other youtube url>
+#     ...
+#     Electro Swing @https://www.youtube.com/watch?v=d1vQMIisJuc&list=RDd1vQMIisJuc
+#    ...
+# You can also add single videos or live streams to the playlist file.
+# It should work as long as the URL is valid.
+
+# ~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·
+# ~·~·~·~·~·~·~ User configuration ·~·~·~·~·~·~·~·
+# ~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·
+
+# Playlist file
+playlist_file=/home/elena/.config/mpv/mpvtube_playlists
+# playlist_file=/path/to/your/mpvtube_playlists
+
+# Arguments that will be passed to mpv
+mpv_args="-shuffle --ytdl-raw-options=yes-playlist= --force-window=immediate"
+
+# Use this if you only need audio
+# mpv_args="--no-video -shuffle"
+
+# Rofi prompt
+rofi_prompt="YouTube ❯"
+# ~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·~·
+
+
+# Grab the playlist names from the file
+get_playlists() {
+    while read -r LINE
+    do
+        playlist_name="$(echo $LINE | cut -d "@" -f 1)"
+        echo $playlist_name
+    done < "$playlist_file"
+}
+
+main() {
+    # Get choice from rofi
+    choice=$( (get_playlists) | rofi -dmenu -i -fuzzy -p "$rofi_prompt" )
+
+  # If user has not picked anything, exit
+  if [[ -z "${choice// }" ]]; then
+      exit 1
+  fi
+
+  # Get URL
+  linktoplay="$(grep -m 1 "$choice" $playlist_file | cut -d '@' -f 2)"
+  # If the choice does not exist, exit
+  if [ ${#linktoplay} -eq "0" ]; then
+      exit 1
+  fi
+
+  # Send notification
+  notify-send "YouTube - Loading:" "$choice"
+
+  # Spawn mpv
+  mpv $mpv_args "$linktoplay"
+}
+
+main &
+
+exit 0
+
