@@ -130,7 +130,7 @@ I use `super` AKA Windows key as my main modifier.
 + `super + s` - Tiling layout
 + `super + shift + s` - Floating layout
 + `super + w` - Maximized / Monocle layout
-+ `super + [arrow keys] / hjkl` - Change focus by direction
++ `super + [arrow keys] / [hjkl]` - Change focus by direction
 + `super + shift + [arrow keys] / [hjkl]` - Move client by direction. Move to edge if it is floating.
 + `super + control + [arrow keys] / [hjkl]` - Resize
 + `super + f` - Toggle fullscreen
@@ -197,7 +197,7 @@ anti_aliased_wibox:setup {
     },
     -- The real background color
     bg = "#111111",
-    -- The real shape
+    -- The real, anti-aliased shape
     shape = gears.shape.rounded_rect,
     widget = wibox.container.background()
 }
