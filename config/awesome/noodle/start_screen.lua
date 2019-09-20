@@ -25,10 +25,6 @@ start_screen.bg = beautiful.start_screen_bg or beautiful.exit_screen_bg or beaut
 start_screen.fg = beautiful.start_screen_fg or beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
 start_screen:buttons(gears.table.join(
-    -- Left click - Hide start_screen
-    awful.button({ }, 1, function ()
-        start_screen_hide()
-    end),
     -- Middle click - Hide start_screen
     awful.button({ }, 2, function ()
         start_screen_hide()
@@ -283,9 +279,11 @@ local function create_bookmark(name, path)
     bookmark:buttons(gears.table.join(
         awful.button({ }, 1, function ()
             awful.spawn.with_shell(user.file_manager.." "..path)
+            start_screen_hide()
         end),
         awful.button({ }, 3, function ()
             awful.spawn.with_shell(user.terminal.." -e 'ranger' "..path)
+            start_screen_hide()
         end)
     ))
 
@@ -369,13 +367,18 @@ local urls_box = create_boxed_widget(urls, dpi(200), dpi(180), beautiful.xbackgr
 -- Fortune
 local fortune_command = "fortune -n 140 -s"
 -- local fortune_command = "fortune -n 140 -s computers"
-local fortune = wibox.widget.textbox()
-fortune.font = "sans 12"
+local fortune = wibox.widget {
+    font = "sans italic 12",
+    align = "center",
+    text = "Loading your cookie...",
+    widget = wibox.widget.textbox
+}
+
 local fortune_update_interval = 3600
 awful.widget.watch(fortune_command, fortune_update_interval, function(widget, stdout)
     -- Remove trailing whitespaces
-    -- stdout = stdout:gsub('^%s*(.-)%s*$', '%1')
-    fortune.markup = "<i>"..stdout.."</i>"
+    stdout = stdout:gsub('^%s*(.-)%s*$', '%1')
+    fortune.markup = stdout
 end)
 
 local fortune_widget = wibox.widget {
