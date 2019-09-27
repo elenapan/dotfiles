@@ -104,7 +104,7 @@ end)
 host_text.font = "sans italic 18"
 host_text.align = "center"
 host_text.valign = "center"
-local user = wibox.widget {
+local user_widget = wibox.widget {
     user_picture,
     pad(1),
     pad(1),
@@ -113,7 +113,7 @@ local user = wibox.widget {
     host_text,
     layout = wibox.layout.fixed.vertical
 }
-local user_box = create_boxed_widget(user, dpi(300), dpi(340), beautiful.xbackground)
+local user_box = create_boxed_widget(user_widget, dpi(300), dpi(340), beautiful.xbackground)
 
 -- Calendar
 -- Create the calendar
