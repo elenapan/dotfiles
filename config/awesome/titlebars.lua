@@ -432,7 +432,7 @@ client.connect_signal("request::titlebars", function(c)
                 -- Only visible when equal padding is desired for the client
                 {
                     visible = user.anti_aliasing and equal_padding or only_borders,
-                    buttons = user.anti_aliasing and only_borders and buttons,
+                    buttons = user.anti_aliasing and only_borders and buttons or nil,
                     -- bg = beautiful.xbackground,
                     bg = anti_aliasing_padding_color,
                     -- bg = only_borders and anti_aliasing_padding_color or beautiful.xbackground,
