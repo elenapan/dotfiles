@@ -388,8 +388,8 @@ client.connect_signal("request::titlebars", function(c)
         -- end
 
         -- Save these here in order to avoid re-evaluating them multiple times
-        local equal_padding = wants_equal_padding(c)
-        local only_borders = wants_only_borders(c)
+        local equal_padding = user.anti_aliasing and wants_equal_padding(c)
+        local only_borders = user.anti_aliasing and wants_only_borders(c)
 
         -- Top titlebar
         local titlebar_container = wibox.widget {
