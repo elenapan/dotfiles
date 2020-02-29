@@ -220,9 +220,7 @@ local function grab_password()
             if input == password then
                 -- YAY
                 reset()
-                for s in screen do
-                    s.mylockscreen.visible = false
-                end
+                set_visibility(false)
             else
                 -- NAY
                 fail()
@@ -233,10 +231,14 @@ local function grab_password()
     }
 end
 
-function lock_screen_show()
+local function set_visibility(v)
     for s in screen do
-        s.mylockscreen.visible = true
+        s.mylockscreen.visible = v
     end
+end
+
+function lock_screen_show()
+    set_visibility(true)
     grab_password()
 end
 
