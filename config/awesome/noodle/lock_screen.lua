@@ -28,14 +28,32 @@ local lock_animation_icon = wibox.widget {
 -- It will not be visible anywhere.
 local some_textbox = wibox.widget.textbox()
 
+-- This function adds blurry mask to a screen
+local function screen_mask(s)
+    local mask = wibox({visible = false, ontop = true, type = "splash", screen = s})
+    awful.placement.maximize(mask)
+    mask.bg = beautiful.lock_screen_bg or "#21252b"
+    mask.fg = beautiful.lock_screen_fg or "#abb2bf"
+    return mask
+end
+
 -- Create the lock screen wibox
 -- Set the type to "splash" and set all "splash" windows to be blurred in your
 -- compositor configuration file
-lock_screen = wibox({visible = false, ontop = true, type = "splash"})
+lock_screen = wibox({visible = false, ontop = true, type = "splash", screen = screen.primary})
 awful.placement.maximize(lock_screen)
 
 lock_screen.bg = beautiful.lock_screen_bg or beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111"
 lock_screen.fg = beautiful.lock_screen_fg or beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
+
+-- Add lockscreen to each screen
+for s in screen do
+    if s == screen.primary then
+        s.mylockscreen = lock_screen
+    else
+        s.mylockscreen = screen_mask(s)
+    end
+end
 
 -- Items
 local day_of_the_week = wibox.widget {
@@ -202,7 +220,9 @@ local function grab_password()
             if input == password then
                 -- YAY
                 reset()
-                lock_screen.visible = false
+                for s in screen do
+                    s.mylockscreen.visible = false
+                end
             else
                 -- NAY
                 fail()
@@ -214,7 +234,9 @@ local function grab_password()
 end
 
 function lock_screen_show()
-    lock_screen.visible = true
+    for s in screen do
+        s.mylockscreen.visible = true
+    end
     grab_password()
 end
 
