@@ -55,6 +55,13 @@ for s in screen do
     end
 end
 
+-- Set visibility for lock screen on each monitor
+local function set_visibility(v)
+    for s in screen do
+        s.mylockscreen.visible = v
+    end
+end
+
 -- Items
 local day_of_the_week = wibox.widget {
     -- Fancy font
@@ -229,12 +236,6 @@ local function grab_password()
         end,
         textbox = some_textbox,
     }
-end
-
-local function set_visibility(v)
-    for s in screen do
-        s.mylockscreen.visible = v
-    end
 end
 
 function lock_screen_show()
