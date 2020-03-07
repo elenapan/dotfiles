@@ -19,9 +19,7 @@ start_widget:buttons(gears.table.join(
             sidebar.visible = not sidebar.visible
         end),
         -- Middle click - Toggle scratchpad
-        awful.button({ }, 2, function ()
-            helpers.toggle_scratchpad()
-        end),
+        awful.button({ }, 2, apps.scratchpad),
         -- Right click - Toggle tray
         awful.button({ }, 3, function ()
             local traybox = awful.screen.focused().traybox
@@ -121,11 +119,11 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 -- Every bar theme should provide these fuctions
-function toggle_wibars()
+function wibars_toggle()
     local s = awful.screen.focused()
     s.mywibox.visible = not s.mywibox.visible
 end
-function toggle_tray()
+function tray_toggle()
     local s = awful.screen.focused()
     s.traybox.visible = not s.traybox.visible
 end

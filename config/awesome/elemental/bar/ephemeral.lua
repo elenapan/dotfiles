@@ -5,7 +5,6 @@ local beautiful = require("beautiful")
 
 local keys = require("keys")
 local helpers = require("helpers")
-local pad = helpers.pad
 
 -- Helper function that creates a button widget
 local create_button = function (symbol, color, bg_color, hover_color)
@@ -38,7 +37,7 @@ local create_button = function (symbol, color, bg_color, hover_color)
     return section
 end
 
-local exit = create_button("", beautiful.xcolor6, beautiful.xcolor8.."C0",beautiful.xcolor8.."E0")
+local exit = create_button("", x.color6, x.color8.."C0",x.color8.."E0")
 exit:buttons(gears.table.join(
     awful.button({ }, 1, function ()
         exit_screen_show()
@@ -46,19 +45,17 @@ exit:buttons(gears.table.join(
 ))
 
 local volume_symbol = ""
-local volume_muted_color = beautiful.xcolor8
-local volume_unmuted_color = beautiful.xcolor5
-local volume = create_button(volume_symbol, volume_unmuted_color, beautiful.xcolor8.."30", beautiful.xcolor8.."50")
+local volume_muted_color = x.color8
+local volume_unmuted_color = x.color5
+local volume = create_button(volume_symbol, volume_unmuted_color, x.color8.."30", x.color8.."50")
 
 volume:buttons(gears.table.join(
     -- Left click - Mute / Unmute
     awful.button({ }, 1, function ()
         helpers.volume_control(0)
     end),
-    -- Right click - Run or raise pavucontrol
-    awful.button({ }, 3, function ()
-        helpers.run_or_raise({class = 'Pavucontrol'}, true, "pavucontrol")
-    end),
+    -- Right click - Run or raise volume control client
+    awful.button({ }, 3, apps.volume),
     -- Scroll - Increase / Decrease volume
     awful.button({ }, 4, function ()
         helpers.volume_control(5)
@@ -78,9 +75,9 @@ awesome.connect_signal("evil::volume", function(_, muted)
 end)
 
 local microphone_symbol = ""
-local microphone_muted_color = beautiful.xcolor8
-local microphone_unmuted_color = beautiful.xcolor3
-local microphone = create_button(microphone_symbol, microphone_unmuted_color, beautiful.xcolor8.."60", beautiful.xcolor8.."80")
+local microphone_muted_color = x.color8
+local microphone_unmuted_color = x.color3
+local microphone = create_button(microphone_symbol, microphone_unmuted_color, x.color8.."60", x.color8.."80")
 
 microphone:buttons(gears.table.join(
     awful.button({ }, 1, function ()
@@ -97,27 +94,28 @@ awesome.connect_signal("evil::microphone", function(muted)
     end
 end)
 
-local music = create_button("", beautiful.xcolor4, beautiful.xcolor8.."90", beautiful.xcolor8.."B0")
+local music = create_button("", x.color4, x.color8.."90", x.color8.."B0")
 
 music:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        helpers.run_or_raise({class = "music"}, true, user.music_client)
+    awful.button({ }, 1, apps.music),
+    awful.button({ }, 3, apps.music),
+    -- Scrolling: Adjust mpd volume
+    awful.button({ }, 4, function ()
+        awful.spawn.with_shell("mpc volume +5")
     end),
-    awful.button({ }, 3, function ()
-        helpers.run_or_raise({class = "music"}, true, user.music_client)
+    awful.button({ }, 5, function ()
+        awful.spawn.with_shell("mpc volume -5")
     end)
 ))
 
-local sandwich = create_button("", beautiful.xcolor1, beautiful.xcolor8.."30", beautiful.xcolor8.."50")
+local sandwich = create_button("", x.color1, x.color8.."30", x.color8.."50")
 sandwich:buttons(gears.table.join(
     awful.button({ }, 1, function ()
         app_drawer_show()
     end),
-    awful.button({ }, 2, function ()
-        helpers.toggle_scratchpad()
-    end),
+    awful.button({ }, 2, apps.scratchpad),
     awful.button({ }, 3, function ()
-        toggle_tray()
+        tray_toggle()
     end)
 ))
 
@@ -129,30 +127,30 @@ local update_tasklist = function (task, c)
         color = "#00000000"
     else
         if c.class == "email" then
-            color = beautiful.xcolor2
+            color = x.color2
         elseif c.class == "Firefox" then
-            color = beautiful.xcolor1
+            color = x.color1
         elseif c.class == "music" then
-            color = beautiful.xcolor5
+            color = x.color5
         elseif c.class == "TelegramDesktop" then
-            color = beautiful.xcolor2
+            color = x.color2
         elseif c.class == "Thunar" then
-            color = beautiful.xcolor3
+            color = x.color3
         elseif c.class == "mpv" then
-            color = beautiful.xcolor6
+            color = x.color6
         elseif c.class == "Alacritty" then
-            color = beautiful.xcolor4
+            color = x.color4
         else
-            color = beautiful.xcolor7
+            color = x.color7
         end
     end
     if client.focus == c then
         text.markup = helpers.colorize_text(text.text, color)
         -- background.bg = color
         background.border_color = color
-        background.bg = beautiful.xbackground.."AA"
+        background.bg = x.background.."AA"
     else
-        text.markup = helpers.colorize_text(text.text, beautiful.xforeground)
+        text.markup = helpers.colorize_text(text.text, x.foreground)
         background.bg = color
         background.border_color = "#00000000"
     end
@@ -161,42 +159,42 @@ end
 local tag_colors_empty = { "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", }
 
 local tag_colors_urgent = {
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7,
-    beautiful.xcolor7
+    x.background,
+    x.background,
+    x.background,
+    x.background,
+    x.background,
+    x.background,
+    x.background,
+    x.background,
+    x.background,
+    x.background
 }
 
 local tag_colors_focused = {
-    beautiful.xcolor1,
-    beautiful.xcolor5,
-    beautiful.xcolor4,
-    beautiful.xcolor6,
-    beautiful.xcolor2,
-    beautiful.xcolor3,
-    beautiful.xcolor1,
-    beautiful.xcolor5,
-    beautiful.xcolor4,
-    beautiful.xcolor6,
+    x.color1,
+    x.color5,
+    x.color4,
+    x.color6,
+    x.color2,
+    x.color3,
+    x.color1,
+    x.color5,
+    x.color4,
+    x.color6,
 }
 
 local tag_colors_occupied = {
-    beautiful.xcolor1.."55",
-    beautiful.xcolor5.."55",
-    beautiful.xcolor4.."55",
-    beautiful.xcolor6.."55",
-    beautiful.xcolor2.."55",
-    beautiful.xcolor3.."55",
-    beautiful.xcolor1.."55",
-    beautiful.xcolor5.."55",
-    beautiful.xcolor4.."55",
-    beautiful.xcolor6.."55",
+    x.color1.."55",
+    x.color5.."55",
+    x.color4.."55",
+    x.color6.."55",
+    x.color2.."55",
+    x.color3.."55",
+    x.color1.."55",
+    x.color5.."55",
+    x.color4.."55",
+    x.color6.."55",
 }
 
 -- Helper function that updates a taglist item
@@ -237,9 +235,11 @@ awful.screen.connect_for_each_screen(function(s)
         buttons  = keys.tasklist_buttons,
         style    = {
             font = beautiful.tasklist_font,
-            bg = beautiful.xcolor0,
+            bg = x.color0,
         },
         layout   = {
+            -- spacing = dpi(10),
+            -- layout  = wibox.layout.fixed.horizontal
             layout  = wibox.layout.flex.horizontal
         },
         widget_template = {
@@ -259,18 +259,48 @@ awful.screen.connect_for_each_screen(function(s)
                 bottom = dpi(4),
                 widget = wibox.container.margin
             },
+            -- shape = helpers.rrect(dpi(8)),
+            -- border_width = dpi(2),
             id = "bg_role",
+            -- id = "background_role",
+            -- shape = gears.shape.rounded_bar,
             widget = wibox.container.background,
+            -- create_callback = function(self, c, index, objects)
+            --     update_tasklist(self, c)
+            -- end,
+            -- update_callback = function(self, c, index, objects)
+            --     update_tasklist(self, c)
+            -- end,
         },
     }
 
+
+    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
+    -- We need one layoutbox per screen.
+    s.mylayoutbox = awful.widget.layoutbox(s)
+    s.mylayoutbox.resize = true
+    s.mylayoutbox.forced_width  = beautiful.wibar_height - dpi(5)
+    s.mylayoutbox.forced_height = beautiful.wibar_height - dpi(5)
+    s.mylayoutbox:buttons(gears.table.join(
+    awful.button({ }, 1, function () awful.layout.inc( 1) end),
+    awful.button({ }, 3, function () awful.layout.inc(-1) end),
+    awful.button({ }, 4, function () awful.layout.inc( 1) end),
+    awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
     -- Create the wibox
     s.mywibox = awful.wibar({screen = s, visible = true, ontop = true, type = "dock", position = "bottom"})
     s.mywibox.height = beautiful.wibar_height
     -- s.mywibox.width = beautiful.wibar_width
 
-    s.mywibox.bg = beautiful.xcolor0
+    -- For antialiasing
+    -- The actual background color is defined in the wibar items
+    -- s.mywibox.bg = "#00000000"
+
+    -- s.mywibox.bg = x.color8
+    -- s.mywibox.bg = x.foreground
+    -- s.mywibox.bg = x.background.."88"
+    -- s.mywibox.bg = x.background
+    s.mywibox.bg = x.color0
 
     -- Bar placement
     awful.placement.maximize_horizontally(s.mywibox)
@@ -329,6 +359,15 @@ awful.screen.connect_for_each_screen(function(s)
     s.traybox:connect_signal("mouse::leave", function ()
         s.traybox.visible = false
     end)
+
+    -- Place bar at the bottom and add margins
+    -- awful.placement.bottom(s.mywibox, {margins = beautiful.screen_margin * 2})
+    -- Also add some screen padding so that clients do not stick to the bar
+    -- For "awful.wibar"
+    -- s.padding = { bottom = s.padding.bottom + beautiful.screen_margin * 2 }
+    -- For "wibox"
+    -- s.padding = { bottom = s.mywibox.height + beautiful.screen_margin * 2 }
+
 end)
 
 -- We have set the wibar(s) to be ontop, but we do not want it to be above fullscreen clients
@@ -346,13 +385,13 @@ client.connect_signal("unfocus", no_wibar_ontop)
 client.connect_signal("property::fullscreen", no_wibar_ontop)
 
 -- Every bar theme should provide these fuctions
-function toggle_wibars()
+function wibars_toggle()
     local s = awful.screen.focused()
     s.mywibox.visible = not s.mywibox.visible
     s.mytopwibox.visible = not s.mytopwibox.visible
 end
 
-function toggle_tray()
+function tray_toggle()
     local s = awful.screen.focused()
     s.traybox.visible = not s.traybox.visible
 end

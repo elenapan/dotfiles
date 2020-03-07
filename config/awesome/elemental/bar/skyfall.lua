@@ -5,7 +5,6 @@ local beautiful = require("beautiful")
 
 local keys = require("keys")
 local helpers = require("helpers")
-local pad = helpers.pad
 
 -- Helper function that updates a taglist item
 local update_taglist = function (item, tag, index)
@@ -56,20 +55,20 @@ awful.screen.connect_for_each_screen(function(s)
     -- s.traybox.y = s.geometry.height - s.traybox.height - s.traybox.height / 2
     s.traybox.bg = beautiful.bg_systray
     s.traybox:setup {
-      pad(1),
-      s.systray,
-      pad(1),
-      layout = wibox.layout.align.horizontal
+        s.systray,
+        left = dpi(6),
+        right = dpi(6),
+        widget = wibox.container.margin
     }
     s.traybox:buttons(gears.table.join(
-                        -- Middle click - Hide traybox
-                        awful.button({ }, 2, function ()
-                            s.traybox.visible = false
-                        end)
+        -- Middle click - Hide traybox
+        awful.button({ }, 2, function ()
+            s.traybox.visible = false
+        end)
     ))
     -- Hide traybox when mouse leaves
     s.traybox:connect_signal("mouse::leave", function ()
-            s.traybox.visible = false
+        s.traybox.visible = false
     end)
 
     -- Create text weather widget
@@ -82,7 +81,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a window control widget
     local close_button = wibox.widget.textbox()
     close_button.font = "Typicons 11"
-    close_button.markup = helpers.colorize_text("", beautiful.xcolor1)
+    close_button.markup = helpers.colorize_text("", x.color1)
     close_button:buttons(gears.table.join(
         awful.button({ }, 1, function ()
             if client.focus then
@@ -99,7 +98,7 @@ awful.screen.connect_for_each_screen(function(s)
         end)
     ))
     maximize_button.font = "Typicons 11"
-    maximize_button.markup = helpers.colorize_text("", beautiful.xcolor5)
+    maximize_button.markup = helpers.colorize_text("", x.color5)
     local minimize_button = wibox.widget.textbox()
     minimize_button:buttons(gears.table.join(
         awful.button({ }, 1, function ()
@@ -109,7 +108,7 @@ awful.screen.connect_for_each_screen(function(s)
         end)
     ))
     minimize_button.font = "Typicons 11"
-    minimize_button.markup = helpers.colorize_text("", beautiful.xcolor6)
+    minimize_button.markup = helpers.colorize_text("", x.color6)
 
     local window_buttons = wibox.widget {
         minimize_button,
@@ -163,11 +162,11 @@ traybox_activator:connect_signal("mouse::enter", function ()
 end)
 
 -- Every bar theme should provide these fuctions
-function toggle_wibars()
+function wibars_toggle()
     local s = awful.screen.focused()
     s.mywibox.visible = not s.mywibox.visible
 end
-function toggle_tray()
+function tray_toggle()
     local s = awful.screen.focused()
     s.traybox.visible = not s.traybox.visible
 end

@@ -5,7 +5,6 @@ local beautiful = require("beautiful")
 -- local naughty = require("naughty")
 
 local helpers = require("helpers")
-local pad = helpers.pad
 
 -- Appearance
 -- icomoon symbols
@@ -29,7 +28,7 @@ local lock_text_icon = ""
 -- local exit_text_icon = ""
 -- local lock_text_icon = ""
 
-local button_bg = beautiful.xcolor0
+local button_bg = x.color0
 local button_size = dpi(120)
 
 
@@ -93,7 +92,7 @@ local create_button = function(symbol, hover_color, text, command)
         button.border_color = hover_color
     end)
     button:connect_signal("mouse::leave", function ()
-        icon.markup = helpers.colorize_text(icon.text, beautiful.xforeground)
+        icon.markup = helpers.colorize_text(icon.text, x.foreground)
         button.border_color = button_bg
     end)
 
@@ -104,11 +103,11 @@ local create_button = function(symbol, hover_color, text, command)
 end
 
 -- Create the buttons
-local poweroff = create_button(poweroff_text_icon, beautiful.xcolor1, "Poweroff", poweroff_command)
-local reboot = create_button(reboot_text_icon, beautiful.xcolor2, "Reboot", reboot_command)
-local suspend = create_button(suspend_text_icon, beautiful.xcolor3, "Suspend", suspend_command)
-local exit = create_button(exit_text_icon, beautiful.xcolor4, "Exit", exit_command)
-local lock = create_button(lock_text_icon, beautiful.xcolor5, "Lock", lock_command)
+local poweroff = create_button(poweroff_text_icon, x.color1, "Poweroff", poweroff_command)
+local reboot = create_button(reboot_text_icon, x.color2, "Reboot", reboot_command)
+local suspend = create_button(suspend_text_icon, x.color3, "Suspend", suspend_command)
+local exit = create_button(exit_text_icon, x.color4, "Exit", exit_command)
+local lock = create_button(lock_text_icon, x.color5, "Lock", lock_command)
 
 -- Create the exit screen wibox
 exit_screen = wibox({visible = false, ontop = true, type = "dock"})
@@ -136,8 +135,12 @@ function exit_screen_show()
         elseif key == 'e' then
             exit_command()
         elseif key == 'l' then
-            exit_screen_hide()
             lock_command()
+            -- Kinda fixes the "white" (undimmed) flash that appears between
+            -- exit screen disappearing and lock screen appearing
+            gears.timer.delayed_call(function()
+                exit_screen_hide()
+            end)
         elseif key == 'p' then
             poweroff_command()
         elseif key == 'r' then

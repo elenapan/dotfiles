@@ -28,8 +28,7 @@ desktop_mode_widget:buttons(gears.table.join(
     awful.button({ }, 1, function ()
         --switch_modes()
         if client.focus ~= nil then
-            decorations.toggle(c)
-            -- awful.titlebar.toggle(c)
+            decorations.cycle(c)
         end
     end),
     -- Right click: Toggle titlebars in all visible clients
@@ -37,10 +36,7 @@ desktop_mode_widget:buttons(gears.table.join(
         local clients = awful.screen.focused().clients
         for _, c in pairs(clients) do
             -- Don't toggle if titlebars are used as borders
-            if not beautiful.titlebars_imitate_borders then
-                decorations.toggle(c)
-                -- awful.titlebar.toggle(c)
-            end
+            decorations.cycle(c)
         end
     end),
     awful.button({ }, 4, function ()

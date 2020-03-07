@@ -4,7 +4,6 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local helpers = require("helpers")
-local pad = helpers.pad
 
 -- Some commonly used variables
 local playerctl_button_size = dpi(48)
@@ -21,6 +20,11 @@ local function format_progress_bar(bar, icon)
     bar.forced_width = progress_bar_width
     bar.shape = gears.shape.rounded_bar
     bar.bar_shape = gears.shape.rounded_bar
+
+    -- bar.forced_height = dpi(30)
+    -- bar.paddings = dpi(4)
+    -- bar.border_width = dpi(2)
+    -- bar.border_color = x.color8
 
     local w = wibox.widget{
         nil,
@@ -85,9 +89,7 @@ local temperature_bar = require("noodle.temperature_bar")
 local temperature = format_progress_bar(temperature_bar, temperature_icon)
 temperature:buttons(
     gears.table.join(
-        awful.button({ }, 1, function ()
-            helpers.run_or_raise({class = 'sensors'}, false, user.terminal.." --class sensors -e watch sensors")
-        end)
+        awful.button({ }, 1, apps.temperature_monitor)
 ))
 
 local battery_icon = wibox.widget.imagebox(icons.battery)
@@ -107,12 +109,8 @@ local cpu = format_progress_bar(cpu_bar, cpu_icon)
 
 cpu:buttons(
     gears.table.join(
-        awful.button({ }, 1, function ()
-            helpers.run_or_raise({class = 'htop'}, false, user.terminal.." --class htop -e htop")
-        end),
-        awful.button({ }, 3, function ()
-            helpers.run_or_raise({class = 'Lxtask'}, false, "lxtask")
-        end)
+        awful.button({ }, 1, apps.process_monitor),
+        awful.button({ }, 3, apps.process_monitor_gui)
 ))
 
 local ram_icon = wibox.widget.imagebox(icons.ram)
@@ -121,14 +119,9 @@ local ram = format_progress_bar(ram_bar, ram_icon)
 
 ram:buttons(
     gears.table.join(
-        awful.button({ }, 1, function ()
-            helpers.run_or_raise({class = 'htop'}, false, user.terminal.." --class htop -e htop")
-        end),
-        awful.button({ }, 3, function ()
-            helpers.run_or_raise({class = 'Lxtask'}, false, "lxtask")
-        end)
+        awful.button({ }, 1, apps.process_monitor),
+        awful.button({ }, 3, apps.process_monitor_gui)
 ))
-
 
 local playerctl_toggle_icon = wibox.widget.imagebox(icons.playerctl_toggle)
 playerctl_toggle_icon.resize = true
@@ -208,9 +201,9 @@ fancy_date.valign = "center"
 fancy_date.font = "sans italic 11"
 
 local fancy_time_widget = wibox.widget.textclock("%H%M")
-fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. beautiful.xcolor12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
+fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. x.color12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
 fancy_time_widget:connect_signal("widget::redraw_needed", function () 
-    fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. beautiful.xcolor12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
+    fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. x.color12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
 end)
 fancy_time_widget.align = "center"
 fancy_time_widget.valign = "center"
@@ -218,7 +211,7 @@ fancy_time_widget.font = "sans 55"
 local fancy_time_decoration = wibox.widget.textbox()
 -- local decoration_string = "------------------------"
 local decoration_string = "──────  ──────"
-fancy_time_decoration.markup = "<span foreground='" .. beautiful.xcolor12 .."'>"..decoration_string.."</span>"
+fancy_time_decoration.markup = "<span foreground='" .. x.color12 .."'>"..decoration_string.."</span>"
 fancy_time_decoration.font = "sans 18"
 fancy_time_decoration.align = "center"
 fancy_time_decoration.valign = "top"
@@ -317,9 +310,7 @@ volume:buttons(gears.table.join(
         helpers.volume_control(0)
     end),
     -- Right click - Run or raise pavucontrol
-    awful.button({ }, 3, function ()
-        helpers.run_or_raise({class = 'Pavucontrol'}, true, "pavucontrol")
-    end),
+    awful.button({ }, 3, apps.volume),
     -- Scroll - Increase / Decrease volume
     awful.button({ }, 4, function ()
         helpers.volume_control(5)
@@ -340,7 +331,7 @@ sidebar = wibox({visible = false, ontop = true, type = "dock"})
 sidebar.bg = beautiful.sidebar_bg or beautiful.wibar_bg or "#111111"
 sidebar.fg = beautiful.sidebar_fg or beautiful.wibar_fg or "#FFFFFF"
 sidebar.opacity = beautiful.sidebar_opacity or 1
-sidebar.height = beautiful.sidebar_height or awful.screen.focused().geometry.height
+sidebar.height = awful.screen.focused().geometry.height
 sidebar.width = beautiful.sidebar_width or dpi(300)
 sidebar.y = beautiful.sidebar_y or 0
 local radius = beautiful.sidebar_border_radius or 0
@@ -399,15 +390,13 @@ end
 -- Item placement
 sidebar:setup {
     { ----------- TOP GROUP -----------
-        pad(1),
-        pad(1),
+        helpers.vertical_pad(40),
         -- fancy_time,
         time,
         date,
-        pad(1),
+        helpers.vertical_pad(20),
         weather,
-        pad(1),
-        pad(1),
+        helpers.vertical_pad(40),
         layout = wibox.layout.fixed.vertical
     },
     { ----------- MIDDLE GROUP -----------
@@ -420,19 +409,16 @@ sidebar:setup {
             right = dpi(10),
             widget = wibox.container.margin
         },
-        pad(1),
-        pad(1),
+        helpers.vertical_pad(40),
         volume,
         cpu,
         temperature,
         ram,
         battery,
-        pad(1),
+        helpers.vertical_pad(20),
         disk,
-        pad(1),
-        pad(1),
+        helpers.vertical_pad(40),
         layout = wibox.layout.fixed.vertical
-        -- layout = wibox.layout.fixed.vertical
     },
     { ----------- BOTTOM GROUP -----------
         nil,

@@ -55,7 +55,6 @@ for s in screen do
     end
 end
 
--- Set visibility for lock screen on each monitor
 local function set_visibility(v)
     for s in screen do
         s.mylockscreen.visible = v
@@ -66,6 +65,10 @@ end
 local day_of_the_week = wibox.widget {
     -- Fancy font
     font = "Scriptina Bold 80",
+    -- font = "Space Craft 50",
+    -- font = "Razed Galerie 70",
+    -- font = "A-15-BIT 70",
+    -- font = "Kill The Noise 90",
     -- Set forced width in order to keep it from getting cut off
     forced_width = dpi(1000),
     align = "center",
@@ -74,7 +77,7 @@ local day_of_the_week = wibox.widget {
 }
 
 local function update_dotw()
-    day_of_the_week.markup = helpers.colorize_text(day_of_the_week.text, beautiful.xcolor3)
+    day_of_the_week.markup = helpers.colorize_text(day_of_the_week.text, x.color3)
 end
 update_dotw()
 day_of_the_week:connect_signal("widget::redraw_needed", function ()
@@ -89,7 +92,7 @@ local month = wibox.widget {
 }
 
 local function update_month()
-    month.markup = helpers.colorize_text(month.text:upper(), beautiful.xforeground.."25")
+    month.markup = helpers.colorize_text(month.text:upper(), x.foreground.."25")
 end
 
 update_month()
@@ -150,7 +153,7 @@ local lock_animation_widget = {
 local characters_entered = 0
 local function reset()
     characters_entered = 0;
-    lock_animation_icon.markup = helpers.colorize_text(lock_screen_symbol, beautiful.xcolor7)
+    lock_animation_icon.markup = helpers.colorize_text(lock_screen_symbol, x.color7)
     lock_animation_widget_rotate.direction = "north"
     lock_animation_arc.bg = "#00000000"
 end
@@ -164,12 +167,12 @@ end
 
 local animation_colors = {
     -- Rainbow sequence =)
-    beautiful.xcolor1,
-    beautiful.xcolor5,
-    beautiful.xcolor4,
-    beautiful.xcolor6,
-    beautiful.xcolor2,
-    beautiful.xcolor3,
+    x.color1,
+    x.color5,
+    x.color4,
+    x.color6,
+    x.color2,
+    x.color3,
 }
 
 local animation_directions = {"north", "west", "south", "east"}
@@ -185,7 +188,7 @@ local function key_animation(char_inserted)
         if characters_entered == 0 then
             reset()
         else
-            color = beautiful.xcolor7 .. "55"
+            color = x.color7 .. "55"
         end
     end
 
@@ -239,7 +242,7 @@ local function grab_password()
 end
 
 function lock_screen_show()
-    set_visibility(true)
+    set_visibility(true) 
     grab_password()
 end
 
@@ -253,7 +256,6 @@ lock_screen:setup {
         {
             {
                 {
-                    -- Date
                     {
                         month,
                         day_of_the_week,
@@ -267,17 +269,16 @@ lock_screen:setup {
                                 forced_height = dpi(5),
                                 forced_width = dpi(5),
                                 shape = gears.shape.circle,
-                                bg = beautiful.xcolor3,
+                                bg = x.color3,
                                 widget = wibox.container.background
                             },
-                            -- Time
                             time,
                             -- Small circle
                             {
                                 forced_height = dpi(5),
                                 forced_width = dpi(5),
                                 shape = gears.shape.circle,
-                                bg = beautiful.xcolor3,
+                                bg = x.color3,
                                 widget = wibox.container.background
                             },
                             spacing = dpi(4),

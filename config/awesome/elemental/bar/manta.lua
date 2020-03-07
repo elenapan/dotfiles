@@ -56,6 +56,9 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, keys.taglist_buttons)
     s.mytaglist.font = beautiful.font
 
+    -- Outer gaps
+    --awful.screen.padding(awful.screen.focused(),{left = 28, right = 28, top = 28, bottom = 28})
+
     -- Create a system tray widget
     s.systray = wibox.widget.systray()
     s.systray.visible = false -- can be toggled by a keybind
@@ -68,6 +71,8 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            --s.mylayoutbox,
+            --mylauncher,
             s.mytaglist,
             textseparator,
             minimal_tasklist
@@ -81,10 +86,21 @@ awful.screen.connect_for_each_screen(function(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            --mpdarc_widget,
+            --textseparator,
+            --volumebar_prefix,
+            --volumebar_widget,
+            --textseparator,
+            --keyboardlayout_prefix,
+            --mykeyboardlayout,
+            --textseparator,
             s.systray,
+            --minimal_tasklist,
             textseparator,
+            --date_prefix,
             mytextdate,
             textseparator,
+            --clock_prefix,
             mytextclock,
             textseparator,
             desktop_mode_widget,
@@ -101,11 +117,11 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 -- Every bar theme should provide these fuctions
-function toggle_wibars()
+function wibars_toggle()
     local s = awful.screen.focused()
     s.mywibox.visible = not s.mywibox.visible
 end
-function toggle_tray()
+function tray_toggle()
     local s = awful.screen.focused()
     s.systray.visible = not s.systray.visible
 end

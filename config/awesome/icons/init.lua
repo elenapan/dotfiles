@@ -12,8 +12,6 @@ end
 
 local icons = {}
 
--- TODO layout icons
--- TODO tag icons
 -- Available icons
 local icon_names = {
     "playerctl_toggle",
@@ -77,7 +75,7 @@ local icon_names = {
 local p
 
 -- Assumes all the icon files end in .png
--- Which they should if you need transparency
+-- TODO maybe automatically detect icons in icon theme directory
 local function set_icon(icon_name)
     local i = p..icon_name..".png"
     icons[icon_name] = i

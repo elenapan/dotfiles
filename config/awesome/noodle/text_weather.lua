@@ -72,34 +72,34 @@ awesome.connect_signal("evil::weather", function(temperature, description, icon_
     -- Set icon and color depending on icon_code
     if string.find(icon_code, "01d") then
         icon = sun_icon
-        color = beautiful.xcolor3
+        color = x.color3
     elseif string.find(icon_code, "01n") then
         icon = moon_icon
-        color = beautiful.xcolor4
+        color = x.color4
     elseif string.find(icon_code, "02d") then
         icon = dcloud_icon
-        color = beautiful.xcolor3
+        color = x.color3
     elseif string.find(icon_code, "02n") then
         icon = ncloud_icon
-        color = beautiful.xcolor6
+        color = x.color6
     elseif string.find(icon_code, "03") or string.find(icon_code, "04") then
         icon = cloud_icon
-        color = beautiful.xcolor1
+        color = x.color1
     elseif string.find(icon_code, "09") or string.find(icon_code, "10") then
         icon = rain_icon
-        color = beautiful.xcolor4
+        color = x.color4
     elseif string.find(icon_code, "11") then
         icon = storm_icon
-        color = beautiful.xcolor1
+        color = x.color1
     elseif string.find(icon_code, "13") then
         icon = snow_icon
-        color = beautiful.xcolor6
+        color = x.color6
     elseif string.find(icon_code, "50") or string.find(icon_code, "40") then
         icon = mist_icon
-        color = beautiful.xcolor5
+        color = x.color5
     else
         icon = whatever_icon
-        color = beautiful.xcolor2
+        color = x.color2
     end
 
     weather_icon.markup = helpers.colorize_text(icon, color)

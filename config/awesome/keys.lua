@@ -16,9 +16,15 @@ shiftkey = "Shift"
 -- {{{ Mouse bindings on desktop
 keys.desktopbuttons = gears.table.join(
     awful.button({ }, 1, function ()
-        mymainmenu:hide()
-        sidebar.visible = false
+        -- Single tap
         naughty.destroy_all_notifications()
+        if mymainmenu then
+            mymainmenu:hide()
+        end
+        if sidebar_hide then
+            sidebar_hide()
+        end
+        -- Double tap
         local function double_tap()
             uc = awful.client.urgent.get()
             -- If there is no urgent client, go back to last tag
@@ -37,9 +43,9 @@ keys.desktopbuttons = gears.table.join(
         app_drawer_show()
     end),
 
-    -- Middle button - Toggle start scren
+    -- Middle button - Toggle dashboard
     awful.button({ }, 2, function ()
-        start_screen_show()
+        dashboard_show()
     end),
 
     -- Scrolling - Switch tags
@@ -129,7 +135,6 @@ keys.globalkeys = gears.table.join(
         {description = "focus right", group = "client"}),
 
     -- Focus client by index (cycle through clients)
-    -- Double tap: choose client with rofi
     awful.key({ superkey }, "Tab",
         function ()
             awful.client.focus.byidx( 1)
@@ -143,7 +148,7 @@ keys.globalkeys = gears.table.join(
         {description = "focus previous by index", group = "client"}
     ),
 
-    -- Gap control
+    -- Gaps
     awful.key({ superkey, shiftkey }, "minus",
         function ()
             awful.tag.incgap(5, nil)
@@ -156,6 +161,7 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "decrement gap size for the current tag", group = "gaps"}
     ),
+
     -- Kill all visible clients for the current tag
     awful.key({ superkey, altkey }, "q",
         function ()
@@ -168,7 +174,6 @@ keys.globalkeys = gears.table.join(
     ),
 
     -- Resize focused client or layout factor
-    -- (Arrow keys)
     awful.key({ superkey, ctrlkey }, "Down", function (c)
         helpers.resize_dwim(client.focus, "down")
     end),
@@ -181,7 +186,6 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey, ctrlkey }, "Right", function (c)
         helpers.resize_dwim(client.focus, "right")
     end),
-    -- (Vim keys)
     awful.key({ superkey, ctrlkey }, "j", function (c)
         helpers.resize_dwim(client.focus, "down")
     end),
@@ -236,8 +240,8 @@ keys.globalkeys = gears.table.join(
     -- Spawn floating terminal
     awful.key({ superkey, shiftkey }, "Return", function()
         awful.spawn(user.floating_terminal, {floating = true})
-    end,
-    {description = "spawn floating terminal", group = "launcher"}),
+                                                end,
+        {description = "spawn floating terminal", group = "launcher"}),
 
     -- Reload Awesome
     awful.key({ superkey, shiftkey }, "r", awesome.restart,
@@ -257,45 +261,45 @@ keys.globalkeys = gears.table.join(
         {description = "quit awesome", group = "awesome"}),
 
     -- Number of master clients
-    awful.key({ superkey, altkey }, "h",
-        function ()
-            awful.tag.incnmaster( 1, nil, true)
+    awful.key({ superkey, altkey }, "h",   
+        function () 
+            awful.tag.incnmaster( 1, nil, true) 
         end,
         {description = "increase the number of master clients", group = "layout"}),
-    awful.key({ superkey, altkey }, "l",
-        function ()
-            awful.tag.incnmaster(-1, nil, true)
+    awful.key({ superkey, altkey }, "l",   
+        function () 
+            awful.tag.incnmaster(-1, nil, true) 
         end,
         {description = "decrease the number of master clients", group = "layout"}),
-    awful.key({ superkey, altkey }, "Left",
-        function ()
-            awful.tag.incnmaster( 1, nil, true)
+    awful.key({ superkey, altkey }, "Left",   
+        function () 
+            awful.tag.incnmaster( 1, nil, true) 
         end,
         {description = "increase the number of master clients", group = "layout"}),
-    awful.key({ superkey, altkey }, "Right",
-        function ()
-            awful.tag.incnmaster(-1, nil, true)
+    awful.key({ superkey, altkey }, "Right",   
+        function () 
+            awful.tag.incnmaster(-1, nil, true) 
         end,
         {description = "decrease the number of master clients", group = "layout"}),
 
     -- Number of columns
-    awful.key({ superkey, altkey }, "k",
-        function ()
+    awful.key({ superkey, altkey }, "k",   
+        function () 
             awful.tag.incncol( 1, nil, true)
         end,
         {description = "increase the number of columns", group = "layout"}),
-    awful.key({ superkey, altkey }, "j",
-        function ()
+    awful.key({ superkey, altkey }, "j",   
+        function () 
             awful.tag.incncol( -1, nil, true)
         end,
         {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ superkey, altkey }, "Up",
-        function ()
+    awful.key({ superkey, altkey }, "Up",   
+        function () 
             awful.tag.incncol( 1, nil, true)
         end,
         {description = "increase the number of columns", group = "layout"}),
-    awful.key({ superkey, altkey }, "Down",
-        function ()
+    awful.key({ superkey, altkey }, "Down",   
+        function () 
             awful.tag.incncol( -1, nil, true)
         end,
         {description = "decrease the number of columns", group = "layout"}),
@@ -320,7 +324,6 @@ keys.globalkeys = gears.table.join(
     -- Prompt
     --awful.key({ superkey },            "d",     function () awful.screen.focused().mypromptbox:run() end,
     --{description = "run prompt", group = "launcher"}),
-
     -- Run program (d for dmenu ;)
     awful.key({ superkey }, "d",
         function()
@@ -328,10 +331,27 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "rofi launcher", group = "launcher"}),
 
+    -- Run
+    awful.key({ superkey }, "r",
+        function ()
+            -- Not all sidebars have a prompt
+            if sidebar_activate_prompt then
+                sidebar_activate_prompt("run")
+            end
+        end,
+        {description = "activate sidebar run prompt", group = "awesome"}),
+    -- Web searc
+    awful.key({ superkey }, "g",
+        function ()
+            sidebar_activate_prompt("web_search")
+        end,
+        {description = "activate sidebar web search prompt", group = "awesome"}),
+
     -- Dismiss notifications
-    awful.key( { ctrlkey }, "space", function()
-        naughty.destroy_all_notifications()
-                                     end,
+    awful.key( { ctrlkey }, "space",
+        function()
+            naughty.destroy_all_notifications()
+        end,
         {description = "dismiss notification", group = "notifications"}),
 
     -- Menubar
@@ -384,17 +404,19 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "raise volume", group = "volume"}),
 
-
-    -- Classic Alt+F4 behavior
-    awful.key({ altkey }, "F4",      function (c) c:kill() end,
-        {description = "close", group = "client"}),
-
     -- Microphone (V for voice)
     awful.key( { superkey }, "v",
         function()
             awful.spawn.with_shell("amixer -D pulse sset Capture toggle &> /dev/null")
         end,
         {description = "(un)mute microphone", group = "volume"}),
+
+    -- Microphone overlay
+    awful.key( { superkey, shiftkey }, "v",
+        function()
+            microphone_overlay_toggle()
+        end,
+        {description = "toggle microphone overlay", group = "volume"}),
 
     -- Screenshots
     awful.key( { }, "Print", function() helpers.screenshot("full") end,
@@ -407,15 +429,13 @@ keys.globalkeys = gears.table.join(
         {description = "browse screenshots", group = "screenshots"}),
     awful.key( { superkey, shiftkey }, "Print", function() helpers.screenshot("gimp") end,
         {description = "edit most recent screenshot with gimp", group = "screenshots"}),
-
     -- Toggle tray visibility
     awful.key({ superkey }, "=",
         function ()
-            toggle_tray()
+            tray_toggle()
         end,
         {description = "toggle tray visibility", group = "awesome"}),
-
-    -- Media
+    -- Media keys
     awful.key({ superkey }, "period", function() awful.spawn.with_shell("mpc -q next") end,
         {description = "next song", group = "media"}),
     awful.key({ superkey }, "comma", function() awful.spawn.with_shell("mpc -q prev") end,
@@ -430,15 +450,12 @@ keys.globalkeys = gears.table.join(
         {description = "mpv toggle pause/play", group = "media"}),
     awful.key({ superkey }, "F8", function() awful.spawn.with_shell("mpvc quit") end,
         {description = "mpv quit", group = "media"}),
-
     awful.key({ superkey }, "F7", function() awful.spawn.with_shell("freeze firefox") end,
         {description = "send STOP signal to all firefox processes", group = "other"}),
     awful.key({ superkey, shiftkey }, "F7", function() awful.spawn.with_shell("freeze -u firefox") end,
         {description = "send CONT signal to all firefox processes", group = "other"}),
-
-    awful.key({ superkey }, "q", function() helpers.toggle_scratchpad() end,
+    awful.key({ superkey }, "q", function() apps.scratchpad() end,
         {description = "scratchpad", group = "launcher"}),
-
     -- Max layout
     -- Single tap: Set max layout
     -- Double tap: Also disable floating for ALL visible clients in the tag
@@ -478,12 +495,13 @@ keys.globalkeys = gears.table.join(
         awful.layout.set(awful.layout.suit.floating)
                                            end,
         {description = "set floating layout", group = "tag"}),
-
-    -- Start screen
+    -- Dashboard
     awful.key({ superkey }, "F1", function()
-        start_screen_show()
-                                  end,
-        {description = "start screen", group = "custom"}),
+        if dashboard_show then
+            dashboard_show()
+        end
+        -- rofi_show()
+    end, {description = "dashboard", group = "custom"}),
 
     -- App drawer
     awful.key({ superkey }, "a", function()
@@ -492,26 +510,29 @@ keys.globalkeys = gears.table.join(
         {description = "App drawer", group = "custom"}),
 
     -- Pomodoro timer
-    awful.key({ superkey }, "slash", function() awful.spawn.with_shell("pomodoro") end,
+    awful.key({ superkey }, "slash", function()
+        awful.spawn.with_shell("pomodoro")
+                                     end,
         {description = "pomodoro", group = "launcher"}),
-
     -- Spawn ranger in a terminal
     awful.key({ superkey }, "F2", function() awful.spawn(user.terminal .. " -e ranger") end,
         {description = "ranger", group = "launcher"}),
-
-    -- Run or raise music client (ncmpcpp in a terminal)
-    awful.key({ superkey }, "F3",
-        function() helpers.run_or_raise({class = "music"}, true, user.music_client) end,
+    -- Spawn music client
+    awful.key({ superkey }, "F3", apps.music,
         {description = "music client", group = "launcher"}),
-
     -- Spawn cava in a terminal
     awful.key({ superkey }, "F4", function() awful.spawn("visualizer") end,
         {description = "cava", group = "launcher"}),
-
     -- Spawn ncmpcpp in a terminal, with a special visualizer config
     awful.key({ superkey, shiftkey }, "F4", function() awful.spawn(user.terminal .. " -e 'ncmpcpp -c ~/.config/ncmpcpp/config_visualizer -s visualizer'") end,
         {description = "ncmpcpp", group = "launcher"}),
-
+    -- Toggle taglist/tasklist box
+    awful.key({ superkey }, "F5", function()
+        local s = mouse.screen
+        s.tasklistbox.visible = not s.tasklistbox.visible
+        -- s.taglistbox.visible = not s.taglistbox.visible
+    end,
+        {description = "toggle taglist/tasklist box", group = "awesome"}),
     -- Network dialog: nmapplet rofi frontend
     awful.key({ superkey }, "F11", function() awful.spawn("networks-rofi") end,
         {description = "spawn network dialog", group = "launcher"}),
@@ -519,16 +540,19 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "grave", function() sidebar.visible = not sidebar.visible end,
         {description = "show or hide sidebar", group = "awesome"}),
     -- Toggle wibar(s)
-    awful.key({ superkey, shiftkey }, "b",
-        function()
-            toggle_wibars()
-        end,
+    awful.key({ superkey, shiftkey }, "b", wibars_toggle,
         {description = "show or hide wibar(s)", group = "awesome"}),
-    -- Run or raise editor
-    awful.key({ superkey }, "e",
-        function()
-            helpers.run_or_raise({class = 'editor'}, false, user.editor)
-        end,
+    -- Emacs (O for org mode)
+    awful.key({ superkey }, "o", apps.org,
+        {description = "emacs", group = "launcher"}),
+    -- Emacs markdown scratchpad (I for input)
+    -- Used for quickly typing markdown comments and pasting them in
+    -- the browser
+    -- TODO: use vim instead of emacs for this one
+    awful.key({ superkey }, "i", apps.markdown_scratchpad,
+        {description = "emacs markdown scratchpad", group = "launcher"}),
+    -- Editor
+    awful.key({ superkey }, "e", apps.editor,
         {description = "editor", group = "launcher"}),
     -- Quick edit file
     awful.key({ superkey, shiftkey }, "e",
@@ -536,21 +560,17 @@ keys.globalkeys = gears.table.join(
             awful.spawn.with_shell("~/scr/Rofi/rofi_edit")
         end,
         {description = "quick edit file", group = "launcher"}),
-    -- mpvtube
-    awful.key({ superkey }, "y", function() awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube") end,
-        {description = "mpvtube", group = "launcher"}),
+    awful.key({ superkey }, "y", apps.youtube,
+        {description = "youtube search and play", group = "launcher"}),
     -- mpvtube song
     awful.key({ superkey, shiftkey }, "y", function() awful.spawn.with_shell("~/scr/info/mpv-query.sh") end,
         {description = "show mpv media title", group = "launcher"}),
     -- Spawn file manager
-    awful.key({ superkey, shiftkey }, "f", function() awful.spawn(user.file_manager, {floating = true}) end,
+    awful.key({ superkey, shiftkey }, "f", apps.file_manager,
         {description = "file manager", group = "launcher"}),
-    -- Spawn htop in a terminal
-    awful.key({ superkey }, "p",
-        function()
-            awful.spawn(user.terminal .. " -e htop")
-        end,
-        {description = "htop", group = "launcher"})
+    -- Process monitor
+    awful.key({ superkey }, "p", apps.process_monitor,
+        {description = "process monitor", group = "launcher"})
 )
 
 keys.clientkeys = gears.table.join(
@@ -621,24 +641,15 @@ keys.clientkeys = gears.table.join(
     -- Toggle titlebars (for focused client only)
     awful.key({ superkey,           }, "t",
         function (c)
-            -- Don't toggle if titlebars are used as borders
-            if not beautiful.titlebars_imitate_borders then
-                decorations.toggle(c)
-                -- awful.titlebar.toggle(c)
-            end
+            decorations.cycle(c)
         end,
         {description = "toggle titlebar", group = "client"}),
     -- Toggle titlebars (for all visible clients in selected tag)
     awful.key({ superkey, shiftkey }, "t",
         function (c)
-            --local s = awful.screen.focused()
             local clients = awful.screen.focused().clients
             for _, c in pairs(clients) do
-                -- Don't toggle if titlebars are used as borders
-                if not beautiful.titlebars_imitate_borders then
-                    -- awful.titlebar.toggle(c)
-                    decorations.toggle(c)
-                end
+                decorations.cycle(c)
             end
         end,
         {description = "toggle titlebar", group = "client"}),
@@ -682,14 +693,14 @@ keys.clientkeys = gears.table.join(
     awful.key({ altkey }, "F4",      function (c) c:kill() end,
         {description = "close", group = "client"}),
 
-    -- Toggle floating client
+    -- Toggle floating
     awful.key({ superkey, ctrlkey }, "space",
         function(c)
             local layout_is_floating = (awful.layout.get(mouse.screen) == awful.layout.suit.floating)
             if not layout_is_floating then
                 awful.client.floating.toggle()
             end
-            c:raise()
+            --c:raise()
         end,
         {description = "toggle floating", group = "client"}),
 
@@ -698,7 +709,7 @@ keys.clientkeys = gears.table.join(
         {description = "move to master", group = "client"}),
 
     -- Change client opacity
-    awful.key({ superkey }, "o",
+    awful.key({ ctrlkey, superkey }, "o",
         function (c)
             c.opacity = c.opacity - 0.1
         end,
@@ -729,9 +740,8 @@ keys.clientkeys = gears.table.join(
     -- Maximize
     awful.key({ superkey,           }, "m",
         function (c)
-            c.maximized = not c.maximized
-            c:raise()
-        end ,
+            helpers.maximize(c)
+        end,
         {description = "(un)maximize", group = "client"}),
     awful.key({ superkey, ctrlkey }, "m",
         function (c)
@@ -819,6 +829,12 @@ end
 -- Mouse buttons on the client (whole window, not just titlebar)
 keys.clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+    -- awful.button({ }, 2, function (c)
+    --     if c.class == "mpv" then
+    --         -- mpv_osd_toggle(c:geometry())
+    --         decorations.cycle(c)
+    --     end
+    -- end),
     awful.button({ superkey }, 1, awful.mouse.client.move),
     awful.button({ superkey }, 2, function (c) c:kill() end),
     awful.button({ superkey }, 3, function(c)
@@ -881,7 +897,8 @@ keys.tasklist_buttons = gears.table.join(
 -- Mouse buttons on a tag of the taglist widget
 keys.taglist_buttons = gears.table.join(
     awful.button({ }, 1, function(t)
-        t:view_only()
+        -- t:view_only()
+        helpers.tag_back_and_forth(t.index)
     end),
     awful.button({ modkey }, 1, function(t)
         if client.focus then
@@ -903,9 +920,68 @@ keys.taglist_buttons = gears.table.join(
     awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end)
 )
 
+
+-- Mouse buttons on the primary titlebar of the window
+keys.titlebar_buttons = gears.table.join(
+    -- Left button - move
+    -- (Double tap - Toggle maximize) -- A little BUGGY
+    awful.button({ }, 1, function()
+        local c = mouse.object_under_pointer()
+        client.focus = c
+        c:raise()
+        awful.mouse.client.move(c)
+        -- local function single_tap()
+        --   awful.mouse.client.move(c)
+        -- end
+        -- local function double_tap()
+        --   gears.timer.delayed_call(function()
+        --       c.maximized = not c.maximized
+        --   end)
+        -- end
+        -- helpers.single_double_tap(single_tap, double_tap)
+        -- helpers.single_double_tap(nil, double_tap)
+    end),
+    -- Middle button - close
+    awful.button({ }, 2, function ()
+        local c = mouse.object_under_pointer()
+        c:kill()
+    end),
+    -- Right button - resize
+    awful.button({ }, 3, function()
+        local c = mouse.object_under_pointer()
+        client.focus = c
+        c:raise()
+        awful.mouse.client.resize(c)
+        -- awful.mouse.resize(c, nil, {jump_to_corner=true})
+    end),
+    -- Side button up - toggle floating
+    awful.button({ }, 9, function()
+        local c = mouse.object_under_pointer()
+        client.focus = c
+        c:raise()
+        --awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
+        c.floating = not c.floating
+    end),
+    -- Side button down - toggle ontop
+    awful.button({ }, 8, function()
+        local c = mouse.object_under_pointer()
+        client.focus = c
+        c:raise()
+        c.ontop = not c.ontop
+        -- Double Tap - toggle sticky
+        -- local function single_tap()
+        --   c.ontop = not c.ontop
+        -- end
+        -- local function double_tap()
+        --   c.sticky = not c.sticky
+        -- end
+        -- helpers.single_double_tap(single_tap, double_tap)
+    end)
+)
+
 -- }}}
 
--- Set keys
+-- Set root (desktop) keys
 root.keys(keys.globalkeys)
 root.buttons(keys.desktopbuttons)
 

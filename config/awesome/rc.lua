@@ -1,103 +1,61 @@
 --[[
-___       ___       ___       ___       ___       ___       ___
-/\  \     /\__\     /\  \     /\  \     /\  \     /\__\     /\  \
-/::\  \   /:/\__\   /::\  \   /::\  \   /::\  \   /::L_L_   /::\  \
+   ___       ___       ___       ___       ___       ___       ___
+  /\  \     /\__\     /\  \     /\  \     /\  \     /\__\     /\  \
+ /::\  \   /:/\__\   /::\  \   /::\  \   /::\  \   /::L_L_   /::\  \
 /::\:\__\ /:/:/\__\ /::\:\__\ /\:\:\__\ /:/\:\__\ /:/L:\__\ /::\:\__\
 \/\::/  / \::/:/  / \:\:\/  / \:\:\/__/ \:\/:/  / \/_/:/  / \:\:\/  /
-/:/  /   \::/  /   \:\/  /   \::/  /   \::/  /    /:/  /   \:\/  /
-\/__/     \/__/     \/__/     \/__/     \/__/     \/__/     \/__/
+  /:/  /   \::/  /   \:\/  /   \::/  /   \::/  /    /:/  /   \:\/  /
+  \/__/     \/__/     \/__/     \/__/     \/__/     \/__/     \/__/
 
+-- >> The file that binds everything together.
 --]]
 
-local theme_collection = {
+
+local themes = {
     "manta",        -- 1 --
     "lovelace",     -- 2 --
     "skyfall",      -- 3 --
     "ephemeral",    -- 4 --
 }
-
 -- Change this number to use a different theme
-local theme_name = theme_collection[4]
-
+local theme = themes[4]
 -- ===================================================================
-
-local bar_theme_collection = {
+-- Affects the window appearance: titlebar, titlebar buttons...
+local decoration_themes = {
+    "lovelace",       -- 1 -- Standard titlebar with 3 buttons (close, max, min)
+    "skyfall",        -- 2 -- No buttons, only title
+    "ephemeral",      -- 3 -- Anti-aliased, with text-generated titlebar buttons
+}
+local decoration_theme = decoration_themes[3]
+-- ===================================================================
+-- Statusbar themes. Multiple bars can be declared in each theme.
+local bar_themes = {
     "manta",        -- 1 -- Taglist, client counter, date, time, layout
     "lovelace",     -- 2 -- Start button, taglist, layout
     "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
     "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
 }
-
--- Change this number to use a different bar theme
-local bar_theme_name = bar_theme_collection[4]
+local bar_theme = bar_themes[4]
 
 -- ===================================================================
-
-local icon_theme_collection = {
+-- Affects which icon theme will be used by widgets that display image icons.
+local icon_themes = {
     "linebit",        -- 1 --
     "drops",          -- 2 --
 }
-
--- Change this number to use a different icon theme
-local icon_theme_name = icon_theme_collection[2]
-
+local icon_theme = icon_themes[2]
 -- ===================================================================
-
--- Jit
---pcall(function() jit.on() end)
-
--- Initialization
+local notification_themes = {
+    "lovelace",       -- 1 --
+    "ephemeral",      -- 2 --
+}
+local notification_theme = notification_themes[2]
 -- ===================================================================
--- Theme handling library
-local beautiful = require("beautiful")
--- Themes define colours, icons, font and wallpapers
-local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/"
-beautiful.init( theme_dir .. theme_name .. "/theme.lua" )
---beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-local xresources = require("beautiful.xresources")
--- Make dpi function global
-dpi = xresources.apply_dpi
-
-local gears = require("gears")
-local awful = require("awful")
-local wibox = require("wibox")
-require("awful.autofocus")
-
--- Default notification library
-local naughty = require("naughty")
-
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup").widget
-require("awful.hotkeys_popup.keys")
-
--- Error handling
--- ===================================================================
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify({
-        preset = naughty.config.presets.critical,
-        title = "Oops, there were errors during startup!",
-        text = awesome.startup_errors
-    })
-end
-
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
-
-        naughty.notify({ preset = naughty.config.presets.critical,
-        title = "Oops, an error happened!",
-        text = tostring(err) })
-        in_error = false
-    end)
-end
-
--- Variable definitions
+local exit_screen_themes = {
+    "lovelace",      -- 1 -- Uses image icons
+    "ephemeral",     -- 2 -- Uses text-generated icons (consumes less RAM)
+}
+local exit_screen_theme = exit_screen_themes[2]
 -- ===================================================================
 -- User variables and preferences
 user = {
@@ -105,7 +63,7 @@ user = {
     terminal = "kitty -1",
     floating_terminal = "kitty -1",
     browser = "firefox",
-    file_manager = "nemo",
+    file_manager = "thunar",
     tmux = "kitty -1 -e tmux new",
     editor = "kitty -1 --class editor -e vim",
     -- editor = "emacs",
@@ -115,36 +73,18 @@ user = {
     web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
     -- web_search_cmd = "exo-open https://www.google.com/search?q="
 
+    -- >> User profile <<
+    profile_picture = os.getenv("HOME").."/.config/awesome/profile.png",
+
     -- >> Music <<
     music_client = "kitty -1 --class music -e ncmpcpp",
 
-    -- TODO
     -- >> Screenshots <<
-    -- Make sure the directory exists!
+    -- Make sure the directory exists
     screenshot_dir = os.getenv("HOME") .. "/Pictures/Screenshots/",
 
     -- >> Email <<
     email_client = "kitty -1 --class email -e neomutt",
-
-    -- >> Anti-aliasing <<
-    -- ------------------
-    -- Requires a compositor to be running.
-    -- ------------------
-    -- Currently this works if you set your titlebar position to "top", but it
-    -- is trivial to make it work for any titlebar position.
-    -- ------------------
-    -- This setting only affects clients, but you can "manually" apply
-    -- anti-aliasing to other wiboxes. Check out the notification
-    -- widget_template in notifications.lua for an example.
-    -- ------------------
-    -- If anti_aliasing is set to true, the top titlebar corners are
-    -- antialiased and a small titlebar is also added at the bottom in order to
-    -- round the bottom corners.
-    -- If anti_aliasing set to false, the client shape will STILL be rounded,
-    -- just without anti-aliasing, according to your theme's border_radius
-    -- variable.
-    -- ------------------
-    anti_aliasing = true,
 
     -- >> Sidebar <<
     sidebar_hide_on_mouse_leave = true,
@@ -153,8 +93,14 @@ user = {
     -- >> Lock screen <<
     -- You can set this to whatever you want or leave it empty in
     -- order to unlock with just the Enter key.
-    lock_screen_password = "awesome",
     -- lock_screen_password = "",
+    lock_screen_password = "awesome",
+
+    -- >> Battery <<
+    -- You will receive notifications when your battery reaches these
+    -- levels.
+    battery_threshold_low = 15,
+    battery_threshold_critical = 5,
 
     -- >> Weather <<
     -- Get your key and find your city id at
@@ -162,60 +108,112 @@ user = {
     -- (You will need to make an account!)
     openweathermap_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     openweathermap_city_id = "yyyyyy",
-    -- Use "metric" for Celcius, "imperial" for Fahrenheit
+    -- > Use "metric" for Celcius, "imperial" for Fahrenheit
     weather_units = "metric",
 }
+-- ===================================================================
+
+
+-- Jit
+--pcall(function() jit.on() end)
+
+-- Initialization
+-- ===================================================================
+-- Theme handling library
+local beautiful = require("beautiful")
+local xrdb = beautiful.xresources.get_current_theme()
+-- Make dpi function global
+dpi = beautiful.xresources.apply_dpi
+-- Make xresources colors global
+x = {
+    --           xrdb variable      fallback
+    background = xrdb.background or "#1D1F28",
+    foreground = xrdb.foreground or "#FDFDFD",
+    color0     = xrdb.color0     or "#282A36",
+    color1     = xrdb.color1     or "#F37F97",
+    color2     = xrdb.color2     or "#5ADECD",
+    color3     = xrdb.color3     or "#F2A272",
+    color4     = xrdb.color4     or "#8897F4",
+    color5     = xrdb.color5     or "#C574DD",
+    color6     = xrdb.color6     or "#79E6F3",
+    color7     = xrdb.color7     or "#FDFDFD",
+    color8     = xrdb.color8     or "#414458",
+    color9     = xrdb.color9     or "#FF4971",
+    color10    = xrdb.color10    or "#18E3C8",
+    color11    = xrdb.color11    or "#FF8037",
+    color12    = xrdb.color12    or "#556FFF",
+    color13    = xrdb.color13    or "#B043D1",
+    color14    = xrdb.color14    or "#3FDCEE",
+    color15    = xrdb.color15    or "#BEBEC1",
+}
+
+-- Themes define colours, icons, fonts, window decorations and wallpapers
+local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
+beautiful.init(theme_dir .. "theme.lua")
+-- require(theme_dir .. "decorations.lua")
+--beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+
+local gears = require("gears")
+local awful = require("awful")
+require("awful.autofocus")
+
+-- Default notification library
+local naughty = require("naughty")
+
+-- Error handling
+-- ===================================================================
+naughty.connect_signal("request::display_error", function(message, startup)
+    naughty.notification {
+        urgency = "critical",
+        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
+        message = message
+    }
+end)
 
 -- Features
 -- ===================================================================
--- Basic
--- ================
--- Load icon theme
+-- Initialize global icons variable and load icon theme
 icons = require("icons")
-icons.init(icon_theme_name)
--- Helper functions
--- What would I do without them?
+icons.init(icon_theme)
+-- Load helper functions
 local helpers = require("helpers")
+-- Initialize global app launching/focusing functions
+require("apps")
 -- Keybinds and mousebinds
 local keys = require("keys")
--- Titlebars
--- (most of the anti-aliasing magic happens here)
-require("titlebars")
--- Notification settings
+-- Notifications
 require("notifications")
+notifications.init(notification_theme)
+-- Window decorations
+require("decorations")
+decorations.init(decoration_theme)
 
--- Extras
--- ==============
+-- >> Elements - Desktop components
 -- Statusbar(s)
-require("bars."..bar_theme_name)
-
--- Sidebar
-local sidebar = require("noodle.sidebar")
-
+require("elemental.bar."..bar_theme)
 -- Exit screen
--- local exit_screen = require("noodle.exit_screen")
-local exit_screen = require("noodle.exit_screen_v2")
-
--- Start screen
--- Have not used/tested it in a long time.
--- Some things might not work properly.
-local start_screen = require("noodle.start_screen")
-
+require("elemental.exit_screen."..exit_screen_theme)
+-- Sidebar
+require("elemental.sidebar")
+-- Dashboard (previously called: Start screen)
+require("elemental.dashboard")
 -- Lock screen
 -- Make sure to configure your password in the 'user' section above
-local lock_screen = require("noodle.lock_screen")
-
+require("elemental.lock_screen")
 -- App drawer
-local app_drawer = require("noodle.app_drawer")
+require("elemental.app_drawer")
 
--- Daemons
--- Most widgets that display system info depend on evil
+-- >> Daemons
+-- Most widgets that display system/external info depend on evil.
+-- Make sure to initialize it last in order to allow all widgets to connect to
+-- their needed evil signals.
 require("evil")
-
 -- ===================================================================
 -- ===================================================================
 
 -- Get screen geometry
+-- I am using a single screen setup and I assume that screen geometry will not
+-- change during the session.
 screen_width = awful.screen.focused().geometry.width
 screen_height = awful.screen.focused().geometry.height
 
@@ -241,56 +239,34 @@ awful.layout.layouts = {
     --awful.layout.suit.corner.se,
 }
 
-
--- Menu
--- ===================================================================
--- Create a launcher widget and a main menu
-myawesomemenu = {
-    { "hotkeys", function() return false, hotkeys_popup.show_help end, icons.keyboard},
-    { "restart", awesome.restart, icons.reboot },
-    { "quit", function() exit_screen_show() end, icons.poweroff}
-}
-
-mymainmenu = awful.menu({
-    items = {
-        { "awesome", myawesomemenu, icons.home },
-        { "firefox", user.browser, icons.firefox },
-        { "terminal", user.terminal, icons.terminal },
-        { "files", user.file_manager, icons.files },
-        { "search", "rofi -matching fuzzy -show combi", icons.search },
-    }
-})
-
-mylauncher = awful.widget.launcher({
-    image = beautiful.awesome_icon,
-    menu = mymainmenu
-})
-
--- Menubar configuration
-menubar.utils.terminal = user.terminal -- Set the terminal for applications that require it
-
 -- Wallpaper
 -- ===================================================================
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
+        -- local wallpaper = beautiful.wallpaper
+        -- -- If wallpaper is a function, call it with the screen
+        -- if type(wallpaper) == "function" then
+        --     wallpaper = wallpaper(s)
+        -- end
 
-        -- Method 1: Built in wallpaper function
+        -- >> Method 1: Built in wallpaper function
         -- gears.wallpaper.fit(wallpaper, s, true)
         -- gears.wallpaper.maximized(wallpaper, s, true)
 
-        -- Method 2: Set theme's wallpaper with feh
+        -- >> Method 2: Set theme's wallpaper with feh
         --awful.spawn.with_shell("feh --bg-fill " .. wallpaper)
 
-        -- Method 3: Set last wallpaper with feh
+        -- >> Method 3: Set last wallpaper with feh
         awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
     end
 end
+
+-- Set wallpaper
+awful.screen.connect_for_each_screen(function(s)
+    -- Wallpaper
+    set_wallpaper(s)
+end)
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
@@ -298,9 +274,6 @@ screen.connect_signal("property::geometry", set_wallpaper)
 -- Tags
 -- ===================================================================
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    set_wallpaper(s)
-
     -- Each screen has its own tag table.
     local l = awful.layout.suit -- Alias to save time :)
     -- Tag layouts
@@ -326,47 +299,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- awful.tag.add(tagnames[1], {
     --     layout = layouts[1],
     --     screen = s,
+    --     master_width_factor = 0.6,
     --     selected = true,
     -- })
-    -- awful.tag.add(tagnames[2], {
-    --     layout = layouts[2],
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[3], {
-    --     layout = layouts[3],
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[4], {
-    --     layout = layouts[4],
-    --     -- master_width_factor = 0.6,
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[5], {
-    --     layout = layouts[5],
-    --     -- master_width_factor = 0.65,
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[6], {
-    --     layout = layouts[6],
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[7], {
-    --     layout = layouts[7],
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[8], {
-    --     layout = layouts[8],
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[9], {
-    --     layout = layouts[9],
-    --     screen = s,
-    -- })
-    -- awful.tag.add(tagnames[10], {
-    --     layout = layouts[10],
-    --     screen = s,
-    -- })
-
+    -- ...
 end)
 
 -- Determines how floating clients should be placed
@@ -406,7 +342,6 @@ awful.rules.rules = {
                 -- Hide titlebars if required by the theme
                 if not beautiful.titlebars_enabled then
                     decorations.hide(c)
-                    -- awful.titlebar.hide(c)
                 end
 
             end
@@ -426,9 +361,11 @@ awful.rules.rules = {
                 "DTA",  -- Firefox addon DownThemAll.
                 "copyq",  -- Includes session name in class.
                 "floating_terminal",
+                "riotclientux.exe",
+                "leagueclientux.exe",
+                "Devtools", -- Firefox devtools
             },
             class = {
-                "mpv",
                 "Gpick",
                 "Lxappearance",
                 "Nm-connection-editor",
@@ -437,6 +374,7 @@ awful.rules.rules = {
             },
             name = {
                 "Event Tester",  -- xev
+                "MetaMask Notification",
             },
             role = {
                 "AlarmWindow",
@@ -451,13 +389,31 @@ awful.rules.rules = {
         properties = { floating = true, ontop = false }
     },
 
+    -- TODO why does Chromium always start up floating in AwesomeWM?
+    -- Temporary fix until I figure it out
+    {
+        rule_any = {
+            class = {
+                "Chromium-browser",
+            }
+        },
+        properties = { floating = false }
+    },
+
     -- Fullscreen clients
     {
         rule_any = {
             class = {
+                "portal2_linux",
+                "csgo_linux64",
+                "EtG.x86_64",
+                "factorio",
                 "dota2",
                 "Terraria.bin.x86",
                 "dontstarve_steam",
+            },
+            instance = {
+                "synthetik.exe",
             },
         },
         properties = { fullscreen = true }
@@ -484,23 +440,15 @@ awful.rules.rules = {
         end
     },
 
-    -- "Switch to tag"
-    -- These clients make you switch to their tag when they appear
-    {
-        rule_any = {
-            class = {
-                -- "Firefox",
-                -- "Chromium-browser",
-                -- "qutebrowser",
-            },
-        },
-        properties = { switchtotag = true }
-    },
-
     -- Titlebars OFF (explicitly)
-    -- Titlebars of these clients will be hidden regardless of the theme setting
     {
         rule_any = {
+            instance = {
+                "riotclientservices.exe",
+                "leagueclientux.exe",
+                "riotclientux.exe",
+                "leagueclient.exe"
+            },
             class = {
                 "qutebrowser",
                 "Sublime_text",
@@ -516,20 +464,13 @@ awful.rules.rules = {
         },
         properties = {},
         callback = function (c)
-            if not beautiful.titlebars_imitate_borders then
-                decorations.hide(c)
-                -- awful.titlebar.hide(c)
-            end
+            decorations.hide(c)
         end
     },
 
     -- Titlebars ON (explicitly)
-    -- Titlebars of these clients will be shown regardless of the theme setting
     {
         rule_any = {
-            class = {
-                --"???",
-            },
             type = {
                 "dialog",
             },
@@ -540,18 +481,7 @@ awful.rules.rules = {
         properties = {},
         callback = function (c)
             decorations.show(c)
-            -- awful.titlebar.show(c)
         end
-    },
-
-    -- Skip taskbar
-    {
-        rule_any = {
-            class = {
-                --"feh",
-            },
-        },
-        properties = { skip_taskbar = true }
     },
 
     -- Fixed terminal geometry
@@ -623,29 +553,11 @@ awful.rules.rules = {
         properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.55}
     },
 
-    -- Rofi configuration
-    -- Needed only if option "-normal-window" is used
-    -- {
-    --     rule_any = {
-    --         class = {
-    --             "Rofi",
-    --         },
-    --     },
-    --     properties = { skip_taskbar = true, floating = true, ontop = true, sticky = true },
-    --     callback = function (c)
-    --         awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
-    --         if not beautiful.titlebars_imitate_borders then
-    --             awful.titlebar.hide(c)
-    --         end
-    --     end
-    -- },
-
     -- Screenruler
     {
         rule_any = { class = { "Screenruler" } },
         properties = { border_width = 0, floating = true, ontop = true },
         callback = function (c)
-            -- awful.titlebar.hide(c)
             decorations.hide(c)
             awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
         end
@@ -653,10 +565,10 @@ awful.rules.rules = {
 
     -- Keepass
     {
-        rule_any = { class = { "keepassxc" } },
+        rule_any = { class = { "KeePassXC" } },
+        except_any = { name = { "KeePassXC-Browser Confirm Access" } },
         properties = { floating = true, width = screen_width * 0.7, height = screen_height * 0.75},
     },
-
 
     -- Scratchpad
     {
@@ -666,7 +578,7 @@ awful.rules.rules = {
             icon_name = { "scratchpad_urxvt" },
         },
         properties = {
-            skip_taskbar = false,
+            skip_taskbar = true,
             floating = true,
             ontop = false,
             minimized = true,
@@ -720,15 +632,42 @@ awful.rules.rules = {
         end
     },
 
+    -- Magit window
+    {
+        rule = { instance = "Magit" },
+        properties = { floating = true, width = screen_width * 0.55, height = screen_height * 0.6 }
+    },
+
     -- Steam guard
     {
         rule = { name = "Steam Guard - Computer Authorization Required" },
         properties = { floating = true },
+        -- Such a stubborn window, centering it does not work
         -- callback = function (c)
         --     gears.timer.delayed_call(function()
         --         awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
         --     end)
         -- end
+    },
+
+    -- MPV
+    {
+        rule = { class = "mpv" },
+        properties = {},
+        callback = function (c)
+            -- Make it floating, ontop and move it out of the way if the current tag is maximized
+            if awful.layout.get(mouse.screen) == awful.layout.suit.max then
+                c.floating = true
+                c.ontop = true
+                c.width = screen_width * 0.30
+                c.height = screen_height * 0.35
+                awful.placement.bottom_right(c, {
+                    honor_padding = true,
+                    honor_workarea = true,
+                    margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
+                })
+            end
+        end
     },
 
     ---------------------------------------------
@@ -739,11 +678,12 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "Firefox",
-                "qutebrowser",
+                -- "qutebrowser",
             },
         },
         except_any = {
             role = { "GtkFileChooserDialog" },
+            instance = { "Toolkit" },
             type = { "dialog" }
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[1] },
@@ -753,10 +693,17 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "portal2_linux",
+                "csgo_linux64",
+                "EtG.x86_64",
+                "factorio",
                 "dota2",
                 "Terraria.bin.x86",
                 "dontstarve_steam",
                 "Wine",
+            },
+            instance = {
+                "synthetik.exe",
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[2] }
@@ -767,6 +714,7 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "Chromium",
+                "Chromium-browser",
                 "discord",
                 "TelegramDesktop",
                 "Signal",
@@ -774,7 +722,7 @@ awful.rules.rules = {
                 "TeamSpeak 3",
             },
         },
-        properties = { screen = 1, tag = awful.screen.focused().tags[3], floating = false }
+        properties = { screen = 1, tag = awful.screen.focused().tags[3] }
     },
 
     -- Editing
@@ -792,6 +740,19 @@ awful.rules.rules = {
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[4] }
+    },
+
+    -- System monitoring
+    {
+        rule_any = {
+            class = {
+                "htop",
+            },
+            instance = {
+                "htop",
+            },
+        },
+        properties = { screen = 1, tag = awful.screen.focused().tags[5] }
     },
 
     -- Photo editing
@@ -826,6 +787,9 @@ awful.rules.rules = {
                 "battle.net.exe",
                 "Lutris",
             },
+            name = {
+                "Steam",
+            }
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[8] }
     },
@@ -835,7 +799,6 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "mpvtube",
-                -- "mpv",
             },
             icon_name = {
                 "mpvtube",
@@ -871,6 +834,11 @@ awful.rules.rules = {
 -- ===================================================================
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
+    -- For debugging awful.rules
+    -- print('c.class = '..c.class)
+    -- print('c.instance = '..c.instance)
+    -- print('c.name = '..c.name)
+
     -- Set every new window as a slave,
     -- i.e. put it at the end of others instead of setting it master.
     if not awesome.startup then awful.client.setslave(c) end
@@ -886,50 +854,12 @@ client.connect_signal("manage", function (c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
--- Can be toggled with a keybind (check keys.lua)
 --client.connect_signal("mouse::enter", function(c)
 --    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
 --        and awful.client.focus.filter(c) then
 --        client.focus = c
 --    end
 --end)
-
--- Apply rounded corners to clients
--- (If antialiasing is enabled, the rounded corners are applied in
--- titlebars.lua)
-if not user.anti_aliasing then
-    if beautiful.border_radius ~= 0 then
-        client.connect_signal("manage", function (c, startup)
-            if not c.fullscreen and not c.maximized then
-                c.shape = helpers.rrect(beautiful.border_radius)
-            end
-        end)
-
-        -- Fullscreen and maximized clients should not have rounded corners
-        local function no_round_corners (c)
-            if c.fullscreen or c.maximized then
-                c.shape = gears.shape.rectangle
-            else
-                c.shape = helpers.rrect(beautiful.border_radius)
-            end
-        end
-
-        client.connect_signal("property::fullscreen", no_round_corners)
-        client.connect_signal("property::maximized", no_round_corners)
-
-        beautiful.snap_shape = helpers.rrect(beautiful.border_radius * 2)
-    else
-        beautiful.snap_shape = gears.shape.rectangle
-    end
-end
-
-if beautiful.taglist_item_roundness ~= 0 then
-    beautiful.taglist_shape = helpers.rrect(beautiful.taglist_item_roundness)
-end
-
-if beautiful.notification_border_radius ~= 0 then
-    beautiful.notification_shape = helpers.rrect(beautiful.notification_border_radius)
-end
 
 -- When a client starts up in fullscreen, resize it to cover the fullscreen a short moment later
 -- Fixes wrong geometry when titlebars are enabled
@@ -987,6 +917,7 @@ client.connect_signal('property::geometry', function(c)
         awful.client.property.set(c, 'floating_geometry', c:geometry())
     end
 end)
+
 -- ==============================================================
 -- ==============================================================
 
@@ -1000,8 +931,16 @@ client.connect_signal("request::activate", function(c, context, hints)
     end
 end)
 
+-- -- Focus urgent clients automatically
+-- client.connect_signal("property::urgent", function(c)
+--     c.minimized = false
+--     c:jump_to()
+-- end)
+
 -- Disconnect the client ability to request different size and position
+-- Breaks fullscreen and maximized
 -- client.disconnect_signal("request::geometry", awful.ewmh.client_geometry_requests)
+-- client.disconnect_signal("request::geometry", awful.ewmh.geometry)
 
 -- Startup applications
 -- Runs your autostart.sh script, which should include all the commands you
@@ -1016,5 +955,5 @@ awful.spawn.with_shell( os.getenv("HOME") .. "/.config/awesome/autostart.sh")
 -- collectgarbage("setpause", 160)
 -- collectgarbage("setstepmul", 400)
 
--- collectgarbage("setpause", 110)
--- collectgarbage("setstepmul", 1000)
+collectgarbage("setpause", 110)
+collectgarbage("setstepmul", 1000)

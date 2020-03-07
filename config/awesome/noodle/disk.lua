@@ -13,9 +13,34 @@ local disk = wibox.widget{
     widget = wibox.widget.textbox
 }
 
+-- Mouse control
+-- disk:buttons(gears.table.join(
+--     -- 
+--     awful.button({ }, 1, function ()
+--     end),
+--     -- 
+--     awful.button({ }, 2, function () 
+--     end),
+--     -- 
+--     awful.button({ }, 3, function () 
+--     end),
+--     -- 
+--     awful.button({ }, 4, function () 
+--     end),
+--     awful.button({ }, 5, function () 
+--     end)
+-- ))
+
 local function update_widget(disk_space)
     disk.markup = disk_space .. "B free"
 end
+
+-- Signals
+-- disk:connect_signal("mouse::enter", function ()
+--     update_widget()
+-- end)
+
+-- update_widget()
 
 -- Use /dev/sdXY according to your setup
 local disk_script = [[

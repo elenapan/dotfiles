@@ -1,5 +1,6 @@
 -- Functions that you use more than once and in different files would
 -- be nice to define here.
+
 local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
@@ -41,13 +42,39 @@ function helpers.client_menu_toggle()
     end
 end
 
-function helpers.pad(size)
-    local str = ""
-    for i = 1, size do
-        str = str .. " "
+-- Escapes a string so that it can be displayed inside pango markup
+-- tags. Modified from:
+-- https://github.com/kernelsauce/turbo/blob/master/turbo/escape.lua
+function helpers.pango_escape(s)
+    return (string.gsub(s, "[&<>]", {
+        ["&"] = "&amp;",
+        ["<"] = "&lt;",
+        [">"] = "&gt;"
+    }))
+end
+
+function helpers.vertical_pad(height)
+    return wibox.widget{
+        forced_height = height,
+        layout = wibox.layout.fixed.vertical
+    }
+end
+
+function helpers.horizontal_pad(width)
+    return wibox.widget{
+        forced_width = width,
+        layout = wibox.layout.fixed.horizontal
+    }
+end
+
+-- Maximizes client and also respects gaps
+function helpers.maximize(c)
+    c.maximized = not c.maximized
+    if c.maximized then
+        awful.placement.maximize(c, { honor_padding = true, honor_workarea = true, margins = beautiful.useless_gap * 2 })
+        
     end
-    local pad = wibox.widget.textbox(str)
-    return pad
+    c:raise()
 end
 
 function helpers.move_to_edge(c, direction)
@@ -139,10 +166,14 @@ function helpers.add_hover_cursor(w, hover_cursor)
 end
 
 -- Tag back and forth:
--- If you try to focus the same tag you are at, go back to the previous tag.
+-- If you try to focus the tag you are already at, go back to the previous tag.
 -- Useful for quick switching after for example checking an incoming chat
 -- message at tag 2 and coming back to your work at tag 1 with the same
--- keypress
+-- keypress.
+-- Also focuses urgent clients if they exist in the tag. This fixes the issue
+-- (visual mismatch) where after switching to a tag which includes an urgent
+-- client, the urgent client is unfocused but still covers all other windows
+-- (even the currently focused window).
 function helpers.tag_back_and_forth(tag_index)
     local s = mouse.screen
     local tag = s.tags[tag_index]
@@ -151,6 +182,15 @@ function helpers.tag_back_and_forth(tag_index)
             awful.tag.history.restore()
         else
             tag:view_only()
+        end
+
+        local urgent_clients = function (c)
+          return awful.rules.match(c, {urgent = true, first_tag = tag})
+        end
+
+        for c in awful.client.iterate(urgent_clients) do
+            client.focus = c
+            c:raise()
         end
     end
 end
@@ -259,54 +299,20 @@ function helpers.round(number, decimals)
     return math.floor(number * power) / power
 end
 
-local volume_get_cmd = "pactl list sinks | grep -m 1 'Volume:' | awk '{print $5}' | cut -d '%' -f1 "
-local muted_get_cmd = "pactl list sinks | grep -m 1 'Mute:' | awk '{printf \"%s\", $2}'"
-local volume_notif
 function helpers.volume_control(step)
     local cmd
     if step == 0 then
-        -- Toggle mute
-        cmd = "pactl set-sink-mute @DEFAULT_SINK@ toggle && "..muted_get_cmd
-        awful.spawn.with_shell(cmd)
-        -- awful.spawn.easy_async_with_shell(cmd, function(out)
-        --     local text
-        --     if out:match('yes') then
-        --         text = "Muted"
-        --     else
-        --         text = "Unmuted"
-        --     end
-        --     if not sidebar.visible then
-        --         if volume_notif and not volume_notif.is_expired then
-        --             volume_notif.message = text
-        --         else
-        --             volume_notif = naughty.notification({ title = "Volume", message = text, timeout = 2 })
-        --         end
-        --     end
-        -- end)
+        cmd = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
     else
-        if step > 0 then
-            sign = "+"
-        else
-            sign = ""
-        end
-        cmd = "pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ "..sign..tostring(step).."% && "..volume_get_cmd
-        awful.spawn.easy_async_with_shell(cmd, function(out)
-            print(out)
-            out = out:gsub('^%s*(.-)%s*$', '%1')
-            print(out)
-            if not sidebar.visible then
-                if volume_notif and not volume_notif.is_expired then
-                    volume_notif.message = out
-                else
-                    volume_notif = naughty.notification({ title = "Volume", message = out, timeout = 2 })
-                end
-            end
-
-        end)
+        sign = step > 0 and "+" or ""
+        cmd = "pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ "..sign..tostring(step).."%"
     end
+    awful.spawn.with_shell(cmd)
 end
 
 -- TODO: notification action buttons
+-- https://github.com/awesomeWM/awesome/issues/3017
+local capture_notif = nil
 function helpers.screenshot(action, delay)
     local cmd
     local timestamp = os.date("%Y.%m.%d-%H.%M.%S")
@@ -324,33 +330,41 @@ function helpers.screenshot(action, delay)
 
     if action == "full" then
         cmd = prefix.."maim "..maim_args.." "..filename
-        print(filename)
-        awful.spawn.easy_async_with_shell(cmd, function(_, __, ___, ____)
-            naughty.notify({ title = "Screenshot", message = "Screenshot taken", icon = icon })
+        awful.spawn.easy_async_with_shell(cmd, function()
+            naughty.notification({ title = "Screenshot", message = "Screenshot taken", icon = icon })
         end)
     elseif action == "selection" then
         cmd = "maim "..maim_args.." -s "..filename
-        naughty.notify({ title = "Screenshot", message = "Select area to capture.", icon = icon })
+        capture_notif = naughty.notification({ title = "Screenshot", message = "Select area to capture.", icon = icon, timeout = 1 })
         awful.spawn.easy_async_with_shell(cmd, function(_, __, ___, exit_code)
             if exit_code == 0 then
-                naughty.notify({ title = "Screenshot", message = "Selection captured", icon = icon })
+                capture_notif = notifications.notify_dwim({ title = "Screenshot", message = "Selection captured", icon = icon }, capture_notif)
+            else
+                naughty.destroy(capture_notif)
             end
         end)
     elseif action == "clipboard" then
-        naughty.notify({ title = "Screenshot", message = "Select area to copy to clipboard.", icon = icon })
-        cmd = "maim "..maim_args.." -s /tmp/maim_clipboard && xclip -selection clipboard -t image/png /tmp/maim_clipboard && rm /tmp/maim_clipboard"
+        capture_notif = naughty.notification({ title = "Screenshot", message = "Select area to copy to clipboard", icon = icon })
+        cmd = "maim "..maim_args.." -s /tmp/maim_clipboard && xclip -selection clipboard -t image/png /tmp/maim_clipboard &>/dev/null && rm /tmp/maim_clipboard"
         awful.spawn.easy_async_with_shell(cmd, function(_, __, ___, exit_code)
             if exit_code == 0 then
-                naughty.notify({ title = "Screenshot", message = "Copied selection to clipboard", icon = icon })
+                capture_notif = notifications.notify_dwim({ title = "Screenshot", message = "Copied selection to clipboard", icon = icon }, capture_notif)
+            else
+                naughty.destroy(capture_notif)
             end
         end)
     elseif action == "browse" then
         awful.spawn.with_shell("cd "..user.screenshot_dir.." && feh $(ls -t)")
     elseif action == "gimp" then
         awful.spawn.with_shell("cd "..user.screenshot_dir.." && gimp $(ls -t | head -n1)")
-        naughty.notify({ message = "Opening last screenshot with GIMP", icon = icon })
+        naughty.notification({ message = "Opening last screenshot with GIMP", icon = icon })
     end
 
+end
+
+function helpers.fake_escape()
+    root.fake_input('key_press', "Escape")
+    root.fake_input('key_release', "Escape")
 end
 
 local prompt_font = beautiful.prompt_font or "sans bold 8"
@@ -400,49 +414,13 @@ function helpers.run_or_raise(match, move, spawn_cmd, spawn_args)
         else
             c:jump_to()
         end
-
-        -- -- Return if found
-        -- return
-        -- -- This would normally work, but some terminals (*cough* termite)
-        -- -- create 2 instances of the same class, for just one window.
-        -- -- So it is not reliable. We will use the helper variable "found"
-        -- -- instead in order to determine if we have raised the window.
+        break
     end
 
     -- Spawn if not found
     if not found then
         awful.spawn(spawn_cmd, spawn_args)
     end
-end
-
-
-function helpers.toggle_scratchpad()
-    local screen = awful.screen.focused()
-
-    -- Get rid of it if it is focused
-    local cf = client.focus
-    if cf and cf.class == "scratchpad" then
-        -- 1. Minimize scratchpad
-        cf.minimized = true
-        -- 2. Move scratchpad to "Miscellaneous" tag
-        -- local tag = screen.tags[10]
-        -- if tag then
-        --     client.focus:move_to_tag(tag)
-        -- end
-    else
-        helpers.run_or_raise({class = "scratchpad"}, true, "scratchpad")
-    end
-end
-
-function helpers.toggle_night_mode()
-    local cmd = "pgrep redshift > /dev/null && (pkill redshift && echo 'OFF') || (echo 'ON' && redshift -l 0:0 -t 3700:3700 -r &>/dev/null &)"
-    awful.spawn.easy_async_with_shell(cmd, function(out)
-        if out:match('ON') then
-            naughty.notify({ title = "Night mode", message = "Activated!" })
-        else
-            naughty.notify({ title = "Night mode", message = "Deactivated!" })
-        end
-    end)
 end
 
 function helpers.float_and_resize(c, width, height)
