@@ -15,11 +15,12 @@
 
 ### Thanks for dropping by!
 
-<img src="https://i.redd.it/glzrkk83f4621.png" alt="img" align="right" width="290px">
+<img src="https://i.redd.it/glzrkk83f4621.png" alt="img" align="right" width="270px">
 
 This is my personal collection of configuration files.
 
 You are probably here for my AwesomeWM configuration.
+
 The [setup section](#setup) will guide you through the installation process.
 
 Here are some details about my setup:
