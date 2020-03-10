@@ -69,11 +69,8 @@ local night_mode_notif
 apps.night_mode = function ()
     local cmd = "pgrep redshift > /dev/null && (pkill redshift && echo 'OFF') || (echo 'ON' && redshift -l 0:0 -t 3700:3700 -r &>/dev/null &)"
     awful.spawn.easy_async_with_shell(cmd, function(out)
-        if out:match('ON') then
-            night_mode_notif = notifications.notify_dwim({ title = "Night mode", message = "Activated!" }, night_mode_notif)
-        else
-            night_mode_notif = notifications.notify_dwim({ title = "Night mode", message = "Deactivated!" }, night_mode_notif)
-        end
+        local message = out:match('ON') and "Activated!" or "Deactivated!"
+        night_mode_notif = notifications.notify_dwim({ title = "Night mode", message = message, app_name = "night_mode", icon = icons.redshift }, night_mode_notif)
     end)
 end
 

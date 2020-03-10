@@ -38,7 +38,7 @@ awesome.connect_signal("evil::battery", function(battery)
 
     -- If message has been initialized, then we need to send a notification
     if message then
-        notif = notifications.notify_dwim({title = "Battery", message = message, icon = icon, timeout = timeout}, notif)
+        notif = notifications.notify_dwim({ title = "Battery", message = message, icon = icon, timeout = timeout, app_name = "battery" }, notif)
     end
 end)
 
@@ -64,6 +64,6 @@ awesome.connect_signal("evil::charger", function(plugged)
     if charger_first_time then
         charger_first_time = false
     else
-        notif = notifications.notify_dwim({title = "Charger", message = message, icon = icon, timeout = 3}, notif)
+        notif = notifications.notify_dwim({ title = "Charger", message = message, icon = icon, timeout = 3, app_name = "charger" }, notif)
     end
 end)

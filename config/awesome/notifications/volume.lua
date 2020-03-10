@@ -15,11 +15,16 @@ awesome.connect_signal("evil::volume", function (percentage, muted)
             end
         else
             -- Send notification
+            local message, icon
             if muted then
-                notif = notifications.notify_dwim({ title = "Volume", message = "muted", icon = icons.muted, timeout = timeout }, notif)
+                message = "muted"
+                icon = icons.muted
             else
-                notif = notifications.notify_dwim({ title = "Volume", message = tostring(percentage), icon = icons.volume, timeout = timeout }, notif)
+                message = tostring(percentage)
+                icon = icons.volume
             end
+
+            notif = notifications.notify_dwim({ title = "Volume", message = message, icon = icon, timeout = timeout, app_name = "volume" }, notif)
         end
     end
 end)

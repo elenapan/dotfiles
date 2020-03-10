@@ -30,8 +30,23 @@ local rainbow_stripe = wibox.widget {
 local notification_bg = beautiful.notification_bg
 beautiful.notification_bg = "#00000000"
 
-local default_symbol = ""
+local default_icon = ""
 local default_color = x.foreground
+
+-- Custom text icons according to the notification's app_name
+-- (This will be removed when notification rules are released)
+-- Using icomoon font
+local text_icons = {
+    ['battery'] = "",
+    ['charger'] = "",
+    ['volume'] = "",
+    ['brightness'] = "",
+    ['screenshot'] = "",
+    ['Telegram Desktop'] = "",
+    ['night_mode'] = "",
+    ['NetworkManager'] = "",
+    ['youtube'] = "",
+}
 
 -- Template
 -- ===================================================================
@@ -40,6 +55,7 @@ naughty.connect_signal("request::display", function(n)
     -- Debugging
     -- print('n.title = '..n.title)
     -- print('n.message = '..n.message)
+    -- print('n.app_name = '..n.app_name)
 
     -- Custom icon widget
     -- It can be used instead of naughty.widget.icon if you prefer your icon to be
@@ -54,35 +70,13 @@ naughty.connect_signal("request::display", function(n)
         widget = wibox.widget.textbox
     }
 
-    local symbol = default_symbol
+    local icon
     local color = default_color
-
-    -- Try to detect the notification source and change the symbol and/or color ccordingly
-    if n.title == "Telegram" then
-        symbol = ""
-    elseif n.title == "Volume" then
-        symbol = ""
-        n.title = ""
-    elseif n.title == "Screenshot" then
-        -- symbol = ""
-        symbol = ""
-        n.title = ""
-    elseif n.title == "Performance mode" then
-        symbol = ""
-    elseif n.title == "Night mode" then
-        symbol = ""
-    elseif n.title:match('Connection') then
-        symbol = ""
-    elseif n.title == "Battery" then
-        -- symbol = ""
-        symbol = ""
-    elseif n.title == "Charger" then
-        symbol = ""
-        n.title = ""
-    elseif n.title:match('YouTube') then
-        -- symbol = ""
-        -- symbol = ""
-        symbol = ""
+    -- Set icon according to app_name
+    if text_icons[n.app_name] then
+        icon = text_icons[n.app_name]
+    else
+        icon = default_icon
     end
 
     naughty.layout.box {
@@ -103,7 +97,7 @@ naughty.connect_signal("request::display", function(n)
                                 {
                                     {
                                         {
-                                            markup = helpers.colorize_text(symbol, color),
+                                            markup = helpers.colorize_text(icon, color),
                                             widget = custom_notification_icon,
                                         },
                                         margins = beautiful.notification_margin,
@@ -127,8 +121,8 @@ naughty.connect_signal("request::display", function(n)
                                         {
                                             {
                                                 align = "center",
-                                                -- Only show title if no symbol has been set
-                                                visible = symbol == default_symbol,
+                                                -- Only show title if no icon has been set
+                                                visible = icon == default_icon,
                                                 widget = naughty.widget.title,
                                             },
                                             {
