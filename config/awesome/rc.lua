@@ -673,6 +673,24 @@ awful.rules.rules = {
         end
     },
 
+    -- Unminimize LoL client after game window closes
+    {
+        rule = { instance = "league of legends.exe" },
+        properties = {},
+        callback = function (c)
+            c:connect_signal("unmanage", function()
+                -- Search for LoL client and unminimize it
+                local matcher = function (c)
+                    return awful.rules.match(c, { instance = "leagueclientux.exe" })
+                end
+
+                for c in awful.client.iterate(matcher) do
+                    c.minimized = false
+                end
+            end)
+        end
+    },
+
     ---------------------------------------------
     -- Start application on specific workspace --
     ---------------------------------------------
@@ -707,6 +725,7 @@ awful.rules.rules = {
             },
             instance = {
                 "synthetik.exe",
+                "leagueclient.exe"
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[2] }
