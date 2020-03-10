@@ -95,57 +95,52 @@ naughty.connect_signal("request::display", function(n)
                 {
                     {
                         {
-                            -- {
-                                -- naughty.widget.icon,
+                            {
+                                {
+                                    {
+                                        markup = helpers.colorize_text(icon, color),
+                                        widget = custom_notification_icon,
+                                    },
+                                    margins = beautiful.notification_margin,
+                                    widget  = wibox.container.margin,
+                                },
+                                -- bg = x.background.."88",
+                                bg = x.color0,
+                                -- bg = x.background.."88",
+                                -- bg = "red",
+                                -- bg = notification_bg.."88",
+                                widget  = wibox.container.background,
+                            },
+                            {
+                                rainbow_stripe,
+                                forced_height = dpi(4),
+                                -- shape = gears.shape.rounded_bar,
+                                widget = wibox.container.background
+                            },
+                            {
                                 {
                                     {
                                         {
-                                            markup = helpers.colorize_text(icon, color),
-                                            widget = custom_notification_icon,
+                                            align = "center",
+                                            visible = title_visible,
+                                            widget = naughty.widget.title,
                                         },
-                                        margins = beautiful.notification_margin,
-                                        widget  = wibox.container.margin,
-                                    },
-                                    -- bg = x.background.."88",
-                                    bg = x.color0,
-                                    -- bg = x.background.."88",
-                                    -- bg = "red",
-                                    -- bg = notification_bg.."88",
-                                    widget  = wibox.container.background,
-                                },
-                                {
-                                    rainbow_stripe,
-                                    forced_height = dpi(4),
-                                    -- shape = gears.shape.rounded_bar,
-                                    widget = wibox.container.background
-                                },
-                                {
-                                    {
                                         {
-                                            {
-                                                align = "center",
-                                                visible = title_visible,
-                                                widget = naughty.widget.title,
-                                            },
-                                            {
-                                                align = "center",
-                                                widget = naughty.widget.message,
-                                            },
-                                            -- spacing = dpi(4),
-                                            layout  = wibox.layout.fixed.vertical,
+                                            align = "center",
+                                            widget = naughty.widget.message,
                                         },
-                                        margins = beautiful.notification_margin,
-                                        widget  = wibox.container.margin,
+                                        -- spacing = dpi(4),
+                                        layout  = wibox.layout.fixed.vertical,
                                     },
-                                    bg = notification_bg,
-                                    widget  = wibox.container.background,
+                                    margins = beautiful.notification_margin,
+                                    widget  = wibox.container.margin,
                                 },
-                                -- naughty.list.actions,
-                                -- spacing = dpi(4),
-                                layout  = wibox.layout.fixed.vertical,
-                            -- },
-                            -- margins = beautiful.notification_margin,
-                            -- widget  = wibox.container.margin,
+                                bg = notification_bg,
+                                widget  = wibox.container.background,
+                            },
+                            -- naughty.list.actions,
+                            -- spacing = dpi(4),
+                            layout  = wibox.layout.fixed.vertical,
                         },
                         bg = "#00000000",
                         id     = "background_role",
