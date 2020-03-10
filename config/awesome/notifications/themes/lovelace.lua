@@ -22,22 +22,7 @@ naughty.connect_signal("request::display", function(n)
                 {
                     {
                         {
-                            -- {
-                            --     naughty.widget.icon,
-                            --     bg = "#ff0000",
-                            --     widget = wibox.container.background
-                            -- },
-                            -- TODO does not render properly
-                            -- That is why we use a normal image box
-                            -- Downside: we cannot update icon
-                            {
-                                forced_height = beautiful.notification_icon_size or dpi(40),
-                                forced_width = beautiful.notification_icon_size or dpi(40),
-                                resize = true,
-                                image = n.icon,
-                                id = "notification_icon",
-                                widget = wibox.widget.imagebox
-                            },
+                            naughty.widget.icon,
                             {
                                 {
                                     nil,
