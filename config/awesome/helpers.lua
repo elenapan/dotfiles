@@ -67,16 +67,6 @@ function helpers.horizontal_pad(width)
     }
 end
 
--- Maximizes client and also respects gaps
-function helpers.maximize(c)
-    c.maximized = not c.maximized
-    if c.maximized then
-        awful.placement.maximize(c, { honor_padding = true, honor_workarea = true, margins = beautiful.useless_gap * 2 })
-        
-    end
-    c:raise()
-end
-
 function helpers.move_to_edge(c, direction)
     -- local workarea = awful.screen.focused().workarea
     -- local client_geometry = c:geometry()
@@ -424,6 +414,7 @@ function helpers.run_or_raise(match, move, spawn_cmd, spawn_args)
 end
 
 function helpers.float_and_resize(c, width, height)
+    c.maximized = false
     c.width = width
     c.height = height
     awful.placement.centered(c,{honor_workarea=true, honor_padding = true})

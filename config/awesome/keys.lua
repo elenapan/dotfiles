@@ -740,7 +740,7 @@ keys.clientkeys = gears.table.join(
     -- Maximize
     awful.key({ superkey,           }, "m",
         function (c)
-            helpers.maximize(c)
+            c.maximized = not c.maximized
         end,
         {description = "(un)maximize", group = "client"}),
     awful.key({ superkey, ctrlkey }, "m",
