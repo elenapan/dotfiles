@@ -34,18 +34,19 @@ local default_icon = ""
 local default_color = x.foreground
 
 -- Custom text icons according to the notification's app_name
+-- plus whether the title should be visible or not
 -- (This will be removed when notification rules are released)
 -- Using icomoon font
-local text_icons = {
-    ['battery'] = "",
-    ['charger'] = "",
-    ['volume'] = "",
-    ['brightness'] = "",
-    ['screenshot'] = "",
-    ['Telegram Desktop'] = "",
-    ['night_mode'] = "",
-    ['NetworkManager'] = "",
-    ['youtube'] = "",
+local app_config = {
+    ['battery'] = { icon = "", title = false },
+    ['charger'] = { icon = "", title = false },
+    ['volume'] = { icon = "", title = false },
+    ['brightness'] = { icon = "", title = false },
+    ['screenshot'] = { icon = "", title = false },
+    ['Telegram Desktop'] = { icon = "", title = true },
+    ['night_mode'] = { icon = "", title = false },
+    ['NetworkManager'] = { icon = "", title = true },
+    ['youtube'] = { icon = "", title = true },
 }
 
 -- Template
@@ -70,13 +71,15 @@ naughty.connect_signal("request::display", function(n)
         widget = wibox.widget.textbox
     }
 
-    local icon
+    local icon, title_visible
     local color = default_color
     -- Set icon according to app_name
-    if text_icons[n.app_name] then
-        icon = text_icons[n.app_name]
+    if app_config[n.app_name] then
+        icon = app_config[n.app_name].icon
+        title_visible = app_config[n.app_name].title
     else
         icon = default_icon
+        title_visible = true
     end
 
     naughty.layout.box {
@@ -121,8 +124,7 @@ naughty.connect_signal("request::display", function(n)
                                         {
                                             {
                                                 align = "center",
-                                                -- Only show title if no icon has been set
-                                                visible = icon == default_icon,
+                                                visible = title_visible,
                                                 widget = naughty.widget.title,
                                             },
                                             {
