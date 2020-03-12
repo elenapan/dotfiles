@@ -32,10 +32,6 @@ dashboard:buttons(gears.table.join(
     -- Middle click - Hide dashboard
     awful.button({ }, 2, function ()
         dashboard_hide()
-    end),
-    -- Right click - Hide dashboard
-    awful.button({ }, 3, function ()
-        dashboard_hide()
     end)
 ))
 

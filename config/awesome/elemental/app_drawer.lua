@@ -142,6 +142,10 @@ app_drawer:buttons(gears.table.join(
     awful.button({ }, 1, function ()
         app_drawer_hide()
     end),
+    -- Right click - Hide app_drawer
+    awful.button({ }, 2, function ()
+        app_drawer_hide()
+    end),
     -- Middle click - Hide app_drawer
     awful.button({ }, 2, function ()
         app_drawer_hide()
