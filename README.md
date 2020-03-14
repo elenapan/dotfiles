@@ -285,3 +285,7 @@ I use <kbd>super</kbd> AKA Windows key as my main modifier.
 + `left click (drag)` - Move
 + `right click (drag)` - Resize
 + `middle click` - Close
+
+### Notes
+If you have any questions or issues, first check if you can find your answer in the [wiki](https://github.com/elenapan/dotfiles/wiki).
+Then you can search in the repository's [issues](https://github.com/elenapan/dotfiles/issues) or make a new issue.
