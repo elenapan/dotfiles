@@ -545,12 +545,11 @@ keys.globalkeys = gears.table.join(
     -- Emacs (O for org mode)
     awful.key({ superkey }, "o", apps.org,
         {description = "emacs", group = "launcher"}),
-    -- Emacs markdown scratchpad (I for input)
-    -- Used for quickly typing markdown comments and pasting them in
+    -- Markdown input scratchpad (I for input)
+    -- For quickly typing markdown comments and pasting them in
     -- the browser
-    -- TODO: use vim instead of emacs for this one
-    awful.key({ superkey }, "i", apps.markdown_scratchpad,
-        {description = "emacs markdown scratchpad", group = "launcher"}),
+    awful.key({ superkey }, "i", apps.markdown_input,
+        {description = "markdown scratchpad", group = "launcher"}),
     -- Editor
     awful.key({ superkey }, "e", apps.editor,
         {description = "editor", group = "launcher"}),

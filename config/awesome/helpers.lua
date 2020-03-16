@@ -412,6 +412,20 @@ function helpers.run_or_raise(match, move, spawn_cmd, spawn_args)
     end
 end
 
+-- Run raise or minimize a client (scratchpad style)
+-- Depends on helpers.run_or_raise
+-- If it not running, spawn it
+-- If it is running, focus it
+-- If it is focused, minimize it
+function helpers.scratchpad(match, spawn_cmd, spawn_args)
+    local cf = client.focus
+    if cf and awful.rules.match(cf, match) then
+        cf.minimized = true
+    else
+        helpers.run_or_raise(match, true, spawn_cmd, spawn_args)
+    end
+end
+
 function helpers.float_and_resize(c, width, height)
     c.maximized = false
     c.width = width

@@ -103,33 +103,14 @@ apps.battery_monitor = function ()
     helpers.run_or_raise({class = 'battop'}, false, user.terminal.." --class battop -e battop", { switchtotag = true, tag = mouse.screen.tags[5] })
 end
 
-apps.markdown_scratchpad = function ()
-    local cf = client.focus
-    if cf and cf.name == "Markdown Scratchpad" then
-        cf.minimized = true
-    else
-        helpers.run_or_raise(
-            { name = 'Markdown Scratchpad' },
-            true,
-            'emacsclient -e "(markdown-input-frame)"')
-    end
+apps.markdown_input = function ()
+    helpers.scratchpad(
+        { instance = "markdown_input" },
+        user.terminal.." --class markdown_input -e nvim -c 'startinsert' /tmp/scratchpad.md",
+        nil)
 end
 
+-- Scratchpad terminal with tmux (see bin/scratchpad)
 apps.scratchpad = function()
-    -- local screen = awful.screen.focused()
-    -- Get rid of it if it is focused
-    local cf = client.focus
-    -- if cf and cf.class == "scratchpad" then
-    if cf and cf.instance == "scratchpad" then
-        -- 1. Minimize scratchpad - Does not work?
-        cf.minimized = true
-        -- 2. Move scratchpad to "Miscellaneous" tag
-        -- local tag = screen.tags[10]
-        -- if tag then
-        --     client.focus:move_to_tag(tag)
-        -- end
-    else
-        -- helpers.run_or_raise({class = "scratchpad"}, true, "scratchpad")
-        helpers.run_or_raise({instance = "scratchpad"}, true, "scratchpad")
-    end
+    helpers.scratchpad({instance = "scratchpad"}, "scratchpad", nil)
 end

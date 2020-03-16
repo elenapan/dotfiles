@@ -576,8 +576,14 @@ awful.rules.rules = {
     -- Scratchpad
     {
         rule_any = {
-            instance = { "scratchpad" },
-            class = { "scratchpad" },
+            instance = {
+                "scratchpad",
+                "markdown_input"
+            },
+            class = {
+                "scratchpad",
+                "markdown_input"
+            },
             icon_name = { "scratchpad_urxvt" },
         },
         properties = {
