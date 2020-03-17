@@ -119,43 +119,6 @@ sandwich:buttons(gears.table.join(
     end)
 ))
 
--- Helper function that updates a tasklist item
-local update_tasklist = function (task, c)
-    local background = task:get_children_by_id('bg_role')[1]
-    local text = task:get_children_by_id('text_role')[1]
-    if c.minimized then
-        color = "#00000000"
-    else
-        if c.class == "email" then
-            color = x.color2
-        elseif c.class == "Firefox" then
-            color = x.color1
-        elseif c.class == "music" then
-            color = x.color5
-        elseif c.class == "TelegramDesktop" then
-            color = x.color2
-        elseif c.class == "Thunar" then
-            color = x.color3
-        elseif c.class == "mpv" then
-            color = x.color6
-        elseif c.class == "Alacritty" then
-            color = x.color4
-        else
-            color = x.color7
-        end
-    end
-    if client.focus == c then
-        text.markup = helpers.colorize_text(text.text, color)
-        -- background.bg = color
-        background.border_color = color
-        background.bg = x.background.."AA"
-    else
-        text.markup = helpers.colorize_text(text.text, x.foreground)
-        background.bg = color
-        background.border_color = "#00000000"
-    end
-end
-
 local tag_colors_empty = { "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", }
 
 local tag_colors_urgent = {
@@ -265,12 +228,6 @@ awful.screen.connect_for_each_screen(function(s)
             -- id = "background_role",
             -- shape = gears.shape.rounded_bar,
             widget = wibox.container.background,
-            -- create_callback = function(self, c, index, objects)
-            --     update_tasklist(self, c)
-            -- end,
-            -- update_callback = function(self, c, index, objects)
-            --     update_tasklist(self, c)
-            -- end,
         },
     }
 
