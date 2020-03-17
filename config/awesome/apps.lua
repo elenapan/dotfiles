@@ -84,7 +84,7 @@ apps.org = function ()
 end
 
 apps.music = function ()
-    helpers.run_or_raise({instance = "music"}, true, user.music_client)
+    helpers.scratchpad({instance = "music"}, user.music_client)
 end
 
 apps.process_monitor = function ()
