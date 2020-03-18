@@ -40,12 +40,16 @@ keys.desktopbuttons = gears.table.join(
     -- Right click - Show app drawer
     -- awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 3, function ()
-        app_drawer_show()
+        if app_drawer_show then
+            app_drawer_show()
+        end
     end),
 
     -- Middle button - Toggle dashboard
     awful.button({ }, 2, function ()
-        dashboard_show()
+        if dashboard_show then
+            dashboard_show()
+        end
     end),
 
     -- Scrolling - Switch tags
