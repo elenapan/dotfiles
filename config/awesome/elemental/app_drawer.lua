@@ -95,16 +95,25 @@ app_drawer.bg = "#00000000"
 -- app_drawer.bg = beautiful.app_drawer_bg or x.background or "#111111"
 app_drawer.fg = beautiful.app_drawer_fg or x.foreground or "#FEFEFE"
 
--- Create an container box
--- local app_drawer_box = wibox.container.background()
--- app_drawer_box.bg = app_drawer.bg
--- app_drawer_box.shape = gears.shape.rounded_rect
--- app_drawer_box.shape_border_radius = 20
+-- Add app drawer or mask to each screen
+for s in screen do
+    if s == screen.primary then
+        s.app_drawer = app_drawer
+    else
+        s.app_drawer = helpers.screen_mask(s, beautiful.lock_screen_bg or beautiful.exit_screen_bg or x.background)
+    end
+end
+
+local function set_visibility(v)
+    for s in screen do
+        s.app_drawer.visible = v
+    end
+end
 
 local app_drawer_grabber
 function app_drawer_hide()
     awful.keygrabber.stop(app_drawer_grabber)
-    app_drawer.visible = false
+    set_visibility(false)
 end
 
 function app_drawer_show()
@@ -134,7 +143,7 @@ function app_drawer_show()
         end
     end)
 
-    app_drawer.visible = true
+    set_visibility(true)
 end
 
 app_drawer:buttons(gears.table.join(

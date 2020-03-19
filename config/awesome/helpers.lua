@@ -436,4 +436,13 @@ function helpers.float_and_resize(c, width, height)
     c:raise()
 end
 
+-- Adds a maximized mask to a screen
+function helpers.screen_mask(s, bg)
+    local mask = wibox({visible = false, ontop = true, type = "splash", screen = s})
+    awful.placement.maximize(mask)
+    mask.bg = bg
+    return mask
+end
+
+
 return helpers

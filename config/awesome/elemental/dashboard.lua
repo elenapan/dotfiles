@@ -16,17 +16,26 @@ local screen_width = awful.screen.focused().geometry.width
 local screen_height = awful.screen.focused().geometry.height
 
 -- Create the widget
-dashboard = wibox({visible = false, ontop = true, type = "dock"})
+dashboard = wibox({visible = false, ontop = true, type = "dock", screen = screen.primary})
 awful.placement.maximize(dashboard)
 
 dashboard.bg = beautiful.dashboard_bg or beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111"
 dashboard.fg = beautiful.dashboard_fg or beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
--- Create an container box
--- local dashboard_box = wibox.container.background()
--- dashboard_box.bg = dashboard.bg
--- dashboard_box.shape = gears.shape.rounded_rect
--- dashboard_box.shape_border_radius = 20
+-- Add dashboard or mask to each screen
+for s in screen do
+    if s == screen.primary then
+        s.dashboard = dashboard
+    else
+        s.dashboard = helpers.screen_mask(s, dashboard.bg)
+    end
+end
+
+local function set_visibility(v)
+    for s in screen do
+        s.dashboard.visible = v
+    end
+end
 
 dashboard:buttons(gears.table.join(
     -- Middle click - Hide dashboard
@@ -684,7 +693,7 @@ dashboard:setup {
 local dashboard_grabber
 function dashboard_hide()
     awful.keygrabber.stop(dashboard_grabber)
-    dashboard.visible = false
+    set_visibility(false)
 end
 
 
@@ -704,5 +713,5 @@ function dashboard_show()
             dashboard_hide()
         end
     end)
-    dashboard.visible = true
+    set_visibility(true)
 end
