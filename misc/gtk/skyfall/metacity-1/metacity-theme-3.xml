@@ -11,7 +11,8 @@
 
 <!-- meaningful constants -->
 
-<constant name="C_titlebar" value="gtk:custom(wm_bg,gtk:bg[NORMAL])"/>
+<constant name="C_titlebar_focused" value="gtk:custom(wm_bg,gtk:bg[NORMAL])"/>
+<constant name="C_titlebar_unfocused" value="gtk:custom(wm_unfocused_bg,gtk:bg[NORMAL])"/>
 <constant name="C_highlight" value="gtk:custom(wm_highlight,gtk:base[NORMAL])"/>
 <constant name="C_title_focused" value="gtk:custom(wm_title,gtk:fg[NORMAL])"/>
 <constant name="C_title_unfocused" value="gtk:custom(wm_unfocused_title,gtk:fg[INSENSITIVE])"/>
@@ -20,9 +21,9 @@
 <!-- geometries -->
 
 <frame_geometry name="normal" title_scale="medium" rounded_top_left="4" rounded_top_right="4">
-  <distance name="left_width" value="1"/>
-  <distance name="right_width" value="1"/>
-  <distance name="bottom_height" value="1"/>
+  <distance name="left_width" value="2"/>
+  <distance name="right_width" value="2"/>
+  <distance name="bottom_height" value="2"/>
   <distance name="left_titlebar_edge" value="0"/>
   <distance name="right_titlebar_edge" value="0"/>
   <distance name="title_vertical_pad" value="13"/>
@@ -56,10 +57,10 @@
 </frame_geometry>
 
 <frame_geometry name="border" has_title="false" rounded_top_left="false" rounded_top_right="false" parent="normal">
-  <distance name="left_width" value="1"/>
-  <distance name="right_width" value="1"/>
-  <distance name="bottom_height" value="1"/>
-  <distance name="title_vertical_pad" value="1"/>
+  <distance name="left_width" value="2"/>
+  <distance name="right_width" value="2"/>
+  <distance name="bottom_height" value="2"/>
+  <distance name="title_vertical_pad" value="2"/>
   <border name="title_border" left="10" right="10" top="0" bottom="0"/>
   <border name="button_border" left="0" right="0" top="0" bottom="0"/>
 </frame_geometry>
@@ -107,11 +108,11 @@
 
 <!-- window decorations -->
 <draw_ops name="entire_background_focused">
-  <rectangle color="C_titlebar" x="0" y="0" width="width" height="height" filled="true"/>
+  <rectangle color="C_titlebar_focused" x="0" y="0" width="width" height="height" filled="true"/>
 </draw_ops>
 
 <draw_ops name="entire_background_unfocused">
-  <include name="entire_background_focused"/>
+  <rectangle color="C_titlebar_unfocused" x="0" y="0" width="width" height="height" filled="true"/>
 </draw_ops>
 
 <draw_ops name="highlight">

@@ -1,9 +1,9 @@
 # vim:set ft=gtkrc ts=2 sw=2 sts=2 ai et:
 #
 # This is the main theme file, handling all the default widgets and theme
-# properties. Since GTK+ 2 is old, we need to overcome some of its limitations,
+# properties. Since GTK 2 is old, we need to overcome some of its limitations,
 # which is also mostly done in this file. Sadly not all of them can be overcome
-# so there will always be a visible difference between the GTK+ 2 and 3 theme.
+# so there will always be a visible difference between the GTK 2 and 3 theme.
 
 style "default" {
   xthickness = 1
@@ -88,7 +88,7 @@ style "default" {
 
   GtkCheckButton::indicator-size    = 24
   GtkCheckButton::indicator_spacing = 2
-  GtkOptionMenu::indicator_spacing  = {10, 10, 6, 6}
+  GtkOptionMenu::indicator_spacing  = {8, 8, 4, 4}
 
   GtkTreeView::expander-size        = 16
   GtkTreeView::vertical-separator   = 0
@@ -108,27 +108,27 @@ style "default" {
 
   bg[NORMAL]      = @bg_color
   bg[PRELIGHT]    = @bg_color
-  bg[SELECTED]    = mix (0.32, @selected_bg_color, @bg_color)
+  bg[SELECTED]    = mix (0.24, @selected_bg_color, @bg_color)
   bg[INSENSITIVE] = @bg_color
   bg[ACTIVE]      = @bg_color
 
   fg[NORMAL]      = @fg_color
   fg[PRELIGHT]    = @fg_color
   fg[SELECTED]    = @fg_color
-  fg[INSENSITIVE] = mix (0.4, @fg_color, @bg_color)
+  fg[INSENSITIVE] = mix (0.5, @fg_color, @bg_color)
   fg[ACTIVE]      = @fg_color
 
   text[NORMAL]      = @text_color
   text[PRELIGHT]    = @text_color
   text[SELECTED]    = @text_color
-  text[INSENSITIVE] = mix (0.4, @text_color, @base_color)
+  text[INSENSITIVE] = mix (0.5, @text_color, @base_color)
   text[ACTIVE]      = @text_color
 
   base[NORMAL]      = @base_color
-  base[PRELIGHT]    = mix (0.05, @text_color, @base_color)
-  base[SELECTED]    = mix (0.32, @selected_bg_color, @base_color)
+  base[PRELIGHT]    = mix (0.08, @text_color, @base_color)
+  base[SELECTED]    = mix (0.24, @selected_bg_color, @base_color)
   base[INSENSITIVE] = mix (0.5, @base_color, @bg_color)
-  base[ACTIVE]      = mix (0.32, @selected_bg_color, @base_color)
+  base[ACTIVE]      = mix (0.24, @selected_bg_color, @base_color)
 
   # For succinctness, all reasonable pixmap options remain here
 
@@ -1657,7 +1657,7 @@ style "menubar" {
   fg[PRELIGHT]    = @titlebar_fg_color
   fg[INSENSITIVE] = mix(0.3, @titlebar_fg_color, @titlebar_bg_color)
   # Needed to fix Firefox's menubar text
-  bg[SELECTED]    = mix(0.15, @titlebar_fg_color, @titlebar_bg_color)
+  bg[SELECTED]    = mix(0.12, @titlebar_fg_color, @titlebar_bg_color)
   fg[SELECTED]    = @titlebar_fg_color
 }
 
@@ -1666,7 +1666,7 @@ style "menubar_item" {
   ythickness = 4
 
   fg[NORMAL]      = mix(0.7, @titlebar_fg_color, @titlebar_bg_color)
-  bg[PRELIGHT]    = mix(0.15, @titlebar_fg_color, @titlebar_bg_color)
+  bg[PRELIGHT]    = mix(0.12, @titlebar_fg_color, @titlebar_bg_color)
   fg[PRELIGHT]    = @titlebar_fg_color
   fg[INSENSITIVE] = mix(0.3, @titlebar_fg_color, @titlebar_bg_color)
 }
@@ -1675,20 +1675,20 @@ style "menu" {
   xthickness = 0
   ythickness = 0
 
-  bg[NORMAL]      = @base_color
-  bg[INSENSITIVE] = @base_color
-  bg[PRELIGHT]    = @base_color
-  bg[SELECTED]    = mix(0.15, @fg_color, @base_color)
+  bg[NORMAL]      = @menu_color
+  bg[INSENSITIVE] = @menu_color
+  bg[PRELIGHT]    = @menu_color
+  bg[SELECTED]    = mix(0.08, @fg_color, @menu_color)
 }
 
 style "menu_item" {
   xthickness = 4
   ythickness = 4
 
-  bg[PRELIGHT]   = mix(0.15, @fg_color, @base_color)
+  bg[PRELIGHT]   = mix(0.08, @fg_color, @menu_color)
   fg[PRELIGHT]   = @fg_color
   # Chromium uses this setting
-  bg[SELECTED]   = mix(0.15, @fg_color, @base_color)
+  bg[SELECTED]   = mix(0.08, @fg_color, @menu_color)
   text[SELECTED] = @fg_color
   # Some widgets use text, we need to handle that
   text[NORMAL]   = @fg_color
@@ -1914,15 +1914,15 @@ style "separator_menu_item" {
 }
 
 style "button_label" {
-  fg[NORMAL] = mix(0.75, @fg_color, @bg_color)
+  # fg[NORMAL] = mix(0.7, @fg_color, @bg_color)
   # fg[INSENSITIVE] = mix(0.3, @fg_color, @bg_color)
 
   font_name = "Medium"
 }
 
-style "checkbutton_label" {
-  fg[NORMAL] = @fg_color
-  # fg[INSENSITIVE] = mix(0.4, @fg_color, @bg_color)
+style "normal_button_label" {
+  # fg[NORMAL] = @fg_color
+  # fg[INSENSITIVE] = mix(0.5, @fg_color, @bg_color)
 
   font_name = "Regular"
 }
@@ -1993,6 +1993,11 @@ style "link_button" {
 }
 
 style "entry" {
+  base[NORMAL]      = @bg_color
+  base[SELECTED]    = mix (0.24, @selected_bg_color, @bg_color)
+  base[INSENSITIVE] = @bg_color
+  base[ACTIVE]      = mix (0.24, @selected_bg_color, @bg_color)
+
   # We set this same as the border of the border of the entry
   # This way there's no overlap
   xthickness = 6
@@ -2005,13 +2010,51 @@ style "combobox" {
 
   # This affects only the button beside an entry
   GtkButton::inner-border = {0, 0, 0, 0}
+
+  # For the sake of sanity style buttons this way
+  engine "pixmap" {
+
+    ###########
+    # Buttons #
+    ###########
+
+    image {
+      function = BOX
+      state    = NORMAL
+      file     = "assets/entry.png"
+      border   = {8, 8, 8, 8}
+      stretch  = TRUE
+    }
+
+    image {
+      function = BOX
+      state    = PRELIGHT
+      file     = "assets/entry-hover.png"
+      border   = {8, 8, 8, 8}
+      stretch  = TRUE
+    }
+
+    image {
+      function = BOX
+      state    = ACTIVE
+      file     = "assets/entry-active.png"
+      border   = {8, 8, 8, 8}
+      stretch  = TRUE
+    }
+
+    image {
+      function = BOX
+      state    = INSENSITIVE
+      file     = "assets/entry-disabled.png"
+      border   = {8, 8, 8, 8}
+      stretch  = TRUE
+    }
+  }
 }
 
 style "combobox_cellview" {
-  text[NORMAL] = mix(0.75, @fg_color, @bg_color)
+  # text[NORMAL] = mix(0.7, @fg_color, @bg_color)
   # text[INSENSITIVE] = mix(0.3, @fg_color, @bg_color)
-
-  font_name = "Medium"
 }
 
 style "combobox_entry" {
@@ -2028,8 +2071,8 @@ style "combobox_entry" {
       function  = SHADOW
       state     = NORMAL
       detail    = "entry"
-      file      = "assets/combo-ltr-entry.png"
-      border    = {8, 0, 8, 8}
+      file      = "assets/combo-left-entry.png"
+      border    = {8, 8, 8, 8}
       stretch   = TRUE
       direction = LTR
     }
@@ -2038,8 +2081,8 @@ style "combobox_entry" {
       function  = SHADOW
       state     = ACTIVE
       detail    = "entry"
-      file      = "assets/combo-ltr-entry-active.png"
-      border    = {8, 0, 8, 8}
+      file      = "assets/combo-left-entry-active.png"
+      border    = {8, 8, 8, 8}
       stretch   = TRUE
       direction = LTR
     }
@@ -2048,8 +2091,8 @@ style "combobox_entry" {
       function  = SHADOW
       state     = INSENSITIVE
       detail    = "entry"
-      file      = "assets/combo-ltr-entry-disabled.png"
-      border    = {8, 0, 8, 8}
+      file      = "assets/combo-left-entry-disabled.png"
+      border    = {8, 8, 8, 8}
       stretch   = TRUE
       direction = LTR
     }
@@ -2062,8 +2105,8 @@ style "combobox_entry" {
       function  = SHADOW
       state     = NORMAL
       detail    = "entry"
-      file      = "assets/combo-rtl-entry.png"
-      border    = {0, 8, 8, 8}
+      file      = "assets/combo-right-entry.png"
+      border    = {8, 8, 8, 8}
       stretch   = TRUE
       direction = RTL
     }
@@ -2072,8 +2115,8 @@ style "combobox_entry" {
       function  = SHADOW
       state     = ACTIVE
       detail    = "entry"
-      file      = "assets/combo-rtl-entry-active.png"
-      border    = {0, 8, 8, 8}
+      file      = "assets/combo-right-entry-active.png"
+      border    = {8, 8, 8, 8}
       stretch   = TRUE
       direction = RTL
     }
@@ -2082,8 +2125,8 @@ style "combobox_entry" {
       function  = SHADOW
       state     = INSENSITIVE
       detail    = "entry"
-      file      = "assets/combo-rtl-entry-disabled.png"
-      border    = {0, 8, 8, 8}
+      file      = "assets/combo-right-entry-disabled.png"
+      border    = {8, 8, 8, 8}
       stretch   = TRUE
       direction = RTL
     }
@@ -2096,7 +2139,7 @@ style "combobox_entry" {
       function  = BOX
       state     = NORMAL
       detail    = "button"
-      file      = "assets/combo-ltr-button.png"
+      file      = "assets/combo-right-entry.png"
       border    = {0, 8, 8, 8}
       stretch   = TRUE
       direction = LTR
@@ -2106,7 +2149,7 @@ style "combobox_entry" {
       function  = BOX
       state     = PRELIGHT
       detail    = "button"
-      file      = "assets/combo-ltr-button-hover.png"
+      file      = "assets/combo-right-entry-hover.png"
       border    = {0, 8, 8, 8}
       stretch   = TRUE
       direction = LTR
@@ -2116,7 +2159,7 @@ style "combobox_entry" {
       function  = BOX
       state     = ACTIVE
       detail    = "button"
-      file      = "assets/combo-ltr-button-active.png"
+      file      = "assets/combo-right-entry-active.png"
       border    = {0, 8, 8, 8}
       stretch   = TRUE
       direction = LTR
@@ -2126,7 +2169,7 @@ style "combobox_entry" {
       function  = BOX
       state     = INSENSITIVE
       detail    = "button"
-      file      = "assets/combo-ltr-button-disabled.png"
+      file      = "assets/combo-right-entry-disabled.png"
       border    = {0, 8, 8, 8}
       stretch   = TRUE
       direction = LTR
@@ -2140,7 +2183,7 @@ style "combobox_entry" {
       function  = BOX
       state     = NORMAL
       detail    = "button"
-      file      = "assets/combo-rtl-button.png"
+      file      = "assets/combo-left-entry.png"
       border    = {8, 0, 8, 8}
       stretch   = TRUE
       direction = RTL
@@ -2150,7 +2193,7 @@ style "combobox_entry" {
       function  = BOX
       state     = PRELIGHT
       detail    = "button"
-      file      = "assets/combo-rtl-button-hover.png"
+      file      = "assets/combo-left-entry-hover.png"
       border    = {8, 0, 8, 8}
       stretch   = TRUE
       direction = RTL
@@ -2160,7 +2203,7 @@ style "combobox_entry" {
       function  = BOX
       state     = ACTIVE
       detail    = "button"
-      file      = "assets/combo-rtl-button-active.png"
+      file      = "assets/combo-left-entry-active.png"
       border    = {8, 0, 8, 8}
       stretch   = TRUE
       direction = RTL
@@ -2170,7 +2213,7 @@ style "combobox_entry" {
       function  = BOX
       state     = INSENSITIVE
       detail    = "button"
-      file      = "assets/combo-rtl-button-disabled.png"
+      file      = "assets/combo-left-entry-disabled.png"
       border    = {8, 0, 8, 8}
       stretch   = TRUE
       direction = RTL
@@ -2192,7 +2235,7 @@ style "notebook" {
 }
 
 style "notebook_tab_label" {
-  fg[ACTIVE] = mix(0.75, @fg_color, @bg_color)
+  fg[ACTIVE] = mix(0.7, @fg_color, @bg_color)
 
   font_name = "Medium"
 }
@@ -2208,33 +2251,10 @@ style "notebook_bg" {
 }
 
 style "notebook_entry" {
-  engine "pixmap" {
-    image {
-      function = SHADOW
-      state    = ACTIVE
-      detail   = "entry"
-      file     = "assets/notebook-entry-active.png"
-      border   = {8, 8, 8, 8}
-      stretch  = TRUE
-    }
-
-    image {
-      function = SHADOW
-      state    = INSENSITIVE
-      detail   = "entry"
-      file     = "assets/notebook-entry-disabled.png"
-      border   = {8, 8, 8, 8}
-      stretch  = TRUE
-    }
-
-    image {
-      function = SHADOW
-      detail   = "entry"
-      file     = "assets/notebook-entry.png"
-      border   = {8, 8, 8, 8}
-      stretch  = TRUE
-    }
-  }
+  base[NORMAL]      = @base_color
+  base[SELECTED]    = mix (0.24, @selected_bg_color, @base_color)
+  base[INSENSITIVE] = @base_color
+  base[ACTIVE]      = mix (0.24, @selected_bg_color, @base_color)
 }
 
 style "normal_bg" {
@@ -2244,106 +2264,10 @@ style "normal_bg" {
 }
 
 style "normal_entry" {
-  engine "pixmap" {
-    image {
-      function = SHADOW
-      state    = ACTIVE
-      detail   = "entry"
-      file     = "assets/entry-active.png"
-      border   = {8, 8, 8, 8}
-      stretch  = TRUE
-    }
-
-    image {
-      function = SHADOW
-      state    = INSENSITIVE
-      detail   = "entry"
-      file     = "assets/entry-disabled.png"
-      border   = {8, 8, 8, 8}
-      stretch  = TRUE
-    }
-
-    image {
-      function = SHADOW
-      detail   = "entry"
-      file     = "assets/entry.png"
-      border   = {8, 8, 8, 8}
-      stretch  = TRUE
-    }
-  }
-}
-
-style "notebook_combo" {
-  engine "pixmap" {
-
-    #############
-    # LTR entry #
-    #############
-
-    image {
-      function  = SHADOW
-      state     = NORMAL
-      detail    = "entry"
-      file      = "assets/notebook-combo-ltr-entry.png"
-      border    = {8, 8, 8, 8}
-      stretch   = TRUE
-      direction = LTR
-    }
-
-    image {
-      function  = SHADOW
-      state     = ACTIVE
-      detail    = "entry"
-      file      = "assets/notebook-combo-ltr-entry-active.png"
-      border    = {8, 8, 8, 8}
-      stretch   = TRUE
-      direction = LTR
-    }
-
-    image {
-      function  = SHADOW
-      state     = INSENSITIVE
-      detail    = "entry"
-      file      = "assets/notebook-combo-ltr-entry-disabled.png"
-      border    = {8, 8, 8, 8}
-      stretch   = TRUE
-      direction = LTR
-    }
-
-    #############
-    # RTL entry #
-    #############
-
-    image {
-      function  = SHADOW
-      state     = NORMAL
-      detail    = "entry"
-      file      = "assets/notebook-combo-rtl-entry.png"
-      border    = {8, 8, 8, 8}
-      stretch   = TRUE
-      direction = RTL
-    }
-
-    image {
-      function  = SHADOW
-      state     = ACTIVE
-      detail    = "entry"
-      file      = "assets/notebook-combo-rtl-entry-active.png"
-      border    = {8, 8, 8, 8}
-      stretch   = TRUE
-      direction = RTL
-    }
-
-    image {
-      function  = SHADOW
-      state     = INSENSITIVE
-      detail    = "entry"
-      file      = "assets/notebook-combo-rtl-entry-disabled.png"
-      border    = {8, 8, 8, 8}
-      stretch   = TRUE
-      direction = RTL
-    }
-  }
+  base[NORMAL]      = @bg_color
+  base[SELECTED]    = mix (0.24, @selected_bg_color, @bg_color)
+  base[INSENSITIVE] = @bg_color
+  base[ACTIVE]      = mix (0.24, @selected_bg_color, @bg_color)
 }
 
 style "textview" {
@@ -2421,7 +2345,7 @@ style "treeview_header" {
   xthickness = 2
   ythickness = 2
 
-  fg[NORMAL]   = mix(0.75, @fg_color, @base_color)
+  fg[NORMAL]   = mix(0.7, @fg_color, @base_color)
   fg[PRELIGHT] = @fg_color
 
   font_name = "Medium"
@@ -2716,6 +2640,7 @@ widget_class "*<GtkFileChooserDefault>*<GtkToolbar>"               style "inline
 
 # Fix padding on regular comboboxes
 widget_class "*<GtkComboBox>.<GtkButton>"                          style "combobox"
+widget_class "*<GtkOptionMenu>"                                    style "combobox"
 
 # And disable separators on them
 widget_class "*<GtkComboBox>.<GtkButton>*<GtkSeparator>"           style "disable_separator"
@@ -2751,23 +2676,19 @@ widget_class "*<GtkNotebook>*<GtkSpinButton>"                      style "notebo
 widget_class "*<GtkNotebook>*<GtkScrolledWindow>*<GtkViewport>"    style "notebook_bg"
 widget_class "*<GtkNotebook>*<GimpRuler>"                          style "notebook_bg"
 widget_class "*<GtkNotebook>.<GimpDisplayShell>*<GtkEventBox>"     style "notebook_bg"
-widget_class "*<GtkNotebook>*<GtkComboBoxEntry>*"                  style "notebook_combo"
-widget_class "*<GtkNotebook>*<GtkCombo>*"                          style "notebook_combo"
 
 # However, stuff inside eventboxes inside notebooks is grey
 # again, react
 widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkEntry>"             style "normal_entry"
 widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkProgressBar>"       style "normal_bg"
 widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkSpinButton>"        style "normal_bg"
-widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkComboBoxEntry>*"    style "combobox_entry"
-widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkCombo>*"            style "combobox_entry"
-widget_class "*<GtkNotebook>*<GtkEventBox>*<GtkCombo>.<GtkButton>" style "combo_button_padding"
 
 # Button labels
-widget_class "*<GtkButton>*<GtkLabel>"                             style "button_label"
+widget_class "*<GtkButton>.<GtkLabel>"                             style "button_label"
 
-# Checkbutton labels
-widget_class "*<GtkCheckButton>.<GtkLabel>"                        style "checkbutton_label"
+# Normalize button labels
+widget_class "*<GtkCheckButton>.<GtkLabel>"                        style "normal_button_label"
+widget_class "*<GtkOptionMenu>.<GtkLabel>"                         style "normal_button_label"
 
 # ComboBoxes tend to draw the button label with text[]
 # instead of fg[], we need to fix that

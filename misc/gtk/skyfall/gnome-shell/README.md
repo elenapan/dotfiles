@@ -7,6 +7,7 @@ To change the GDM (lock/login screen) theme, you need to replace the system's _d
 - If the replacement fails, your desktop environment will not work properly. So please **be careful** if doing this.
 - When applying this, other third-party GNOME Shell themes would look broken until you restore to the original theme.
 - If GNOME Shell has been updated and restored to the original theme, you will need to install this again.
+  > Note: On Arch Linux, you can automatically reinstall the GDM theme by creating a [hook](https://wiki.archlinux.org/index.php/Pacman#Hooks) file. For example, if you use oomox-skyfall-compact as your GDM theme, put [this file](https://gist.github.com/looselyrigorous/a1aa931ce48627cc39daccc9253b30c7) in the `/usr/share/libalpm/hooks/` directory.
 
 ## Requirements
 
@@ -30,7 +31,7 @@ To change the GDM (lock/login screen) theme, you need to replace the system's _d
   sudo cp -av /usr/share/gnome-shell/theme/Yaru/gnome-shell.css{,~}
   ```
 
-2. Select a **GTK+** theme to decide which variant to install.
+2. Select a **GTK** theme to decide which variant to install.
 3. Replace the default theme file(s):
 
   ```sh
@@ -52,13 +53,13 @@ To change the GDM (lock/login screen) theme, you need to replace the system's _d
 1. Restore to the original theme file(s) from the backup:
 
   ```sh
-  sudo mv -av /usr/share/gnome-shell/gnome-shell-theme.gresource{~,}
+  sudo mv -v /usr/share/gnome-shell/gnome-shell-theme.gresource{~,}
 
   # For Ubuntu 17.10 or 18.04, you also need the following:
-  sudo mv -av /usr/share/gnome-shell/theme/ubuntu.css{~,}
+  sudo mv -v /usr/share/gnome-shell/theme/ubuntu.css{~,}
 
   # For Ubuntu 18.10, you also need the following:
-  sudo mv -av /usr/share/gnome-shell/theme/Yaru/gnome-shell.css{~,}
+  sudo mv -v /usr/share/gnome-shell/theme/Yaru/gnome-shell.css{~,}
   ```
 
 2. Reload the theme. If you are running GNOME Shell, press <kbd>Alt</kbd> + <kbd>F2</kbd> then type `rt`.
