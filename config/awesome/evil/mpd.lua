@@ -5,6 +5,9 @@
 --      paused (boolean)
 -- evil::mpd_volume
 --      value (integer from 0 to 100)
+-- evil::mpd_options
+--      loop (boolean)
+--      random (boolean)
 local awful = require("awful")
 
 local function emit_info()
@@ -77,6 +80,34 @@ awful.spawn.easy_async_with_shell("ps x | grep \"mpc idleloop mixer\" | grep -v 
     awful.spawn.with_line_callback(mpd_volume_script, {
         stdout = function()
             emit_volume_info()
+        end
+    })
+end)
+
+local mpd_options_script = [[
+  sh -c "
+    mpc idleloop options
+  "]]
+
+local function emit_options_info()
+    awful.spawn.easy_async_with_shell("mpc | tail -1",
+        function(stdout)
+            local loop = stdout:match('repeat: (.*)')
+            local random = stdout:match('random: (.*)')
+            awesome.emit_signal("evil::mpd_options", loop:sub(1, 2) == "on", random:sub(1, 2) == "on")
+        end
+    )
+end
+
+-- Run once to initialize widgets
+emit_options_info()
+
+-- Kill old mpc idleloop options process
+awful.spawn.easy_async_with_shell("ps x | grep \"mpc idleloop options\" | grep -v grep | awk '{print $1}' | xargs kill", function ()
+    -- Emit song info with each line printed
+    awful.spawn.with_line_callback(mpd_options_script, {
+        stdout = function()
+            emit_options_info()
         end
     })
 end)
