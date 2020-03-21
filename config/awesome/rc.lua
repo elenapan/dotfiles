@@ -959,10 +959,12 @@ client.connect_signal("request::activate", function(c, context, hints)
     end
 end)
 
--- -- Focus urgent clients automatically
+-- Focus urgent clients automatically
 -- client.connect_signal("property::urgent", function(c)
---     c.minimized = false
---     c:jump_to()
+--     if c.urgent then
+--         c.minimized = false
+--         c:jump_to()
+--     end
 -- end)
 
 -- Disconnect the client ability to request different size and position
