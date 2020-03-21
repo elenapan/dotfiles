@@ -160,10 +160,6 @@ end
 -- Useful for quick switching after for example checking an incoming chat
 -- message at tag 2 and coming back to your work at tag 1 with the same
 -- keypress.
--- Also focuses urgent clients if they exist in the tag. This fixes the issue
--- (visual mismatch) where after switching to a tag which includes an urgent
--- client, the urgent client is unfocused but still covers all other windows
--- (even the currently focused window).
 function helpers.tag_back_and_forth(tag_index)
     local s = mouse.screen
     local tag = s.tags[tag_index]
@@ -173,18 +169,8 @@ function helpers.tag_back_and_forth(tag_index)
         else
             tag:view_only()
         end
-
-        local urgent_clients = function (c)
-          return awful.rules.match(c, {urgent = true, first_tag = tag})
-        end
-
-        for c in awful.client.iterate(urgent_clients) do
-            client.focus = c
-            c:raise()
-        end
     end
 end
-
 
 -- Resize DWIM (Do What I Mean)
 -- Resize client or factor

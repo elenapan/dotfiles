@@ -959,6 +959,21 @@ client.connect_signal("request::activate", function(c, context, hints)
     end
 end)
 
+-- When switching to a tag with urgent clients, raise them.
+-- This fixes the issue (visual mismatch) where after switching to
+-- a tag which includes an urgent client, the urgent client is
+-- unfocused but still covers all other windows (even the currently
+-- focused window).
+awful.tag.attached_connect_signal(s, "property::selected", function ()
+    local urgent_clients = function (c)
+        return awful.rules.match(c, {urgent = true, first_tag = mouse.screen.selected_tag})
+    end
+    for c in awful.client.iterate(urgent_clients) do
+        client.focus = c
+        c:raise()
+    end
+end)
+
 -- Focus urgent clients automatically
 -- client.connect_signal("property::urgent", function(c)
 --     if c.urgent then
