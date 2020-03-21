@@ -28,8 +28,7 @@ end
 
 -- TODO (work in progress)
 -- Custom decorations for specific clients
--- require("decorations.mpv")
--- require("decorations.mpd")
+require("decorations.mpd")
 
 -- Load theme
 function decorations.init(theme_name)
