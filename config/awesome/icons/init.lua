@@ -21,7 +21,6 @@ local icon_names = {
     "search",
     "volume",
     "muted",
-    "mpd",
     "firefox",
     "youtube",
     "reddit",
