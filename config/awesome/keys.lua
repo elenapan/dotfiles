@@ -79,13 +79,6 @@ keys.desktopbuttons = gears.table.join(
 
 -- {{{ Key bindings
 keys.globalkeys = gears.table.join(
-    --awful.key({ superkey,           }, "s",      hotkeys_popup.show_help,
-    --{description="show help", group="awesome"}),
-    --awful.key({ superkey,           }, "comma",   awful.tag.viewprev,
-    --{description = "view previous", group = "tag"}),
-    --awful.key({ superkey,           }, "period",  awful.tag.viewnext,
-    --{description = "view next", group = "tag"}),
-
     -- Focus client by direction (hjkl keys)
     awful.key({ superkey }, "j",
         function()
