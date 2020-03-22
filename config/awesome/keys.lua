@@ -131,19 +131,25 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "focus right", group = "client"}),
 
-    -- Focus client by index (cycle through clients)
+    -- Window switcher
     awful.key({ superkey }, "Tab",
         function ()
-            awful.client.focus.byidx( 1)
+            window_switcher_show(awful.screen.focused())
         end,
-        {description = "focus next by index", group = "client"}
-    ),
-    awful.key({ superkey, shiftkey }, "Tab",
+        {description = "activate window switcher", group = "client"}),
+
+    -- Focus client by index (cycle through clients)
+    awful.key({ superkey }, "z",
+        function ()
+            awful.client.focus.byidx(1)
+        end,
+        {description = "focus next by index", group = "client"}),
+
+    awful.key({ superkey, shiftkey }, "z",
         function ()
             awful.client.focus.byidx(-1)
         end,
-        {description = "focus previous by index", group = "client"}
-    ),
+        {description = "focus next by index", group = "client"}),
 
     -- Gaps
     awful.key({ superkey, shiftkey }, "minus",
@@ -217,14 +223,6 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "jump to urgent client", group = "client"}),
 
-    awful.key({ superkey,           }, "z",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end,
-        {description = "go back", group = "client"}),
     awful.key({ superkey,           }, "x",
         function ()
             awful.tag.history.restore()
@@ -727,10 +725,8 @@ keys.clientkeys = gears.table.join(
     -- Minimize
     awful.key({ superkey,           }, "n",
         function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
             c.minimized = true
-        end ,
+        end,
         {description = "minimize", group = "client"}),
 
     -- Maximize

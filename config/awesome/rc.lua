@@ -202,6 +202,8 @@ require("elemental.dashboard")
 require("elemental.lock_screen")
 -- App drawer
 require("elemental.app_drawer")
+-- Window switcher
+require("elemental.window_switcher")
 
 -- >> Daemons
 -- Most widgets that display system/external info depend on evil.
