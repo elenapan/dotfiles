@@ -422,6 +422,21 @@ awful.rules.rules = {
         properties = { fullscreen = true }
     },
 
+    -- Unfocusable clients (unless clicked with the mouse)
+    -- If you want to prevent focusing even when clicking them, you need to
+    -- modify the left click client mouse bind in keys.lua
+    {
+        rule_any = {
+            class = {
+                "markdown_input"
+            },
+            instance = {
+                "markdown_input"
+            },
+        },
+        properties = { focusable = false }
+    },
+
     -- Centered clients
     {
         rule_any = {
@@ -450,7 +465,9 @@ awful.rules.rules = {
                 "riotclientservices.exe",
                 "leagueclientux.exe",
                 "riotclientux.exe",
-                "leagueclient.exe"
+                "leagueclient.exe",
+                "editor",
+                "markdown_input"
             },
             class = {
                 "qutebrowser",
@@ -462,6 +479,8 @@ awful.rules.rules = {
                 "Steam",
                 "Lutris",
                 "Chromium",
+                "editor",
+                "markdown_input"
                 -- "Thunderbird",
             },
         },
