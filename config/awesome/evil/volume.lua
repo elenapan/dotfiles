@@ -23,9 +23,9 @@ local function emit_volume_info()
         -- when a media file starts playing.
         if volume_int ~= volume_old or muted_int ~= muted_old then
             awesome.emit_signal("evil::volume", volume_int, muted)
+            volume_old = volume_int
+            muted_old = muted_int
         end
-        volume_old = volume_int
-        muted_old = muted_int
         -- TODO maybe collect garbage here?
     end)
 end
