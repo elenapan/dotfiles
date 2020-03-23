@@ -337,6 +337,14 @@ function helpers.screenshot(action, delay)
 
 end
 
+function helpers.send_key(c, key)
+    awful.spawn.with_shell("xdotool key --window "..tostring(c.window).." "..key)
+end
+
+function helpers.send_key_sequence(c, seq)
+    awful.spawn.with_shell("xdotool type --delay 5 --window "..tostring(c.window).." "..seq)
+end
+
 function helpers.fake_escape()
     root.fake_input('key_press', "Escape")
     root.fake_input('key_release', "Escape")
