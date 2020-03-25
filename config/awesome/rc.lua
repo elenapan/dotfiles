@@ -700,17 +700,21 @@ awful.rules.rules = {
         end
     },
 
-    -- Unminimize LoL client after game window closes
     {
         rule = { instance = "league of legends.exe" },
         properties = {},
         callback = function (c)
-            c:connect_signal("unmanage", function()
-                -- Search for LoL client and unminimize it
-                local matcher = function (c)
-                    return awful.rules.match(c, { instance = "leagueclientux.exe" })
-                end
+            local matcher = function (c)
+                return awful.rules.match(c, { instance = "leagueclientux.exe" })
+            end
+            -- Minimize LoL client after game window opens
+            for c in awful.client.iterate(matcher) do
+                c.urgent = false
+                c.minimized = true
+            end
 
+            -- Unminimize LoL client after game window closes
+            c:connect_signal("unmanage", function()
                 for c in awful.client.iterate(matcher) do
                     c.minimized = false
                 end
