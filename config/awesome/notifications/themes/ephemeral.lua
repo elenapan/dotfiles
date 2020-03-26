@@ -47,6 +47,8 @@ local app_config = {
     ['night_mode'] = { icon = "", title = false },
     ['NetworkManager'] = { icon = "", title = true },
     ['youtube'] = { icon = "", title = true },
+    ['mpd'] = { icon = "", title = true },
+    ['mpv'] = { icon = "", title = true },
 }
 
 -- Template
