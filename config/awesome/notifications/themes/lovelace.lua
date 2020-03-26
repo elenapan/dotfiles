@@ -27,25 +27,18 @@ naughty.connect_signal("request::display", function(n)
                                 {
                                     nil,
                                     {
-                                        nil,
                                         {
-                                            {
-                                                align = "left",
-                                                -- valign = "center",
-                                                widget = naughty.widget.title,
-                                            },
-                                            {
-                                                align = "left",
-                                                -- valign = "center",
-                                                widget = naughty.widget.message,
-                                            },
-                                            layout = wibox.layout.fixed.vertical
+                                            align = "left",
+                                            widget = naughty.widget.title,
                                         },
-                                        expand = "none",
-                                        layout = wibox.layout.align.vertical
+                                        {
+                                            align = "left",
+                                            widget = naughty.widget.message,
+                                        },
+                                        layout = wibox.layout.fixed.vertical
                                     },
                                     expand = "none",
-                                    layout = wibox.layout.align.horizontal
+                                    layout = wibox.layout.align.vertical
                                 },
                                 left = beautiful.notification_padding,
                                 widget = wibox.container.margin,
