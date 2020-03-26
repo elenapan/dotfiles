@@ -310,7 +310,7 @@ function helpers.screenshot(action, delay)
         end)
     elseif action == "selection" then
         cmd = "maim "..maim_args.." -s "..filename
-        capture_notif = naughty.notification({ title = "Screenshot", message = "Select area to capture.", icon = icon, timeout = 1 })
+        capture_notif = naughty.notification({ title = "Screenshot", message = "Select area to capture.", icon = icon, timeout = 1, app_name = screenshot_notification_app_name })
         awful.spawn.easy_async_with_shell(cmd, function(_, __, ___, exit_code)
             if exit_code == 0 then
                 capture_notif = notifications.notify_dwim({ title = "Screenshot", message = "Selection captured", icon = icon, app_name = screenshot_notification_app_name }, capture_notif)
