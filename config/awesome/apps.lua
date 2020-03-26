@@ -74,6 +74,15 @@ apps.night_mode = function ()
     end)
 end
 
+local screenkey_notif
+apps.screenkey = function ()
+    local cmd = "pgrep screenkey > /dev/null && (pkill screenkey && echo 'OFF') || (echo 'ON' && screenkey --ignore Caps_Lock &>/dev/null &)"
+    awful.spawn.easy_async_with_shell(cmd, function(out)
+        local message = out:match('ON') and "Activated!" or "Deactivated!"
+        screenkey_notif = notifications.notify_dwim({ title = "Screenkey", message = message, app_name = "screenkey", icon = icons.keyboard }, screenkey_notif)
+    end)
+end
+
 apps.record = function ()
     awful.spawn.with_shell("screenrec.sh")
 end
