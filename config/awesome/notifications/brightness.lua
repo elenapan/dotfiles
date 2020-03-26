@@ -8,7 +8,7 @@ awesome.connect_signal("evil::brightness", function (percentage)
     if first_time then
         first_time = false
     else
-        if sidebar.visible or dashboard.visible then
+        if (sidebar and sidebar.visible) or (dashboard and dashboard.visible) then
             -- Sidebar and dashboard already show brightness, so
             -- destroy notification if it exists
             if notif then

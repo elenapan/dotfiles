@@ -29,7 +29,7 @@ awesome.connect_signal("evil::battery", function(battery)
         end
     else
         icon = icons.battery_charging
-        if battery > 99 and not battery_full_already_notified then
+        if battery > 96 and not battery_full_already_notified then
             battery_full_already_notified = true
             message = helpers.colorize_text("Full", x.color10)
             timeout = 6
