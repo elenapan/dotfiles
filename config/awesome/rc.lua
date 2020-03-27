@@ -996,10 +996,12 @@ awful.tag.attached_connect_signal(s, "property::selected", function ()
     for c in awful.client.iterate(urgent_clients) do
         if c.first_tag == mouse.screen.selected_tag then
             client.focus = c
-            c:raise()
         end
     end
 end)
+
+-- Raise focused clients automatically
+client.connect_signal("focus", function(c) c:raise() end)
 
 -- Focus urgent clients automatically
 -- client.connect_signal("property::urgent", function(c)

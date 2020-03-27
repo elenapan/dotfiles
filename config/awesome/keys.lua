@@ -71,7 +71,6 @@ keys.desktopbuttons = gears.table.join(
     --       -- Focus restored client
     --       if c then
     --           client.focus = c
-    --           c:raise()
     --       end
     -- end)
 )
@@ -83,25 +82,21 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "j",
         function()
             awful.client.focus.bydirection("down")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus down", group = "client"}),
     awful.key({ superkey }, "k",
         function()
             awful.client.focus.bydirection("up")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus up", group = "client"}),
     awful.key({ superkey }, "h",
         function()
             awful.client.focus.bydirection("left")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus left", group = "client"}),
     awful.key({ superkey }, "l",
         function()
             awful.client.focus.bydirection("right")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus right", group = "client"}),
 
@@ -109,25 +104,21 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "Down",
         function()
             awful.client.focus.bydirection("down")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus down", group = "client"}),
     awful.key({ superkey }, "Up",
         function()
             awful.client.focus.bydirection("up")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus up", group = "client"}),
     awful.key({ superkey }, "Left",
         function()
             awful.client.focus.bydirection("left")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus left", group = "client"}),
     awful.key({ superkey }, "Right",
         function()
             awful.client.focus.bydirection("right")
-            if client.focus then client.focus:raise() end
         end,
         {description = "focus right", group = "client"}),
 
@@ -311,7 +302,6 @@ keys.globalkeys = gears.table.join(
             -- Focus restored client
             if c then
                 client.focus = c
-                c:raise()
             end
         end,
         {description = "restore minimized", group = "client"}),
@@ -694,7 +684,6 @@ keys.clientkeys = gears.table.join(
             if not layout_is_floating then
                 awful.client.floating.toggle()
             end
-            --c:raise()
         end,
         {description = "toggle floating", group = "client"}),
 
@@ -820,7 +809,7 @@ end
 
 -- Mouse buttons on the client (whole window, not just titlebar)
 keys.clientbuttons = gears.table.join(
-    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+    awful.button({ }, 1, function (c) client.focus = c end),
     -- awful.button({ }, 2, function (c)
     --     if c.class == "mpv" then
     --         -- mpv_osd_toggle(c:geometry())
@@ -831,7 +820,6 @@ keys.clientbuttons = gears.table.join(
     awful.button({ superkey }, 2, function (c) c:kill() end),
     awful.button({ superkey }, 3, function(c)
         client.focus = c
-        c:raise()
         awful.mouse.client.resize(c)
         -- awful.mouse.resize(c, nil, {jump_to_corner=true})
     end),
@@ -861,7 +849,6 @@ keys.tasklist_buttons = gears.table.join(
                 -- This will also un-minimize
                 -- the client, if needed
                 client.focus = c
-                c:raise()
             end
     end),
     -- Middle mouse button closes the window
@@ -876,12 +863,10 @@ keys.tasklist_buttons = gears.table.join(
 
     -- Side button up - toggle floating
     awful.button({ }, 9, function(c)
-        -- c:raise()
         c.floating = not c.floating
     end),
     -- Side button down - toggle ontop
-    awful.button({ }, 8, function()
-        -- c:raise()
+    awful.button({ }, 8, function(c)
         c.ontop = not c.ontop
     end)
 )
@@ -920,7 +905,6 @@ keys.titlebar_buttons = gears.table.join(
     awful.button({ }, 1, function()
         local c = mouse.object_under_pointer()
         client.focus = c
-        c:raise()
         awful.mouse.client.move(c)
         -- local function single_tap()
         --   awful.mouse.client.move(c)
@@ -942,7 +926,6 @@ keys.titlebar_buttons = gears.table.join(
     awful.button({ }, 3, function()
         local c = mouse.object_under_pointer()
         client.focus = c
-        c:raise()
         awful.mouse.client.resize(c)
         -- awful.mouse.resize(c, nil, {jump_to_corner=true})
     end),
@@ -950,7 +933,6 @@ keys.titlebar_buttons = gears.table.join(
     awful.button({ }, 9, function()
         local c = mouse.object_under_pointer()
         client.focus = c
-        c:raise()
         --awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
         c.floating = not c.floating
     end),
@@ -958,7 +940,6 @@ keys.titlebar_buttons = gears.table.join(
     awful.button({ }, 8, function()
         local c = mouse.object_under_pointer()
         client.focus = c
-        c:raise()
         c.ontop = not c.ontop
         -- Double Tap - toggle sticky
         -- local function single_tap()

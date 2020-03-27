@@ -24,7 +24,6 @@ minimal_tasklist:buttons(gears.table.join(
         local c = awful.client.restore()
         if c then
             client.focus = c
-            c:raise()
         end
     end),
     -- Close

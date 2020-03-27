@@ -148,7 +148,6 @@ local function window_switcher_hide()
     -- Add currently focused client to history
     if client.focus then
         awful.client.focus.history.add(client.focus)
-        client.focus:raise()
     end
     -- Resume recording focus history
     awful.client.focus.history.enable_tracking()
@@ -196,15 +195,11 @@ local unminimize = function()
     -- Focus restored client
     if c then
         client.focus = c
-        c:raise()
     end
 end
 
 local cycle = function(direction)
     awful.client.focus.byidx(direction)
-    if client.focus then
-        client.focus:raise()
-    end
 end
 
 -- Set up keybinds
@@ -242,9 +237,6 @@ function window_switcher_show(s)
 
     -- Go to previously focused client (in the tag)
     awful.client.focus.history.previous()
-    if client.focus then
-        client.focus:raise()
-    end
 
     -- Stop recording focus history
     awful.client.focus.history.disable_tracking()

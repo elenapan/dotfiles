@@ -127,7 +127,6 @@ function helpers.rofi_move_client_here(window)
         c.minimized = false
         c:move_to_tag(mouse.screen.selected_tag)
         client.focus = c
-        c:raise()
     end
 end
 
@@ -393,7 +392,6 @@ function helpers.run_or_raise(match, move, spawn_cmd, spawn_args)
         if move then
             c:move_to_tag(mouse.screen.selected_tag)
             client.focus = c
-            c:raise()
         else
             c:jump_to()
         end
