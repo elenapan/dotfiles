@@ -327,11 +327,11 @@ helpers.add_hover_cursor(temperature, "hand1")
 helpers.add_hover_cursor(volume, "hand1")
 
 -- Create the sidebar
-sidebar = wibox({visible = false, ontop = true, type = "dock"})
+sidebar = wibox({visible = false, ontop = true, type = "dock", screen = screen.primary})
 sidebar.bg = beautiful.sidebar_bg or beautiful.wibar_bg or "#111111"
 sidebar.fg = beautiful.sidebar_fg or beautiful.wibar_fg or "#FFFFFF"
 sidebar.opacity = beautiful.sidebar_opacity or 1
-sidebar.height = awful.screen.focused().geometry.height
+sidebar.height = screen.primary.geometry.height
 sidebar.width = beautiful.sidebar_width or dpi(300)
 sidebar.y = beautiful.sidebar_y or 0
 local radius = beautiful.sidebar_border_radius or 0
@@ -364,7 +364,7 @@ if user.sidebar_hide_on_mouse_leave then
 end
 -- Activate sidebar by moving the mouse at the edge of the screen
 if user.sidebar_show_on_mouse_screen_edge then
-    local sidebar_activator = wibox({y = sidebar.y, width = 1, visible = true, ontop = false, opacity = 0, below = true})
+    local sidebar_activator = wibox({y = sidebar.y, width = 1, visible = true, ontop = false, opacity = 0, below = true, screen = screen.primary})
     sidebar_activator.height = sidebar.height
     sidebar_activator:connect_signal("mouse::enter", function ()
         sidebar.visible = true

@@ -16,17 +16,19 @@ local themes = {
     "lovelace",     -- 2 --
     "skyfall",      -- 3 --
     "ephemeral",    -- 4 --
+    "amarena",      -- 5 --
 }
 -- Change this number to use a different theme
-local theme = themes[4]
+local theme = themes[5]
 -- ===================================================================
 -- Affects the window appearance: titlebar, titlebar buttons...
 local decoration_themes = {
     "lovelace",       -- 1 -- Standard titlebar with 3 buttons (close, max, min)
     "skyfall",        -- 2 -- No buttons, only title
     "ephemeral",      -- 3 -- Anti-aliased, with text-generated titlebar buttons
+    "amarena",        -- 4 -- Text-generated titlebar buttons
 }
-local decoration_theme = decoration_themes[3]
+local decoration_theme = decoration_themes[4]
 -- ===================================================================
 -- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
@@ -34,8 +36,9 @@ local bar_themes = {
     "lovelace",     -- 2 -- Start button, taglist, layout
     "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
     "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
+    "amarena",      -- 5 -- Popup tasklist
 }
-local bar_theme = bar_themes[4]
+local bar_theme = bar_themes[5]
 
 -- ===================================================================
 -- Affects which icon theme will be used by widgets that display image icons.
@@ -48,8 +51,15 @@ local icon_theme = icon_themes[2]
 local notification_themes = {
     "lovelace",       -- 1 --
     "ephemeral",      -- 2 --
+    "amarena",        -- 3 --
 }
-local notification_theme = notification_themes[2]
+local notification_theme = notification_themes[3]
+-- ===================================================================
+local sidebar_themes = {
+    "lovelace",       -- 1 -- Uses image icons
+    "amarena",        -- 2 -- Text-only (consumes less RAM)
+}
+local sidebar_theme = sidebar_themes[2]
 -- ===================================================================
 local exit_screen_themes = {
     "lovelace",      -- 1 -- Uses image icons
@@ -194,7 +204,7 @@ require("elemental.bar."..bar_theme)
 -- Exit screen
 require("elemental.exit_screen."..exit_screen_theme)
 -- Sidebar
-require("elemental.sidebar")
+require("elemental.sidebar."..sidebar_theme)
 -- Dashboard (previously called: Start screen)
 require("elemental.dashboard")
 -- Lock screen

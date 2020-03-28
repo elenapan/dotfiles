@@ -1,0 +1,139 @@
+local awful = require("awful")
+local wibox = require("wibox")
+local gears = require("gears")
+local beautiful = require("beautiful")
+local naughty = require("naughty")
+
+local helpers = require("helpers")
+
+-- Note: This theme does not show image notification icons
+
+-- For antialiasing
+-- The real background color is set in the widget_template
+local notification_bg = beautiful.notification_bg
+beautiful.notification_bg = "#00000000"
+
+local default_icon = ""
+local default_color = x.color6
+
+-- Custom text icons according to the notification's app_name
+-- plus whether the title should be visible or not
+-- (This will be removed when notification rules are released)
+-- Using icomoon font
+local app_config = {
+    ['battery'] = { icon = "", title = false },
+    ['charger'] = { icon = "", title = false },
+    ['volume'] = { icon = "", title = false },
+    ['brightness'] = { icon = "", title = false },
+    ['screenshot'] = { icon = "", title = false },
+    ['Telegram Desktop'] = { icon = "", title = true },
+    ['night_mode'] = { icon = "", title = false },
+    ['NetworkManager'] = { icon = "", title = true },
+    ['youtube'] = { icon = "", title = true },
+    ['mpd'] = { icon = "", title = true },
+    ['mpv'] = { icon = "", title = true },
+    ['heart'] = { icon = "", title = true },
+}
+
+local urgency_bg = {
+    ['low'] = x.color6,
+    ['normal'] = x.color12,
+    ['critical'] = x.color1,
+}
+
+-- Template
+-- ===================================================================
+naughty.connect_signal("request::display", function(n)
+
+    -- Custom icon widget
+    -- It can be used instead of naughty.widget.icon if you prefer your icon to be
+    -- a textbox instead of an image. However, you have to determine its
+    -- text/markup value from the notification before creating the
+    -- naughty.layout.box.
+    local custom_notification_icon = wibox.widget {
+        font = "icomoon 18",
+        -- font = "icomoon bold 40",
+        align = "center",
+        valign = "center",
+        widget = wibox.widget.textbox
+    }
+
+    local icon, title_visible
+    local color = default_color
+    local bg = urgency_bg[n.urgency] or urgency_bg['normal']
+    -- Set icon according to app_name
+    if app_config[n.app_name] then
+        icon = app_config[n.app_name].icon
+        title_visible = app_config[n.app_name].title
+    else
+        icon = default_icon
+        title_visible = true
+    end
+
+    naughty.layout.box {
+        notification = n,
+        -- type = "splash",
+        -- For antialiasing: The real shape is set in widget_template
+        shape = gears.shape.rectangle,
+        border_width = beautiful.notification_border_width,
+        border_color = beautiful.notification_border_color,
+        position = beautiful.notification_position,
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            {
+                                markup = helpers.colorize_text(icon, color),
+                                align = "center",
+                                valign = "center",
+                                widget = custom_notification_icon,
+                            },
+                            forced_height = dpi(50),
+                            bg = x.foreground,
+                            widget  = wibox.container.background,
+                        },
+                        {
+                            {
+                                {
+                                    {
+                                        align = "center",
+                                        visible = title_visible,
+                                        widget = naughty.widget.title,
+                                    },
+                                    {
+                                        align = "center",
+                                        widget = naughty.widget.message,
+                                    },
+                                    -- spacing = dpi(4),
+                                    layout  = wibox.layout.fixed.vertical,
+                                },
+                                margins = beautiful.notification_margin,
+                                widget  = wibox.container.margin,
+                            },
+                            bg = bg,
+                            widget  = wibox.container.background,
+                        },
+                        -- naughty.list.actions,
+                        -- spacing = dpi(4),
+                        layout  = wibox.layout.fixed.vertical,
+                    },
+                    strategy = "min",
+                    width    = dpi(200),
+                    widget   = wibox.container.constraint,
+                },
+                strategy = "max",
+                width    = beautiful.notification_max_width or dpi(500),
+                widget   = wibox.container.constraint,
+            },
+            -- Anti-aliasing container
+            bg = notification_bg,
+            -- bg = "#00000000",
+            -- This will be the anti-aliased shape of the notification
+            shape = helpers.rrect(beautiful.notification_border_radius),
+            widget = wibox.container.background
+        }
+    }
+end)
+
+-- naughty.disconnect_signal("request::display", naughty.default_notification_handler)
