@@ -434,20 +434,17 @@ awful.rules.rules = {
         properties = { fullscreen = true }
     },
 
-    -- Unfocusable clients (unless clicked with the mouse)
-    -- If you want to prevent focusing even when clicking them, you need to
-    -- modify the left click client mouse bind in keys.lua
-    {
-        rule_any = {
-            class = {
-                "markdown_input"
-            },
-            instance = {
-                "markdown_input"
-            },
-        },
-        properties = { focusable = false }
-    },
+    -- -- Unfocusable clients (unless clicked with the mouse)
+    -- -- If you want to prevent focusing even when clicking them, you need to
+    -- -- modify the left click client mouse bind in keys.lua
+    -- {
+    --     rule_any = {
+    --         class = {
+    --             "scratchpad"
+    --         },
+    --     },
+    --     properties = { focusable = false }
+    -- },
 
     -- Centered clients
     {
@@ -618,7 +615,7 @@ awful.rules.rules = {
             icon_name = { "scratchpad_urxvt" },
         },
         properties = {
-            skip_taskbar = true,
+            skip_taskbar = false,
             floating = true,
             ontop = false,
             minimized = true,
