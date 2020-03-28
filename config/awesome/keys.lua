@@ -389,6 +389,10 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "raise volume", group = "volume"}),
 
+    -- Screenkey toggle
+    awful.key( { superkey }, "F12", apps.screenkey,
+        {description = "raise volume", group = "volume"}),
+
     -- Microphone (V for voice)
     awful.key( { superkey }, "v",
         function()
