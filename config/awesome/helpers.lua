@@ -178,7 +178,7 @@ local floating_resize_amount = dpi(20)
 local tiling_resize_factor= 0.05
 ---------------
 function helpers.resize_dwim(c, direction)
-    if awful.layout.get(mouse.screen) == awful.layout.suit.floating or (c and c.floating) then
+    if c and c.floating then
         if direction == "up" then
             c:relative_move(  0,  0, 0, -floating_resize_amount)
         elseif direction == "down" then
@@ -188,7 +188,7 @@ function helpers.resize_dwim(c, direction)
         elseif direction == "right" then
             c:relative_move(  0,  0,  floating_resize_amount, 0)
         end
-    else
+    elseif awful.layout.get(mouse.screen) ~= awful.layout.suit.floating then
         if direction == "up" then
             awful.client.incwfact(-tiling_resize_factor)
         elseif direction == "down" then
