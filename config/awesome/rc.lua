@@ -974,16 +974,6 @@ end)
 -- ==============================================================
 -- ==============================================================
 
--- Make rofi able to unminimize minimized clients
-client.connect_signal("request::activate", function(c, context, hints)
-    if not awesome.startup then
-        if c.minimized then
-            c.minimized = false
-        end
-        awful.ewmh.activate(c, context, hints)
-    end
-end)
-
 -- When switching to a tag with urgent clients, raise them.
 -- This fixes the issue (visual mismatch) where after switching to
 -- a tag which includes an urgent client, the urgent client is
