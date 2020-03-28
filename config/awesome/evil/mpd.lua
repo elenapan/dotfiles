@@ -15,7 +15,6 @@ local function emit_info()
         function(stdout)
             local artist = stdout:match('(.*)@@')
             local title = stdout:match('@@(.*)@')
-            title = string.gsub(title, '^%s*(.-)%s*$', '%1')
             local status = stdout:match('%[(.*)%]')
             status = string.gsub(status, '^%s*(.-)%s*$', '%1')
 
