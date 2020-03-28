@@ -142,7 +142,7 @@ local volume_bar = wibox.widget {
     forced_width  = dpi(60),
     shape         = gears.shape.rounded_bar,
     bar_shape     = gears.shape.rounded_bar,
-    color         = x.color2,
+    color         = x.color4,
     background_color = x.foreground.."11",
     border_width  = 0,
     widget        = wibox.widget.progressbar,
@@ -166,7 +166,7 @@ local volume = wibox.widget {
     {
         align = "left",
         font = "icomoon 16",
-        markup = helpers.colorize_text("", x.color3),
+        markup = helpers.colorize_text("", x.color1),
         widget = wibox.widget.textbox()
     },
     helpers.horizontal_pad(dpi(2)),
@@ -228,7 +228,7 @@ local main_titlebar_size = dpi(50)
 
 local mpd_create_decoration = function (c)
     -- Main titlebar
-    awful.titlebar(c, { position = "bottom", size = main_titlebar_size, bg = x.color0 }):setup {
+    awful.titlebar(c, { position = "top", size = main_titlebar_size, bg = x.background }):setup {
         {
             create_toolbar_button(c),
             mpd_buttons,
@@ -246,33 +246,40 @@ local mpd_create_decoration = function (c)
     -- you are using default ncmpcpp keybindings. Otherwise, you will
     -- have to modify the helpers.send_key() function arguments so they
     -- send your desired keys.
-    awful.titlebar(c, { position = toolbar_position, size = toolbar_size, bg = toolbar_bg }):setup {
-        -- Go to playlist and focus currently playing song
-        control_button(c, "", x.color6, dpi(30), function()
-            helpers.send_key_sequence(c, "1o")
-        end),
-        -- Toggle lyrics
-        control_button(c, "", x.color5, dpi(30), function()
-            helpers.send_key(c, "l")
-        end),
-        -- Go to list of playlists
-        control_button(c, "", x.color4, dpi(30), function()
-            helpers.send_key(c, "5")
-        end),
-        -- Visualizer button
-        control_button(c, "", x.color5, dpi(30),
-            -- Left click - Go to visualizer
-            function()
-                helpers.send_key(c, "8")
-            end,
-            -- Right click - Toggle visualizer
-            function()
-                awful.spawn.with_shell("mpc toggleoutput mpd_fifo")
+    awful.titlebar(c, { position = toolbar_position, size = toolbar_size, bg = x.background }):setup {
+        {
+            -- Go to playlist and focus currently playing song
+            control_button(c, "", x.color6, dpi(30), function()
+                helpers.send_key_sequence(c, "1o")
             end),
-        random_button,
-        loop_button,
-        notifications_button,
-        layout = wibox.layout.flex.vertical
+            -- Toggle lyrics
+            control_button(c, "", x.color5, dpi(30), function()
+                helpers.send_key(c, "l")
+            end),
+            -- Go to list of playlists
+            control_button(c, "", x.color4, dpi(30), function()
+                helpers.send_key(c, "5")
+            end),
+            -- Visualizer button
+            control_button(c, "", x.color5, dpi(30),
+                -- Left click - Go to visualizer
+                function()
+                    helpers.send_key(c, "8")
+                end,
+                -- Right click - Toggle visualizer
+                function()
+                    awful.spawn.with_shell("mpc toggleoutput mpd_fifo")
+                end
+                ),
+            random_button,
+            loop_button,
+            notifications_button,
+            layout = wibox.layout.flex.vertical
+        },
+        bg = x.color0,
+        -- bg = toolbar_bg,
+        shape = helpers.prrect(dpi(20), false, true, false, false),
+        widget = wibox.container.background
     }
 
     if not toolbar_enabled_initially then
