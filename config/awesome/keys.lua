@@ -325,7 +325,7 @@ keys.globalkeys = gears.table.join(
             end
         end,
         {description = "activate sidebar run prompt", group = "awesome"}),
-    -- Web searc
+    -- Web search
     awful.key({ superkey }, "g",
         function ()
             sidebar_activate_prompt("web_search")
@@ -437,6 +437,7 @@ keys.globalkeys = gears.table.join(
         {description = "mpv previous song", group = "media"}),
     awful.key({ superkey, shiftkey}, "space", function() awful.spawn.with_shell("mpvc toggle") end,
         {description = "mpv toggle pause/play", group = "media"}),
+
     awful.key({ superkey }, "F8", function() awful.spawn.with_shell("mpvc quit") end,
         {description = "mpv quit", group = "media"}),
     awful.key({ superkey }, "F7", function() awful.spawn.with_shell("freeze firefox") end,
@@ -450,16 +451,15 @@ keys.globalkeys = gears.table.join(
     -- Double tap: Also disable floating for ALL visible clients in the tag
     awful.key({ superkey }, "w",
         function()
-        awful.layout.set(awful.layout.suit.max)
-        helpers.single_double_tap(
-            nil,
-            function()
-                local clients = awful.screen.focused().clients
-                for _, c in pairs(clients) do
-                    c.floating = false
-                end
-            end
-        )
+            awful.layout.set(awful.layout.suit.max)
+            helpers.single_double_tap(
+                nil,
+                function()
+                    local clients = awful.screen.focused().clients
+                    for _, c in pairs(clients) do
+                        c.floating = false
+                    end
+                end)
         end,
         {description = "set max layout", group = "tag"}),
     -- Tiling
@@ -475,8 +475,7 @@ keys.globalkeys = gears.table.join(
                     for _, c in pairs(clients) do
                         c.floating = false
                     end
-                end
-            )
+                end)
         end,
         {description = "set tiled layout", group = "tag"}),
     -- Set floating layout
@@ -596,8 +595,7 @@ keys.clientkeys = gears.table.join(
             nil,
             function ()
                 helpers.float_and_resize(c, screen_width * 0.65, screen_height * 0.9)
-            end
-        )
+            end)
     end),
     
     -- Relative move client
@@ -855,8 +853,8 @@ keys.tasklist_buttons = gears.table.join(
                 client.focus = c
             end
     end),
-    -- Middle mouse button closes the window
-    awful.button({ }, 2, function (c) c:kill() end),
+    -- Middle mouse button closes the window (on release)
+    awful.button({ }, 2, nil, function (c) c:kill() end),
     awful.button({ }, 3, function (c) c.minimized = true end),
     awful.button({ }, 4, function ()
         awful.client.focus.byidx(-1)
@@ -872,6 +870,35 @@ keys.tasklist_buttons = gears.table.join(
     -- Side button down - toggle ontop
     awful.button({ }, 8, function(c)
         c.ontop = not c.ontop
+    end),
+
+    -- Exactly the same keybinds as above, but also while holding Super
+    -- I need this for the mouse buttons to work with the window switcher widget 
+    -- Which becomes invisible after releasing Super
+    awful.button({ superkey }, 1,
+        function (c)
+            if c == client.focus then
+                c.minimized = true
+            else
+                -- Without this, the following
+                -- :isvisible() makes no sense
+                c.minimized = false
+                if not c:isvisible() and c.first_tag then
+                    c.first_tag:view_only()
+                end
+                -- This will also un-minimize
+                -- the client, if needed
+                client.focus = c
+            end
+    end),
+    -- Middle mouse button closes the window (on release)
+    awful.button({ superkey }, 2, nil, function (c) c:kill() end),
+    awful.button({ superkey }, 3, function (c) c.minimized = true end),
+    awful.button({ superkey }, 4, function ()
+        awful.client.focus.byidx(-1)
+    end),
+    awful.button({ superkey }, 5, function ()
+        awful.client.focus.byidx(1)
     end)
 )
 
