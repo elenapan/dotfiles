@@ -43,6 +43,7 @@ local class_icons = {
     ['htop'] = { symbol = "", color = x.color2 },
     ['Screenruler'] = { symbol = "", color = x.color3 },
     ['Galculator'] = { symbol = "", color = x.color2 },
+    ['Zathura'] = { symbol = "", color = x.color2 },
 
     -- File managers
     ['Thunar'] = { symbol = "", color = x.color3 },
