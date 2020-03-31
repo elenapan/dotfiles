@@ -4,6 +4,7 @@
 --      description (string)
 --      icon_code (string)
 local awful = require("awful")
+local helpers = require("helpers")
 
 -- Configuration
 local key = user.openweathermap_key
@@ -31,8 +32,7 @@ local weather_details_script = [[
     fi
   ']]
 
--- Periodically get weather info
-awful.widget.watch(weather_details_script, update_interval, function(widget, stdout)
+helpers.remote_watch(weather_details_script, update_interval, "/tmp/awesomewm-evil-weather", function(stdout)
     local icon_code = string.sub(stdout, 1, 3)
     local weather_details = string.sub(stdout, 5)
     weather_details = string.gsub(weather_details, '^%s*(.-)%s*$', '%1')
