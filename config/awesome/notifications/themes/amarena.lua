@@ -21,7 +21,7 @@ local default_color = x.color6
 -- (This will be removed when notification rules are released)
 -- Using icomoon font
 local app_config = {
-    ['battery'] = { icon = "", title = false },
+    ['battery'] = { icon = "", title = false },
     ['charger'] = { icon = "", title = false },
     ['volume'] = { icon = "", title = false },
     ['brightness'] = { icon = "", title = false },
