@@ -318,7 +318,17 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 -- Determines how floating clients should be placed
-local client_placement_f = awful.placement.no_overlap + awful.placement.no_offscreen
+local floating_client_placement = function(c)
+    -- If the layout is floating or there are no other visible
+    -- clients, center client
+    if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating or #mouse.screen.clients == 1 then
+        return awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
+    end
+
+    -- Else use this placement
+    local p = awful.placement.no_overlap + awful.placement.no_offscreen
+    return p(c, {honor_padding = true, honor_workarea=true, margins = beautiful.useless_gap * 2})
+end
 
 -- Rules
 -- ===================================================================
@@ -342,23 +352,13 @@ awful.rules.rules = {
             maximized = false,
             maximized_horizontal = false,
             maximized_vertical = false,
-            -- placement = awful.placement.no_overlap+awful.placement.no_offscreen
+            -- placement = not awesome.startup and floating_client_placement
+            placement = floating_client_placement
         },
         callback = function (c)
-            if not awesome.startup then
-                -- If the layout is floating or there are no other visible clients
-                -- Apply placement function
-                if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating or #mouse.screen.clients == 1 then
-                    awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
-                else
-                    client_placement_f(c, {honor_padding = true, honor_workarea=true, margins = beautiful.useless_gap * 2})
-                end
-
-                -- Hide titlebars if required by the theme
-                if not beautiful.titlebars_enabled then
-                    decorations.hide(c)
-                end
-
+            -- Hide titlebars if required by the theme
+            if not beautiful.titlebars_enabled then
+                decorations.hide(c)
             end
         end
     },
@@ -455,6 +455,10 @@ awful.rules.rules = {
             class = {
                 "Steam",
                 "discord",
+                "music",
+            },
+            instance = {
+                "music",
             },
             role = {
                 "GtkFileChooserDialog",
