@@ -175,6 +175,10 @@ theme.sidebar_y = 0
 theme.sidebar_border_radius = 0
 -- theme.sidebar_border_radius = theme.border_radius
 
+-- Dashboard
+theme.dashboard_bg = x.color0
+theme.dashboard_fg = x.color7
+
 -- Exit screen
 theme.exit_screen_bg = x.color0 .. "CC"
 theme.exit_screen_fg = x.color7
