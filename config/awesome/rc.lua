@@ -130,7 +130,7 @@ user = {
     -- >> Coronavirus <<
     -- Country to check for corona statistics
     -- Uses the https://corona-stats.online API
-    coronavirus_country = "usa",
+    coronavirus_country = "germany",
 }
 -- ===================================================================
 

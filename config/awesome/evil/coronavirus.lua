@@ -10,6 +10,7 @@ local naughty = require("naughty")
 
 local update_interval = 60 * 60 * 12 -- 12 hours
 local country = user.coronavirus_country or "usa"
+local temp_file = "/tmp/awesomewm-evil-coronavirus"
 
 local coronavirus_script = [[
   sh -c '
@@ -25,11 +26,18 @@ local coronavirus_script = [[
   echo CTOTAL@$cases_total@CTODAY@$cases_today@DTOTAL@$deaths_total@DTODAY@$deaths_today@
   ']]
 
-helpers.remote_watch(coronavirus_script, update_interval, "/tmp/awesomewm-evil-coronavirus", function(stdout)
+helpers.remote_watch(coronavirus_script, update_interval, temp_file, function(stdout)
     local cases_total = stdout:match('^CTOTAL@(.*)@CTODAY')
     local cases_today = stdout:match('CTODAY@(.*)@DTOTAL')
     local deaths_total = stdout:match('DTOTAL@(.*)@DTODAY')
     local deaths_today = stdout:match('DTODAY@(.*)@')
 
-    awesome.emit_signal("evil::coronavirus", cases_total, cases_today, deaths_total, deaths_today)
+    -- If it is found, we assume the command succeeded
+    if cases_total then
+        awesome.emit_signal("evil::coronavirus", cases_total, cases_today, deaths_total, deaths_today)
+    else
+        -- Remove temp_file to force an update the next time
+        awful.spawn.with_shell("rm "..temp_file)
+        awesome.emit_signal("evil::coronavirus", -1, -1, -1, -1)
+    end
 end)

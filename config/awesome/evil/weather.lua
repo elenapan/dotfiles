@@ -12,6 +12,7 @@ local city_id = user.openweathermap_city_id
 local units = user.weather_units
 -- Don't update too often, because your requests might get blocked for 24 hours
 local update_interval = 1200
+local temp_file = "/tmp/awesomewm-evil-weather"
 
 local weather_details_script = [[
     bash -c '
@@ -32,7 +33,7 @@ local weather_details_script = [[
     fi
   ']]
 
-helpers.remote_watch(weather_details_script, update_interval, "/tmp/awesomewm-evil-weather", function(stdout)
+helpers.remote_watch(weather_details_script, update_interval, temp_file, function(stdout)
     local icon_code = string.sub(stdout, 1, 3)
     local weather_details = string.sub(stdout, 5)
     weather_details = string.gsub(weather_details, '^%s*(.-)%s*$', '%1')
@@ -43,6 +44,8 @@ helpers.remote_watch(weather_details_script, update_interval, "/tmp/awesomewm-ev
     local description = weather_details:match('(.*)@@')
     local temperature = weather_details:match('@@(.*)')
     if icon_code == "..." then
+        -- Remove temp_file to force an update the next time
+        awful.spawn.with_shell("rm "..temp_file)
         awesome.emit_signal("evil::weather", 999, "Weather unavailable", "")
     else
         awesome.emit_signal("evil::weather", tonumber(temperature), description, icon_code)
