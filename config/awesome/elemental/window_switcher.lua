@@ -236,11 +236,11 @@ function window_switcher_show(s)
     s.window_switcher.height = num_clients * item_size + window_switcher_margin * 2
     awful.placement.centered(s.window_switcher, { honor_workarea = true, honor_padding = true })
 
-    -- Go to previously focused client (in the tag)
-    awful.client.focus.history.previous()
-
     -- Stop recording focus history
     awful.client.focus.history.disable_tracking()
+
+    -- Go to previously focused client (in the tag)
+    awful.client.focus.history.previous()
 
     -- Start the keygrabber
     window_switcher_grabber = awful.keygrabber.run(function(modifiers, key, event)
