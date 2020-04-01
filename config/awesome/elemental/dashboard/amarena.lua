@@ -405,7 +405,7 @@ local fortune_command = "fortune -n 140 -s"
 local fortune_update_interval = 3600
 -- local fortune_command = "fortune -n 140 -s computers"
 local fortune = wibox.widget {
-    font = "sans italic 12",
+    font = "sans italic 11",
     align = "center",
     text = "Loading your cookie...",
     widget = wibox.widget.textbox
@@ -415,7 +415,7 @@ local update_fortune = function()
     awful.spawn.easy_async_with_shell(fortune_command, function(out)
         -- Remove trailing whitespaces
         out = out:gsub('^%s*(.-)%s*$', '%1')
-        fortune.markup = helpers.colorize_text(out, x.color6)
+        fortune.markup = "<b>"..helpers.colorize_text(out, x.color6).."</b>"
     end)
 end
 
@@ -442,12 +442,12 @@ fortune_box:buttons(gears.table.join(
 helpers.add_hover_cursor(fortune_box, "hand1")
 
 -- URL launcher petals
-local petal_font = "Sans Bold 13"
+local petal_font = "Sans Bold 11"
 local function create_url_petal(text, bg_color, hover_color, url, tl, tr, br, bl)
     local petal_container = wibox.widget {
         bg = bg_color,
-        forced_height = dpi(65),
-        forced_width = dpi(65),
+        forced_height = dpi(45),
+        forced_width = dpi(45),
         shape = helpers.prrect(99, tl, tr, br, bl),
         widget = wibox.container.background()
     } 
@@ -513,7 +513,7 @@ local url_petals = wibox.widget {
     layout = wibox.layout.grid
 }
 
-local url_petals_box = create_boxed_widget(url_petals, dpi(150), dpi(150), "#00000000")
+local url_petals_box = create_boxed_widget(url_petals, dpi(150), dpi(150), x.background)
 local icon_size = dpi(40)
 
 -- Uptime
