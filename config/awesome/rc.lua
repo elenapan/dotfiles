@@ -59,7 +59,7 @@ local sidebar_themes = {
     "lovelace",       -- 1 -- Uses image icons
     "amarena",        -- 2 -- Text-only (consumes less RAM)
 }
-local sidebar_theme = sidebar_themes[1]
+local sidebar_theme = sidebar_themes[2]
 -- ===================================================================
 local dashboard_themes = {
     "skyfall",        -- 1 --
