@@ -372,7 +372,7 @@ function helpers.prompt(action, textbox, prompt, callback)
             done_callback = callback,
             exe_callback = function(input)
                 if not input or #input == 0 then return end
-                awful.spawn(user.web_search_cmd.."\""..input.."\"")
+                awful.spawn.with_shell(user.web_search_cmd.."\""..input.."\"")
                 naughty.notify { title = "Searching the web for", text = input, icon = icons.firefox }
             end
         }
