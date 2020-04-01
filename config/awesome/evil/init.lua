@@ -12,4 +12,5 @@ require("evil.brightness")
 -- require("evil.spotify")
 
 -- Internet access required
+require("evil.coronavirus")
 require("evil.weather")
