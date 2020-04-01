@@ -112,27 +112,31 @@ brightness:buttons(
 local hours = wibox.widget.textclock("%H")
 local minutes = wibox.widget.textclock("%M")
 local time = {
-        {
-            font = "sans bold 50",
-            align = "center",
-            valign = "center",
-            widget = hours
-        },
-        {
-            font = "San Francisco Display Heavy 24",
-            align = "center",
-            valign = "center",
-            markup = helpers.colorize_text("✖", x.color9),
-            widget = wibox.widget.textbox
-        },
-        {
-            font = "sans 50",
-            align = "center",
-            valign = "center",
-            widget = minutes
-        },
-        spacing = dpi(2),
-        layout = wibox.layout.fixed.horizontal
+    {
+        font = "sans bold 50",
+        -- Set forced width to ensure alignment since we are not using a monospace font. You might need to adjust this depending on your chosen font and font size.
+        forced_width = dpi(90),
+        align = "right",
+        valign = "center",
+        widget = hours
+    },
+    {
+        font = "San Francisco Display Heavy 24",
+        align = "center",
+        valign = "center",
+        markup = helpers.colorize_text("✖", x.color9),
+        widget = wibox.widget.textbox
+    },
+    {
+        font = "sans 50",
+        -- Set forced width to ensure alignment since we are not using a monospace font. You might need to adjust this depending on your chosen font and font size.
+        forced_width = dpi(90),
+        align = "left",
+        valign = "center",
+        widget = minutes
+    },
+    spacing = dpi(10),
+    layout = wibox.layout.fixed.horizontal
 }
 
 -- Update text color for clocks
