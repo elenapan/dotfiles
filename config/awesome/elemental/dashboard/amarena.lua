@@ -545,8 +545,10 @@ local uptime_box = create_boxed_widget(uptime, dpi(300), dpi(80), x.background)
 
 uptime_box:buttons(gears.table.join(
     awful.button({ }, 1, function ()
-        dashboard_hide()
         exit_screen_show()
+        gears.timer.delayed_call(function()
+            dashboard_hide()
+        end)
     end)
 ))
 helpers.add_hover_cursor(uptime_box, "hand1")
