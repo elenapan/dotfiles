@@ -392,22 +392,8 @@ awful.widget.watch(fortune_command, fortune_update_interval, function(widget, st
     fortune.text = stdout
 end)
 
--- local start_quotation_marks = wibox.widget.textbox(" ")
--- start_quotation_marks.font = "Iosevka Nerd Font 18"
--- start_quotation_marks.align = "left"
--- local end_quotation_marks = wibox.widget.textbox(" ")
--- end_quotation_marks.font = "Iosevka Nerd Font 18"
--- end_quotation_marks.align = "right"
-
 local fortune_widget = wibox.widget {
     fortune,
-    -- {
-    --     start_quotation_marks,
-    --     fortune,
-    --     end_quotation_marks,
-    --     expand = "none",
-    --     layout = wibox.layout.fixed.vertical
-    -- },
     margins = box_gap * 3,
     color = "#00000000",
     widget = wibox.container.margin
@@ -427,116 +413,6 @@ fortune_box:buttons(gears.table.join(
 ))
 helpers.add_hover_cursor(fortune_box, "hand1")
 
--- Launcher petals
--- local function create_launcher_petal(bg_color)
---     local petal_container = wibox.container.background()
---     petal_container.bg = bg_color
---     petal_container.forced_height = dpi(65)
---     petal_container.forced_width = dpi(65)
---     petal_container.shape = helpers.prrect(99, true, true, false, true)
-
---     -- Put the petal container inside a rounded container. Why?
---     -- Because I want the unrounded petal corner to not be pointy!
---     local petal = wibox.widget {
---         petal_container,
---         shape = helpers.rrect(box_radius / 2),
---         widget = wibox.container.background()
---     }
-
---     return petal
--- end
-
--- -- Create the containers
--- local petal_container_top_left = create_launcher_petal(x.background)
--- local petal_container_top_right = wibox.widget {
---     create_launcher_petal(x.background),
---     widget = wibox.container.mirror,
---     reflection = { horizontal = true }
--- }
--- local petal_container_bottom_left = wibox.widget {
---     create_launcher_petal(x.background),
---     widget = wibox.container.mirror,
---     reflection = { vertical = true }
--- }
--- local petal_container_bottom_right = wibox.widget {
---     create_launcher_petal(x.background),
---     widget = wibox.container.mirror,
---     reflection = { horizontal = true, vertical = true }
--- }
-
--- -- Create the icons
--- local petal_font = "Material Design Icons 20"
--- local petal_icon_top_left = wibox.widget.textbox("", { align = "center", valign = "center", font = petal_font })
--- -- petal_icon_top_left.font = petal_font
--- local petal_icon_top_right = wibox.widget.textbox("")
--- petal_icon_top_right.font = petal_font
--- local petal_icon_bottom_left = wibox.widget.textbox("")
--- petal_icon_bottom_left.font = petal_font
--- local petal_icon_bottom_right = wibox.widget.textbox("")
--- petal_icon_bottom_right.font = petal_font
-
--- -- Finally, create the petals and add buttons
--- local petal_top_left = wibox.widget {
---     petal_container_top_left,
---     petal_icon_top_left,
---     layout = wibox.layout.stack
--- }
--- petal_top_left:buttons(gears.table.join(
---                 awful.button({ }, 1, function ()
---                     awful.spawn(user.browser)
---                 end)
--- ))
-
--- local petal_top_right = wibox.widget {
---     petal_container_top_right,
---     petal_icon_top_right,
---     layout = wibox.layout.stack
--- }
--- petal_top_right:buttons(gears.table.join(
---                 awful.button({ }, 1, function ()
---                     awful.spawn(user.browser .. " reddit.com")
---                 end)
--- ))
-
--- local petal_bottom_left = wibox.widget {
---     petal_container_bottom_left,
---     petal_icon_bottom_left,
---     layout = wibox.layout.stack
--- }
--- petal_bottom_left:buttons(gears.table.join(
---                 awful.button({ }, 1, function ()
---                     awful.spawn("flux")
---                 end)
--- ))
-
--- local petal_bottom_right = wibox.widget {
---     petal_container_bottom_right,
---     petal_icon_bottom_right,
---     layout = wibox.layout.stack
--- }
--- petal_bottom_right:buttons(gears.table.join(
---                 awful.button({ }, 1, function ()
---                     awful.spawn("lutris")
---                 end)
--- ))
-
--- -- Add clickable effects on hover
--- helpers.add_hover_cursor(petal_top_left, "hand1")
--- helpers.add_hover_cursor(petal_top_right, "hand1")
--- helpers.add_hover_cursor(petal_bottom_left, "hand1")
--- helpers.add_hover_cursor(petal_bottom_right, "hand1")
-
--- local launcher_petals = wibox.widget {
---     petal_top_left,
---     petal_top_right,
---     petal_bottom_left,
---     petal_bottom_right,
---     forced_num_cols = 2,
---     spacing = box_gap * 2,
---     layout = wibox.layout.grid
--- }
-
--- local launcher_petals_box = create_boxed_widget(launcher_petals, dpi(150), dpi(150), "#00000000")
 local icon_size = dpi(40)
 
 local brightness_icon = wibox.widget.imagebox(icons.redshift)
@@ -660,7 +536,6 @@ dashboard:setup {
             {
                 -- Column 2
                 time_box,
-                -- launcher_petals_box,
                 notification_state_box,
                 screenshot_box,
                 date_box,

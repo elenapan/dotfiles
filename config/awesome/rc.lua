@@ -59,7 +59,13 @@ local sidebar_themes = {
     "lovelace",       -- 1 -- Uses image icons
     "amarena",        -- 2 -- Text-only (consumes less RAM)
 }
-local sidebar_theme = sidebar_themes[2]
+local sidebar_theme = sidebar_themes[1]
+-- ===================================================================
+local dashboard_themes = {
+    "skyfall",        -- 1 --
+    "amarena",        -- 2 -- Displays coronavirus stats
+}
+local dashboard_theme = dashboard_themes[2]
 -- ===================================================================
 local exit_screen_themes = {
     "lovelace",      -- 1 -- Uses image icons
@@ -211,7 +217,7 @@ require("elemental.exit_screen."..exit_screen_theme)
 -- Sidebar
 require("elemental.sidebar."..sidebar_theme)
 -- Dashboard (previously called: Start screen)
-require("elemental.dashboard")
+require("elemental.dashboard."..dashboard_theme)
 -- Lock screen
 -- Make sure to configure your password in the 'user' section above
 require("elemental.lock_screen")
