@@ -3,12 +3,15 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local helpers = require("helpers")
 local keys = require("keys")
+local gears = require("gears")
+local capi = { screen = screen, client = client }
 
--- TODO ability to switch to minimized clients:
+-- TODO ability to switch to specific minimized clients without using the mouse:
 -- Might need to ditch the "easy" tasklist approach for something manual
 
 local window_switcher_margin = dpi(10)
-local item_size = dpi(50)
+local item_height = dpi(50)
+local item_width = dpi(500)
 
 -- Set up text symbols and colors to be used instead of awful.widget.clienticon
 -- Based on the client's `class` property
@@ -57,18 +60,10 @@ local class_icons = {
     ['_'] = { symbol = "", color = x.color7.."99" }
 }
 
-awful.screen.connect_for_each_screen(function(s)
-    s.window_switcher = wibox({
-        width = dpi(500),
-        height = dpi(100), -- Will change dynamically
-        visible = false,
-        ontop = true,
-        screen = s,
-        bg = "#00000000",
-        fg = x.foreground
-    })
-    awful.placement.centered(s.window_switcher, { honor_workarea = true, honor_padding = true })
 
+local window_switcher_hide
+local get_num_clients
+awful.screen.connect_for_each_screen(function(s)
     -- Tasklist
     s.window_switcher_tasklist = awful.widget.tasklist {
         screen   = s,
@@ -116,7 +111,7 @@ awful.screen.connect_for_each_screen(function(s)
                 },
                 layout  = wibox.layout.fixed.horizontal
             },
-            forced_height = item_size,
+            forced_height = item_height,
             id = "bg_role",
             widget = wibox.container.background,
             create_callback = function(self, c, _, __)
@@ -131,21 +126,49 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
 
-    s.window_switcher:setup {
-        {
-            s.window_switcher_tasklist,
-            margins = window_switcher_margin,
-            widget = wibox.container.margin
-        },
-        bg = x.color0,
-        shape = helpers.rrect(beautiful.border_radius),
-        widget = wibox.container.background
-    }
+    s.window_switcher = awful.popup({
+        visible = false,
+        ontop = true,
+        screen = s,
+        bg = "#00000000",
+        fg = x.foreground,
+        widget = {
+            {
+                s.window_switcher_tasklist,
+                forced_width = item_width,
+                margins = window_switcher_margin,
+                widget = wibox.container.margin
+            },
+            bg = x.color0,
+            shape = helpers.rrect(beautiful.border_radius),
+            widget = wibox.container.background
+        }
+    })
+
+    -- Center window switcher whenever its height changes
+    s.window_switcher:connect_signal("property::height", function()
+        awful.placement.centered(s.window_switcher, { honor_workarea = true, honor_padding = true })
+        if get_num_clients(s) == 0 then
+            window_switcher_hide()
+        end
+    end)
 end)
 
+get_num_clients = function(s)
+    local minimized_clients_in_tag = 0
+    local matcher = function (c)
+        return awful.rules.match(c, { minimized = true, skip_taskbar = false, hidden = false, first_tag = s.selected_tag })
+    end
+    for c in awful.client.iterate(matcher) do
+        minimized_clients_in_tag = minimized_clients_in_tag + 1
+    end
+    return minimized_clients_in_tag + #s.clients
+end
+
 -- Keygrabber configuration
+-- Helper functions for keybinds
 local window_switcher_grabber
-local function window_switcher_hide()
+window_switcher_hide = function()
     -- Add currently focused client to history
     if client.focus then
         awful.client.focus.history.add(client.focus)
@@ -158,37 +181,9 @@ local function window_switcher_hide()
     s.window_switcher.visible = false
 end
 
--- Helper functions for keybinds
 local window_search = function()
     window_switcher_hide()
     awful.spawn.with_shell("rofi -show windowcd")
-end
-
-local function get_num_clients(s)
-    local clients = s.selected_tag:clients()
-    local num_clients = 0
-    for _, c in pairs(clients) do
-        if not c.skip_taskbar then
-            num_clients = num_clients + 1
-        end
-    end
-
-    return num_clients
-end
-
-local close = function()
-    if client.focus then
-        client.focus:kill()
-        local s = awful.screen.focused()
-        local num_clients = get_num_clients(s)
-        -- Hide or adjust size and position if needed
-        if num_clients > 1 then
-            s.window_switcher.height = s.window_switcher.height - item_size
-            awful.placement.centered(s.window_switcher, { honor_workarea = true, honor_padding = true })
-        else
-            window_switcher_hide()
-        end
-    end
 end
 
 local unminimize = function()
@@ -199,42 +194,32 @@ local unminimize = function()
     end
 end
 
-local cycle = function(direction)
-    awful.client.focus.byidx(direction)
-end
-
 -- Set up keybinds
 -- Single keys only
 local keybinds = {
     ['Escape'] = window_switcher_hide,
-    ['Tab'] = function() cycle(1) end,
+    ['Tab'] = function() awful.client.focus.byidx(1) end,
     -- (Un)Minimize
     ['n'] = function() if client.focus then client.focus.minimized = true end end,
     ['N'] = unminimize,
     ['u'] = unminimize, -- `u` for up
     -- Close
-    ['d'] = close,
-    ['q'] = close,
+    ['d'] = function() if client.focus then client.focus:kill() end end,
+    ['q'] = function() if client.focus then client.focus:kill() end end,
     -- Move with vim keys
-    ['j'] = function() cycle(1) end,
-    ['k'] = function() cycle(-1) end,
+    ['j'] = function() awful.client.focus.byidx(1) end,
+    ['k'] = function() awful.client.focus.byidx(-1) end,
     -- Move with arrow keys
-    ['Down'] = function() cycle(1) end,
-    ['Up'] = function() cycle(-1) end,
+    ['Down'] = function() awful.client.focus.byidx(1) end,
+    ['Up'] = function() awful.client.focus.byidx(-1) end,
     -- Space
     [' '] = window_search
 }
 
 function window_switcher_show(s)
-    local num_clients = get_num_clients(s)
-
-    if num_clients == 0 or (num_clients == 1 and client.focus) then
+    if get_num_clients(s) == 0 then
         return
     end
-
-    -- Adjust size and position
-    s.window_switcher.height = num_clients * item_size + window_switcher_margin * 2
-    awful.placement.centered(s.window_switcher, { honor_workarea = true, honor_padding = true })
 
     -- Stop recording focus history
     awful.client.focus.history.disable_tracking()
@@ -243,7 +228,7 @@ function window_switcher_show(s)
     awful.client.focus.history.previous()
 
     -- Start the keygrabber
-    window_switcher_grabber = awful.keygrabber.run(function(modifiers, key, event)
+    window_switcher_grabber = awful.keygrabber.run(function(_, key, event)
         if event == "release" then
             -- Hide if the modifier was released
             -- We try to match Super or Alt or Control since we do not know which keybind is
@@ -261,7 +246,10 @@ function window_switcher_show(s)
         end
     end)
 
-    -- Finally make the window switcher wibox visible
-    s.window_switcher.visible = true
+    gears.timer.delayed_call(function()
+        -- Finally make the window switcher wibox visible after
+        -- a small delay, to allow the popup size to update
+        s.window_switcher.visible = true
+    end)
 end
 
