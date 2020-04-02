@@ -90,6 +90,16 @@ awful.screen.connect_for_each_screen(function(s)
         autohide()
     end)
 
+    s.mywibox_activator:buttons(
+        gears.table.join(
+            awful.button({ }, 4, function ()
+                awful.tag.viewprev()
+            end),
+            awful.button({ }, 5, function ()
+                awful.tag.viewnext()
+            end)
+    ))
+
     s.mywibox:connect_signal("mouse::enter", function ()
         if popup_timer then
             popup_timer:stop()
