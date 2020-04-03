@@ -17,6 +17,7 @@ shiftkey = "Shift"
 keys.desktopbuttons = gears.table.join(
     awful.button({ }, 1, function ()
         -- Single tap
+        awesome.emit_signal("elemental::dismiss")
         naughty.destroy_all_notifications()
         if mymainmenu then
             mymainmenu:hide()
@@ -332,9 +333,10 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "activate sidebar web search prompt", group = "awesome"}),
 
-    -- Dismiss notifications
+    -- Dismiss notifications and elements that connect to the dismiss signal
     awful.key( { ctrlkey }, "space",
         function()
+            awesome.emit_signal("elemental::dismiss")
             naughty.destroy_all_notifications()
         end,
         {description = "dismiss notification", group = "notifications"}),

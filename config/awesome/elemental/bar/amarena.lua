@@ -135,6 +135,11 @@ awful.screen.connect_for_each_screen(function(s)
 
 end)
 
+awesome.connect_signal("elemental::dismiss", function()
+    local s = mouse.screen
+    s.mywibox.visible = false
+end)
+
 -- Every bar theme should provide these fuctions
 function wibars_toggle()
     local s = awful.screen.focused()
