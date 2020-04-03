@@ -126,6 +126,9 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.attached_connect_signal(s, "property::urgent", function (t)
         if t.urgent then
             s.mywibox.visible = true
+            if mouse.current_wibox == s.mywibox then
+                return
+            end
             autohide()
         end
     end)
