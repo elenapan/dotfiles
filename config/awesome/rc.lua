@@ -1023,6 +1023,20 @@ client.connect_signal("focus", function(c) c:raise() end)
 --     end
 -- end)
 
+-- Disable ontop when the client is not floating, and restore ontop if needed
+-- when the client is floating again
+-- I never want a non floating client to be ontop.
+client.connect_signal('property::floating', function(c)
+    if c.floating then
+        if c.restore_ontop then
+            c.ontop = c.restore_ontop
+        end
+    else
+        c.restore_ontop = c.ontop
+        c.ontop = false
+    end
+end)
+
 -- Disconnect the client ability to request different size and position
 -- Breaks fullscreen and maximized
 -- client.disconnect_signal("request::geometry", awful.ewmh.client_geometry_requests)
