@@ -516,13 +516,6 @@ keys.globalkeys = gears.table.join(
     -- Spawn ncmpcpp in a terminal, with a special visualizer config
     awful.key({ superkey, shiftkey }, "F4", function() awful.spawn(user.terminal .. " -e 'ncmpcpp -c ~/.config/ncmpcpp/config_visualizer -s visualizer'") end,
         {description = "ncmpcpp", group = "launcher"}),
-    -- Toggle taglist/tasklist box
-    awful.key({ superkey }, "F5", function()
-        local s = mouse.screen
-        s.tasklistbox.visible = not s.tasklistbox.visible
-        -- s.taglistbox.visible = not s.taglistbox.visible
-    end,
-        {description = "toggle taglist/tasklist box", group = "awesome"}),
     -- Network dialog: nmapplet rofi frontend
     awful.key({ superkey }, "F11", function() awful.spawn("networks-rofi") end,
         {description = "spawn network dialog", group = "launcher"}),
