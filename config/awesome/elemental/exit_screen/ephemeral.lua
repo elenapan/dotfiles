@@ -121,6 +121,25 @@ function exit_screen_hide()
     awful.keygrabber.stop(exit_screen_grabber)
     exit_screen.visible = false
 end
+
+local keybinds = {
+    ['escape'] = exit_screen_hide,
+    ['q'] = exit_screen_hide,
+    ['x'] = exit_screen_hide,
+    ['s'] = function () suspend_command(); exit_screen_hide() end,
+    ['e'] = exit_command,
+    ['p'] = poweroff_command,
+    ['r'] = reboot_command,
+    ['l'] = function ()
+        lock_command()
+        -- Kinda fixes the "white" (undimmed) flash that appears between
+        -- exit screen disappearing and lock screen appearing
+        gears.timer.delayed_call(function()
+            exit_screen_hide()
+        end)
+    end
+}
+
 function exit_screen_show()
     exit_screen_grabber = awful.keygrabber.run(function(_, key, event)
         -- Ignore case
@@ -128,25 +147,8 @@ function exit_screen_show()
 
         if event == "release" then return end
 
-        if key == 's' then
-            suspend_command()
-            exit_screen_hide()
-            -- 'e' for exit
-        elseif key == 'e' then
-            exit_command()
-        elseif key == 'l' then
-            lock_command()
-            -- Kinda fixes the "white" (undimmed) flash that appears between
-            -- exit screen disappearing and lock screen appearing
-            gears.timer.delayed_call(function()
-                exit_screen_hide()
-            end)
-        elseif key == 'p' then
-            poweroff_command()
-        elseif key == 'r' then
-            reboot_command()
-        elseif key == 'escape' or key == 'q' or key == 'x' then
-            exit_screen_hide()
+        if keybinds[key] then
+            keybinds[key]()
         end
     end)
     exit_screen.visible = true
