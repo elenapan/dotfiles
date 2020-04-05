@@ -51,7 +51,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = wibox({ screen = s, width = beautiful.wibar_width, height = beautiful.wibar_height, shape = helpers.rrect(beautiful.wibar_border_radius), bg = "#00000000", visible = false, ontop = true})
+    s.mywibox = wibox({ screen = s, width = beautiful.wibar_width, height = beautiful.wibar_height, bg = "#00000000", visible = false, ontop = true})
     -- Wibar items
     -- Add or remove widgets here
     s.mywibox:setup {
