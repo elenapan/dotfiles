@@ -130,7 +130,7 @@ theme.wibar_bg = x.foreground
 theme.wibar_border_color = x.color0
 theme.wibar_border_width = dpi(0)
 theme.wibar_border_radius = dpi(0)
-theme.wibar_width = dpi(390)
+theme.wibar_width = dpi(380)
 
 theme.prefix_fg = x.color8
 
@@ -186,7 +186,7 @@ theme.exit_screen_font = "sans 20"
 theme.exit_screen_icon_size = dpi(180)
 
 -- Lock screen
-theme.lock_screen_bg = x.color0
+theme.lock_screen_bg = x.color0.."CC"
 theme.lock_screen_fg = x.color7
 
 -- Icon taglist

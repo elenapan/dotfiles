@@ -446,8 +446,8 @@ local petal_font = "Sans Bold 11"
 local function create_url_petal(text, bg_color, hover_color, url, tl, tr, br, bl)
     local petal_container = wibox.widget {
         bg = bg_color,
-        forced_height = dpi(45),
-        forced_width = dpi(45),
+        forced_height = dpi(65),
+        forced_width = dpi(65),
         shape = helpers.prrect(99, tl, tr, br, bl),
         widget = wibox.container.background()
     } 
@@ -464,7 +464,7 @@ local function create_url_petal(text, bg_color, hover_color, url, tl, tr, br, bl
         },
         -- Put the petal container inside a rounded container. Why?
         -- Because I want the unrounded petal corner to not be pointy!
-        shape = helpers.rrect(box_radius / 2),
+        shape = helpers.rrect(dpi(4)),
         widget = wibox.container.background()
     }
 
@@ -513,7 +513,7 @@ local url_petals = wibox.widget {
     layout = wibox.layout.grid
 }
 
-local url_petals_box = create_boxed_widget(url_petals, dpi(150), dpi(150), x.background)
+local url_petals_box = create_boxed_widget(url_petals, dpi(150), dpi(150), "#00000000")
 local icon_size = dpi(40)
 
 -- Uptime
