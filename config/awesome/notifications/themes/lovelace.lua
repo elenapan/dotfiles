@@ -29,7 +29,10 @@ naughty.connect_signal("request::display", function(n)
                                     {
                                         {
                                             align = "left",
-                                            widget = naughty.widget.title,
+                                            font = beautiful.notification_font,
+                                            markup = "<b>"..n.title.."</b>",
+                                            widget = wibox.widget.textbox,
+                                            -- widget = naughty.widget.title,
                                         },
                                         {
                                             align = "left",
