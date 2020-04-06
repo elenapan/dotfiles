@@ -729,6 +729,28 @@ awful.rules.rules = {
         end
     },
 
+    -- "Fix" games that minimize on focus loss
+    -- Usually this can be fixed by launching them with
+    -- SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
+    -- but not all games use SDL
+    {
+        rule_any = {
+            instance = {
+                "synthetik.exe"
+            },
+        },
+        properties = {},
+        callback = function (c)
+            -- Unminimize automatically
+            c:connect_signal("property::minimized", function()
+                if c.minimized then
+                    c.minimized = false
+                end
+            end)
+        end
+    },
+
+    -- League of Legends client QoL fixes
     {
         rule = { instance = "league of legends.exe" },
         properties = {},
