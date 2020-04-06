@@ -363,14 +363,21 @@ awful.rules.rules = {
             maximized = false,
             maximized_horizontal = false,
             maximized_vertical = false,
-            -- placement = not awesome.startup and floating_client_placement
-            placement = floating_client_placement
+            -- placement = floating_client_placement
         },
         callback = function (c)
             -- Hide titlebars if required by the theme
             if not beautiful.titlebars_enabled then
                 decorations.hide(c)
             end
+
+            -- Apply placement function here instead of in
+            -- properties above so that clients are placed
+            -- accurately if and after titlebars have been
+            -- hidden
+            gears.timer.delayed_call(function ()
+                floating_client_placement(c)
+            end)
         end
     },
 
