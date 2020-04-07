@@ -361,30 +361,11 @@ awful.rules.rules = {
             honor_workarea = true,
             honor_padding = true,
             maximized = false,
+            titlebars_enabled = beautiful.titlebars_enabled,
             maximized_horizontal = false,
             maximized_vertical = false,
-            -- placement = floating_client_placement
+            placement = floating_client_placement
         },
-        callback = function (c)
-            -- Hide titlebars if required by the theme
-            if not beautiful.titlebars_enabled then
-                decorations.hide(c)
-            end
-
-            -- Apply placement function here instead of in
-            -- properties above so that clients are placed
-            -- accurately if and after titlebars have been
-            -- hidden
-            gears.timer.delayed_call(function ()
-                floating_client_placement(c)
-            end)
-        end
-    },
-
-    -- Add titlebars to normal clients and dialogs
-    {
-        rule_any = { type = { "normal", "dialog" } },
-        properties = { titlebars_enabled = true }
     },
 
     -- Floating clients
@@ -489,6 +470,20 @@ awful.rules.rules = {
         end
     },
 
+    -- Titlebars ON (explicitly)
+    {
+        rule_any = {
+            type = {
+                "dialog",
+                "normal",
+            },
+            role = {
+                "conversation",
+            }
+        },
+        properties = { titlebars_enabled = true },
+    },
+
     -- Titlebars OFF (explicitly)
     {
         rule_any = {
@@ -515,26 +510,7 @@ awful.rules.rules = {
                 -- "Thunderbird",
             },
         },
-        properties = {},
-        callback = function (c)
-            decorations.hide(c)
-        end
-    },
-
-    -- Titlebars ON (explicitly)
-    {
-        rule_any = {
-            type = {
-                "dialog",
-            },
-            role = {
-                "conversation",
-            }
-        },
-        properties = {},
-        callback = function (c)
-            decorations.show(c)
-        end
+        properties = { titlebars_enabled = false },
     },
 
     -- Fixed terminal geometry
