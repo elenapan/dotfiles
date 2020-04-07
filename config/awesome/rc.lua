@@ -969,15 +969,10 @@ awful.mouse.resize.set_mode("live")
 tag.connect_signal('property::layout', function(t)
     for k, c in ipairs(t:clients()) do
         if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
-            -- Geometry x = 0 and y = 0 most probably means that the client's
-            -- floating_geometry has not been set yet.
-            -- If that is the case, don't change their geometry
-            -- TODO does this affect clients that are really placed in 0,0 ?
             local cgeo = awful.client.property.get(c, 'floating_geometry')
-            if cgeo and not (cgeo.x == 0 and cgeo.y == 0) then
+            if cgeo then
                 c:geometry(awful.client.property.get(c, 'floating_geometry'))
             end
-            --c:geometry(awful.client.property.get(c, 'floating_geometry'))
         end
     end
 end)
