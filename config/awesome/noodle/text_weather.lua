@@ -66,40 +66,39 @@ local weather = wibox.widget{
     layout = wibox.layout.fixed.horizontal
 }
 
+local icons = {
+    ["01d"] = { icon = sun_icon, color = x.color3 },
+    ["01n"] = { icon = moon_icon, color = x.color4 },
+    ["02d"] = { icon = dcloud_icon, color = x.color3 },
+    ["02n"] = { icon = ncloud_icon, color = x.color6 },
+    ["03d"] = { icon = cloud_icon, color = x.color1 },
+    ["03n"] = { icon = cloud_icon, color = x.color1 },
+    ["04d"] = { icon = cloud_icon, color = x.color1 },
+    ["04n"] = { icon = cloud_icon, color = x.color1 },
+    ["09d"] = { icon = rain_icon, color = x.color4 },
+    ["09n"] = { icon = rain_icon, color = x.color4 },
+    ["10d"] = { icon = rain_icon, color = x.color4 },
+    ["10n"] = { icon = rain_icon, color = x.color4 },
+    ["11d"] = { icon = storm_icon, color = x.color1 },
+    ["11n"] = { icon = storm_icon, color = x.color1 },
+    ["13d"] = { icon = snow_icon, color = x.color6 },
+    ["13n"] = { icon = snow_icon, color = x.color6 },
+    ["40d"] = { icon = mist_icon, color = x.color5 },
+    ["40n"] = { icon = mist_icon, color = x.color5 },
+    ["50d"] = { icon = mist_icon, color = x.color5 },
+    ["50n"] = { icon = mist_icon, color = x.color5 },
+    ["_"] = { icon = whatever_icon, color = x.color2 },
+}
+
 awesome.connect_signal("evil::weather", function(temperature, description, icon_code)
     local icon
     local color
-    -- Set icon and color depending on icon_code
-    if string.find(icon_code, "01d") then
-        icon = sun_icon
-        color = x.color3
-    elseif string.find(icon_code, "01n") then
-        icon = moon_icon
-        color = x.color4
-    elseif string.find(icon_code, "02d") then
-        icon = dcloud_icon
-        color = x.color3
-    elseif string.find(icon_code, "02n") then
-        icon = ncloud_icon
-        color = x.color6
-    elseif string.find(icon_code, "03") or string.find(icon_code, "04") then
-        icon = cloud_icon
-        color = x.color1
-    elseif string.find(icon_code, "09") or string.find(icon_code, "10") then
-        icon = rain_icon
-        color = x.color4
-    elseif string.find(icon_code, "11") then
-        icon = storm_icon
-        color = x.color1
-    elseif string.find(icon_code, "13") then
-        icon = snow_icon
-        color = x.color6
-    elseif string.find(icon_code, "50") or string.find(icon_code, "40") then
-        icon = mist_icon
-        color = x.color5
+    if icons[icon_code] then
+        icon = icons[icon_code].icon
+        color = icons[icon_code].color
     else
-        icon = whatever_icon
-        color = x.color2
+        icon = icons['_'].icon
+        color = icons['_'].color
     end
 
     weather_icon.markup = helpers.colorize_text(icon, color)

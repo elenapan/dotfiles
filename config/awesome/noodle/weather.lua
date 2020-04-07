@@ -30,28 +30,35 @@ local weather = wibox.widget{
     layout = wibox.layout.fixed.horizontal
 }
 
+local icons = {
+    ["01d"] = icons.sun,
+    ["01n"] = icons.star,
+    ["02d"] = icons.dcloud,
+    ["02n"] = icons.ncloud,
+    ["03d"] = icons.cloud,
+    ["03n"] = icons.cloud,
+    ["04d"] = icons.cloud,
+    ["04n"] = icons.cloud,
+    ["09d"] = icons.rain,
+    ["09n"] = icons.rain,
+    ["10d"] = icons.rain,
+    ["10n"] = icons.rain,
+    ["11d"] = icons.storm,
+    ["11n"] = icons.storm,
+    ["13d"] = icons.snow,
+    ["13n"] = icons.snow,
+    ["40d"] = icons.mist,
+    ["40n"] = icons.mist,
+    ["50d"] = icons.mist,
+    ["50n"] = icons.mist,
+    ["_"] = icons.whatever,
+}
+
 awesome.connect_signal("evil::weather", function(temperature, description, icon_code)
-    -- Set icon
-    if string.find(icon_code, "01d") then
-        weather_icon.image = icons.sun
-    elseif string.find(icon_code, "01n") then
-        weather_icon.image = icons.star
-    elseif string.find(icon_code, "02d") then
-        weather_icon.image = icons.dcloud
-    elseif string.find(icon_code, "02n") then
-        weather_icon.image = icons.ncloud
-    elseif string.find(icon_code, "03") or string.find(icon_code, "04") then
-        weather_icon.image = icons.cloud
-    elseif string.find(icon_code, "09") or string.find(icon_code, "10") then
-        weather_icon.image = icons.rain
-    elseif string.find(icon_code, "11") then
-        weather_icon.image = icons.storm
-    elseif string.find(icon_code, "13") then
-        weather_icon.image = icons.snow
-    elseif string.find(icon_code, "50") or string.find(icon_code, "40") then
-        weather_icon.image = icons.mist
+    if icons[icon_code] then
+        weather_icon.image = icons[icon_code]
     else
-        weather_icon.image = icons.whatever
+        weather_icon.image = icons['_']
     end
 
     weather_text.markup = description.." "..tostring(temperature)..weather_temperature_symbol
