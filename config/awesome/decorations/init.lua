@@ -79,9 +79,8 @@ decorations.button = function (c, shape, color, unfocused_color, hover_color, si
     local button = wibox.widget {
         forced_height = size,
         forced_width = size,
-        -- Initialize with the "unfocused" color
         -- bg = "#00000000",
-        bg = unfocused_color,
+        bg = (client.focus and c == client.focus) and color or unfocused_color,
         -- border_color = unfocused_color,
         -- border_width = dpi(2),
         shape = shape,
@@ -97,10 +96,10 @@ decorations.button = function (c, shape, color, unfocused_color, hover_color, si
         widget = wibox.container.margin(),
     }
     button_widget:buttons(gears.table.join(
-            awful.button({ }, 1, function ()
-                button_commands[cmd](c)
-            end)
-        ))
+        awful.button({ }, 1, function ()
+            button_commands[cmd](c)
+        end)
+    ))
 
     -- Hover "animation"
     button_widget:connect_signal("mouse::enter", function ()
