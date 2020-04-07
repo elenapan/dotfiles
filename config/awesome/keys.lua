@@ -831,8 +831,10 @@ keys.clientbuttons = gears.table.join(
 )
 
 -- Mouse buttons on the tasklist
+-- Use 'Any' modifier so that the same buttons can be used in the floating
+-- tasklist displayed by the window switcher while the modkey is pressed
 keys.tasklist_buttons = gears.table.join(
-    awful.button({ }, 1,
+    awful.button({ 'Any' }, 1,
         function (c)
             if c == client.focus then
                 c.minimized = true
@@ -849,51 +851,22 @@ keys.tasklist_buttons = gears.table.join(
             end
     end),
     -- Middle mouse button closes the window (on release)
-    awful.button({ }, 2, nil, function (c) c:kill() end),
-    awful.button({ }, 3, function (c) c.minimized = true end),
-    awful.button({ }, 4, function ()
+    awful.button({ 'Any' }, 2, nil, function (c) c:kill() end),
+    awful.button({ 'Any' }, 3, function (c) c.minimized = true end),
+    awful.button({ 'Any' }, 4, function ()
         awful.client.focus.byidx(-1)
     end),
-    awful.button({ }, 5, function ()
+    awful.button({ 'Any' }, 5, function ()
         awful.client.focus.byidx(1)
     end),
 
     -- Side button up - toggle floating
-    awful.button({ }, 9, function(c)
+    awful.button({ 'Any' }, 9, function(c)
         c.floating = not c.floating
     end),
     -- Side button down - toggle ontop
-    awful.button({ }, 8, function(c)
+    awful.button({ 'Any' }, 8, function(c)
         c.ontop = not c.ontop
-    end),
-
-    -- Exactly the same keybinds as above, but also while holding Super
-    -- I need this for the mouse buttons to work with the window switcher widget 
-    -- Which becomes invisible after releasing Super
-    awful.button({ superkey }, 1,
-        function (c)
-            if c == client.focus then
-                c.minimized = true
-            else
-                -- Without this, the following
-                -- :isvisible() makes no sense
-                c.minimized = false
-                if not c:isvisible() and c.first_tag then
-                    c.first_tag:view_only()
-                end
-                -- This will also un-minimize
-                -- the client, if needed
-                client.focus = c
-            end
-    end),
-    -- Middle mouse button closes the window (on release)
-    awful.button({ superkey }, 2, nil, function (c) c:kill() end),
-    awful.button({ superkey }, 3, function (c) c.minimized = true end),
-    awful.button({ superkey }, 4, function ()
-        awful.client.focus.byidx(-1)
-    end),
-    awful.button({ superkey }, 5, function ()
-        awful.client.focus.byidx(1)
     end)
 )
 
