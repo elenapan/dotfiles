@@ -1,9 +1,7 @@
 local beautiful = require("beautiful")
 local naughty = require("naughty")
-local helpers = require("helpers")
 local menubar = require("menubar")
 
--- notifications = {}
 local notifications = {}
 
 -- Notification settings
