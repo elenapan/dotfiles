@@ -9,10 +9,14 @@ local awful = require("awful")
 local volume_old = -1
 local muted_old = -1
 local function emit_volume_info()
-    -- Get volume info
-    awful.spawn.easy_async("pactl list sinks", function(stdout)
+    -- Get volume info of the currently active sink
+    -- The currently active sink has a star `*` in front of its index
+    -- In the output of `pacmd list-sinks`, lines +7 and +11 after "* index:"
+    -- contain the volume level and muted state respectively
+    -- This is why we are using `awk` to print them.
+    awful.spawn.easy_async_with_shell("pacmd list-sinks | awk '/\\* index: /{nr[NR+7];nr[NR+11]}; NR in nr'", function(stdout)
         local volume = stdout:match('(%d+)%% /')
-        local muted = stdout:match('Mute:(%s+)[yes]')
+        local muted = stdout:match('muted:(%s+)[yes]')
         local muted_int = muted and 1 or 0
         local volume_int = tonumber(volume)
         -- Only send signal if there was a change
@@ -26,7 +30,6 @@ local function emit_volume_info()
             volume_old = volume_int
             muted_old = muted_int
         end
-        -- TODO maybe collect garbage here?
     end)
 end
 
@@ -48,15 +51,15 @@ emit_microphone_info()
 
 -- Sleeps until pactl detects an event (volume up/down/toggle mute)
 local volume_script = [[
-    bash -c '
-    pactl subscribe 2> /dev/null | grep --line-buffered "sink"
-    ']]
+    bash -c "
+    pactl subscribe 2> /dev/null | grep --line-buffered \"Event 'change' on sink #\"
+    "]]
 
 
 -- Sleeps until pactl detects an event (microphone volume up / down / (un)mute)
 local microphone_script = [[
   bash -c '
-  pactl subscribe 2> /dev/null | grep --line-buffered "source"
+  pactl subscribe 2> /dev/null | grep --line-buffered "source #"
   ']]
 
 -- Kill old pactl subscribe processes
