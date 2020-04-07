@@ -2,6 +2,8 @@ local awful = require("awful")
 local naughty = require("naughty")
 local gears = require("gears")
 local beautiful = require("beautiful")
+local apps = require("apps")
+local decorations = require("decorations")
 
 local helpers = require("helpers")
 

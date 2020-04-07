@@ -7,7 +7,7 @@ local wibox = require("wibox")
 -- Disable popup tooltip on titlebar button hover
 awful.titlebar.enable_tooltip = false
 
-decorations = {}
+local decorations = {}
 
 -- >> Default decoration management functions
 -- Can be overrided by the selected decoration theme when the titlebar
@@ -27,19 +27,10 @@ function decorations.cycle(c)
     awful.titlebar.toggle(c, beautiful.titlebar_position)
 end
 
--- TODO (work in progress)
--- Custom decorations for specific clients
-require("decorations.mpd")
-
--- Load theme
-function decorations.init(theme_name)
-    require("decorations.themes." .. theme_name)
-end
-
 -- Helper function to be used by decoration themes to enable client rounding
 function decorations.enable_rounding()
     -- Apply rounded corners to clients if needed
-    if beautiful.border_radius > 0 then
+    if beautiful.border_radius and beautiful.border_radius > 0 then
         client.connect_signal("manage", function (c, startup)
             if not c.fullscreen and not c.maximized then
                 c.shape = helpers.rrect(beautiful.border_radius)
@@ -141,8 +132,6 @@ decorations.button = function (c, shape, color, unfocused_color, hover_color, si
     return button_widget
 end
 
-
-
 -- Generates a button from a text symbol
 decorations.text_button = function (c, symbol, font, color, unfocused_color, hover_color, size, margin, cmd)
     local button = wibox.widget {
@@ -193,3 +182,13 @@ decorations.text_button = function (c, symbol, font, color, unfocused_color, hov
     return button
 end
 
+-- Load theme and custom decorations
+function decorations.init(theme_name)
+    require("decorations.themes." .. theme_name)
+
+    -- TODO (work in progress)
+    -- Custom decorations for specific clients
+    require("decorations.mpd")
+end
+
+return decorations

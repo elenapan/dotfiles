@@ -1,5 +1,6 @@
 local naughty = require("naughty")
 local icons = require("icons")
+local notifications = require("notifications")
 
 notifications.mpd = {}
 

@@ -3,7 +3,8 @@ local naughty = require("naughty")
 local helpers = require("helpers")
 local menubar = require("menubar")
 
-notifications = {}
+-- notifications = {}
+local notifications = {}
 
 -- Notification settings
 -- Icon size
@@ -76,6 +77,12 @@ function notifications.notify_dwim(args, notif)
 end
 
 function notifications.init(theme_name)
+    -- Initialize various notification daemons
+    require("notifications.volume")
+    require("notifications.brightness")
+    require("notifications.battery")
+    require("notifications.mpd")
+    require("notifications.league_of_legends")
     -- Load theme
     require("notifications.themes." .. theme_name)
 end
@@ -99,9 +106,4 @@ naughty.connect_signal("request::action_icon", function(a, context, hints)
     a.icon = menubar.utils.lookup_icon(hints.id)
 end)
 
--- Initialize various notification daemons
-require("notifications.volume")
-require("notifications.brightness")
-require("notifications.battery")
-require("notifications.mpd")
-require("notifications.league_of_legends")
+return notifications

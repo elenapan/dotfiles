@@ -168,18 +168,16 @@ x = {
     color15    = xrdb.color15    or "#BEBEC1",
 }
 
--- Themes define colours, icons, fonts, window decorations and wallpapers
-local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
-beautiful.init(theme_dir .. "theme.lua")
--- require(theme_dir .. "decorations.lua")
---beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-
+-- Load AwesomeWM libraries
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
-
 -- Default notification library
 local naughty = require("naughty")
+
+-- Load theme
+local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
+beautiful.init(theme_dir .. "theme.lua")
 
 -- Error handling
 -- ===================================================================
@@ -196,18 +194,16 @@ end)
 -- Initialize global icons variable and load icon theme
 local icons = require("icons")
 icons.init(icon_theme)
--- Load helper functions
-local helpers = require("helpers")
--- Initialize global app launching/focusing functions
-require("apps")
 -- Keybinds and mousebinds
 local keys = require("keys")
--- Notifications
-require("notifications")
+-- Load notification daemons and notification theme
+local notifications = require("notifications")
 notifications.init(notification_theme)
--- Window decorations
-require("decorations")
+-- Load window decoration theme and custom decorations
+local decorations = require("decorations")
 decorations.init(decoration_theme)
+-- Load helper functions
+local helpers = require("helpers")
 
 -- >> Elements - Desktop components
 -- Statusbar(s)

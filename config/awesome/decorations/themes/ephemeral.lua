@@ -4,6 +4,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 local keys = require("keys")
 local helpers = require("helpers")
+local decorations = require("decorations")
 
 -- >> Anti-aliasing <<
 -- ------------------

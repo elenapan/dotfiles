@@ -2,6 +2,7 @@ local awful = require("awful")
 local naughty = require("naughty")
 local helpers = require("helpers")
 local icons = require("icons")
+local notifications = require("notifications")
 
 local jump_to_client = naughty.action { name = "Jump to client" }
 

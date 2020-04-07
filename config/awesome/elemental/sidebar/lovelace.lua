@@ -3,6 +3,7 @@ local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local icons = require("icons")
+local apps = require("apps")
 
 local helpers = require("helpers")
 

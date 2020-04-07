@@ -5,11 +5,12 @@ local naughty = require("naughty")
 local beautiful = require("beautiful")
 local helpers = require("helpers")
 local icons = require("icons")
+local notifications = require("notifications")
 
-apps = {}
+local apps = {}
 
 apps.browser = function ()
-    awful.spawn(user.browser, {switchtotag = true})
+    awful.spawn(user.browser, { switchtotag = true })
 end
 apps.file_manager = function ()
     awful.spawn(user.file_manager, { floating = true })
@@ -124,3 +125,5 @@ end
 apps.scratchpad = function()
     helpers.scratchpad({instance = "scratchpad"}, "scratchpad", nil)
 end
+
+return apps

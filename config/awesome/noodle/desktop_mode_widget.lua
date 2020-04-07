@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
+local decorations = require("decorations")
 
 -- Get theme variables
 local floating_color = beautiful.desktop_mode_color_floating or "#1D8CD2"
