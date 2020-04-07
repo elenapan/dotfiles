@@ -451,9 +451,13 @@ awful.rules.rules = {
                 "Steam",
                 "discord",
                 "music",
+                "markdown_input",
+                "scratchpad",
             },
             instance = {
                 "music",
+                "markdown_input",
+                "scratchpad",
             },
             role = {
                 "GtkFileChooserDialog",
@@ -537,10 +541,10 @@ awful.rules.rules = {
             below = true,
             focusable = false,
             height = screen_height * 0.40,
-            opacity = 0.6
+            opacity = 0.6,
+            titlebars_enabled = false,
         },
         callback = function (c)
-            decorations.hide(c)
             awful.placement.bottom(c)
         end
     },
@@ -581,9 +585,8 @@ awful.rules.rules = {
     -- Screenruler
     {
         rule_any = { class = { "Screenruler" } },
-        properties = { border_width = 0, floating = true, ontop = true },
+        properties = { border_width = 0, floating = true, ontop = true, titlebars_enabled = false },
         callback = function (c)
-            decorations.hide(c)
             awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
         end
     },
@@ -606,7 +609,6 @@ awful.rules.rules = {
                 "scratchpad",
                 "markdown_input"
             },
-            icon_name = { "scratchpad_urxvt" },
         },
         properties = {
             skip_taskbar = false,
@@ -616,13 +618,28 @@ awful.rules.rules = {
             sticky = false,
             width = screen_width * 0.7,
             height = screen_height * 0.75
+        }
+    },
+
+    -- Markdown input
+    {
+        rule_any = {
+            instance = {
+                "markdown_input"
+            },
+            class = {
+                "markdown_input"
+            },
         },
-        callback = function (c)
-            awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
-            gears.timer.delayed_call(function()
-                c.urgent = false
-            end)
-        end
+        properties = {
+            skip_taskbar = false,
+            floating = true,
+            ontop = false,
+            minimized = true,
+            sticky = false,
+            width = screen_width * 0.5,
+            height = screen_height * 0.7
+        }
     },
 
     -- Music clients (usually a terminal running ncmpcpp)
@@ -634,14 +651,11 @@ awful.rules.rules = {
             instance = {
                 "music",
             },
-            name = {
-                "Music Terminal",
-            },
         },
         properties = {
             floating = true,
-            width = screen_width * 0.35,
-            height = screen_height * 0.55
+            width = screen_width * 0.45,
+            height = screen_height * 0.50
         },
     },
 
@@ -701,10 +715,9 @@ awful.rules.rules = {
         end
     },
 
-    -- "Fix" games that minimize on focus loss
-    -- Usually this can be fixed by launching them with
-    -- SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
-    -- but not all games use SDL
+    -- "Fix" games that minimize on focus loss Usually this can be fixed by
+    -- launching them with SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0 but not all games
+    -- use SDL
     {
         rule_any = {
             instance = {
@@ -870,25 +883,6 @@ awful.rules.rules = {
         properties = { screen = 1, tag = awful.screen.focused().tags[8] }
     },
 
-    -- Media
-    {
-        rule_any = {
-            class = {
-                "mpvtube",
-            },
-            icon_name = {
-                "mpvtube",
-            },
-        },
-        properties = { screen = 1, floating = false, tag = awful.screen.focused().tags[9] },
-        callback = function (c)
-            -- awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
-            gears.timer.delayed_call(function()
-                c.urgent = false
-            end)
-        end
-    },
-
     -- Miscellaneous
     -- All clients that I want out of my way when they are running
     {
@@ -929,14 +923,6 @@ client.connect_signal("manage", function (c)
 
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
---client.connect_signal("mouse::enter", function(c)
---    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
---        and awful.client.focus.filter(c) then
---        client.focus = c
---    end
---end)
-
 -- When a client starts up in fullscreen, resize it to cover the fullscreen a short moment later
 -- Fixes wrong geometry when titlebars are enabled
 --client.connect_signal("property::fullscreen", function(c)
@@ -949,11 +935,6 @@ client.connect_signal("manage", function(c)
         end)
     end
 end)
-
--- Center client when floating property changes (a-la i3)
---client.connect_signal("property::floating", function(c)
---awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
---end)
 
 if beautiful.border_width > 0 then
     client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
