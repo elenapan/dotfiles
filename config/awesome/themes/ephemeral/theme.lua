@@ -250,7 +250,6 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 )
 
 -- Variables set for theming the menu:
--- theme.menu_submenu_icon = icons.submenu
 theme.menu_height = dpi(35)
 theme.menu_width  = dpi(180)
 theme.menu_bg_normal = x.color0

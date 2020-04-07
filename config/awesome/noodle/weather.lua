@@ -3,6 +3,7 @@ local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
+local icons = require("icons")
 
 local weather_temperature_symbol
 if user.weather_units == "metric" then
@@ -30,7 +31,7 @@ local weather = wibox.widget{
     layout = wibox.layout.fixed.horizontal
 }
 
-local icons = {
+local weather_icons = {
     ["01d"] = icons.sun,
     ["01n"] = icons.star,
     ["02d"] = icons.dcloud,
@@ -55,10 +56,10 @@ local icons = {
 }
 
 awesome.connect_signal("evil::weather", function(temperature, description, icon_code)
-    if icons[icon_code] then
-        weather_icon.image = icons[icon_code]
+    if weather_icons[icon_code] then
+        weather_icon.image = weather_icons[icon_code]
     else
-        weather_icon.image = icons['_']
+        weather_icon.image = weather_icons['_']
     end
 
     weather_text.markup = description.." "..tostring(temperature)..weather_temperature_symbol

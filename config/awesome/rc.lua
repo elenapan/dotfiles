@@ -194,7 +194,7 @@ end)
 -- Features
 -- ===================================================================
 -- Initialize global icons variable and load icon theme
-icons = require("icons")
+local icons = require("icons")
 icons.init(icon_theme)
 -- Load helper functions
 local helpers = require("helpers")

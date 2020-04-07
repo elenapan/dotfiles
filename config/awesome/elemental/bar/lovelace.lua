@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
---local xrdb = xresources.get_current_theme()
+local icons = require("icons")
 
 local helpers = require("helpers")
 local keys = require("keys")

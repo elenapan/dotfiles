@@ -4,6 +4,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 local helpers = require("helpers")
+local icons = require("icons")
 
 local keygrabber = require("awful.keygrabber")
 

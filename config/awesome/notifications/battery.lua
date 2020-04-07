@@ -1,5 +1,6 @@
 local naughty = require("naughty")
 local helpers = require("helpers")
+local icons = require("icons")
 
 -- Helper variables
 local charger_first_time = true

@@ -1,4 +1,5 @@
 local naughty = require("naughty")
+local icons = require("icons")
 
 local notif
 local first_time = true

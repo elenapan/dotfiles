@@ -66,7 +66,7 @@ local weather = wibox.widget{
     layout = wibox.layout.fixed.horizontal
 }
 
-local icons = {
+local weather_icons = {
     ["01d"] = { icon = sun_icon, color = x.color3 },
     ["01n"] = { icon = moon_icon, color = x.color4 },
     ["02d"] = { icon = dcloud_icon, color = x.color3 },
@@ -93,12 +93,12 @@ local icons = {
 awesome.connect_signal("evil::weather", function(temperature, description, icon_code)
     local icon
     local color
-    if icons[icon_code] then
-        icon = icons[icon_code].icon
-        color = icons[icon_code].color
+    if weather_icons[icon_code] then
+        icon = weather_icons[icon_code].icon
+        color = weather_icons[icon_code].color
     else
-        icon = icons['_'].icon
-        color = icons['_'].color
+        icon = weather_icons['_'].icon
+        color = weather_icons['_'].color
     end
 
     weather_icon.markup = helpers.colorize_text(icon, color)
