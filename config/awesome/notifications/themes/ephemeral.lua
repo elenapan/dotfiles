@@ -49,6 +49,7 @@ local app_config = {
     ['youtube'] = { icon = "", title = true },
     ['mpd'] = { icon = "", title = true },
     ['mpv'] = { icon = "", title = true },
+    ['keyboard'] = { icon = "", title = false },
 }
 
 -- Template
