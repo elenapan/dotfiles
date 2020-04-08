@@ -464,24 +464,7 @@ awful.rules.rules = {
                 "conversation",
             }
         },
-        properties = {},
-        callback = function (c)
-            awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
-        end
-    },
-
-    -- Titlebars ON (explicitly)
-    {
-        rule_any = {
-            type = {
-                "dialog",
-                "normal",
-            },
-            role = {
-                "conversation",
-            }
-        },
-        properties = { titlebars_enabled = true },
+        properties = { placement = awful.placement.centered },
     },
 
     -- Titlebars OFF (explicitly)
@@ -513,7 +496,20 @@ awful.rules.rules = {
         properties = { titlebars_enabled = false },
     },
 
-    -- Fixed terminal geometry
+    -- Titlebars ON (explicitly)
+    {
+        rule_any = {
+            type = {
+                "dialog",
+            },
+            role = {
+                "conversation",
+            }
+        },
+        properties = { titlebars_enabled = true },
+    },
+
+    -- Fixed terminal geometry for floating terminals
     {
         rule_any = {
             class = {
