@@ -5,6 +5,7 @@ local notifications = require("notifications")
 
 -- Helper variables
 local charger_first_time = true
+local battery_first_time = true
 local charger_plugged = true
 local battery_full_already_notified = true
 local battery_low_already_notified = false
@@ -18,6 +19,10 @@ awesome.connect_signal("evil::battery", function(battery)
     local icon
     local timeout
     battery_current = battery
+    if battery_first_time then
+        battery_first_time = false
+        return
+    end
     if not charger_plugged then
         icon = icons.battery
         if battery <= user.battery_threshold_critical and not battery_critical_already_notified then

@@ -61,7 +61,7 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
    - **Ubuntu** 18.04 or newer (and all Ubuntu-based distributions)
 
        ```shell
-       sudo apt install rofi lm-sensors upower acpid jq fortune-mod redshift mpd mpc maim feh pulseaudio inotify-tools
+       sudo apt install rofi lm-sensors acpid jq fortune-mod redshift mpd mpc maim feh pulseaudio inotify-tools
 
        # install light, which is not in the official ubuntu repositories
        wget https://github.com/haikarainen/light/releases/download/v1.2/light_1.2_amd64.deb
@@ -73,7 +73,7 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
        *Assuming your AUR helper is* `yay`
 
        ```shell
-       yay -S rofi lm_sensors upower acpid jq fortune-mod redshift mpd mpc maim feh light-git pulseaudio inotify-tools
+       yay -S rofi lm_sensors acpid jq fortune-mod redshift mpd mpc maim feh light-git pulseaudio inotify-tools
        ```
 3. Install needed fonts
 
