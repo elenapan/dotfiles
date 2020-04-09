@@ -300,6 +300,10 @@ local mpd_create_decoration = function (c)
                 notifications_button,
                 layout = wibox.layout.flex.vertical
             },
+            {
+                buttons = keys.titlebar_buttons,
+                widget = wibox.container.background
+            },
             layout = wibox.layout.align.vertical
         },
         bg = x.color0,
