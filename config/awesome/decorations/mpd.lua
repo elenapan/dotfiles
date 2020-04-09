@@ -204,8 +204,8 @@ local loop_button = control_button(c, loop_symbol, loop_color, dpi(30), function
     awful.spawn.with_shell("mpc repeat")
 end)
 
-local loop_textbox = loop_button:get_all_children()[1]
-local random_textbox = random_button:get_all_children()[1]
+local loop_textbox = loop_button:get_all_children()[1]:get_all_children()[1]
+local random_textbox = random_button:get_all_children()[1]:get_all_children()[1]
 
 local disabled_color = x.color8
 -- Update loop and random button colors based on their state
