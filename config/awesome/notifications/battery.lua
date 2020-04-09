@@ -1,4 +1,3 @@
-local naughty = require("naughty")
 local helpers = require("helpers")
 local icons = require("icons")
 local notifications = require("notifications")
@@ -11,7 +10,8 @@ local battery_full_already_notified = true
 local battery_low_already_notified = false
 local battery_critical_already_notified = false
 local notif
-local battery_current = 0
+local battery_current = 100
+local battery_full_threshold = 96
 
 -- Full / Low / Critical notifications
 awesome.connect_signal("evil::battery", function(battery)
@@ -38,7 +38,7 @@ awesome.connect_signal("evil::battery", function(battery)
         end
     else
         icon = icons.battery_charging
-        if battery > 96 and not battery_full_already_notified then
+        if battery > battery_full_threshold and not battery_full_already_notified then
             battery_full_already_notified = true
             message = "Full"
             -- message = helpers.colorize_text("Full", x.color10)
@@ -61,7 +61,7 @@ awesome.connect_signal("evil::charger", function(plugged)
         battery_critical_already_notified = false
         battery_low_already_notified = false
         -- Avoids notifying of a full battery if it was almost full after plugging
-        battery_full_already_notified = battery_current > 97
+        battery_full_already_notified = battery_current > battery_full_threshold
         message = "Plugged"
         icon = icons.battery_charging
     else
