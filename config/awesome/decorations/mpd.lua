@@ -3,6 +3,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local helpers = require("helpers")
 local notifications = require("notifications")
+local keys = require("keys")
 
 local create_little_circle = function(color)
     return wibox.widget {
@@ -30,7 +31,7 @@ local toolbar_position = "left"
 local toolbar_size = dpi(50)
 -- local toolbar_bg = x.color0
 local toolbar_bg = x.background
-local toolbar_enabled_initially = false
+local toolbar_enabled_initially = true
 
 -- Note: Some terminals require moving the window after toggling
 -- the toolbar in order to keep the window in the same place.
@@ -171,7 +172,6 @@ local volume = wibox.widget {
         widget = wibox.widget.textbox()
     },
     helpers.horizontal_pad(dpi(2)),
-    -- spacing = dpi(6),
     layout = wibox.layout.fixed.horizontal
 }
 
@@ -231,10 +231,25 @@ local mpd_create_decoration = function (c)
     -- Main titlebar
     awful.titlebar(c, { position = "top", size = main_titlebar_size, bg = x.background }):setup {
         {
-            create_toolbar_button(c),
+            {
+                create_toolbar_button(c),
+                {
+                    buttons = keys.titlebar_buttons,
+                    widget = wibox.container.background
+                },
+                layout = wibox.layout.align.horizontal
+            },
             mpd_buttons,
-            volume,
-            expand = "none",
+            {
+                nil,
+                {
+                    buttons = keys.titlebar_buttons,
+                    widget = wibox.container.background
+                },
+                volume,
+                layout = wibox.layout.align.horizontal
+            },
+            expand = "outside",
             layout = wibox.layout.align.horizontal
         },
         left = dpi(10),
