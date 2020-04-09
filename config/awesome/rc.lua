@@ -147,25 +147,25 @@ local xrdb = beautiful.xresources.get_current_theme()
 dpi = beautiful.xresources.apply_dpi
 -- Make xresources colors global
 x = {
-    --           xrdb variable      fallback
-    background = xrdb.background or "#1D1F28",
-    foreground = xrdb.foreground or "#FDFDFD",
-    color0     = xrdb.color0     or "#282A36",
-    color1     = xrdb.color1     or "#F37F97",
-    color2     = xrdb.color2     or "#5ADECD",
-    color3     = xrdb.color3     or "#F2A272",
-    color4     = xrdb.color4     or "#8897F4",
-    color5     = xrdb.color5     or "#C574DD",
-    color6     = xrdb.color6     or "#79E6F3",
-    color7     = xrdb.color7     or "#FDFDFD",
-    color8     = xrdb.color8     or "#414458",
-    color9     = xrdb.color9     or "#FF4971",
-    color10    = xrdb.color10    or "#18E3C8",
-    color11    = xrdb.color11    or "#FF8037",
-    color12    = xrdb.color12    or "#556FFF",
-    color13    = xrdb.color13    or "#B043D1",
-    color14    = xrdb.color14    or "#3FDCEE",
-    color15    = xrdb.color15    or "#BEBEC1",
+    --           xrdb variable
+    background = xrdb.background,
+    foreground = xrdb.foreground,
+    color0     = xrdb.color0,
+    color1     = xrdb.color1,
+    color2     = xrdb.color2,
+    color3     = xrdb.color3,
+    color4     = xrdb.color4,
+    color5     = xrdb.color5,
+    color6     = xrdb.color6,
+    color7     = xrdb.color7,
+    color8     = xrdb.color8,
+    color9     = xrdb.color9,
+    color10    = xrdb.color10,
+    color11    = xrdb.color11,
+    color12    = xrdb.color12,
+    color13    = xrdb.color13,
+    color14    = xrdb.color14,
+    color15    = xrdb.color15,
 }
 
 -- Load AwesomeWM libraries
