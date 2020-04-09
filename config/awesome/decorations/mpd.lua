@@ -115,19 +115,26 @@ local control_button = function(c, symbol, color, size, on_click, on_right_click
         widget = wibox.container.background
     }
 
-    button:buttons(gears.table.join(
+    local container = wibox.widget {
+        button,
+        strategy = "min",
+        height = dpi(50),
+        widget = wibox.container.constraint,
+    }
+
+    container:buttons(gears.table.join(
         awful.button({ }, 1, on_click),
         awful.button({ }, 3, on_right_click)
     ))
 
-    button:connect_signal("mouse::enter", function ()
+    container:connect_signal("mouse::enter", function ()
         button.bg = x.color8.."55"
     end)
-    button:connect_signal("mouse::leave", function ()
+    container:connect_signal("mouse::leave", function ()
         button.bg = control_button_bg
     end)
 
-    return button
+    return container
 end
 
 local mpd_buttons = require("noodle.mpd_buttons")
@@ -264,33 +271,36 @@ local mpd_create_decoration = function (c)
     -- send your desired keys.
     awful.titlebar(c, { position = toolbar_position, size = toolbar_size, bg = x.background }):setup {
         {
-            -- Go to playlist and focus currently playing song
-            control_button(c, "", x.color6, dpi(30), function()
-                helpers.send_key_sequence(c, "1o")
-            end),
-            -- Toggle lyrics
-            control_button(c, "", x.color5, dpi(30), function()
-                helpers.send_key(c, "l")
-            end),
-            -- Go to list of playlists
-            control_button(c, "", x.color4, dpi(30), function()
-                helpers.send_key(c, "5")
-            end),
-            -- Visualizer button
-            control_button(c, "", x.color5, dpi(30),
-                -- Left click - Go to visualizer
-                function()
-                    helpers.send_key(c, "8")
-                end,
-                -- Right click - Toggle visualizer
-                function()
-                    awful.spawn.with_shell("mpc toggleoutput mpd_fifo")
-                end
-                ),
-            random_button,
-            loop_button,
-            notifications_button,
-            layout = wibox.layout.flex.vertical
+            {
+                -- Go to playlist and focus currently playing song
+                control_button(c, "", x.color6, dpi(30), function()
+                    helpers.send_key_sequence(c, "1o")
+                end),
+                -- Toggle lyrics
+                control_button(c, "", x.color5, dpi(30), function()
+                    helpers.send_key(c, "l")
+                end),
+                -- Go to list of playlists
+                control_button(c, "", x.color4, dpi(30), function()
+                    helpers.send_key(c, "5")
+                end),
+                -- Visualizer button
+                control_button(c, "", x.color5, dpi(30),
+                    -- Left click - Go to visualizer
+                    function()
+                        helpers.send_key(c, "8")
+                    end,
+                    -- Right click - Toggle visualizer
+                    function()
+                        awful.spawn.with_shell("mpc toggleoutput mpd_fifo")
+                    end
+                    ),
+                random_button,
+                loop_button,
+                notifications_button,
+                layout = wibox.layout.flex.vertical
+            },
+            layout = wibox.layout.align.vertical
         },
         bg = x.color0,
         -- bg = toolbar_bg,
