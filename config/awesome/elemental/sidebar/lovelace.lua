@@ -135,13 +135,6 @@ playerctl_toggle_icon:buttons(gears.table.join(
     end),
     awful.button({ }, 3, function ()
         awful.spawn.with_shell("mpvc toggle")
-    end),
-    awful.button({ }, 8, function ()
-        sidebar.visible = false
-        awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube")
-    end),
-    awful.button({ }, 9, function ()
-        awful.spawn.with_shell("~/scr/info/mpv-query.sh")
     end)
 ))
 

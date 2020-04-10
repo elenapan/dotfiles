@@ -541,14 +541,12 @@ keys.globalkeys = gears.table.join(
     -- Quick edit file
     awful.key({ superkey, shiftkey }, "e",
         function()
-            awful.spawn.with_shell("~/scr/Rofi/rofi_edit")
+            awful.spawn.with_shell("rofi_edit")
         end,
         {description = "quick edit file", group = "launcher"}),
+    -- Rofi youtube search and playlist selector
     awful.key({ superkey }, "y", apps.youtube,
         {description = "youtube search and play", group = "launcher"}),
-    -- mpvtube song
-    awful.key({ superkey, shiftkey }, "y", function() awful.spawn.with_shell("~/scr/info/mpv-query.sh") end,
-        {description = "show mpv media title", group = "launcher"}),
     -- Spawn file manager
     awful.key({ superkey, shiftkey }, "f", apps.file_manager,
         {description = "file manager", group = "launcher"}),

@@ -37,10 +37,10 @@ apps.lutris = function ()
     helpers.run_or_raise({class = 'Lutris'}, false, "lutris")
 end
 apps.youtube = function ()
-    awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube")
+    awful.spawn.with_shell("rofi_mpvtube")
 end
 apps.networks = function ()
-    awful.spawn.with_shell("~/bin/networks-rofi")
+    awful.spawn.with_shell("rofi_networks")
 end
 apps.passwords = function ()
     helpers.run_or_raise({class = 'KeePassXC'}, true, "keepassxc")
