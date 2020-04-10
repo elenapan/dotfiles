@@ -10,7 +10,11 @@ local stroke = x.background
 local transparent = "#00000000"
 local happy_color = x.color2
 local sad_color = x.color1
-local charging_color = x.color6
+local ok_color = x.color3
+local charging_color = x.color4
+
+-- Not great not terrible
+local ok_threshold = 45
 
 local bar_shape = function()
     return function(cr, width, height)
@@ -71,8 +75,20 @@ local smile = wibox.widget {
     widget = wibox.container.rotate()
 }
 
+local ok = wibox.widget {
+    {
+        bg = stroke,
+        shape = helpers.rrect(dpi(2)),
+        widget = wibox.container.background
+    },
+    top = dpi(5),
+    bottom = dpi(1),
+    widget = wibox.container.margin()
+}
+
 local mouth = wibox.widget {
     frown,
+    ok,
     smile,
     top_only = true,
     widget = wibox.layout.stack()
@@ -138,6 +154,9 @@ awesome.connect_signal("evil::battery", function(value)
     elseif value <= user.battery_threshold_low then
         color = sad_color
         mouth:set(1, frown)
+    elseif value <= ok_threshold then
+        color = ok_color
+        mouth:set(1, ok)
     else
         color = happy_color
         mouth:set(1, smile)
@@ -152,12 +171,14 @@ awesome.connect_signal("evil::charger", function(plugged)
         charging_icon.visible = true
         color = charging_color
         mouth:set(1, smile)
-        -- todo what the fuck is wrong with this?
-        -- elseif battery_bar.value <= user.battery_threshold_low
     elseif last_value <= user.battery_threshold_low then
         charging_icon.visible = false
         color = sad_color
         mouth:set(1, frown)
+    elseif last_value <= ok_threshold then
+        charging_icon.visible = false
+        color = ok_color
+        mouth:set(1, ok)
     else
         charging_icon.visible = false
         color = happy_color
