@@ -83,7 +83,7 @@ awful.screen.connect_for_each_screen(function(s)
     end
 
     -- Initialize wibox activator
-    s.mywibox_activator = wibox({ screen = s, width = beautiful.wibar_width, height = 1, bg = "#00000000", visible = true, ontop = false})
+    s.mywibox_activator = wibox({ screen = s, width = beautiful.wibar_width + dpi(250), height = 1, bg = "#00000000", visible = true, ontop = false})
     awful.placement.bottom(s.mywibox_activator)
     s.mywibox_activator:connect_signal("mouse::enter", function()
         s.mywibox.visible = true
