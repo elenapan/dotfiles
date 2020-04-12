@@ -337,6 +337,10 @@ local floating_client_placement = function(c)
     return p(c, {honor_padding = true, honor_workarea=true, margins = beautiful.useless_gap * 2})
 end
 
+local centered_client_placement = function(c)
+    return awful.placement.centered(c, {honor_padding = true, honor_workarea=true})
+end
+
 -- Rules
 -- ===================================================================
 -- Rules to apply to new clients (through the "manage" signal).
@@ -464,7 +468,7 @@ awful.rules.rules = {
                 "conversation",
             }
         },
-        properties = { placement = awful.placement.centered },
+        properties = { placement = centered_client_placement },
     },
 
     -- Titlebars OFF (explicitly)
