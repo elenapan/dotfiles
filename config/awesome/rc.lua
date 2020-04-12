@@ -36,22 +36,22 @@ local bar_themes = {
     "lovelace",     -- 2 -- Start button, taglist, layout
     "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
     "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
-    "amarena",      -- 5 -- Popup tasklist
+    "amarena",      -- 5 -- Autohiding taglist
 }
 local bar_theme = bar_themes[5]
 
 -- ===================================================================
 -- Affects which icon theme will be used by widgets that display image icons.
 local icon_themes = {
-    "linebit",        -- 1 --
-    "drops",          -- 2 --
+    "linebit",        -- 1 -- Neon + outline
+    "drops",          -- 2 -- Pastel + filled
 }
 local icon_theme = icon_themes[2]
 -- ===================================================================
 local notification_themes = {
-    "lovelace",       -- 1 --
-    "ephemeral",      -- 2 --
-    "amarena",        -- 3 --
+    "lovelace",       -- 1 -- Standard image icons
+    "ephemeral",      -- 2 -- Text icons
+    "amarena",        -- 3 -- Speech bubble shape with text icons
 }
 local notification_theme = notification_themes[3]
 -- ===================================================================
@@ -76,6 +76,7 @@ local exit_screen_theme = exit_screen_themes[2]
 -- User variables and preferences
 user = {
     -- >> Default applications <<
+    -- Check apps.lua for more
     terminal = "kitty -1",
     floating_terminal = "kitty -1",
     browser = "firefox",
@@ -97,7 +98,7 @@ user = {
 
     -- >> Screenshots <<
     -- Make sure the directory exists
-    screenshot_dir = os.getenv("HOME") .. "/Pictures/Screenshots/",
+    screenshot_dir = os.getenv("HOME").."/Pictures/Screenshots/",
 
     -- >> Email <<
     email_client = "kitty -1 --class email -e neomutt",
@@ -715,9 +716,9 @@ awful.rules.rules = {
         end
     },
 
-    -- "Fix" games that minimize on focus loss Usually this can be fixed by
-    -- launching them with SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0 but not all games
-    -- use SDL
+    -- "Fix" games that minimize on focus loss.
+    -- Usually this can be fixed by launching them with
+    -- SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0 but not all games use SDL
     {
         rule_any = {
             instance = {
@@ -844,7 +845,7 @@ awful.rules.rules = {
         properties = { screen = 1, tag = awful.screen.focused().tags[5] }
     },
 
-    -- Photo editing
+    -- Image editing
     {
         rule_any = {
             class = {
@@ -925,7 +926,6 @@ end)
 
 -- When a client starts up in fullscreen, resize it to cover the fullscreen a short moment later
 -- Fixes wrong geometry when titlebars are enabled
---client.connect_signal("property::fullscreen", function(c)
 client.connect_signal("manage", function(c)
     if c.fullscreen then
         gears.timer.delayed_call(function()
@@ -1023,7 +1023,7 @@ end)
 -- Runs your autostart.sh script, which should include all the commands you
 -- would like to run every time AwesomeWM restarts
 -- ===================================================================
-awful.spawn.with_shell( os.getenv("HOME") .. "/.config/awesome/autostart.sh")
+awful.spawn.with_shell(os.getenv("HOME") .. "/.config/awesome/autostart.sh")
 
 -- Garbage collection
 -- Enable for lower memory consumption
