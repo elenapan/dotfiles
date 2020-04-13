@@ -19,8 +19,12 @@ apps.telegram = function ()
     helpers.run_or_raise({class = 'TelegramDesktop'}, false, "telegram", { switchtotag = true })
 end
 apps.discord = function ()
-    -- Run or raise Discord running on the browser, spawned with Chromium browser's app mode
-    helpers.run_or_raise({instance = 'discordapp.com__channels_@me'}, false, "chromium-browser --app=\"https://discordapp.com/channels/@me\"")
+    -- Run or raise Discord running in the browser, spawned with Chromium browser's app mode
+    -- >> Ubuntu / Debian
+    -- helpers.run_or_raise({instance = 'discordapp.com__channels_@me'}, false, "chromium-browser --app=\"https://discordapp.com/channels/@me\"")
+    -- >> Arch
+    helpers.run_or_raise({instance = 'discordapp.com__channels_@me'}, false, "chromium --app=\"https://discordapp.com/channels/@me\"")
+
     -- Run or raise Discord app
     -- helpers.run_or_raise({class = 'discord'}, false, "discord")
 end
