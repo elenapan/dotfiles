@@ -331,7 +331,10 @@ keys.globalkeys = gears.table.join(
     -- Web search
     awful.key({ superkey }, "g",
         function ()
-            sidebar_activate_prompt("web_search")
+            -- Not all sidebars have a prompt
+            if sidebar_activate_prompt then
+                sidebar_activate_prompt("web_search")
+            end
         end,
         {description = "activate sidebar web search prompt", group = "awesome"}),
 
@@ -522,7 +525,7 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "F11", function() awful.spawn("networks-rofi") end,
         {description = "spawn network dialog", group = "launcher"}),
     -- Toggle sidebar
-    awful.key({ superkey }, "grave", function() sidebar.visible = not sidebar.visible end,
+    awful.key({ superkey }, "grave", function() sidebar_toggle() end,
         {description = "show or hide sidebar", group = "awesome"}),
     -- Toggle wibar(s)
     awful.key({ superkey, shiftkey }, "b", function() wibars_toggle() end,

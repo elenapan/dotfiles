@@ -261,6 +261,11 @@ function sidebar_activate_prompt(action)
     end)
 end
 
+local prompt_is_active = function ()
+    -- The search icon is hidden and replaced by other icons when the prompt is running
+    return not search_icon.visible
+end
+
 search:buttons(gears.table.join(
     awful.button({ }, 1, function ()
         sidebar_activate_prompt("run")
@@ -395,20 +400,26 @@ end
 sidebar:buttons(gears.table.join(
     -- Middle click - Hide sidebar
     awful.button({ }, 2, function ()
-        sidebar.visible = false
+        sidebar_hide()
     end)
-    -- Right click - Hide sidebar
-    -- awful.button({ }, 3, function ()
-    --     sidebar.visible = false
-    --     -- mymainmenu:show()
-    -- end)
 ))
 
+sidebar_show = function()
+    sidebar.visible = true
+end
+
 sidebar_hide = function()
-    -- Do not hide it if prompt is running
-    -- (The search icon is hidden and replaced by other icons when the prompt is running)
-    if search_icon.visible then
+    -- Do not hide it if prompt is active
+    if not prompt_is_active() then
         sidebar.visible = false
+    end
+end
+
+sidebar_toggle = function()
+    if sidebar.visible then
+        sidebar_hide()
+    else
+        sidebar.visible = true
     end
 end
 

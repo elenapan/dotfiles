@@ -17,7 +17,7 @@ start_widget = wibox.widget.imagebox(icons.start)
 start_widget:buttons(gears.table.join(
         -- Left click - Toggle sidebar
         awful.button({ }, 1, function ()
-            sidebar.visible = not sidebar.visible
+            sidebar_toggle()
         end),
         -- Middle click - Toggle scratchpad
         awful.button({ }, 2, apps.scratchpad),

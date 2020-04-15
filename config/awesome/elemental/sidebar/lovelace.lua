@@ -339,16 +339,23 @@ else
 end
 -- sidebar.shape = helpers.rrect(radius)
 
+sidebar_show = function()
+    sidebar.visible = true
+end
+
+sidebar_hide = function()
+    sidebar.visible = false
+end
+
+sidebar_toggle = function()
+    sidebar.visible = not sidebar.visible
+end
+
 sidebar:buttons(gears.table.join(
     -- Middle click - Hide sidebar
     awful.button({ }, 2, function ()
         sidebar.visible = false
     end)
-    -- Right click - Hide sidebar
-    -- awful.button({ }, 3, function ()
-    --     sidebar.visible = false
-    --     -- mymainmenu:show()
-    -- end)
 ))
 
 -- Hide sidebar when mouse leaves
