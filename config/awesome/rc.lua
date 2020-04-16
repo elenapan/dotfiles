@@ -108,10 +108,12 @@ user = {
     sidebar_show_on_mouse_screen_edge = true,
 
     -- >> Lock screen <<
-    -- You can set this to whatever you want or leave it empty in
-    -- order to unlock with just the Enter key.
-    -- lock_screen_password = "",
-    lock_screen_password = "awesome",
+    -- This password will ONLY be used if you have not installed
+    -- https://github.com/RMTT/lua-pam
+    -- as described in the README instructions
+    -- Leave it empty in order to unlock with just the Enter key.
+    -- lock_screen_custom_password = "",
+    lock_screen_custom_password = "awesome",
 
     -- >> Battery <<
     -- You will receive notifications when your battery reaches these
@@ -216,8 +218,10 @@ require("elemental.sidebar."..sidebar_theme)
 -- Dashboard (previously called: Start screen)
 require("elemental.dashboard."..dashboard_theme)
 -- Lock screen
--- Make sure to configure your password in the 'user' section above
-require("elemental.lock_screen")
+-- Make sure to install lua-pam as described in the README or configure your
+-- custom password in the 'user' section above
+local lock_screen = require("elemental.lock_screen")
+lock_screen.init()
 -- App drawer
 require("elemental.app_drawer")
 -- Window switcher

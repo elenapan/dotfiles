@@ -478,5 +478,11 @@ function helpers.remote_watch(command, interval, output_file, callback)
     }
 end
 
+-- The directory of the currently executed lua script
+-- Requires the `debug` library to be available in the build of Lua that is running
+function helpers.this_dir()
+   local str = debug.getinfo(2, "S").source:sub(2)
+   return str:match("(.*/)")
+end
 
 return helpers

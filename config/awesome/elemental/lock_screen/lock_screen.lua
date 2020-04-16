@@ -7,10 +7,8 @@ local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
-
 local helpers = require("helpers")
-
-local password = user.lock_screen_password or ""
+local lock_screen = require("elemental.lock_screen")
 
 local lock_screen_symbol = ""
 local lock_screen_fail_symbol = ""
@@ -31,16 +29,16 @@ local some_textbox = wibox.widget.textbox()
 -- Create the lock screen wibox
 -- Set the type to "splash" and set all "splash" windows to be blurred in your
 -- compositor configuration file
-lock_screen = wibox({visible = false, ontop = true, type = "splash", screen = screen.primary})
-awful.placement.maximize(lock_screen)
+lock_screen_box = wibox({visible = false, ontop = true, type = "splash", screen = screen.primary})
+awful.placement.maximize(lock_screen_box)
 
-lock_screen.bg = beautiful.lock_screen_bg or beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111"
-lock_screen.fg = beautiful.lock_screen_fg or beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
+lock_screen_box.bg = beautiful.lock_screen_bg or beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111"
+lock_screen_box.fg = beautiful.lock_screen_fg or beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
 -- Add lockscreen to each screen
 for s in screen do
     if s == screen.primary then
-        s.mylockscreen = lock_screen
+        s.mylockscreen = lock_screen_box
     else
         s.mylockscreen = helpers.screen_mask(s, beautiful.lock_screen_bg or beautiful.exit_screen_bg or x.background)
     end
@@ -218,7 +216,7 @@ local function grab_password()
         end,
         exe_callback = function(input)
             -- Check input
-            if input == password then
+            if lock_screen.authenticate(input) then
                 -- YAY
                 reset()
                 set_visibility(false)
@@ -238,7 +236,7 @@ function lock_screen_show()
 end
 
 -- Item placement
-lock_screen:setup {
+lock_screen_box:setup {
     -- Horizontal centering
     nil,
     {

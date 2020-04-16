@@ -112,7 +112,21 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
    cp -r config/awesome ~/.config/awesome
    ```
 
-   Optionally, you can take a look at [how my configuration is structured](#awesomewm-configuration-file-structure).
+   + *(Optional but recommended)* Improved lock screen security
+
+      Instead of authenticating with a custom password stored in plain text inside your configuration files, it is possible to use [PAM](https://wiki.archlinux.org/index.php/PAM) in order to do it using your regular user password in a secure way. [lua-pam](https://github.com/RMTT/lua-pam) allows us to use PAM from within AwesomeWM.
+
+      You will need to install the `pam` package through your distribution's package manager and then follow the [instructions to build lua-pam](https://github.com/RMTT/lua-pam).
+      After building it, you can simply copy the resulting `liblua_pam.so` file to the lock screen configuration directory, like so:
+
+      ```shell
+      cp liblua_pam.so ~/.config/awesome/elemental/lock_screen/
+      ```
+
+      If you do not want to install it, no worries!
+      You can set a custom lock screen password in your user preferences (see next section).
+
+      The lock screen will automatically determine the authentication method depending on whether `lua-pam` is installed or not.
 
 4. Configure stuff
 
@@ -132,6 +146,8 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
       See the [keybinds](#keybinds) section for more details.
 
       You can edit `keys.lua` to configure your keybinds.
+
+   + *(Optional)* This is also a good time to take a look at [how my configuration is structured](#awesomewm-configuration-file-structure) in order to understand the purpose of each file.
 
 5. Login with AwesomeWM 🎉
 
