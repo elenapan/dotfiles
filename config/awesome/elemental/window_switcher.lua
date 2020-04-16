@@ -183,7 +183,7 @@ end
 
 local window_search = function()
     window_switcher_hide()
-    awful.spawn.with_shell("rofi -show windowcd")
+    awful.spawn.with_shell("rofi_awesome_window")
 end
 
 local unminimize = function()
