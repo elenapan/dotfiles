@@ -54,27 +54,40 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
    yay -S awesome-git
    ```
 
-2. Install needed software
+2. Install needed software and enable services
 
    *If you are curious, [click here](https://github.com/elenapan/dotfiles/wiki/Detailed-dependency-table) to see a table of dependencies and why they are needed.*
 
-   - **Ubuntu** 18.04 or newer (and all Ubuntu-based distributions)
+   + Software
 
-       ```shell
-       sudo apt install rofi lm-sensors acpid jq fortune-mod redshift mpd mpc maim feh pulseaudio inotify-tools
+     - **Ubuntu** 18.04 or newer (and all Ubuntu-based distributions)
 
-       # install light, which is not in the official ubuntu repositories
-       wget https://github.com/haikarainen/light/releases/download/v1.2/light_1.2_amd64.deb
-       sudo dpkg -i light_1.2_amd64.deb
-       ```
+         ```shell
+         sudo apt install rofi lm-sensors acpid jq fortune-mod redshift mpd mpc maim feh pulseaudio inotify-tools
 
-   - **Arch Linux** (and all Arch-based distributions)
+         # Install light, which is not in the official Ubuntu repositories
+         wget https://github.com/haikarainen/light/releases/download/v1.2/light_1.2_amd64.deb
+         sudo dpkg -i light_1.2_amd64.deb
+         ```
 
-       *Assuming your AUR helper is* `yay`
+     - **Arch Linux** (and all Arch-based distributions)
 
-       ```shell
-       yay -S rofi lm_sensors acpid jq fortune-mod redshift mpd mpc maim feh light-git pulseaudio inotify-tools
-       ```
+         *Assuming your AUR helper is* `yay`
+
+         ```shell
+         yay -S rofi lm_sensors acpid jq fortune-mod redshift mpd mpc maim feh light-git pulseaudio inotify-tools
+         ```
+   + Services
+
+      ```shell
+      # For automatically launching mpd on login
+      systemctl --user enable mpd.service
+      systemctl --user start mpd.service
+      # For charger plug/unplug events (if you have a battery)
+      sudo systemctl enable acpid.service
+      sudo systemctl start acpid.service
+      ```
+
 3. Install needed fonts
 
    You will need to install a few fonts (mainly icon fonts) in order for text and icons to be rendered properly.
