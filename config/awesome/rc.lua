@@ -1023,12 +1023,6 @@ end)
 -- client.disconnect_signal("request::geometry", awful.ewmh.client_geometry_requests)
 -- client.disconnect_signal("request::geometry", awful.ewmh.geometry)
 
--- Startup applications
--- Runs your autostart.sh script, which should include all the commands you
--- would like to run every time AwesomeWM restarts
--- ===================================================================
-awful.spawn.with_shell(os.getenv("HOME") .. "/.config/awesome/autostart.sh")
-
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================

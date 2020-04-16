@@ -186,12 +186,6 @@ After setting up my AwesomeWM configuration, inside `~/.config/awesome` you will
    This file allows you to set user preferences, choose themes, configure default layouts for each tag, window rules and more.
    It is also responsible for initializing all necessary desktop components.
 
-+ 🚀 `autostart.sh`
-
-   The commands in in this file will run every time AwesomeWM restarts.
-
-   If you would like to run something only **once on login**, I suggest you create the file `~/.xprofile`, make it executable and put the commands you want in it.
-
 + ⌨️ `keys.lua`
 
    It initializes global and client keybinds.
