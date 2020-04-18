@@ -228,7 +228,7 @@ local notifications_symbol = ""
 local notifications_button
 notifications_button = control_button(c, notifications_symbol, notifications.mpd.enabled and notifications_color or disabled_color, dpi(30), function()
     notifications.mpd.toggle()
-    local text = notifications_button:get_all_children()[1] 
+    local text = notifications_button:get_all_children()[1]:get_all_children()[1]
     text.markup = helpers.colorize_text(notifications_symbol, notifications.mpd.enabled and notifications_color or disabled_color)
 end)
 
