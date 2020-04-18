@@ -130,10 +130,10 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
       Instead of authenticating with a custom password stored in plain text inside your configuration files, it is possible to use [PAM](https://wiki.archlinux.org/index.php/PAM) in order to do it using your regular user password in a secure way. [lua-pam](https://github.com/RMTT/lua-pam) allows us to use PAM from within AwesomeWM.
 
       You will need to install the `pam` package through your distribution's package manager and then follow the [instructions to build lua-pam](https://github.com/RMTT/lua-pam).
-      After building it, you can simply copy the resulting `liblua_pam.so` file to the lock screen configuration directory, like so:
+      After building it, you can simply copy the resulting `liblua_pam.so` file to your configuration directory, like so:
 
       ```shell
-      cp liblua_pam.so ~/.config/awesome/elemental/lock_screen/
+      cp liblua_pam.so ~/.config/awesome/
       ```
 
       If you do not want to install it, no worries!

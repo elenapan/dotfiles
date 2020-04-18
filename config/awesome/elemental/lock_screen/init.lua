@@ -3,8 +3,7 @@ local helpers = require("helpers")
 
 local lock_screen = {}
 
--- local lua_pam_path = os.getenv("HOME").."/.config/awesome/elemental/lock_screen/liblua_pam.so"
-local lua_pam_path = helpers.this_dir().."liblua_pam.so"
+local lua_pam_path = os.getenv("HOME").."/.config/awesome/liblua_pam.so"
 
 lock_screen.init = function ()
     -- Initialize authentication method based on whether lua-pam has been
