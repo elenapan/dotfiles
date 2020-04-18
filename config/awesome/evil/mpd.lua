@@ -15,7 +15,7 @@ local function emit_info()
         function(stdout)
             local artist = stdout:match('^ARTIST@(.*)@TITLE')
             local title = stdout:match('@TITLE@(.*)@FILE')
-            local status = stdout:match('%[(.*)%]')
+            local status = stdout:match('\n%[(.*)%]')
 
             if artist == "" then
               artist = "N/A"
