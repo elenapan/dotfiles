@@ -196,7 +196,12 @@ local function grab_password()
                     reset()
                     grab_password()
                 end
-            }
+            },
+            -- Fix for Control+Delete crashing the keygrabber
+            {{ 'Control' }, 'Delete', function ()
+                reset()
+                grab_password()
+            end}
         },
         keypressed_callback  = function(mod, key, cmd)
             -- Only count single character keys (thus preventing
