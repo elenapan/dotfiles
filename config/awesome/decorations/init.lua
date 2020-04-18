@@ -56,16 +56,16 @@ function decorations.enable_rounding()
 end
 
 local button_commands = {
-    ['close'] = function(c) c:kill() end,
-    ['maximize'] = function(c) c.maximized = not c.maximized; c:raise() end,
-    ['minimize'] = function (c) c.minimized = true end,
-    ['sticky'] = function (c) c.sticky = not c.sticky end,
-    ['ontop'] = function (c) c.ontop = not c.ontop end,
-    ['floating'] = function (c) c.floating = not c.floating end,
+    ['close'] = { fun = function(c) c:kill() end, track_property = nil } ,
+    ['maximize'] = { fun = function(c) c.maximized = not c.maximized; c:raise() end, track_property = "maximized" },
+    ['minimize'] = { fun = function(c) c.minimized = true end },
+    ['sticky'] = { fun = function(c) c.sticky = not c.sticky; c:raise() end, track_property = "sticky" },
+    ['ontop'] = { fun = function(c) c.ontop = not c.ontop; c:raise() end, track_property = "ontop" },
+    ['floating'] = { fun = function(c) c.floating = not c.floating; c:raise() end, track_property = "floating" },
 }
 
 -- >> Helper functions for generating simple window buttons
--- Generates a button from using an AwesomeWM widget
+-- Generates a button using an AwesomeWM widget
 decorations.button = function (c, shape, color, unfocused_color, hover_color, size, margin, cmd)
     local button = wibox.widget {
         forced_height = size,
@@ -88,45 +88,43 @@ decorations.button = function (c, shape, color, unfocused_color, hover_color, si
     }
     button_widget:buttons(gears.table.join(
         awful.button({ }, 1, function ()
-            button_commands[cmd](c)
+            button_commands[cmd].fun(c)
         end)
     ))
 
-    -- Hover "animation"
+    local p = button_commands[cmd].track_property
+    -- Track client property if needed
+    if p then
+        c:connect_signal("property::"..p, function ()
+            button.bg = c[p] and color .. "40" or color
+        end)
+        c:connect_signal("focus", function ()
+            button.bg = c[p] and color .. "40" or color
+        end)
+        button_widget:connect_signal("mouse::leave", function ()
+            if c == client.focus then
+                button.bg = c[p] and color .. "40" or color
+            else
+                button.bg = unfocused_color
+            end
+        end)
+    else
+        button_widget:connect_signal("mouse::leave", function ()
+            if c == client.focus then
+                button.bg = color
+            else
+                button.bg = unfocused_color
+            end
+        end)
+        c:connect_signal("focus", function ()
+            button.bg = color
+        end)
+    end
     button_widget:connect_signal("mouse::enter", function ()
         button.bg = hover_color
-        -- button.border_color = hover_color
-    end)
-    button_widget:connect_signal("mouse::leave", function ()
-        if c == client.focus then
-            button.bg = color
-            -- button.border_color = color
-        else
-            button.bg = unfocused_color
-            -- button.border_color = unfocused_color
-        end
-    end)
-
-    -- Press "animation"
-    -- button_widget:connect_signal("button::press", function ()
-    --     button.bg = color .. "55"
-    -- end)
-    -- button_widget:connect_signal("button::release", function ()
-    --     if c == client.focus then
-    --         button.bg = hover_color
-    --     else
-    --         button.bg = unfocused_color
-    --     end
-    -- end)
-
-    -- Focus / unfocus
-    c:connect_signal("focus", function ()
-        button.bg = color
-        -- button.border_color = color
     end)
     c:connect_signal("unfocus", function ()
         button.bg = unfocused_color
-        -- button.border_color = unfocused_color
     end)
 
     return button_widget
@@ -145,35 +143,42 @@ decorations.text_button = function (c, symbol, font, color, unfocused_color, hov
         widget = wibox.widget.textbox
     }
 
-    -- local button_widget = wibox.widget {
-    --     button,
-    --     forced_height = size,
-    --     forced_width = size + margin * 2,
-    --     margins = margin,
-    --     widget = wibox.container.background()
-    -- }
-    -- button_widget:buttons(gears.table.join(
     button:buttons(gears.table.join(
         awful.button({ }, 1, function ()
-            button_commands[cmd](c)
+            button_commands[cmd].fun(c)
         end)
     ))
 
-    -- Hover "animation"
+    local p = button_commands[cmd].track_property
+    -- Track client property if needed
+    if p then
+        c:connect_signal("property::"..p, function ()
+            button.markup = helpers.colorize_text(symbol, c[p] and color .. "40" or color)
+        end)
+        c:connect_signal("focus", function ()
+            button.markup = helpers.colorize_text(symbol, c[p] and color .. "40" or color)
+        end)
+        button:connect_signal("mouse::leave", function ()
+            if c == client.focus then
+                button.markup = helpers.colorize_text(symbol, c[p] and color .. "40" or color)
+            else
+                button.markup = helpers.colorize_text(symbol, unfocused_color)
+            end
+        end)
+    else
+        button:connect_signal("mouse::leave", function ()
+            if c == client.focus then
+                button.markup = helpers.colorize_text(symbol, color)
+            else
+                button.markup = helpers.colorize_text(symbol, unfocused_color)
+            end
+        end)
+        c:connect_signal("focus", function ()
+            button.markup = helpers.colorize_text(symbol, color)
+        end)
+    end
     button:connect_signal("mouse::enter", function ()
         button.markup = helpers.colorize_text(symbol, hover_color)
-    end)
-    button:connect_signal("mouse::leave", function ()
-        if c == client.focus then
-            button.markup = helpers.colorize_text(symbol, color)
-        else
-            button.markup = helpers.colorize_text(symbol, unfocused_color)
-        end
-    end)
-
-    -- Focus / unfocus
-    c:connect_signal("focus", function ()
-        button.markup = helpers.colorize_text(symbol, color)
     end)
     c:connect_signal("unfocus", function ()
         button.markup = helpers.colorize_text(symbol, unfocused_color)
