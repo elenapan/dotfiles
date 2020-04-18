@@ -11,12 +11,18 @@
 local awful = require("awful")
 
 local function emit_info()
-    awful.spawn.easy_async({"mpc", "-f", "[[%artist%@@%title%@]]"},
+    awful.spawn.easy_async_with_shell("sh -c 'mpc -f ARTIST@%artist%@TITLE@%title%@FILE@%file%@'",
         function(stdout)
-            local artist = stdout:match('(.*)@@')
-            local title = stdout:match('@@(.*)@')
+            local artist = stdout:match('^ARTIST@(.*)@TITLE')
+            local title = stdout:match('@TITLE@(.*)@FILE')
             local status = stdout:match('%[(.*)%]')
-            status = string.gsub(status, '^%s*(.-)%s*$', '%1')
+
+            if artist == "" then
+              artist = "N/A"
+            end
+            if title == "" then
+              title = stdout:match('@FILE@(.*)@')
+            end
 
             local paused
             if status == "playing" then
