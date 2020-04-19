@@ -52,6 +52,9 @@ end
 apps.volume = function ()
     helpers.run_or_raise({class = 'Pavucontrol'}, true, "pavucontrol")
 end
+apps.torrent = function ()
+    helpers.run_or_raise({instance = 'torrent'}, true, user.terminal.." --class torrent -e transmission-remote-cli")
+end
 
 apps.editor = function ()
     -- helpers.run_or_raise({class = 'Emacs'}, false, "emacs")

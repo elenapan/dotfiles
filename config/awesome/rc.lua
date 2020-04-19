@@ -893,10 +893,14 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "torrent",
                 "Transmission",
                 "Deluge",
                 "VirtualBox Manager",
             },
+            instance = {
+                "torrent",
+            }
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[10] }
     },
