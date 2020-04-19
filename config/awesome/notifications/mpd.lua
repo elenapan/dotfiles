@@ -13,7 +13,8 @@ local send_mpd_notif = function (artist, song, paused)
     if first_time then
         first_time = false
     else
-        if paused or (sidebar and sidebar.visible) then
+        if  paused or (sidebar and sidebar.visible)
+            or (client.focus and (client.focus.instance == "music" or client.focus.class == "music")) then
             -- Sidebar and already shows mpd info, so
             -- destroy notification if it exists
             -- Also destroy it if music pauses
