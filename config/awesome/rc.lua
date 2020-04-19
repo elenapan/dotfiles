@@ -1023,6 +1023,19 @@ end)
 -- client.disconnect_signal("request::geometry", awful.ewmh.client_geometry_requests)
 -- client.disconnect_signal("request::geometry", awful.ewmh.geometry)
 
+-- Show the dashboard on login
+-- Add `touch /tmp/awesomewm-show-dashboard` to your ~/.xprofile in order to make the dashboard appear on login
+local dashboard_flag_path = "/tmp/awesomewm-show-dashboard"
+-- Check if file exists
+awful.spawn.easy_async_with_shell("stat "..dashboard_flag_path.." >/dev/null 2>&1", function (_, __, ___, exitcode)
+    if exitcode == 0 then
+      -- Show dashboard
+      if dashboard_show then dashboard_show() end
+      -- Delete the file
+      awful.spawn.with_shell("rm "..dashboard_flag_path)
+    end
+end)
+
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
