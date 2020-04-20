@@ -12,21 +12,21 @@ local city_id = user.openweathermap_city_id
 local units = user.weather_units
 -- Don't update too often, because your requests might get blocked for 24 hours
 local update_interval = 1200
-local temp_file = "/tmp/awesomewm-evil-weather"
+local temp_file = "/tmp/awesomewm-evil-weather-"..city_id.."-"..units
 
 local weather_details_script = [[
     bash -c '
     KEY="]]..key..[["
     CITY="]]..city_id..[["
     UNITS="]]..units..[["
-  
+
     weather=$(curl -sf "http://api.openweathermap.org/data/2.5/weather?APPID=$KEY&id=$CITY&units=$UNITS")
-  
+
     if [ ! -z "$weather" ]; then
         weather_temp=$(echo "$weather" | jq ".main.temp" | cut -d "." -f 1)
         weather_icon=$(echo "$weather" | jq -r ".weather[].icon" | head -1)
         weather_description=$(echo "$weather" | jq -r ".weather[].description" | head -1)
-  
+
         echo "$weather_icon" "$weather_description"@@"$weather_temp"
     else
         echo "..."
