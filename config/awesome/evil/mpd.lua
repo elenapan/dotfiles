@@ -17,11 +17,14 @@ local function emit_info()
             local title = stdout:match('@TITLE@(.*)@FILE')
             local status = stdout:match('\n%[(.*)%]')
 
-            if artist == "" then
+            if not artist or artist == "" then
               artist = "N/A"
             end
-            if title == "" then
+            if not title or title == "" then
               title = stdout:match('@FILE@(.*)@')
+              if not title or title == "" then
+                  title = "N/A"
+              end
             end
 
             local paused
