@@ -85,6 +85,31 @@ naughty.connect_signal("request::display", function(n)
         title_visible = true
     end
 
+    local actions = wibox.widget {
+        notification = n,
+        base_layout = wibox.widget {
+            layout = wibox.layout.flex.horizontal
+        },
+        widget_template = {
+            {
+                {
+                    id = 'text_role',
+                    font = beautiful.notification_font,
+                    widget = wibox.widget.textbox
+                },
+                widget = wibox.container.place
+            },
+            bg = x.color0,
+            forced_height = dpi(35),
+            widget = wibox.container.background
+        },
+        style = {
+            underline_normal = false,
+            underline_selected = true
+        },
+        widget = naughty.list.actions
+    }
+
     naughty.layout.box {
         notification = n,
         -- type = "splash",
@@ -141,8 +166,13 @@ naughty.connect_signal("request::display", function(n)
                                 bg = notification_bg,
                                 widget  = wibox.container.background,
                             },
-                            -- naughty.list.actions,
-                            -- spacing = dpi(4),
+                            {
+                                rainbow_stripe,
+                                forced_height = dpi(4),
+                                visible = n.actions and #n.actions > 0,
+                                widget = wibox.container.background
+                            },
+                            actions,
                             layout  = wibox.layout.fixed.vertical,
                         },
                         bg = "#00000000",
