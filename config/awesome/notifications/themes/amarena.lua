@@ -71,6 +71,32 @@ naughty.connect_signal("request::display", function(n)
         title_visible = true
     end
 
+    local actions = wibox.widget {
+        notification = n,
+        base_layout = wibox.widget {
+            spacing = dpi(3),
+            layout = wibox.layout.flex.horizontal
+        },
+        widget_template = {
+            {
+                {
+                    id = 'text_role',
+                    font = beautiful.notification_font,
+                    widget = wibox.widget.textbox
+                },
+                widget = wibox.container.place
+            },
+            bg = x.foreground.."22",
+            forced_height = dpi(25),
+            widget = wibox.container.background
+        },
+        style = {
+            underline_normal = false,
+            underline_selected = true
+        },
+        widget = naughty.list.actions
+    }
+
     naughty.layout.box {
         notification = n,
         type = "notification",
@@ -110,7 +136,15 @@ naughty.connect_signal("request::display", function(n)
                                             align = "center",
                                             widget = naughty.widget.message,
                                         },
-                                        -- spacing = dpi(4),
+                                        {
+                                            visible = n.actions and #n.actions > 0,
+                                            widget = helpers.vertical_pad(dpi(10)),
+                                        },
+                                        {
+                                            actions,
+                                            shape = gears.shape.rounded_bar,
+                                            widget = wibox.container.background,
+                                        },
                                         layout  = wibox.layout.fixed.vertical,
                                     },
                                     margins = beautiful.notification_margin,
@@ -119,8 +153,6 @@ naughty.connect_signal("request::display", function(n)
                                 bg = bg,
                                 widget  = wibox.container.background,
                             },
-                            -- naughty.list.actions,
-                            -- spacing = dpi(4),
                             layout  = wibox.layout.fixed.vertical,
                         },
                         strategy = "min",
