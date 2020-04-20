@@ -415,15 +415,15 @@ keys.globalkeys = gears.table.join(
         {description = "toggle microphone overlay", group = "volume"}),
 
     -- Screenshots
-    awful.key( { }, "Print", function() helpers.screenshot("full") end,
+    awful.key( { }, "Print", function() apps.screenshot("full") end,
         {description = "take full screenshot", group = "screenshots"}),
-    awful.key( { superkey, shiftkey }, "c", function() helpers.screenshot("selection") end,
+    awful.key( { superkey, shiftkey }, "c", function() apps.screenshot("selection") end,
         {description = "select area to capture", group = "screenshots"}),
-    awful.key( { superkey, ctrlkey }, "c", function() helpers.screenshot("clipboard") end,
+    awful.key( { superkey, ctrlkey }, "c", function() apps.screenshot("clipboard") end,
         {description = "select area to copy to clipboard", group = "screenshots"}),
-    awful.key( { superkey }, "Print", function() helpers.screenshot("browse") end,
+    awful.key( { superkey }, "Print", function() apps.screenshot("browse") end,
         {description = "browse screenshots", group = "screenshots"}),
-    awful.key( { superkey, shiftkey }, "Print", function() helpers.screenshot("gimp") end,
+    awful.key( { superkey, shiftkey }, "Print", function() apps.screenshot("gimp") end,
         {description = "edit most recent screenshot with gimp", group = "screenshots"}),
     -- Toggle tray visibility
     awful.key({ superkey }, "=",

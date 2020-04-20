@@ -133,4 +133,60 @@ apps.scratchpad = function()
     helpers.scratchpad({instance = "scratchpad"}, "scratchpad", nil)
 end
 
+-- Screenshots
+-- TODO: notification action buttons
+-- https://github.com/awesomeWM/awesome/issues/3017
+local capture_notif = nil
+local screenshot_notification_app_name = "screenshot"
+function apps.screenshot(action, delay)
+    local cmd
+    local timestamp = os.date("%Y.%m.%d-%H.%M.%S")
+    local filename = user.screenshot_dir..timestamp..".screenshot.png"
+    -- local filename = user.screenshot_dir.."screenshot"..timestamp..".png"
+    local maim_args = "-u -b 3 -m 5"
+    local icon = icons.screenshot
+
+    local prefix
+    if delay then
+        prefix = "sleep "..tostring(delay).." && "
+    else
+        prefix = ""
+    end
+
+    if action == "full" then
+        cmd = prefix.."maim "..maim_args.." "..filename
+        awful.spawn.easy_async_with_shell(cmd, function()
+            naughty.notification({ title = "Screenshot", message = "Screenshot taken", icon = icon, app_name = screenshot_notification_app_name })
+        end)
+    elseif action == "selection" then
+        cmd = "maim "..maim_args.." -s "..filename
+        capture_notif = naughty.notification({ title = "Screenshot", message = "Select area to capture.", icon = icon, timeout = 1, app_name = screenshot_notification_app_name })
+        awful.spawn.easy_async_with_shell(cmd, function(_, __, ___, exit_code)
+            if exit_code == 0 then
+                capture_notif = notifications.notify_dwim({ title = "Screenshot", message = "Selection captured", icon = icon, app_name = screenshot_notification_app_name }, capture_notif)
+            else
+                naughty.destroy(capture_notif)
+            end
+        end)
+    elseif action == "clipboard" then
+        capture_notif = naughty.notification({ title = "Screenshot", message = "Select area to copy to clipboard", icon = icon })
+        cmd = "maim "..maim_args.." -s /tmp/maim_clipboard && xclip -selection clipboard -t image/png /tmp/maim_clipboard &>/dev/null && rm /tmp/maim_clipboard"
+        awful.spawn.easy_async_with_shell(cmd, function(_, __, ___, exit_code)
+            if exit_code == 0 then
+                capture_notif = notifications.notify_dwim({ title = "Screenshot", message = "Copied selection to clipboard", icon = icon, app_name = screenshot_notification_app_name }, capture_notif)
+            else
+                naughty.destroy(capture_notif)
+            end
+        end)
+    elseif action == "browse" then
+      -- awful.spawn.with_shell("cd "..user.screenshot_dir.." && feh $(ls -t)")
+        awful.spawn.with_shell("cd "..user.screenshot_dir.." && sxiv $(ls -t)")
+    elseif action == "gimp" then
+        awful.spawn.with_shell("cd "..user.screenshot_dir.." && gimp $(ls -t | head -n1)")
+        naughty.notification({ message = "Opening last screenshot with GIMP", icon = icon, app_name = screenshot_notification_app_name})
+    end
+
+end
+
+
 return apps
