@@ -481,7 +481,7 @@ notification_state.forced_height = icon_size
 -- local notification_state = wibox.widget.textbox()
 -- notification_state.font = "Material Design Icons 30"
 local function update_notification_state_icon()
-    if naughty.is_suspended() then
+    if naughty.suspended then
         notification_state.image = icons.alarm_off
     else
         notification_state.image = icons.alarm
@@ -492,7 +492,7 @@ local notification_state_box = create_boxed_widget(notification_state, dpi(150),
 notification_state_box:buttons(gears.table.join(
     -- Left click - Toggle notification state
     awful.button({ }, 1, function ()
-        naughty.toggle()
+        naughty.suspended = not naughty.suspended
         update_notification_state_icon()
     end)
 ))

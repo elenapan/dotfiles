@@ -560,7 +560,7 @@ local notification_state = wibox.widget {
     widget = wibox.widget.textbox("")
 }
 local function update_notification_state_icon()
-    if naughty.is_suspended() then
+    if naughty.suspended then
         notification_state.markup = helpers.colorize_text(notification_state.text, x.color8)
     else
         notification_state.markup = helpers.colorize_text(notification_state.text, x.color2)
@@ -571,7 +571,7 @@ local notification_state_box = create_boxed_widget(notification_state, dpi(150),
 notification_state_box:buttons(gears.table.join(
     -- Left click - Toggle notification state
     awful.button({ }, 1, function ()
-        naughty.toggle()
+        naughty.suspended = not naughty.suspended
         update_notification_state_icon()
     end)
 ))
