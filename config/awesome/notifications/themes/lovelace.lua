@@ -11,6 +11,42 @@ if beautiful.notification_border_radius > 0 then
 end
 
 naughty.connect_signal("request::display", function(n)
+    local actions = wibox.widget {
+        notification = n,
+        base_layout = wibox.widget {
+            spacing = dpi(5),
+            forced_num_cols = 3,
+            layout = wibox.layout.grid
+            -- layout = wibox.layout.flex.horizontal
+        },
+        widget_template = {
+            {
+                {
+                    {
+                        font = "monospace 11 bold",
+                        markup = helpers.colorize_text(" ", x.color4),
+                        widget = wibox.widget.textbox
+                    },
+                    {
+                        id = 'text_role',
+                        font = beautiful.notification_font,
+                        widget = wibox.widget.textbox
+                    },
+                    forced_height = dpi(35),
+                    layout = wibox.layout.fixed.horizontal
+                },
+                widget = wibox.container.place
+            },
+            -- forced_height = dpi(35),
+            widget = wibox.container.background
+        },
+        style = {
+            underline_normal = false,
+            underline_selected = true
+        },
+        widget = naughty.list.actions
+    }
+
     naughty.layout.box {
         notification = n,
         shape = helpers.rrect(beautiful.notification_border_radius),
@@ -50,7 +86,12 @@ naughty.connect_signal("request::display", function(n)
                         },
                         {
                             helpers.vertical_pad(dpi(10)),
-                            naughty.list.actions,
+                            {
+                                nil,
+                                actions,
+                                expand = "none",
+                                layout = wibox.layout.align.horizontal
+                            },
                             visible = n.actions and #n.actions > 0,
                             layout = wibox.layout.fixed.vertical
                         },
