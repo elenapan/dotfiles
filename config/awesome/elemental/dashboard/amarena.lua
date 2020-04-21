@@ -5,6 +5,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local icons = require("icons")
 local helpers = require("helpers")
+local apps = require("apps")
 
 local keygrabber = require("awful.keygrabber")
 
@@ -589,12 +590,12 @@ local screenshot_box = create_boxed_widget(screenshot, dpi(150), dpi(78), x.back
 screenshot_box:buttons(gears.table.join(
     -- Left click - Take screenshot
     awful.button({ }, 1, function ()
-        helpers.screenshot("full")
+        apps.screenshot("full")
     end),
     -- Right click - Take screenshot in 5 seconds
     awful.button({ }, 3, function ()
         naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = icons.screenshot})
-        helpers.screenshot("full", 5)
+        apps.screenshot("full", 5)
     end)
 ))
 
