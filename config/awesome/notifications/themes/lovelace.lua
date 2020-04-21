@@ -15,9 +15,7 @@ naughty.connect_signal("request::display", function(n)
         notification = n,
         base_layout = wibox.widget {
             spacing = dpi(5),
-            forced_num_cols = 3,
-            layout = wibox.layout.grid
-            -- layout = wibox.layout.flex.horizontal
+            layout = wibox.layout.flex.horizontal
         },
         widget_template = {
             {
@@ -37,8 +35,9 @@ naughty.connect_signal("request::display", function(n)
                 },
                 widget = wibox.container.place
             },
-            -- forced_height = dpi(35),
-            widget = wibox.container.background
+            strategy = "min",
+            width = dpi(60),
+            widget = wibox.container.constraint,
         },
         style = {
             underline_normal = false,
