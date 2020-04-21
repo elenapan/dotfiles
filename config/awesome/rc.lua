@@ -390,6 +390,7 @@ awful.rules.rules = {
                 "Nm-connection-editor",
                 "File-roller",
                 "fst",
+                "Nvidia-settings",
             },
             name = {
                 "Event Tester",  -- xev
@@ -405,7 +406,7 @@ awful.rules.rules = {
                 "dialog",
             }
         },
-        properties = { floating = true, ontop = false }
+        properties = { floating = true }
     },
 
     -- TODO why does Chromium always start up floating in AwesomeWM?
@@ -414,6 +415,7 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "Chromium-browser",
+                "Chromium",
             }
         },
         properties = { floating = false }
@@ -484,7 +486,7 @@ awful.rules.rules = {
                 "leagueclientux.exe",
                 "riotclientux.exe",
                 "leagueclient.exe",
-                "editor",
+                "^editor$",
                 "markdown_input"
             },
             class = {
@@ -494,13 +496,17 @@ awful.rules.rules = {
                 --"discord",
                 --"TelegramDesktop",
                 "Firefox",
+                "firefox",
                 "Steam",
                 "Lutris",
                 "Chromium",
-                "editor",
+                "^editor$",
                 "markdown_input"
                 -- "Thunderbird",
             },
+            type = {
+              "splash"
+            }
         },
         properties = { titlebars_enabled = false },
     },
@@ -618,7 +624,7 @@ awful.rules.rules = {
     -- Keepass
     {
         rule_any = { class = { "KeePassXC" } },
-        except_any = { name = { "KeePassXC-Browser Confirm Access" } },
+        except_any = { name = { "KeePassXC-Browser Confirm Access" }, type = { "dialog" } },
         properties = { floating = true, width = screen_width * 0.7, height = screen_height * 0.75},
     },
 
@@ -790,6 +796,7 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "Firefox",
+                "firefox",
                 -- "qutebrowser",
             },
         },
@@ -806,6 +813,7 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "portal2_linux",
+                "deadcells",
                 "csgo_linux64",
                 "EtG.x86_64",
                 "factorio",
@@ -842,14 +850,9 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
-                "editor",
+                "^editor$",
                 -- "Emacs",
                 -- "Subl3",
-            },
-        },
-        except_any = {
-            class = {
-                "Nm-connection-editor",
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[4] }
@@ -919,6 +922,7 @@ awful.rules.rules = {
             },
             instance = {
                 "torrent",
+                "qemu",
             }
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[10] }

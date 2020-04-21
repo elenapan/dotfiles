@@ -31,6 +31,7 @@ local class_icons = {
     -- General
     ['TelegramDesktop'] = { symbol = "", color = x.color4 },
     ['Firefox'] = { symbol = "", color = x.color3 },
+    ['firefox'] = { symbol = "", color = x.color3 },
     ['Chromium'] = { symbol = "", color = x.color4 },
     ['Chromium-browser'] = { symbol = "", color = x.color4 },
     ['Steam'] = { symbol = "", color = x.color2 },
