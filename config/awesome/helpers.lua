@@ -68,29 +68,19 @@ function helpers.horizontal_pad(width)
     }
 end
 
+local direction_translate = {
+    ['up'] = 'top',
+    ['down'] = 'bottom',
+    ['left'] = 'left',
+    ['right'] = 'right'
+}
 function helpers.move_to_edge(c, direction)
-    -- local workarea = awful.screen.focused().workarea
-    -- local client_geometry = c:geometry()
-    if direction == "up" then
-        local old_x = c:geometry().x
-        awful.placement.top(c, {honor_padding = true, honor_workarea = true, honor_padding = true})
-        c.x = old_x
-        -- c:geometry({ nil, y = workarea.y + beautiful.screen_margin * 2, nil, nil })
-    elseif direction == "down" then 
-        local old_x = c:geometry().x
-        awful.placement.bottom(c, {honor_padding = true, honor_workarea = true, honor_padding = true})
-        c.x = old_x
-        -- c:geometry({ nil, y = workarea.height + workarea.y - client_geometry.height - beautiful.screen_margin * 2 - beautiful.border_width * 2, nil, nil })
-    elseif direction == "left" then 
-        local old_y = c:geometry().y
-        awful.placement.left(c, {honor_padding = true, honor_workarea = true, honor_padding = true})
-        c.y = old_y
-        -- c:geometry({ x = workarea.x + beautiful.screen_margin * 2, nil, nil, nil })
-    elseif direction == "right" then 
-        local old_y = c:geometry().y
-        awful.placement.right(c, {honor_padding = true, honor_workarea = true, honor_padding = true})
-        c.y = old_y
-        -- c:geometry({ x = workarea.width + workarea.x - client_geometry.width - beautiful.screen_margin * 2 - beautiful.border_width * 2, nil, nil, nil })
+    local old = c:geometry()
+    local new = awful.placement[direction_translate[direction]](c, {honor_padding = true, honor_workarea = true, margins = beautiful.useless_gap * 2, pretend = true})
+    if direction == "up" or direction == "down" then
+        c:geometry({ x = old.x, y = new.y })
+    else
+        c:geometry({ x = new.x, y = old.y })
     end
 end
 
@@ -199,20 +189,6 @@ function helpers.resize_dwim(c, direction)
         elseif direction == "right" then
             awful.tag.incmwfact( tiling_resize_factor)
         end
-    end
-end
-
--- Move client to screen edge, respecting the screen workarea
-function helpers.move_to_edge(c, direction)
-    local workarea = awful.screen.focused().workarea
-    if direction == "up" then
-        c:geometry({ nil, y = workarea.y + beautiful.useless_gap * 2, nil, nil })
-    elseif direction == "down" then 
-        c:geometry({ nil, y = workarea.height + workarea.y - c:geometry().height - beautiful.useless_gap * 2 - beautiful.border_width * 2, nil, nil })
-    elseif direction == "left" then 
-        c:geometry({ x = workarea.x + beautiful.useless_gap * 2, nil, nil, nil })
-    elseif direction == "right" then 
-        c:geometry({ x = workarea.width + workarea.x - c:geometry().width - beautiful.useless_gap * 2 - beautiful.border_width * 2, nil, nil, nil })
     end
 end
 
