@@ -149,6 +149,11 @@ awful.screen.connect_for_each_screen(function(s)
         widget = wibox.container.background
     }
     awful.placement.bottom_right(s.traybox, {margins = { bottom = beautiful.useless_gap * 4, right = beautiful.useless_gap * 4 }})
+    s.traybox:buttons(gears.table.join(
+        awful.button({ }, 2, function ()
+            s.traybox.visible = false
+        end)
+    ))
 end)
 
 awesome.connect_signal("elemental::dismiss", function()
