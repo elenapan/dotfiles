@@ -137,15 +137,16 @@ naughty.connect_signal("request::display", function(n)
                                             widget = naughty.widget.message,
                                         },
                                         {
+                                            helpers.vertical_pad(dpi(10)),
+                                            {
+                                                actions,
+                                                shape = gears.shape.rounded_bar,
+                                                widget = wibox.container.background,
+                                            },
                                             visible = n.actions and #n.actions > 0,
-                                            widget = helpers.vertical_pad(dpi(10)),
+                                            layout  = wibox.layout.fixed.vertical
                                         },
-                                        {
-                                            actions,
-                                            shape = gears.shape.rounded_bar,
-                                            widget = wibox.container.background,
-                                        },
-                                        layout  = wibox.layout.fixed.vertical,
+                                        layout  = wibox.layout.align.vertical,
                                     },
                                     margins = beautiful.notification_margin,
                                     widget  = wibox.container.margin,
