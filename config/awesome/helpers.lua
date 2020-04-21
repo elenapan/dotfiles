@@ -211,36 +211,21 @@ function helpers.move_client_dwim(c, direction)
 end
 
 -- Make client floating and snap to the desired edge
--- Respects gaps
--- TODO needs work
+local axis_translate = {
+    ['up'] = 'horizontally',
+    ['down'] = 'horizontally',
+    ['left'] = 'vertically',
+    ['right'] = 'vertically'
+}
 function helpers.float_and_edge_snap(c, direction)
     c.maximized = false
+    c.maximized_vertical = false
+    c.maximized_horizontal = false
     c.floating = true
-    local workarea = awful.screen.focused().workarea
-    local f
-    if direction == "up" then
-        local axis = 'horizontally'
-        f = awful.placement.scale
-            + awful.placement.top
-            + (axis and awful.placement['maximize_'..axis] or nil)
-    elseif direction == "down" then 
-        local axis = 'horizontally'
-        f = awful.placement.scale
-            + awful.placement.bottom
-            + (axis and awful.placement['maximize_'..axis] or nil)
-    elseif direction == "left" then 
-        local axis = 'vertically'
-        f = awful.placement.scale
-            + awful.placement.left
-            + (axis and awful.placement['maximize_'..axis] or nil)
-    elseif direction == "right" then 
-        local axis = 'vertically'
-        f = awful.placement.scale
-            + awful.placement.right
-            + (axis and awful.placement['maximize_'..axis] or nil)
-    end
-    -- TODO gap should be different depending on position
-    f(client.focus, {honor_padding = true, honor_workarea=true, to_percent = 0.5, margins = beautiful.useless_gap * 2 })
+    local f = awful.placement.scale
+        + awful.placement[direction_translate[direction]]
+        + awful.placement['maximize_'..axis_translate[direction]]
+    f(c, {honor_padding = true, honor_workarea=true, to_percent = 0.5, margins = beautiful.useless_gap * 2 })
 end
 
 -- Rounds a number to any number of decimals
