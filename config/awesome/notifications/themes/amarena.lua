@@ -33,9 +33,9 @@ local app_config = {
     ['mpd'] = { icon = "", title = true },
     ['mpv'] = { icon = "", title = true },
     ['keyboard'] = { icon = "", title = false },
+    ['email'] = { icon = "", title = true },
 }
 
--- TODO TODO TODO
 local urgency_bg = {
     ['low'] = x.color4,
     ['normal'] = x.color11,
