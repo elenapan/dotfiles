@@ -23,10 +23,6 @@ end
 
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s)
-    -- Create a system tray widget
-    s.systray = wibox.widget.systray()
-    s.systray.visible = false
-
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
@@ -133,6 +129,26 @@ awful.screen.connect_for_each_screen(function(s)
         end
     end)
 
+    -- Create a system tray widget
+    s.systray = wibox.widget.systray()
+    -- Create the tray box
+    s.traybox = wibox({ screen = s, width = dpi(150), height = beautiful.wibar_height, bg = "#00000000", visible = false, ontop = true})
+    s.traybox:setup {
+        {
+            {
+                nil,
+                s.systray,
+                expand = "none",
+                layout = wibox.layout.align.horizontal,
+            },
+            margins = dpi(10),
+            widget = wibox.container.margin
+        },
+        bg = beautiful.wibar_bg,
+        shape = helpers.rrect(beautiful.border_radius),
+        widget = wibox.container.background
+    }
+    awful.placement.bottom_right(s.traybox, {margins = { bottom = beautiful.useless_gap * 4, right = beautiful.useless_gap * 4 }})
 end)
 
 awesome.connect_signal("elemental::dismiss", function()
@@ -147,5 +163,5 @@ function wibars_toggle()
 end
 function tray_toggle()
     local s = awful.screen.focused()
-    s.systray.visible = not s.systray.visible
+    s.traybox.visible = not s.traybox.visible
 end
