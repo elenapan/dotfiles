@@ -518,6 +518,25 @@ awful.rules.rules = {
         properties = { titlebars_enabled = true },
     },
 
+    -- "Needy": Clients that steal focus when they are urgent
+    {
+        rule_any = {
+            class = {
+                "TelegramDesktop",
+            },
+            type = {
+                "dialog",
+            },
+        },
+        callback = function (c)
+            c:connect_signal("property::urgent", function ()
+                if c.urgent then
+                    c:jump_to()
+                end
+            end)
+        end
+    },
+
     -- Fixed terminal geometry for floating terminals
     {
         rule_any = {
