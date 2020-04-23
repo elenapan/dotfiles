@@ -190,7 +190,8 @@ naughty.connect_signal("request::display", function(n)
                     widget   = wibox.container.constraint,
                 },
                 strategy = "max",
-                width    = beautiful.notification_max_width or dpi(500),
+                width    = beautiful.notification_max_width or dpi(350),
+                height   = beautiful.notification_max_height or dpi(200),
                 widget   = wibox.container.constraint,
             },
             -- Anti-aliasing container

@@ -105,7 +105,7 @@ naughty.connect_signal("request::display", function(n)
             },
             strategy = "max",
             width = beautiful.notification_max_width or dpi(300),
-            -- height = beautiful.notification_max_height or dpi(300),
+            height = beautiful.notification_max_height or dpi(150),
             widget = wibox.container.constraint,
         }
     }
