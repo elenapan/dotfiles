@@ -318,11 +318,11 @@ local function create_bookmark(name, path)
 end
 
 local bookmarks = wibox.widget {
-    create_bookmark("HOME", ""),
-    create_bookmark("DOWNLOADS", "~/Downloads"),
-    create_bookmark("MUSIC", "~/Music"),
-    create_bookmark("PICTURES", "~/Pictures"),
-    create_bookmark("WALLPAPERS", "~/Pictures/Wallpapers"),
+    create_bookmark("HOME", os.getenv("HOME")),
+    create_bookmark("DOWNLOADS", user.dirs.downloads),
+    create_bookmark("MUSIC", user.dirs.music),
+    create_bookmark("PICTURES", user.dirs.pictures),
+    create_bookmark("WALLPAPERS", user.dirs.wallpapers),
     spacing = dpi(10),
     layout = wibox.layout.fixed.vertical
 }

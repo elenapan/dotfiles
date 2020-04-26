@@ -96,9 +96,17 @@ user = {
     -- >> Music <<
     music_client = "kitty -1 --class music -e ncmpcpp",
 
-    -- >> Screenshots <<
-    -- Make sure the directory exists
-    screenshot_dir = os.getenv("HOME").."/Pictures/Screenshots/",
+    -- Directories with fallback values
+    dirs = {
+        downloads = os.getenv("XDG_DOWNLOAD_DIR") or "~/Downloads",
+        documents = os.getenv("XDG_DOCUMENTS_DIR") or "~/Documents",
+        music = os.getenv("XDG_MUSIC_DIR") or "~/Music",
+        pictures = os.getenv("XDG_PICTURES_DIR") or "~/Pictures",
+        videos = os.getenv("XDG_VIDEOS_DIR") or "~/Videos",
+        -- Make sure the directory exists so that your screenshots
+        -- are not lost
+        screenshots = os.getenv("XDG_SCREENSHOTS_DIR") or "~/Pictures/Screenshots",
+    },
 
     -- >> Email <<
     email_client = "kitty -1 --class email -e neomutt",

@@ -139,10 +139,20 @@ end
 local capture_notif = nil
 local screenshot_notification_app_name = "screenshot"
 function apps.screenshot(action, delay)
+    -- Read-only actions
+    if action == "browse" then
+        awful.spawn.with_shell("cd "..user.dirs.screenshots.." && sxiv $(ls -t)")
+        return
+    elseif action == "gimp" then
+        awful.spawn.with_shell("cd "..user.dirs.screenshots.." && gimp $(ls -t | head -n1)")
+        naughty.notification({ message = "Opening last screenshot with GIMP", icon = icon, app_name = screenshot_notification_app_name})
+        return
+    end
+
+    -- Screenshot capturing actions
     local cmd
     local timestamp = os.date("%Y.%m.%d-%H.%M.%S")
-    local filename = user.screenshot_dir..timestamp..".screenshot.png"
-    -- local filename = user.screenshot_dir.."screenshot"..timestamp..".png"
+    local filename = user.dirs.screenshots..timestamp..".screenshot.png"
     local maim_args = "-u -b 3 -m 5"
     local icon = icons.screenshot
 
@@ -159,7 +169,7 @@ function apps.screenshot(action, delay)
     local screenshot_edit = naughty.action { name = "Edit" }
     local screenshot_delete = naughty.action { name = "Delete" }
     screenshot_open:connect_signal('invoked', function()
-        awful.spawn.with_shell("cd "..user.screenshot_dir.." && sxiv $(ls -t)")
+        awful.spawn.with_shell("cd "..user.dirs.screenshots.." && sxiv $(ls -t)")
     end)
     screenshot_copy:connect_signal('invoked', function()
         awful.spawn.with_shell("xclip -selection clipboard -t image/png "..filename.." &>/dev/null")
@@ -207,12 +217,6 @@ function apps.screenshot(action, delay)
                 naughty.destroy(capture_notif)
             end
         end)
-    elseif action == "browse" then
-      -- awful.spawn.with_shell("cd "..user.screenshot_dir.." && feh $(ls -t)")
-        awful.spawn.with_shell("cd "..user.screenshot_dir.." && sxiv $(ls -t)")
-    elseif action == "gimp" then
-        awful.spawn.with_shell("cd "..user.screenshot_dir.." && gimp $(ls -t | head -n1)")
-        naughty.notification({ message = "Opening last screenshot with GIMP", icon = icon, app_name = screenshot_notification_app_name})
     end
 
 end
