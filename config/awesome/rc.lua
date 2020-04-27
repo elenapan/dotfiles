@@ -516,7 +516,9 @@ awful.rules.rules = {
               "splash"
             }
         },
-        properties = { titlebars_enabled = false },
+        callback = function(c)
+            decorations.hide(c)
+        end
     },
 
     -- Titlebars ON (explicitly)
@@ -529,7 +531,9 @@ awful.rules.rules = {
                 "conversation",
             }
         },
-        properties = { titlebars_enabled = true },
+        callback = function(c)
+            decorations.show(c)
+        end
     },
 
     -- "Needy": Clients that steal focus when they are urgent
