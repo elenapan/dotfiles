@@ -215,6 +215,13 @@ calendar_widget:buttons(gears.table.join(
     end)
 ))
 
+-- Update calendar whenever dashboard is shown
+dashboard:connect_signal("property::visible", function ()
+    if dashboard.visible then
+        calendar_widget.date = os.date('*t')
+    end
+end)
+
 local calendar_box = create_boxed_widget(calendar_widget, dpi(300), dpi(400), x.background)
 -- local calendar_box = create_boxed_widget(calendar, 380, 540, x.color0)
 
