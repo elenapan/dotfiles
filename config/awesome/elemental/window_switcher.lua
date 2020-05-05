@@ -166,13 +166,22 @@ get_num_clients = function(s)
     return minimized_clients_in_tag + #s.clients
 end
 
+-- The client that was focused when the window_switcher was activated
+local window_switcher_first_client
 -- Keygrabber configuration
 -- Helper functions for keybinds
 local window_switcher_grabber
 window_switcher_hide = function()
     -- Add currently focused client to history
     if client.focus then
-        awful.client.focus.history.add(client.focus)
+        local window_switcher_last_client = client.focus
+        awful.client.focus.history.add(window_switcher_last_client)
+        -- Raise client that was focused originally
+        -- Then raise last focused client
+        if window_switcher_first_client then
+            window_switcher_first_client:raise()
+            window_switcher_last_client:raise()
+        end
     end
     -- Resume recording focus history
     awful.client.focus.history.enable_tracking()
@@ -221,6 +230,8 @@ function window_switcher_show(s)
     if get_num_clients(s) == 0 then
         return
     end
+    -- Store client that is focused in a variable
+    window_switcher_first_client = client.focus
 
     -- Stop recording focus history
     awful.client.focus.history.disable_tracking()
