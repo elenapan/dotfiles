@@ -26,8 +26,17 @@ helpers.prrect = function(radius, tl, tr, br, bl)
     end
 end
 
-function helpers.colorize_text(txt, fg)
-    return "<span foreground='" .. fg .."'>" .. txt .. "</span>"
+helpers.squircle = function(rate, delta)
+    return function(cr, width, height)
+        gears.shape.squircle(cr, width, height, rate, delta)
+    end
+end
+helpers.psquircle = function(rate, delta, tl, tr, br, bl)
+    return function(cr, width, height)
+        gears.shape.partial_squircle(cr, width, height, tl, tr, br, bl, rate, delta)
+    end
+end
+
 end
 
 function helpers.client_menu_toggle()
