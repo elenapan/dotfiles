@@ -540,7 +540,7 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "grave", function() sidebar.visible = not sidebar.visible end,
         {description = "show or hide sidebar", group = "awesome"}),
     -- Toggle wibar(s)
-    awful.key({ superkey, shiftkey }, "b", wibars_toggle,
+    awful.key({ superkey, shiftkey }, "b", function() wibars_toggle() end,
         {description = "show or hide wibar(s)", group = "awesome"}),
     -- Emacs (O for org mode)
     awful.key({ superkey }, "o", apps.org,
