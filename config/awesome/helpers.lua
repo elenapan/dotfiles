@@ -37,6 +37,8 @@ helpers.psquircle = function(rate, delta, tl, tr, br, bl)
     end
 end
 
+helpers.colorize_text = function(text, color)
+    return "<span foreground='"..color.."'>"..text.."</span>"
 end
 
 function helpers.client_menu_toggle()
