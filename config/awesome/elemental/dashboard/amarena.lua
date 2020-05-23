@@ -129,100 +129,15 @@ local user_widget = wibox.widget {
 local user_box = create_boxed_widget(user_widget, dpi(300), dpi(340), x.background)
 
 -- Calendar
--- Create the calendar
-local styles = {}
-styles.month   = { padding      = 20,
-    fg_color     = x.color7,
-    bg_color     = x.background.."00",
-    border_width = 0,
-}
-styles.normal  = {}
-styles.focus   = { fg_color = x.color1,
-    bg_color = x.color5..00,
-    markup   = function(t) return '<b>' .. t .. '</b>' end,
-}
-styles.header  = { fg_color = x.color4,
-    bg_color = x.color1.."00",
-    -- markup   = function(t) return '<b>' .. t .. '</b>' end,
-    markup   = function(t) return '<span font_desc="sans bold 22">' .. t .. '</span>' end,
-}
-styles.weekday = { fg_color = x.color7,
-    bg_color = x.color1.."00",
-    padding  = 3,
-    markup   = function(t) return '<b>' .. t .. '</b>' end,
-}
-local function decorate_cell(widget, flag, date)
-    if flag=='monthheader' and not styles.monthheader then
-        flag = 'header'
-    end
-    local props = styles[flag] or {}
-    if props.markup and widget.get_text and widget.set_markup then
-        widget:set_markup(props.markup(widget:get_text()))
-    end
-    -- Change bg color for weekends
-    local d = {year=date.year, month=(date.month or 1), day=(date.day or 1)}
-    local weekday = tonumber(os.date('%w', os.time(d)))
-    local default_fg = x.color7
-    local default_bg = x.color0.."00"
-    -- local default_bg = (weekday==0 or weekday==6) and x.color6 or x.color14
-    local ret = wibox.widget {
-        {
-            widget,
-            margins = (props.padding or 2) + (props.border_width or 0),
-            widget  = wibox.container.margin
-        },
-        shape              = props.shape,
-        shape_border_color = props.border_color or x.background,
-        shape_border_width = props.border_width or 0,
-        fg                 = props.fg_color or default_fg,
-        bg                 = props.bg_color or default_bg,
-        widget             = wibox.container.background
-    }
-    return ret
-end
-
-calendar_widget = wibox.widget {
-    date     = os.date('*t'),
-    font     = "sans medium 13",
-    long_weekdays = false,
-    spacing  = dpi(3),
-    fn_embed = decorate_cell,
-    widget   = wibox.widget.calendar.month
-}
-
-local current_month = os.date('*t').month
-calendar_widget:buttons(gears.table.join(
-    -- Left Click - Reset date to current date
-    awful.button({ }, 1, function ()
-        calendar_widget.date = os.date('*t')
-    end),
-    -- Scroll - Move to previous or next month
-    awful.button({ }, 4, function ()
-        new_calendar_month = calendar_widget.date.month - 1
-        if new_calendar_month == current_month then
-            calendar_widget.date = os.date('*t')
-        else
-            calendar_widget.date = {month = new_calendar_month, year = calendar_widget.date.year} 
-        end
-    end),
-    awful.button({ }, 5, function ()
-        new_calendar_month = calendar_widget.date.month + 1
-        if new_calendar_month == current_month then
-            calendar_widget.date = os.date('*t')
-        else
-            calendar_widget.date = {month = new_calendar_month, year = calendar_widget.date.year} 
-        end
-    end)
-))
-
+local calendar = require("noodle.calendar")
 -- Update calendar whenever dashboard is shown
 dashboard:connect_signal("property::visible", function ()
     if dashboard.visible then
-        calendar_widget.date = os.date('*t')
+        calendar.date = os.date('*t')
     end
 end)
 
-local calendar_box = create_boxed_widget(calendar_widget, dpi(300), dpi(400), x.background)
+local calendar_box = create_boxed_widget(calendar, dpi(300), dpi(400), x.background)
 -- local calendar_box = create_boxed_widget(calendar, 380, 540, x.color0)
 
 local disk_arc = wibox.widget {
@@ -400,7 +315,7 @@ end)
 local corona_box = create_boxed_widget(corona, dpi(200), dpi(180), x.background)
 
 corona_box:buttons(gears.table.join(
-    -- Left click - Go to a more detailed webside
+    -- Left click - Go to a more detailed website
     awful.button({ }, 1, function ()
         awful.spawn.with_shell(user.browser.." https://www.worldometers.info/coronavirus/")
         dashboard_hide()
@@ -413,7 +328,7 @@ local fortune_command = "fortune -n 140 -s"
 local fortune_update_interval = 3600
 -- local fortune_command = "fortune -n 140 -s computers"
 local fortune = wibox.widget {
-    font = "sans italic 11",
+    font = "sans medium 11",
     align = "center",
     text = "Loading your cookie...",
     widget = wibox.widget.textbox
@@ -423,7 +338,7 @@ local update_fortune = function()
     awful.spawn.easy_async_with_shell(fortune_command, function(out)
         -- Remove trailing whitespaces
         out = out:gsub('^%s*(.-)%s*$', '%1')
-        fortune.markup = "<b>"..helpers.colorize_text(out, x.color6).."</b>"
+        fortune.markup = "<i>"..helpers.colorize_text(out, x.color4).."</i>"
     end)
 end
 
