@@ -36,7 +36,7 @@ local bar_themes = {
     "lovelace",     -- 2 -- Start button, taglist, layout
     "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
     "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
-    "amarena",      -- 5 -- Autohiding taglist
+    "amarena",      -- 5 -- Hardcore "bar-less" setup with autohiding taglist
 }
 local bar_theme = bar_themes[5]
 
@@ -49,9 +49,9 @@ local icon_themes = {
 local icon_theme = icon_themes[2]
 -- ===================================================================
 local notification_themes = {
-    "lovelace",       -- 1 -- Standard image icons
-    "ephemeral",      -- 2 -- Text icons
-    "amarena",        -- 3 -- Speech bubble shape with text icons
+    "lovelace",       -- 1 -- Plain with standard image icons
+    "ephemeral",      -- 2 -- Outlined text icons and a rainbow stripe
+    "amarena",        -- 3 -- Speech bubble shape with filled text icons
 }
 local notification_theme = notification_themes[3]
 -- ===================================================================
@@ -743,7 +743,7 @@ awful.rules.rules = {
         properties = {},
         callback = function (c)
             -- Make it floating, ontop and move it out of the way if the current tag is maximized
-            if awful.layout.get(mouse.screen) == awful.layout.suit.max then
+            if awful.layout.get(awful.screen.focused()) == awful.layout.suit.max then
                 c.floating = true
                 c.ontop = true
                 c.width = screen_width * 0.30
@@ -807,8 +807,7 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
-                "Firefox",
-                "firefox",
+                "[fF]irefox",
                 -- "qutebrowser",
             },
         },
@@ -824,6 +823,7 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "lt-love",
                 "portal2_linux",
                 "deadcells",
                 "csgo_linux64",
@@ -833,10 +833,13 @@ awful.rules.rules = {
                 "Terraria.bin.x86",
                 "dontstarve_steam",
                 "Wine",
+                "trove.exe"
             },
             instance = {
                 "synthetik.exe",
-                "leagueclient.exe"
+                "pathofexile_x64steam.exe",
+                "leagueclient.exe",
+                "glyphclientapp.exe"
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[2] }
@@ -853,6 +856,7 @@ awful.rules.rules = {
                 "Signal",
                 "Slack",
                 "TeamSpeak 3",
+                "zoom",
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[3] }
@@ -931,11 +935,15 @@ awful.rules.rules = {
                 "Transmission",
                 "Deluge",
                 "VirtualBox Manager",
+                "KeePassXC"
             },
             instance = {
                 "torrent",
                 "qemu",
             }
+        },
+        except_any = {
+            type = { "dialog" }
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[10] }
     },
@@ -1035,7 +1043,7 @@ end)
 -- Raise focused clients automatically
 client.connect_signal("focus", function(c) c:raise() end)
 
--- Focus urgent clients automatically
+-- Focus all urgent clients automatically
 -- client.connect_signal("property::urgent", function(c)
 --     if c.urgent then
 --         c.minimized = false

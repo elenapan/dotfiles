@@ -17,12 +17,12 @@ local coronavirus_script = [[
   country="]]..country..[["
 
   stats=$(curl "https://corona-stats.online/$country?format=json" 2>/dev/null)
-  
+
   cases_total="$(echo $stats | jq ".data[0].cases")"
   cases_today="$(echo $stats | jq ".data[0].todayCases")"
   deaths_total="$(echo $stats | jq ".data[0].deaths")"
   deaths_today="$(echo $stats | jq ".data[0].todayDeaths")"
-  
+
   echo CTOTAL@$cases_total@CTODAY@$cases_today@DTOTAL@$deaths_total@DTODAY@$deaths_today@
   ']]
 

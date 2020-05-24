@@ -14,9 +14,7 @@ require("evil.brightness")
 -- Internet access required
 -- Note: These daemons use a temp file to store the retrieved
 -- values in order to check its modification time and decide if it is time to update or not.
--- If you want to change their parameters (e.g.
--- coronavirus_country), make sure to delete files
--- `/tmp/awesomewm-evil-weather` and
--- `/tmp/awesomewm-evil-coronavirus` before restarting AwesomeWM.
+-- No need to worry that you will be updating too often when restarting AwesomeWM :)
+-- This is useful because some APIs have a limit on the number of calls per hour.
 require("evil.coronavirus")
 require("evil.weather")

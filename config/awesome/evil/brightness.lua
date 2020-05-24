@@ -7,7 +7,7 @@ local awful = require("awful")
 -- Requires inotify-tools
 local brightness_subscribe_script = [[
    bash -c "
-   while (inotifywait -e modify /sys/class/backlight/?**/brightness -qq) do echo; done
+   while (inotifywait -e modify /sys/class/backlight/?*/brightness -qq) do echo; done
 "]]
 
 local brightness_script = [[

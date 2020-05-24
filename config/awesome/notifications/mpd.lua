@@ -22,9 +22,19 @@ local send_mpd_notif = function (artist, song, paused)
                 notif:destroy()
             end
         else
-            -- Since the evil::mpd signal is also emitted when seeking, only send a notification when the song and artist are different than before.
+            -- Since the evil::mpd signal is also emitted when seeking, only
+            -- send a notification when the song and artist are different than
+            -- before.
             if artist ~= old_artist and song ~=old_song then
-                notif = notifications.notify_dwim({ title = "Now playing:", message = "<b>"..song.."</b> by <b>"..artist.."</b>", icon = icons.music, timeout = timeout, app_name = "mpd" }, notif)
+                notif = notifications.notify_dwim(
+                    {
+                        title = "Now playing:",
+                        message = "<b>"..song.."</b> by <b>"..artist.."</b>",
+                        icon = icons.music,
+                        timeout = timeout,
+                        app_name = "mpd"
+                    },
+                    notif)
                 old_artist = artist
                 old_song = song
             end
