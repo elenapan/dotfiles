@@ -359,13 +359,13 @@ sidebar:buttons(gears.table.join(
 ))
 
 -- Hide sidebar when mouse leaves
-if user.sidebar_hide_on_mouse_leave then
+if user.sidebar.hide_on_mouse_leave then
     sidebar:connect_signal("mouse::leave", function ()
         sidebar.visible = false
     end)
 end
 -- Activate sidebar by moving the mouse at the edge of the screen
-if user.sidebar_show_on_mouse_screen_edge then
+if user.sidebar.show_on_mouse_screen_edge then
     local sidebar_activator = wibox({y = sidebar.y, width = 1, visible = true, ontop = false, opacity = 0, below = true, screen = screen.primary})
     sidebar_activator.height = sidebar.height
     sidebar_activator:connect_signal("mouse::enter", function ()

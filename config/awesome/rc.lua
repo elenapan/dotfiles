@@ -80,21 +80,17 @@ user = {
     terminal = "kitty -1",
     floating_terminal = "kitty -1",
     browser = "firefox",
-    file_manager = "thunar",
-    tmux = "kitty -1 -e tmux new",
+    file_manager = "kitty -1 -e ranger",
     editor = "kitty -1 --class editor -e vim",
-    -- editor = "emacs",
+    email_client = "kitty -1 --class email -e neomutt",
+    music_client = "kitty -1 --class music -e ncmpcpp",
 
-    -- >> Search <<
-    -- web_search_cmd = "exo-open https://duckduckgo.com/?q="
+    -- >> Web Search <<
     web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
-    -- web_search_cmd = "exo-open https://www.google.com/search?q="
+    -- web_search_cmd = "xdg-open https://www.google.com/search?q="
 
     -- >> User profile <<
     profile_picture = os.getenv("HOME").."/.config/awesome/profile.png",
-
-    -- >> Music <<
-    music_client = "kitty -1 --class music -e ncmpcpp",
 
     -- Directories with fallback values
     dirs = {
@@ -108,12 +104,11 @@ user = {
         screenshots = os.getenv("XDG_SCREENSHOTS_DIR") or "~/Pictures/Screenshots",
     },
 
-    -- >> Email <<
-    email_client = "kitty -1 --class email -e neomutt",
-
     -- >> Sidebar <<
-    sidebar_hide_on_mouse_leave = true,
-    sidebar_show_on_mouse_screen_edge = true,
+    sidebar = {
+        hide_on_mouse_leave = true,
+        show_on_mouse_screen_edge = true,
+    },
 
     -- >> Lock screen <<
     -- This password will ONLY be used if you have not installed
