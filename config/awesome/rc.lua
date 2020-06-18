@@ -749,6 +749,14 @@ awful.rules.rules = {
                     margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
                 })
             end
+
+            -- Restore `ontop` after fullscreen is disabled
+            -- Sorta tries to fix: https://github.com/awesomeWM/awesome/issues/667
+            c:connect_signal("property::fullscreen", function ()
+                if not c.fullscreen then
+                    c.ontop = true
+                end
+            end)
         end
     },
 
