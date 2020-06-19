@@ -25,7 +25,7 @@ local theme = themes[5]
 local decoration_themes = {
     "lovelace",       -- 1 -- Standard titlebar with 3 buttons (close, max, min)
     "skyfall",        -- 2 -- No buttons, only title
-    "ephemeral",      -- 3 -- Anti-aliased, with text-generated titlebar buttons
+    "ephemeral",      -- 3 -- Text-generated titlebar buttons
     "amarena",        -- 4 -- Text-generated titlebar buttons
 }
 local decoration_theme = decoration_themes[4]
