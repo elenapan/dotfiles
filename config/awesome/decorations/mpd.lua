@@ -315,6 +315,9 @@ local mpd_create_decoration = function (c)
     if not toolbar_enabled_initially then
         awful.titlebar.hide(c, toolbar_position)
     end
+
+    -- Set custom decoration flags
+    c.custom_decoration = { top = true, left = true }
 end
 
 -- Add the titlebar whenever a new music client is spawned
