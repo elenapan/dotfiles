@@ -9,5 +9,5 @@ local notif
 -- updates in order to send a notification whenerver needed.
 local dummy_keyboardlayout_widget = awful.widget.keyboardlayout()
 dummy_keyboardlayout_widget:connect_signal("widget::redraw_needed", function ()
-    notif = notifications.notify_dwim({ title = "Keyboard layout", message = dummy_keyboardlayout_widget.widget.text:upper(), icon = icons.keyboard, timeout = 1, app_name = "keyboard" }, notif)
+    notif = notifications.notify_dwim({ title = "Keyboard layout", message = dummy_keyboardlayout_widget.widget.text:upper(), icon = icons.image.keyboard, timeout = 1, app_name = "keyboard" }, notif)
 end)

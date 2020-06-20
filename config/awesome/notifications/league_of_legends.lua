@@ -25,7 +25,7 @@ table.insert(awful.rules.rules, {
         c.urgent_first_time = true
         c:connect_signal("property::urgent", function()
             if c.urgent and not c.urgent_first_time then
-                league_notif = notifications.notify_dwim({ title = "League of Legends", message = "is desperate for your attention", icon = icons.games, timeout = 15, app_name = "League of Legends", actions = { jump_to_client } }, league_notif)
+                league_notif = notifications.notify_dwim({ title = "League of Legends", message = "is desperate for your attention", icon = icons.image.games, timeout = 15, app_name = "League of Legends", actions = { jump_to_client } }, league_notif)
             else
                 if league_notif then
                     league_notif:destroy()

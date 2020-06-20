@@ -79,7 +79,7 @@ apps.night_mode = function ()
     local cmd = "pgrep redshift > /dev/null && (pkill redshift && echo 'OFF') || (echo 'ON' && redshift -l 0:0 -t 3700:3700 -r &>/dev/null &)"
     awful.spawn.easy_async_with_shell(cmd, function(out)
         local message = out:match('ON') and "Activated!" or "Deactivated!"
-        night_mode_notif = notifications.notify_dwim({ title = "Night mode", message = message, app_name = "night_mode", icon = icons.redshift }, night_mode_notif)
+        night_mode_notif = notifications.notify_dwim({ title = "Night mode", message = message, app_name = "night_mode", icon = icons.image.redshift }, night_mode_notif)
     end)
 end
 
@@ -88,7 +88,7 @@ apps.screenkey = function ()
     local cmd = "pgrep screenkey > /dev/null && (pkill screenkey && echo 'OFF') || (echo 'ON' && screenkey --ignore Caps_Lock --bg-color '#FFFFFF' --font-color '#000000' &>/dev/null &)"
     awful.spawn.easy_async_with_shell(cmd, function(out)
         local message = out:match('ON') and "Activated!" or "Deactivated!"
-        screenkey_notif = notifications.notify_dwim({ title = "Screenkey", message = message, app_name = "screenkey", icon = icons.keyboard }, screenkey_notif)
+        screenkey_notif = notifications.notify_dwim({ title = "Screenkey", message = message, app_name = "screenkey", icon = icons.image.keyboard }, screenkey_notif)
     end)
 end
 
@@ -154,7 +154,7 @@ function apps.screenshot(action, delay)
     local timestamp = os.date("%Y.%m.%d-%H.%M.%S")
     local filename = user.dirs.screenshots..timestamp..".screenshot.png"
     local maim_args = "-u -b 3 -m 5"
-    local icon = icons.screenshot
+    local icon = icons.image.screenshot
 
     local prefix
     if delay then

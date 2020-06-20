@@ -5,6 +5,8 @@ local helpers = require("helpers")
 local keys = require("keys")
 local gears = require("gears")
 local capi = { screen = screen, client = client }
+local icons = require("icons")
+local class_icons = icons.text.by_class
 
 -- TODO ability to switch to specific minimized clients without using the mouse:
 -- Might need to ditch the "easy" tasklist approach for something manual
@@ -12,55 +14,6 @@ local capi = { screen = screen, client = client }
 local window_switcher_margin = dpi(10)
 local item_height = dpi(50)
 local item_width = dpi(500)
-
--- Set up text symbols and colors to be used instead of awful.widget.clienticon
--- Based on the client's `class` property
-local class_icons = {
-    -- Terminals
-    ['kitty'] = { symbol = "", color = x.color5 },
-    ['Alacritty'] = { symbol = "", color = x.color5 },
-    ['Termite'] = { symbol = "", color = x.color5 },
-    ['URxvt'] = { symbol = "", color = x.color5 },
-    ['st'] = { symbol = "", color = x.color5 },
-    ['st-256color'] = { symbol = "", color = x.color5 },
-
-    -- Image viewers
-    ['feh'] = { symbol = "", color = x.color1 },
-    ['Sxiv'] = { symbol = "", color = x.color1 },
-
-    -- General
-    ['TelegramDesktop'] = { symbol = "", color = x.color4 },
-    ['Firefox'] = { symbol = "", color = x.color3 },
-    ['firefox'] = { symbol = "", color = x.color3 },
-    ['Chromium'] = { symbol = "", color = x.color4 },
-    ['Chromium-browser'] = { symbol = "", color = x.color4 },
-    ['Steam'] = { symbol = "", color = x.color2 },
-    ['Lutris'] = { symbol = "", color = x.color6 },
-    ['editor'] = { symbol = "", color = x.color5 },
-    ['Emacs'] = { symbol = "", color = x.color5 },
-    ['email'] = { symbol = "", color = x.color6 },
-    ['music'] = { symbol = "", color = x.color6 },
-    ['mpv'] = { symbol = "", color = x.color6 },
-    ['KeePassXC'] = { symbol = "", color = x.color1 },
-    ['Gucharmap'] = { symbol = "", color = x.color6 },
-    ['Pavucontrol'] = { symbol = "", color = x.color4 },
-    ['htop'] = { symbol = "", color = x.color2 },
-    ['Screenruler'] = { symbol = "", color = x.color3 },
-    ['Galculator'] = { symbol = "", color = x.color2 },
-    ['Zathura'] = { symbol = "", color = x.color2 },
-
-    -- File managers
-    ['Thunar'] = { symbol = "", color = x.color3 },
-    ['Nemo'] = { symbol = "", color = x.color3 },
-
-    ['Gimp'] = { symbol = "", color = x.color4 },
-    ['Inkscape'] = { symbol = "", color = x.color2 },
-    ['Gpick'] = { symbol = "", color = x.color6 },
-
-    -- Default
-    ['_'] = { symbol = "", color = x.color7.."99" }
-}
-
 
 local window_switcher_hide
 local get_num_clients

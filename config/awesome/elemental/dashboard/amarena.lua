@@ -516,7 +516,7 @@ screenshot_box:buttons(gears.table.join(
     end),
     -- Right click - Take screenshot in 5 seconds
     awful.button({ }, 3, function ()
-        naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = icons.screenshot})
+        naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = icons.image.screenshot})
         apps.screenshot("full", 5)
     end)
 ))

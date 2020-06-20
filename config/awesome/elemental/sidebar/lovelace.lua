@@ -43,7 +43,7 @@ local function format_progress_bar(bar, icon)
 end
 
 -- Item configuration
-local exit_icon = wibox.widget.imagebox(icons.poweroff)
+local exit_icon = wibox.widget.imagebox(icons.image.poweroff)
 exit_icon.resize = true
 exit_icon.forced_width = icon_size
 exit_icon.forced_height = icon_size
@@ -86,7 +86,7 @@ local weather = wibox.widget{
 }
 
 
-local temperature_icon = wibox.widget.imagebox(icons.temperature)
+local temperature_icon = wibox.widget.imagebox(icons.image.temperature)
 local temperature_bar = require("noodle.temperature_bar")
 local temperature = format_progress_bar(temperature_bar, temperature_icon)
 temperature:buttons(
@@ -94,18 +94,18 @@ temperature:buttons(
         awful.button({ }, 1, apps.temperature_monitor)
 ))
 
-local battery_icon = wibox.widget.imagebox(icons.battery)
+local battery_icon = wibox.widget.imagebox(icons.image.battery)
 awesome.connect_signal("evil::charger", function(plugged)
     if plugged then
-        battery_icon.image = icons.battery_charging
+        battery_icon.image = icons.image.battery_charging
     else
-        battery_icon.image = icons.battery
+        battery_icon.image = icons.image.battery
     end
 end)
 local battery_bar = require("noodle.battery_bar")
 local battery = format_progress_bar(battery_bar, battery_icon)
 
-local cpu_icon = wibox.widget.imagebox(icons.cpu)
+local cpu_icon = wibox.widget.imagebox(icons.image.cpu)
 local cpu_bar = require("noodle.cpu_bar")
 local cpu = format_progress_bar(cpu_bar, cpu_icon)
 
@@ -115,7 +115,7 @@ cpu:buttons(
         awful.button({ }, 3, apps.process_monitor_gui)
 ))
 
-local ram_icon = wibox.widget.imagebox(icons.ram)
+local ram_icon = wibox.widget.imagebox(icons.image.ram)
 local ram_bar = require("noodle.ram_bar")
 local ram = format_progress_bar(ram_bar, ram_icon)
 
@@ -125,7 +125,7 @@ ram:buttons(
         awful.button({ }, 3, apps.process_monitor_gui)
 ))
 
-local playerctl_toggle_icon = wibox.widget.imagebox(icons.playerctl_toggle)
+local playerctl_toggle_icon = wibox.widget.imagebox(icons.image.playerctl_toggle)
 playerctl_toggle_icon.resize = true
 playerctl_toggle_icon.forced_width = playerctl_button_size
 playerctl_toggle_icon.forced_height = playerctl_button_size
@@ -138,7 +138,7 @@ playerctl_toggle_icon:buttons(gears.table.join(
     end)
 ))
 
-local playerctl_prev_icon = wibox.widget.imagebox(icons.playerctl_prev)
+local playerctl_prev_icon = wibox.widget.imagebox(icons.image.playerctl_prev)
 playerctl_prev_icon.resize = true
 playerctl_prev_icon.forced_width = playerctl_button_size
 playerctl_prev_icon.forced_height = playerctl_button_size
@@ -151,7 +151,7 @@ playerctl_prev_icon:buttons(gears.table.join(
     end)
 ))
 
-local playerctl_next_icon = wibox.widget.imagebox(icons.playerctl_next)
+local playerctl_next_icon = wibox.widget.imagebox(icons.image.playerctl_next)
 playerctl_next_icon.resize = true
 playerctl_next_icon.forced_width = playerctl_button_size
 playerctl_next_icon.forced_height = playerctl_button_size
@@ -247,7 +247,7 @@ mpd_song:buttons(gears.table.join(
 
 local disk_space = require("noodle.disk")
 disk_space.font = "sans 14"
-local disk_icon = wibox.widget.imagebox(icons.files)
+local disk_icon = wibox.widget.imagebox(icons.image.files)
 disk_icon.resize = true
 disk_icon.forced_width = icon_size
 disk_icon.forced_height = icon_size
@@ -272,7 +272,7 @@ disk:buttons(gears.table.join(
     end)
 ))
 
-local search_icon = wibox.widget.imagebox(icons.search)
+local search_icon = wibox.widget.imagebox(icons.image.search)
 search_icon.resize = true
 search_icon.forced_width = icon_size
 search_icon.forced_height = icon_size
@@ -295,7 +295,7 @@ search:buttons(gears.table.join(
     end)
 ))
 
-local volume_icon = wibox.widget.imagebox(icons.volume)
+local volume_icon = wibox.widget.imagebox(icons.image.volume)
 local volume_bar = require("noodle.volume_bar")
 local volume = format_progress_bar(volume_bar, volume_icon)
 

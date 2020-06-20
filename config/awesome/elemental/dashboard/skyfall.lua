@@ -333,7 +333,7 @@ helpers.add_hover_cursor(fortune_box, "hand1")
 
 local icon_size = dpi(40)
 
-local brightness_icon = wibox.widget.imagebox(icons.redshift)
+local brightness_icon = wibox.widget.imagebox(icons.image.redshift)
 brightness_icon.resize = true
 brightness_icon.forced_width = icon_size
 brightness_icon.forced_height = icon_size
@@ -390,7 +390,7 @@ brightness_box:buttons(
 
 helpers.add_hover_cursor(brightness_box, "hand1")
 
-local notification_state = wibox.widget.imagebox(icons.alarm)
+local notification_state = wibox.widget.imagebox(icons.image.alarm)
 notification_state.resize = true
 notification_state.forced_width = icon_size
 notification_state.forced_height = icon_size
@@ -398,9 +398,9 @@ notification_state.forced_height = icon_size
 -- notification_state.font = "Material Design Icons 30"
 local function update_notification_state_icon()
     if naughty.suspended then
-        notification_state.image = icons.alarm_off
+        notification_state.image = icons.image.alarm_off
     else
-        notification_state.image = icons.alarm
+        notification_state.image = icons.image.alarm
     end
 end
 update_notification_state_icon()
@@ -415,7 +415,7 @@ notification_state_box:buttons(gears.table.join(
 
 helpers.add_hover_cursor(notification_state_box, "hand1")
 
-local screenshot = wibox.widget.imagebox(icons.screenshot)
+local screenshot = wibox.widget.imagebox(icons.image.screenshot)
 screenshot.resize = true
 screenshot.forced_width = icon_size
 screenshot.forced_height = icon_size
@@ -429,7 +429,7 @@ screenshot_box:buttons(gears.table.join(
     end),
     -- Right click - Take screenshot in 5 seconds
     awful.button({ }, 3, function ()
-        naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = icons.screenshot})
+        naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = icons.image.screenshot})
         apps.screenshot("full", 5)
     end)
 ))

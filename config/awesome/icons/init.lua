@@ -11,9 +11,63 @@ local function file_exists(path)
 end
 
 local icons = {}
+icons.image = {}
+icons.text = {}
+
+-- TODO Set up weather text icons here instead of in ../noodle/text_weather.lua
+-- icons.text.weather = {}
+
+-- Set up text symbols and accent colors to be used in tasklists or docks
+-- instead of awful.widget.clienticon
+-- Based on the client's `class` property
+icons.text.by_class = {
+    -- Terminals
+    ['kitty'] = { symbol = "", color = x.color5 },
+    ['Alacritty'] = { symbol = "", color = x.color5 },
+    ['Termite'] = { symbol = "", color = x.color5 },
+    ['URxvt'] = { symbol = "", color = x.color5 },
+    ['st'] = { symbol = "", color = x.color5 },
+    ['st-256color'] = { symbol = "", color = x.color5 },
+
+    -- Image viewers
+    ['feh'] = { symbol = "", color = x.color1 },
+    ['Sxiv'] = { symbol = "", color = x.color1 },
+
+    -- General
+    ['TelegramDesktop'] = { symbol = "", color = x.color4 },
+    ['Firefox'] = { symbol = "", color = x.color3 },
+    ['firefox'] = { symbol = "", color = x.color3 },
+    ['Chromium'] = { symbol = "", color = x.color4 },
+    ['Chromium-browser'] = { symbol = "", color = x.color4 },
+    ['Steam'] = { symbol = "", color = x.color2 },
+    ['Lutris'] = { symbol = "", color = x.color6 },
+    ['editor'] = { symbol = "", color = x.color5 },
+    ['Emacs'] = { symbol = "", color = x.color5 },
+    ['email'] = { symbol = "", color = x.color6 },
+    ['music'] = { symbol = "", color = x.color6 },
+    ['mpv'] = { symbol = "", color = x.color6 },
+    ['KeePassXC'] = { symbol = "", color = x.color1 },
+    ['Gucharmap'] = { symbol = "", color = x.color6 },
+    ['Pavucontrol'] = { symbol = "", color = x.color4 },
+    ['htop'] = { symbol = "", color = x.color2 },
+    ['Screenruler'] = { symbol = "", color = x.color3 },
+    ['Galculator'] = { symbol = "", color = x.color2 },
+    ['Zathura'] = { symbol = "", color = x.color2 },
+
+    -- File managers
+    ['Thunar'] = { symbol = "", color = x.color3 },
+    ['Nemo'] = { symbol = "", color = x.color3 },
+
+    ['Gimp'] = { symbol = "", color = x.color4 },
+    ['Inkscape'] = { symbol = "", color = x.color2 },
+    ['Gpick'] = { symbol = "", color = x.color6 },
+
+    -- Default
+    ['_'] = { symbol = "", color = x.color7.."99" }
+}
 
 -- Available icons
-local icon_names = {
+local image_icon_names = {
     "playerctl_toggle",
     "playerctl_prev",
     "playerctl_next",
@@ -75,19 +129,21 @@ local p
 
 -- Assumes all the icon files end in .png
 -- TODO maybe automatically detect icons in icon theme directory
-local function set_icon(icon_name)
+local function set_image_icon(icon_name)
     local i = p..icon_name..".png"
-    icons[icon_name] = i
+    icons.image[icon_name] = i
 end
 
 -- Set all the icon variables
 function icons.init(theme_name)
-    -- Set the path to icons
+    -- Set the path to image icons
     p = gears.filesystem.get_configuration_dir().."icons/"..theme_name.."/"
 
-    for i = 1, #icon_names do
-        set_icon(icon_names[i])
+    for i = 1, #image_icon_names do
+        set_image_icon(image_icon_names[i])
     end
+
+    -- Set symbols and accent colors for text icons
 end
 
 return icons

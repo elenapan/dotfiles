@@ -30,7 +30,7 @@ local send_mpd_notif = function (artist, song, paused)
                     {
                         title = "Now playing:",
                         message = "<b>"..song.."</b> by <b>"..artist.."</b>",
-                        icon = icons.music,
+                        icon = icons.image.music,
                         timeout = timeout,
                         app_name = "mpd"
                     },

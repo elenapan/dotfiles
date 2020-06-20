@@ -223,7 +223,9 @@ After setting up my AwesomeWM configuration, inside `~/.config/awesome` you will
 
    Here you can find a directory for each available icon theme and an `init.lua` file which initializes the `icons` variables.
 
-   For example, `icons.firefox` can be used to refer to your selected theme's Firefox icon instead of using the full path to the image. This makes it easy to switch between themes.
+   Icons can be images taken from the selected icon theme or text symbols taken from some icon font.
+
+   For example, `icons.image.firefox` can be used to refer to your selected theme's Firefox icon instead of using the full path to the image. This makes it easy to switch between themes.
 
    Note: Icon themes defined here have nothing to do with your system-wide icon theme.
 

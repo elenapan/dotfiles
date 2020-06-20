@@ -18,7 +18,7 @@ awesome.connect_signal("evil::brightness", function (percentage)
             end
         else
             -- Send notification
-            notif = notifications.notify_dwim({ title = "Brightness", message = tostring(percentage), icon = icons.redshift, timeout = timeout, app_name = "brightness" }, notif)
+            notif = notifications.notify_dwim({ title = "Brightness", message = tostring(percentage), icon = icons.image.redshift, timeout = timeout, app_name = "brightness" }, notif)
         end
     end
 end)

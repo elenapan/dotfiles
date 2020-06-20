@@ -24,7 +24,7 @@ awesome.connect_signal("evil::battery", function(battery)
         return
     end
     if not charger_plugged then
-        icon = icons.battery
+        icon = icons.image.battery
         if battery <= user.battery_threshold_critical and not battery_critical_already_notified then
             battery_critical_already_notified = true
             message = "CRITICAL"
@@ -37,7 +37,7 @@ awesome.connect_signal("evil::battery", function(battery)
             timeout = 6
         end
     else
-        icon = icons.battery_charging
+        icon = icons.image.battery_charging
         if battery > battery_full_threshold and not battery_full_already_notified then
             battery_full_already_notified = true
             message = "Full"
@@ -63,11 +63,11 @@ awesome.connect_signal("evil::charger", function(plugged)
         -- Avoids notifying of a full battery if it was almost full after plugging
         battery_full_already_notified = battery_current > battery_full_threshold
         message = "Plugged"
-        icon = icons.battery_charging
+        icon = icons.image.battery_charging
     else
         battery_full_already_notified = false
         message = "Unplugged"
-        icon = icons.battery
+        icon = icons.image.battery
     end
 
     -- Do not send a notification the first time (when AwesomeWM (re)starts)

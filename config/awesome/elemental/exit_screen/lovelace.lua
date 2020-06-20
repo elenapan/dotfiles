@@ -38,7 +38,7 @@ local username = os.getenv("USER")
 local goodbye_widget = wibox.widget.textbox("Goodbye " .. username:sub(1,1):upper()..username:sub(2))
 goodbye_widget.font = "sans 70"
 
-local poweroff_icon = wibox.widget.imagebox(icons.poweroff)
+local poweroff_icon = wibox.widget.imagebox(icons.image.poweroff)
 poweroff_icon.resize = true
 poweroff_icon.forced_width = icon_size
 poweroff_icon.forced_height = icon_size
@@ -67,7 +67,7 @@ poweroff:buttons(gears.table.join(
     end)
 ))
 
-local reboot_icon = wibox.widget.imagebox(icons.reboot)
+local reboot_icon = wibox.widget.imagebox(icons.image.reboot)
 reboot_icon.resize = true
 reboot_icon.forced_width = icon_size
 reboot_icon.forced_height = icon_size
@@ -98,7 +98,7 @@ reboot:buttons(gears.table.join(
     end)
 ))
 
-local suspend_icon = wibox.widget.imagebox(icons.suspend)
+local suspend_icon = wibox.widget.imagebox(icons.image.suspend)
 suspend_icon.resize = true
 suspend_icon.forced_width = icon_size
 suspend_icon.forced_height = icon_size
@@ -130,7 +130,7 @@ suspend:buttons(gears.table.join(
 ))
 
 
-local exit_icon = wibox.widget.imagebox(icons.exit)
+local exit_icon = wibox.widget.imagebox(icons.image.exit)
 exit_icon.resize = true
 exit_icon.forced_width = icon_size
 exit_icon.forced_height = icon_size
@@ -161,7 +161,7 @@ exit:buttons(gears.table.join(
     end)
 ))
 
-local lock_icon = wibox.widget.imagebox(icons.lock)
+local lock_icon = wibox.widget.imagebox(icons.image.lock)
 lock_icon.resize = true
 lock_icon.forced_width = icon_size
 lock_icon.forced_height = icon_size

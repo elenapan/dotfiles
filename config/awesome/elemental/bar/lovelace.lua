@@ -13,7 +13,7 @@ local desktop_control = require("noodle.desktop_control")
 local minimal_tasklist = require("noodle.minimal_tasklist")
 
 -- Start button widget (can toggle sidebar, tray, scratchpad)
-start_widget = wibox.widget.imagebox(icons.start)
+start_widget = wibox.widget.imagebox(icons.image.start)
 start_widget:buttons(gears.table.join(
         -- Left click - Toggle sidebar
         awful.button({ }, 1, function ()
