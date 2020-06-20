@@ -62,16 +62,9 @@ apps.editor = function ()
     -- helpers.run_or_raise({class = 'editor'}, false, user.editor, { switchtotag = true })
 end
 
-apps.performance_mode = function ()
-    -- local cmd = "pgrep compton > /dev/null && (pkill compton && sudo cpufreq-set -g performance && echo 'ON') || (echo 'OFF' && compton --config ~/.config/compton/compton.conf & sudo cpufreq-set -g powersave &)"
-    -- awful.spawn.easy_async_with_shell(cmd, function(out)
-    --     if out:match('ON') then
-    --         naughty.notify({ title = "Performance mode", message = "Activated!" })
-    --     else
-    --         naughty.notify({ title = "Performance mode", message = "Deactivated!" })
-    --     end
-    -- end)
-    awful.spawn.with_shell("performance_mode")
+-- Toggle compositor
+apps.compositor = function ()
+    awful.spawn.with_shell("sh -c 'pgrep picom > /dev/null && pkill picom || picom --config ~/.config/picom/picom.conf & disown'")
 end
 
 local night_mode_notif
