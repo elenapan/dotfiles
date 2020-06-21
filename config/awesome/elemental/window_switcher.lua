@@ -157,6 +157,16 @@ local unminimize = function()
     end
 end
 
+local close = function()
+    if client.focus then
+        -- Remove bad reference to client.focus
+        if client.focus == window_switcher_first_client then
+            window_switcher_first_client = nil
+        end
+        client.focus:kill()
+    end
+end
+
 -- Set up keybinds
 -- Single keys only
 local keybinds = {
@@ -167,8 +177,8 @@ local keybinds = {
     ['N'] = unminimize,
     ['u'] = unminimize, -- `u` for up
     -- Close
-    ['d'] = function() if client.focus then client.focus:kill() end end,
-    ['q'] = function() if client.focus then client.focus:kill() end end,
+    ['d'] = close,
+    ['q'] = close,
     -- Move with vim keys
     ['j'] = function() awful.client.focus.byidx(1) end,
     ['k'] = function() awful.client.focus.byidx(-1) end,
