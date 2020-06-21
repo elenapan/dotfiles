@@ -329,7 +329,6 @@ local fortune_update_interval = 3600
 -- local fortune_command = "fortune -n 140 -s computers"
 local fortune = wibox.widget {
     font = "sans medium 11",
-    align = "center",
     text = "Loading your cookie...",
     widget = wibox.widget.textbox
 }
@@ -351,8 +350,12 @@ gears.timer {
 }
 
 local fortune_widget = wibox.widget {
-    fortune,
-    margins = box_gap * 3,
+    {
+        nil,
+        fortune,
+        layout = wibox.layout.align.horizontal,
+    },
+    margins = box_gap * 4,
     color = "#00000000",
     widget = wibox.container.margin
 }

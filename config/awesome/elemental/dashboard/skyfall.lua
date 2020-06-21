@@ -298,7 +298,6 @@ local fortune_command = "fortune -n 140 -s"
 -- local fortune_command = "fortune -n 140 -s computers"
 local fortune = wibox.widget {
     font = "sans italic 12",
-    align = "center",
     text = "Loading your cookie...",
     widget = wibox.widget.textbox
 }
@@ -311,8 +310,12 @@ awful.widget.watch(fortune_command, fortune_update_interval, function(widget, st
 end)
 
 local fortune_widget = wibox.widget {
-    fortune,
-    margins = box_gap * 3,
+    {
+        nil,
+        fortune,
+        layout = wibox.layout.align.horizontal,
+    },
+    margins = box_gap * 4,
     color = "#00000000",
     widget = wibox.container.margin
 }
