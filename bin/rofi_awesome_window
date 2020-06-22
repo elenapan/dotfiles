@@ -15,7 +15,9 @@ awesome_get_client_list() {
     local list = '\n'
     local capi = { screen = screen, client = client }
     for _, c in ipairs(capi.client.get()) do
-        list = list..c.window..' ['..c.first_tag.index..'] ~ '..c.class..' ~ '..c.name..'\n'
+        if c.class then
+            list = list..c.window..' ['..c.first_tag.index..'] ~ '..c.class..' ~ '..c.name..'\n'
+        end
     end
     return list
     " | sed '1,1d; $d'
