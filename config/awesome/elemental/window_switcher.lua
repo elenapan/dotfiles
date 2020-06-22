@@ -121,6 +121,7 @@ end
 
 -- The client that was focused when the window_switcher was activated
 local window_switcher_first_client
+
 -- Keygrabber configuration
 -- Helper functions for keybinds
 local window_switcher_grabber
@@ -131,7 +132,7 @@ window_switcher_hide = function()
         awful.client.focus.history.add(window_switcher_last_client)
         -- Raise client that was focused originally
         -- Then raise last focused client
-        if window_switcher_first_client then
+        if window_switcher_first_client and window_switcher_first_client.valid then
             window_switcher_first_client:raise()
             window_switcher_last_client:raise()
         end
@@ -158,13 +159,7 @@ local unminimize = function()
 end
 
 local close = function()
-    if client.focus then
-        -- Remove bad reference to client.focus
-        if client.focus == window_switcher_first_client then
-            window_switcher_first_client = nil
-        end
-        client.focus:kill()
-    end
+    if client.focus then client.focus:kill() end
 end
 
 -- Set up keybinds
