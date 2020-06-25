@@ -299,6 +299,39 @@ function helpers.prompt(action, textbox, prompt, callback)
     end
 end
 
+-- Given a `match` condition, returns an array with clients that match it, or
+-- just the first found client if `first_only` is true
+function helpers.find_clients(match, first_only)
+    local matcher = function (c)
+        return awful.rules.match(c, match)
+    end
+
+    if first_only then
+        for c in awful.client.iterate(matcher) do
+            return c
+        end
+    else
+        local clients = {}
+        for c in awful.client.iterate(matcher) do
+            table.insert(clients, c)
+        end
+        return clients
+    end
+    return nil
+end
+
+-- Given a `match` condition, calls the specified function `f_do` on all the
+-- clients that match it
+function helpers.find_clients_and_do(match, f_do)
+    local matcher = function (c)
+        return awful.rules.match(c, match)
+    end
+
+    for c in awful.client.iterate(matcher) do
+        f_do(c)
+    end
+end
+
 function helpers.run_or_raise(match, move, spawn_cmd, spawn_args)
     local matcher = function (c)
         return awful.rules.match(c, match)
