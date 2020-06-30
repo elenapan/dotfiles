@@ -221,8 +221,13 @@ local function generate_dock_icon(c, bg, fg, symbol)
             -- Each line corresponds to 1 client
             local rofi_input = ""
             for i = 1, #clients do
-                rofi_input = rofi_input..prefix..'  '..clients[i].name..'\n'
+                if clients[i].name then
+                    rofi_input = rofi_input..prefix..'  '..clients[i].name..'\n'
+                end
             end
+
+            -- Nothing to do
+            if rofi_input == "" then return end
 
             -- Remove last \n
             rofi_input = rofi_input:sub(1, #rofi_input - 1)
