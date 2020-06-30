@@ -266,7 +266,9 @@ for i = 1, #dock_pinned_classes do
 end
 
 -- >> Helper functions used by signals
-local function add_client(c)
+local add_client
+local remove_client
+add_client = function(c)
     if not c.class then return end -- Some windows have no class (rare)
 
     -- Increment class count
@@ -285,20 +287,26 @@ local function add_client(c)
             local indicator = item:get_children_by_id("indicator")[1]
             indicator.bg = i.color
         else
-            if dock_items[c.class] then
-                -- Show item
-                dock_items[c.class].visible = true
-            else
-                -- Create a new item if it has not been created yet
-                dock_items[c.class] = generate_dock_icon(c, item_bg, i.color, i.symbol)
-                dock:add(dock_items[c.class])
-            end
+            -- Create a new item if it has not been created yet
+            dock_items[c.class] = generate_dock_icon(c, item_bg, i.color, i.symbol)
+            dock:add(dock_items[c.class])
         end
     end
+
+    local old_class = c.class
+    -- Handle clients which change their own class
+    local handle_class_change
+    handle_class_change = function(c)
+        require("naughty").notification({ title = "class changed. old: "..old_class, message = "new: "..c.class })
+        c:disconnect_signal("property::class", handle_class_change)
+        remove_client({ class = old_class })
+        add_client(c)
+    end
+    c:connect_signal("property::class", handle_class_change)
 end
 
-local function remove_client(c)
-    if not c.class then return end -- Some windows have no class (rare)
+remove_client = function(c)
+    if not c.class then return end -- Some clients have no class (rare)
 
     -- Decrement class count
     dock_class_count[c.class] = dock_class_count[c.class] - 1
@@ -315,12 +323,9 @@ local function remove_client(c)
             local indicator = item:get_children_by_id("indicator")[1]
             indicator.bg = "#00000000"
         else
-            -- Hide item
-            dock_items[c.class].visible = false
-
             -- Remove item
-            -- dock:remove_widgets(dock_items[c.class])
-            -- dock_items[c.class] = nil
+            dock:remove_widgets(dock_items[c.class])
+            dock_items[c.class] = nil
         end
     end
 end
@@ -356,5 +361,4 @@ end)
 client.connect_signal("focus", update_focus)
 client.connect_signal("unfocus", update_focus)
 
--- dock:emit_signal("noodle::dock_update")
 return dock
