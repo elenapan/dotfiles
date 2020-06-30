@@ -63,6 +63,7 @@ awful.screen.connect_for_each_screen(function(s)
         placement = dock_placement,
         widget = dock
     })
+    dock_placement(s.dock)
 
     local popup_timer
     local autohide = function ()
@@ -110,14 +111,18 @@ awful.screen.connect_for_each_screen(function(s)
             end)
     ))
 
-    s.dock:connect_signal("property::width", function ()
+    local function adjust_dock()
         -- Reset position every time the number of dock items changes
         dock_placement(s.dock)
+
         -- Adjust activator width every time the dock wibox width changes
         s.dock_activator.width = s.dock.width + dpi(250)
         -- And recenter
         awful.placement.bottom(s.dock_activator)
-    end)
+    end
+
+    adjust_dock()
+    s.dock:connect_signal("property::width", adjust_dock)
 
     s.dock:connect_signal("mouse::enter", function ()
         if popup_timer then
