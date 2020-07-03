@@ -6,6 +6,7 @@ local wibox = require("wibox")
 local helpers = require("helpers")
 local beautiful = require("beautiful")
 local apps = require("apps")
+local cairo = require("lgi").cairo
 local icons = require("icons")
 local class_icons = icons.text.by_class
 
@@ -16,9 +17,13 @@ local item_size = dpi(50)
 local item_shape = helpers.squircle(dpi(1.6), 0)
 local item_margin = dpi(8) -- For spacing between items
 local indicator_spacing = dpi(8)
-local indicator_shape_focused = gears.shape.rounded_bar
-local indicator_shape_unfocused = gears.shape.circle
-local indicator_size = dpi(14)
+local indicator_height = dpi(7)
+-- Custom arc shape
+local function draw_indicator_shape_unfocused(cr)
+    cr:arc(item_size / 2, indicator_height, 10, 0, 2 * math.pi)
+    cr:close_path()
+    cr:fill()
+end
 
 -- >> Grouping happens based on the `class` property of each client
 -------------------------------------------------------------------
@@ -131,22 +136,36 @@ local function generate_dock_icon(c, bg, fg, symbol)
         widget = wibox.container.background
     })
 
-    local indicator = wibox.widget({
-        helpers.horizontal_pad(1), -- Dummy widget
-        bg = c.ghost and "#00000000" or fg, -- If pinned, initially make indicator invisible
-        shape = client.focus and client.focus == c and indicator_shape_focused or indicator_shape_unfocused,
-        forced_height = indicator_size,
-        forced_width = item_size - item_margin * 2,
-        widget = wibox.container.background
-    })
+    local indicator_focused = cairo.ImageSurface.create(cairo.Format.ARGB32, item_size, indicator_height)
+    local indicator_unfocused = cairo.ImageSurface.create(cairo.Format.ARGB32, item_size, indicator_height)
+
+    local cr
+    cr = cairo.Context(indicator_unfocused)
+    cr:set_source(gears.color(fg))
+    draw_indicator_shape_unfocused(cr)
 
     -- Put everything together
     local w = wibox.widget({
         {
             icon,
             {
+                {
+                    id = "indicator_unfocused",
+                    bgimage = indicator_unfocused,
+                    widget = wibox.container.background
+                },
+                {
+                    id = "indicator_focused",
+                    bg = fg,
+                    shape = helpers.prrect(dpi(60), true, true, false, false),
+                    visible = false,
+                    widget = wibox.container.background
+                },
+                forced_height = indicator_height,
+                forced_width = item_size - item_margin * 2,
                 id = "indicator",
-                widget = indicator
+                visible = not c.ghost,
+                layout = wibox.layout.stack
             },
             spacing = indicator_spacing,
             layout = wibox.layout.fixed.vertical
@@ -284,13 +303,13 @@ add_client = function(c)
         local i = class_icons[c.class] or class_icons['_']
         if dock_pinned_launchers[c.class] then
             -- It is pinned, we dont need to create a new item, as it is
-            -- already there. Instead, just colorize the indicator.
+            -- already there. Instead, just show the indicator.
             local item = dock_items[c.class]
             if not item then
                 return
             end
             local indicator = item:get_children_by_id("indicator")[1]
-            indicator.bg = i.color
+            indicator.visible = true
         else
             -- Create a new item if it has not been created yet
             dock_items[c.class] = generate_dock_icon(c, item_bg, i.color, i.symbol)
@@ -302,7 +321,6 @@ add_client = function(c)
     -- Handle clients which change their own class
     local handle_class_change
     handle_class_change = function(c)
-        require("naughty").notification({ title = "class changed. old: "..old_class, message = "new: "..c.class })
         c:disconnect_signal("property::class", handle_class_change)
         remove_client({ class = old_class })
         add_client(c)
@@ -326,7 +344,7 @@ remove_client = function(c)
                 return
             end
             local indicator = item:get_children_by_id("indicator")[1]
-            indicator.bg = "#00000000"
+            indicator.visible = false
         else
             -- Remove item
             dock:remove_widgets(dock_items[c.class])
@@ -340,13 +358,14 @@ local function update_focus(c)
 
     local item = dock_items[c.class]
     if not item then return end
-    local indicator = item:get_children_by_id("indicator")[1]
+    local indicator_focused = item:get_children_by_id("indicator_focused")[1]
+    local indicator_unfocused = item:get_children_by_id("indicator_unfocused")[1]
     if client.focus and client.focus == c then
-        -- Focused
-        indicator.shape = indicator_shape_focused
+        indicator_unfocused.visible = false
+        indicator_focused.visible = true
     else
-        -- Unfocused
-        indicator.shape = indicator_shape_unfocused
+        indicator_unfocused.visible = true
+        indicator_focused.visible = false
 
         -- Update the reference to the most recently used window of this class
         dock_recently_focused[c.class] = c

@@ -22,10 +22,9 @@ local update_taglist = function (item, tag, index)
 end
 
 local dock = require("noodle.dock")
--- Half of the indicator will be deliberately offscreen in order to create
--- that "cut off rounded bar" look.
 local dock_placement = function(w)
-    return awful.placement.bottom(w, { margins = { bottom = -dpi(7) } })
+    return awful.placement.bottom(w)
+end
 end
 
 -- Create a wibox for each screen and add it
