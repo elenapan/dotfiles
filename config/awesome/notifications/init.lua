@@ -7,14 +7,12 @@ local notifications = {}
 -- Notification settings
 -- Icon size
 -- naughty.config.defaults['icon_size'] = beautiful.notification_icon_size
+naughty.config.defaults['border_width'] = beautiful.notification_border_width
 
 -- Timeouts
 naughty.config.defaults.timeout = 5
 naughty.config.presets.low.timeout = 2
 naughty.config.presets.critical.timeout = 12
-
--- Icon size
--- naughty.config.defaults['icon_size'] = beautiful.notification_icon_size
 
 -- >> Notify DWIM (Do What I Mean):
 -- Create or update notification automagically. Requires storing the
