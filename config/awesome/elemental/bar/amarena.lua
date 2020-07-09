@@ -25,34 +25,94 @@ local dock = require("noodle.dock")
 local dock_placement = function(w)
     return awful.placement.bottom(w)
 end
+
+local tag_colors_empty = { "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000", "#00000000" }
+
+local tag_colors_urgent = { x.foreground, x.foreground, x.foreground, x.foreground, x.foreground, x.foreground, x.foreground, x.foreground, x.foreground, x.foreground }
+
+local tag_colors_focused = {
+    x.color1,
+    x.color5,
+    x.color4,
+    x.color6,
+    x.color2,
+    x.color3,
+    x.color1,
+    x.color5,
+    x.color4,
+    x.color6,
+}
+
+local tag_colors_occupied = {
+    x.color1.."45",
+    x.color5.."45",
+    x.color4.."45",
+    x.color6.."45",
+    x.color2.."45",
+    x.color3.."45",
+    x.color1.."45",
+    x.color5.."45",
+    x.color4.."45",
+    x.color6.."45",
+}
+
+-- Helper function that updates a taglist item
+local update_taglist = function (item, tag, index)
+    if tag.selected then
+        item.bg = tag_colors_focused[index]
+    elseif tag.urgent then
+        item.bg = tag_colors_urgent[index]
+    elseif #tag:clients() > 0 then
+        item.bg = tag_colors_occupied[index]
+    else
+        item.bg = tag_colors_empty[index]
+    end
 end
 
--- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s)
+    -- Create a taglist for every screen
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
         buttons = keys.taglist_buttons,
-        widget_template = {
-            {
-                forced_width = dpi(12),
-                forced_height = dpi(12),
-                shape = gears.shape.circle,
-                widget = wibox.container.background,
+        layout = {
+            spacing = 10,
+            spacing_widget = {
+                color  = '#00ff00',
+                shape  = gears.shape.circle,
+                widget = wibox.widget.separator,
             },
-            left = dpi(12),
-            right = dpi(12),
-            widget = wibox.container.margin,
+            layout = wibox.layout.flex.horizontal,
+        },
+        widget_template = {
+            widget = wibox.container.background,
             create_callback = function(self, tag, index, _)
-                update_taglist(self:get_all_children()[1], tag, index)
+                update_taglist(self, tag, index)
             end,
             update_callback = function(self, tag, index, _)
-                update_taglist(self:get_all_children()[1], tag, index)
+                update_taglist(self, tag, index)
             end,
         }
     }
 
-    -- Create the wibox
+    -- Create the taglist wibox
+    s.taglist_box = awful.wibar({
+        screen = s,
+        visible = true,
+        ontop = false,
+        type = "dock",
+        position = "top",
+        height = dpi(10),
+        -- position = "left",
+        -- width = dpi(6),
+        bg = "#00000000",
+    })
+
+    s.taglist_box:setup {
+        widget = s.mytaglist,
+    }
+
+    -- Create the dock wibox
     s.dock = awful.popup({
         -- Size is dynamic, no need to set it here
         visible = false,

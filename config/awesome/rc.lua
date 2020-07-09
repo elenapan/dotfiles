@@ -36,7 +36,7 @@ local bar_themes = {
     "lovelace",     -- 2 -- Start button, taglist, layout
     "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
     "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
-    "amarena",      -- 5 -- Hardcore "bar-less" setup with autohiding taglist
+    "amarena",      -- 5 -- Minimal taglist and dock with autohide
 }
 local bar_theme = bar_themes[5]
 
