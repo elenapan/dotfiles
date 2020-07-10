@@ -77,14 +77,20 @@ naughty.connect_signal("request::display", function(n)
         widget_template = {
             {
                 {
-                    id = 'text_role',
-                    font = beautiful.notification_font,
-                    widget = wibox.widget.textbox
+                    {
+                        id = 'text_role',
+                        font = beautiful.notification_font,
+                        widget = wibox.widget.textbox
+                    },
+                    left = dpi(6),
+                    right = dpi(6),
+                    widget = wibox.container.margin
                 },
                 widget = wibox.container.place
             },
             bg = x.color8.."32",
             forced_height = dpi(25),
+            forced_width = dpi(70),
             widget = wibox.container.background
         },
         style = {
