@@ -78,7 +78,7 @@ naughty.connect_signal("request::display", function(n)
                                     expand = "none",
                                     layout = wibox.layout.align.vertical
                                 },
-                                left = beautiful.notification_padding,
+                                left = n.icon and beautiful.notification_padding or 0,
                                 widget = wibox.container.margin,
                             },
                             layout = wibox.layout.align.horizontal
