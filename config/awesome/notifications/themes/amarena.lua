@@ -77,20 +77,15 @@ naughty.connect_signal("request::display", function(n)
         widget_template = {
             {
                 {
-                    {
-                        id = 'text_role',
-                        font = beautiful.notification_font,
-                        widget = wibox.widget.textbox
-                    },
-                    widget = wibox.container.place
+                    id = 'text_role',
+                    font = beautiful.notification_font,
+                    widget = wibox.widget.textbox
                 },
-                bg = x.color8.."32",
-                forced_height = dpi(25),
-                widget = wibox.container.background
+                widget = wibox.container.place
             },
-            strategy = "min",
-            width = dpi(60),
-            widget = wibox.container.constraint,
+            bg = x.color8.."32",
+            forced_height = dpi(25),
+            widget = wibox.container.background
         },
         style = {
             underline_normal = false,
@@ -112,51 +107,46 @@ naughty.connect_signal("request::display", function(n)
                 {
                     {
                         {
-                            {
-                                markup = helpers.colorize_text(icon, color),
-                                align = "center",
-                                valign = "center",
-                                widget = custom_notification_icon,
-                            },
-                            forced_width = dpi(50),
-                            bg = x.background,
-                            widget  = wibox.container.background,
+                            markup = helpers.colorize_text(icon, color),
+                            align = "center",
+                            valign = "center",
+                            widget = custom_notification_icon,
                         },
+                        forced_width = dpi(50),
+                        bg = x.background,
+                        widget  = wibox.container.background,
+                    },
+                    {
                         {
                             {
-                                {
-                                    align = "center",
-                                    visible = title_visible,
-                                    font = beautiful.notification_font,
-                                    markup = "<b>"..n.title.."</b>",
-                                    widget = wibox.widget.textbox,
-                                    -- widget = naughty.widget.title,
-                                },
-                                {
-                                    align = "center",
-                                    wrap = "char",
-                                    widget = naughty.widget.message,
-                                },
-                                {
-                                    helpers.vertical_pad(dpi(10)),
-                                    {
-                                        actions,
-                                        shape = helpers.rrect(dpi(4)),
-                                        widget = wibox.container.background,
-                                    },
-                                    visible = n.actions and #n.actions > 0,
-                                    layout  = wibox.layout.fixed.vertical
-                                },
-                                layout  = wibox.layout.align.vertical,
+                                align = "center",
+                                visible = title_visible,
+                                font = beautiful.notification_font,
+                                markup = "<b>"..n.title.."</b>",
+                                widget = wibox.widget.textbox,
+                                -- widget = naughty.widget.title,
                             },
-                            margins = beautiful.notification_margin,
-                            widget  = wibox.container.margin,
+                            {
+                                align = "center",
+                                -- wrap = "char",
+                                widget = naughty.widget.message,
+                            },
+                            {
+                                helpers.vertical_pad(dpi(10)),
+                                {
+                                    actions,
+                                    shape = helpers.rrect(dpi(4)),
+                                    widget = wibox.container.background,
+                                },
+                                visible = n.actions and #n.actions > 0,
+                                layout  = wibox.layout.fixed.vertical
+                            },
+                            layout  = wibox.layout.align.vertical,
                         },
-                        layout  = wibox.layout.fixed.horizontal,
+                        margins = beautiful.notification_margin,
+                        widget  = wibox.container.margin,
                     },
-                    strategy = "min",
-                    width    = dpi(100),
-                    widget   = wibox.container.constraint,
+                    layout  = wibox.layout.fixed.horizontal,
                 },
                 strategy = "max",
                 width    = beautiful.notification_max_width or dpi(350),
