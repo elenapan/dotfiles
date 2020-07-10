@@ -26,9 +26,8 @@ local decoration_themes = {
     "lovelace",       -- 1 -- Standard titlebar with 3 buttons (close, max, min)
     "skyfall",        -- 2 -- No buttons, only title
     "ephemeral",      -- 3 -- Text-generated titlebar buttons
-    "amarena",        -- 4 -- Text-generated titlebar buttons
 }
-local decoration_theme = decoration_themes[4]
+local decoration_theme = decoration_themes[3]
 -- ===================================================================
 -- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
