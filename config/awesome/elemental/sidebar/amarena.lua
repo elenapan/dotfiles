@@ -112,52 +112,47 @@ brightness:buttons(
 
 local hours = wibox.widget.textclock("%H")
 local minutes = wibox.widget.textclock("%M")
+
+local make_little_dot = function (color)
+    return wibox.widget{
+        bg = color,
+        forced_width = dpi(10),
+        forced_height = dpi(10),
+        shape = helpers.rrect(dpi(2)),
+        widget = wibox.container.background
+    }
+end
+
 local time = {
     {
-        font = "sans bold 50",
-        -- Set forced width to ensure alignment since we are not using a monospace font. You might need to adjust this depending on your chosen font and font size.
-        forced_width = dpi(90),
+        font = "biotif extra bold 44",
         align = "right",
-        valign = "center",
+        valign = "top",
         widget = hours
     },
     {
-        font = "San Francisco Display Heavy 24",
-        align = "center",
-        valign = "center",
-        markup = helpers.colorize_text("✖", x.color9),
-        widget = wibox.widget.textbox
+        nil,
+        {
+            make_little_dot(x.color1),
+            make_little_dot(x.color4),
+            make_little_dot(x.color5),
+            spacing = dpi(10),
+            widget = wibox.layout.fixed.vertical
+        },
+        expand = "none",
+        widget = wibox.layout.align.vertical
     },
     {
-        font = "sans 50",
-        -- Set forced width to ensure alignment since we are not using a monospace font. You might need to adjust this depending on your chosen font and font size.
-        forced_width = dpi(90),
+        font = "biotif extra bold 44",
         align = "left",
-        valign = "center",
+        valign = "top",
         widget = minutes
     },
-    spacing = dpi(10),
+    spacing = dpi(20),
     layout = wibox.layout.fixed.horizontal
 }
 
--- Update text color for clocks
-local function update_minutes()
-    minutes.markup = helpers.colorize_text(minutes.text, x.background)
-end
-local function update_hours()
-    hours.markup = helpers.colorize_text(hours.text, x.background)
-end
-update_minutes()
-update_hours()
-minutes:connect_signal("widget::redraw_needed", function ()
-    update_minutes()
-end)
-hours:connect_signal("widget::redraw_needed", function ()
-    update_hours()
-end)
-
 -- Day of the week (dotw)
--- local day_of_the_week = require("noodle.day_of_the_week")
 local dotw = require("noodle.day_of_the_week")
 local day_of_the_week = wibox.widget {
     nil,
@@ -225,14 +220,12 @@ local search = wibox.widget{
         {
             search_icon,
             search_text,
-            -- spacing = dpi(4),
-            -- forced_width = search_bar.forced_width
             layout = wibox.layout.fixed.horizontal
         },
-        left = dpi(10),
+        left = dpi(15),
         widget = wibox.container.margin
     },
-    forced_height = dpi(25),
+    forced_height = dpi(35),
     forced_width = dpi(200),
     shape = gears.shape.rounded_bar,
     bg = x.color0,
@@ -262,7 +255,8 @@ function sidebar_activate_prompt(action)
 end
 
 local prompt_is_active = function ()
-    -- The search icon is hidden and replaced by other icons when the prompt is running
+    -- The search icon is hidden and replaced by other icons
+    -- when the prompt is running
     return not search_icon.visible
 end
 
@@ -381,7 +375,7 @@ helpers.add_hover_cursor(cute_battery_face, "hand1")
 
 -- Create the sidebar
 sidebar = wibox({visible = false, ontop = true, type = "dock", screen = screen.primary})
-sidebar.bg = beautiful.sidebar_bg or beautiful.wibar_bg or "#111111"
+sidebar.bg = "#00000000" -- For anti aliasing
 sidebar.fg = beautiful.sidebar_fg or beautiful.wibar_fg or "#FFFFFF"
 sidebar.opacity = beautiful.sidebar_opacity or 1
 sidebar.height = screen.primary.geometry.height
@@ -389,13 +383,11 @@ sidebar.width = beautiful.sidebar_width or dpi(300)
 sidebar.y = beautiful.sidebar_y or 0
 local radius = beautiful.sidebar_border_radius or 0
 if beautiful.sidebar_position == "right" then
-    awful.placement.right(sidebar)
-    sidebar.shape = helpers.prrect(radius, true, false, false, true)
+    awful.placement.top_right(sidebar)
 else
-    awful.placement.left(sidebar)
-    sidebar.shape = helpers.prrect(radius, false, true, true, false)
+    awful.placement.top_left(sidebar)
 end
--- sidebar.shape = helpers.rrect(radius)
+awful.placement.maximize_vertically(sidebar, { honor_workarea = true, margins = { top = beautiful.useless_gap * 2 } })
 
 sidebar:buttons(gears.table.join(
     -- Middle click - Hide sidebar
@@ -457,8 +449,8 @@ end
 
 -- Item placement
 sidebar:setup {
-    { ----------- TOP GROUP -----------
-        {
+    {
+        { ----------- TOP GROUP -----------
             {
                 helpers.vertical_pad(dpi(30)),
                 {
@@ -471,7 +463,9 @@ sidebar:setup {
                     expand = "none",
                     layout = wibox.layout.align.horizontal
                 },
-                helpers.vertical_pad(dpi(10)),
+                helpers.vertical_pad(dpi(20)),
+                day_of_the_week,
+                helpers.vertical_pad(dpi(25)),
                 {
                     nil,
                     cute_battery_face,
@@ -481,69 +475,76 @@ sidebar:setup {
                 helpers.vertical_pad(dpi(30)),
                 layout = wibox.layout.fixed.vertical
             },
-            bg = x.foreground,
-            shape = helpers.prrect(dpi(40), false, false, true, false),
-            widget = wibox.container.background
-        },
-        day_of_the_week,
-        weather,
-        spacing = dpi(30),
-        layout = wibox.layout.fixed.vertical
-    },
-    { ----------- MIDDLE GROUP -----------
-        {
-            {
-                mpd_buttons,
-                mpd_song,
-                spacing = dpi(5),
-                layout = wibox.layout.fixed.vertical
-            },
-            top = dpi(40),
-            bottom = dpi(60),
-            left = dpi(20),
-            right = dpi(20),
-            widget = wibox.container.margin
-        },
-        {
-            nil,
-            {
-                volume,
-                cpu,
-                temperature,
-                ram,
-                brightness,
-                spacing = dpi(5),
-                -- layout = wibox.layout.fixed.vertical
-                layout = wibox.layout.fixed.horizontal
-            },
-            expand = "none",
-            layout = wibox.layout.align.horizontal
-        },
-        helpers.vertical_pad(dpi(25)),
-        layout = wibox.layout.fixed.vertical
-    },
-    { ----------- BOTTOM GROUP -----------
-        {
-            {
-                nil,
-                adaptive_tooltip,
-                expand = "none",
-                layout = wibox.layout.align.horizontal,
-            },
-            helpers.vertical_pad(dpi(30)),
-            {
-                nil,
-                search,
-                expand = "none",
-                layout = wibox.layout.align.horizontal,
-            },
             layout = wibox.layout.fixed.vertical
         },
-        left = dpi(20),
-        right = dpi(20),
-        bottom = dpi(30),
-        widget = wibox.container.margin
+        { ----------- MIDDLE GROUP -----------
+            {
+                helpers.vertical_pad(dpi(30)),
+                weather,
+                {
+                    {
+                        mpd_buttons,
+                        mpd_song,
+                        spacing = dpi(5),
+                        layout = wibox.layout.fixed.vertical
+                    },
+                    top = dpi(40),
+                    bottom = dpi(60),
+                    left = dpi(20),
+                    right = dpi(20),
+                    widget = wibox.container.margin
+                },
+                {
+                    nil,
+                    {
+                        volume,
+                        cpu,
+                        temperature,
+                        ram,
+                        brightness,
+                        spacing = dpi(5),
+                        -- layout = wibox.layout.fixed.vertical
+                        layout = wibox.layout.fixed.horizontal
+                    },
+                    expand = "none",
+                    layout = wibox.layout.align.horizontal
+                },
+                helpers.vertical_pad(dpi(25)),
+                layout = wibox.layout.fixed.vertical
+            },
+            shape = helpers.prrect(beautiful.sidebar_border_radius, false, true, false, false),
+            bg = x.color0.."66",
+            widget = wibox.container.background
+        },
+        { ----------- BOTTOM GROUP -----------
+            {
+                {
+                    {
+                        nil,
+                        adaptive_tooltip,
+                        expand = "none",
+                        layout = wibox.layout.align.horizontal,
+                    },
+                    helpers.vertical_pad(dpi(30)),
+                    {
+                        nil,
+                        search,
+                        expand = "none",
+                        layout = wibox.layout.align.horizontal,
+                    },
+                    layout = wibox.layout.fixed.vertical
+                },
+                left = dpi(20),
+                right = dpi(20),
+                bottom = dpi(30),
+                widget = wibox.container.margin
+            },
+            bg = x.color0.."66",
+            widget = wibox.container.background
+        },
+        layout = wibox.layout.align.vertical,
     },
-    layout = wibox.layout.align.vertical,
-    -- expand = "none"
+    shape = helpers.prrect(beautiful.sidebar_border_radius, false, true, false, false),
+    bg = beautiful.sidebar_bg or beautiful.wibar_bg or "#111111",
+    widget = wibox.container.background
 }
