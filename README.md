@@ -10,12 +10,13 @@
 <a href="#setup"><img width="150px" style="padding: 0 10px;" src=".assets/setup.png"></a>
 <a href="https://github.com/elenapan/dotfiles/wiki"><img width="150px" style="padding: 0 10px;" src=".assets/wiki.png"></a>
 <a href="https://github.com/elenapan/dotfiles/wiki/Gallery"><img width="150px" style="padding: 0 10px;" src=".assets/gallery.png"></a>
+<a href="https://github.com/elenapan/dotfiles/wiki/Tipjar"><img width="150px" style="padding: 0 10px;" src=".assets/tipjar.png"></a>
 </p>
 
 
 ### Thanks for dropping by!
 
-<img src="https://i.redd.it/glzrkk83f4621.png" alt="img" align="right" width="270px">
+<img src="https://raw.githubusercontent.com/wiki/elenapan/dotfiles/assets/amarena.png" alt="img" align="right" width="400px">
 
 This is my personal collection of configuration files.
 
@@ -25,21 +26,26 @@ The [setup section](#setup) will guide you through the installation process.
 
 Here are some details about my setup:
 
-+ **WM**: [AwesomeWM](https://github.com/awesomeWM/awesome/)
-+ **OS**: Ubuntu 18.04
++ **WM**: [AwesomeWM](https://github.com/awesomeWM/awesome/) 💙 config included!
++ **OS**: Arch Linux
 + **Shell**: [zsh](https://wiki.archlinux.org/index.php/Zsh)
-+ **Terminal**: [kitty](https://github.com/kovidgoyal/kitty/)
-+ **Editor**: [Neovim](https://github.com/neovim/neovim/)
++ **Terminal**: [kitty](https://github.com/kovidgoyal/kitty/) 💙 config included!
++ **Editor**: [Neovim](https://github.com/neovim/neovim/) 💙 config included!
 + **Org editor**: [Doom Emacs](https://github.com/hlissner/doom-emacs/)
 + **File Manager**: [Thunar](https://git.xfce.org/xfce/thunar/)
-+ **Launcher**: [rofi](https://github.com/davatorium/rofi/)
++ **Launcher**: [rofi](https://github.com/davatorium/rofi/) 💙 config included!
 + **Browser**: Firefox
 
-## New features
+## New stuff
 
-| Anti-aliased rounded corners | App drawer | Lock screen - [See it in action](https://streamable.com/d2t8f) |
-| --- | --- | --- |
-| ![Screenshot](https://i.imgur.com/PXwQc87.png) | ![Screenshot](https://i.imgur.com/Z5rYUvI.png) | ![Screenshot](https://i.imgur.com/BL0USAH.png) |
+- New release: Code name `amarena`
+- Brand new sidebar theme
+- Revamped dashboard: now with corona stats for your country of choice
+- Mini window switcher / manager activated with <kbd>super + tab</kbd>. Check out all its features [here](https://github.com/elenapan/dotfiles/wiki/Desktop-elements#window-switcher)
+- Custom mouse-friendly `ncmpcpp` UI
+- Adorable battery indicator
+- Support for [PAM authentication](https://wiki.archlinux.org/index.php/PAM) through the built-in lock screen
+- Cleaner code (but no one will notice)
 
 ## Setup
 
@@ -47,14 +53,14 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
 
 1. Install the [git version of AwesomeWM](https://github.com/awesomeWM/awesome/).
 
-   Build instructions [here](https://github.com/awesomeWM/awesome/#building-and-installation).
-
    **Arch users** can use the [awesome-git AUR package](https://aur.archlinux.org/packages/awesome-git/).
    ```shell
    yay -S awesome-git
    ```
 
-2. Install needed software and enable services
+   **For other distros**, build instructions are [here](https://github.com/awesomeWM/awesome/#building-and-installation).
+
+2. Install dependencies and enable services
 
    *If you are curious, [click here](https://github.com/elenapan/dotfiles/wiki/Detailed-dependency-table) to see a table of dependencies and why they are needed.*
 
@@ -117,7 +123,7 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
    ```
 
 4. Install my AwesomeWM configuration files
-   
+
    ```shell
    git clone https://github.com/elenapan/dotfiles
    cd dotfiles
@@ -125,37 +131,23 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
    cp -r config/awesome ~/.config/awesome
    ```
 
-   + *(Optional but recommended)* Improved lock screen security
-
-      Instead of authenticating with a custom password stored in plain text inside your configuration files, it is possible to use [PAM](https://wiki.archlinux.org/index.php/PAM) in order to do it using your regular user password in a secure way. [lua-pam](https://github.com/RMTT/lua-pam) allows us to use PAM from within AwesomeWM.
-
-      You will need to install the `pam` package through your distribution's package manager and then follow the [instructions to build lua-pam](https://github.com/RMTT/lua-pam).
-      After building it, you can simply copy the resulting `liblua_pam.so` file to your configuration directory, like so:
-
-      ```shell
-      cp liblua_pam.so ~/.config/awesome/
-      ```
-
-      If you do not want to install it, no worries!
-      You can set a custom lock screen password in your user preferences (see next section).
-
-      The lock screen will automatically determine the authentication method depending on whether `lua-pam` is installed or not.
-
 4. Configure stuff
 
    The relevant files are inside your `~/.config/awesome` directory.
 
-   + User preferences
-   
+   + User preferences and default applications
+
       In `rc.lua` there is a *User variables and preferences* section where user preferences and default applications are defined.
       You should change those to your liking. Probably the most important change you can make is to set your `terminal`.
 
+      For more sophisticated control over your apps, check out `apps.lua`
+
       Note: For the weather widgets to work, you will also need to create an account on [openweathermap](https://openweathermap.org), get your key, look for your city ID, and set `openweathermap_key` and `openweathermap_city_id` accordingly.
-   
+
    + Have a general idea of what my keybinds do
 
       My keybinds will most probably not suit you completely, but on your first login you might need to know how to navigate the desktop.
-   
+
       See the [keybinds](#keybinds) section for more details.
 
       You can edit `keys.lua` to configure your keybinds.
@@ -166,19 +158,23 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
 
    Congratulations, at this point you should be ready to log out of your current desktop and into AwesomeWM.
 
-   Your login screen should have a button that lets you change between available desktop sessions.
+   Your login screen should have a button that lets you change between available desktop sessions. If not, [click here](https://github.com/elenapan/dotfiles/wiki/Troubleshooting#i-cannot-find-the-login-screen-button-that-lets-me-login-with-awesomewm) to find out how to fix it.
+
+   Try it, play with it, enjoy it.
+   Consider checking out the [Advanced setup](https://github.com/elenapan/dotfiles/wiki/Advanced-setup) in order to enable and configure various components that are not needed to use the desktop, but provide a better experience.
+
 
 6. *(Optional)* Eye-candy
 
    + Set the wallpaper
 
-      ```sh
+      ```shell
       feh --bg-fill /path/to/your/wallpaper
       ```
 
    + Load a colorscheme
-   
-      ```sh
+
+      ```shell
       xrdb -merge /path/to/colorscheme
       ```
 
@@ -231,10 +227,16 @@ After setting up my AwesomeWM configuration, inside `~/.config/awesome` you will
 
 + 🎀 `decorations` directory
 
-   In this directoy you can find window decoration (titlebar) styles.
+   In this directory you can find window decoration (titlebar) styles.
 
    They affect the layout of the titlebar and the titlebar buttons (e.g. close, maximize, minimize).
-   <!-- TODO custom per-window decorations -->
+
+   Optionally, they may implement more complex decorations, using multiple titlebars around the window to create a certain look (e.g. double borders) or achieve anti-aliased window corners.
+
+   Finally, some clients may have their own special titlebars added to them in order to simulate a custom UI.
+   For now, a custom `mpd` UI has been implemented.
+
+   The `decorations` module also includes helper functions that generate titlebar buttons, in case you do not have/want image buttons.
 
 + 💎 `elemental` directory
 
@@ -242,7 +244,7 @@ After setting up my AwesomeWM configuration, inside `~/.config/awesome` you will
    Elements with multiple available themes have their own directory. For example:
 
    + In `elemental/bar` you can find a `.lua` file for each available bar or bar group.
-   
+
       Multiple bars can be created in one file.
       Every bar theme provides the global functions `wibars_toggle()` and `tray_toggle()` which you can bind to any keys you want.
 
@@ -253,7 +255,7 @@ After setting up my AwesomeWM configuration, inside `~/.config/awesome` you will
 + 💬 `notifications` directory
 
    This directory includes notification daemons that trigger notifications for various desktop events such as volume or brightness change.
-   Also it includes notification themes that define the layout of the notification.
+   Also it includes notification themes that define the layout of the notification contents.
 
 + 🍜 `noodle` directory: Contains widgets that usually take up more than 50 lines of code.
 
@@ -274,43 +276,64 @@ After setting up my AwesomeWM configuration, inside `~/.config/awesome` you will
 I use <kbd>super</kbd> AKA Windows key as my main modifier.
 
 #### Keyboard
-+ <kbd>super + enter</kbd> - Spawn terminal
-+ <kbd>super + shift + enter</kbd> - Spawn floating terminal
-+ <kbd>super + d</kbd> - Launch rofi
-+ <kbd>super + shift + q</kbd> - Close client
-+ <kbd>super + control + space</kbd> - Toggle floating client
-+ <kbd>super + [1-0]</kbd> - View tag AKA change workspace (for you i3 folks)
-+ <kbd>super + shift + [1-0]</kbd> - Move focused client to tag
-+ <kbd>super + s</kbd> - Tiling layout
-+ <kbd>super + shift + s</kbd> - Floating layout
-+ <kbd>super + w</kbd> - Maximized / Monocle layout
-+ <kbd>super + [arrow keys]</kbd> or <kbd>super + [hjkl]</kbd> - Change focus by direction
-+ <kbd>super + shift + [arrow keys]</kbd> or <kbd>super + shift + [hjkl]</kbd> - Move client by direction. Move to edge if it is floating.
-+ <kbd>super + control + [arrow keys]</kbd> or <kbd>super + control + [hjkl]</kbd> - Resize
-+ <kbd>super + f</kbd> - Toggle fullscreen
-+ <kbd>super + m</kbd> - Toggle maximize
-+ <kbd>super + n</kbd> - Minimize
-+ <kbd>super + shift + n</kbd> - Restore minimized
-+ <kbd>super + c</kbd> - Center floating client
-+ <kbd>super + u</kbd> - Jump to urgent client (or back to last tag if there is no such client)
-+ <kbd>super + shift + b</kbd> - Toggle bar
-+ <kbd>super + =</kbd> - Toggle tray
-+ *... And many many more.*
+| Keybind | Action |
+| --- | --- |
+| <kbd>super + enter</kbd> | Spawn terminal |
+| <kbd>super + shift + enter</kbd> | Spawn floating terminal |
+| <kbd>super + d</kbd> | Launch rofi |
+| <kbd>super + shift + q</kbd> | Close client |
+| <kbd>super + control + space</kbd> | Toggle floating client |
+| <kbd>super + [1-0]</kbd> | View tag AKA change workspace (for you i3 folks) |
+| <kbd>super + shift + [1-0]</kbd> | Move focused client to tag |
+| <kbd>super + s</kbd> | Tiling layout |
+| <kbd>super + shift + s</kbd> | Floating layout |
+| <kbd>super + w</kbd> | Maximized / Monocle layout |
+| <kbd>super + [arrow keys]</kbd> | Change focus by direction |
+| <kbd>super + [hjkl]</kbd> | ^ |
+| <kbd>super + shift + [arrow keys]</kbd> | Move client by direction. Move to edge if it is floating. |
+| <kbd>super + shift + [hjkl]</kbd> | ^ |
+| <kbd>super + control + [arrow keys]</kbd> | Resize client |
+| <kbd>super + control + [hjkl]</kbd> | ^ |
+| <kbd>super + f</kbd> | Toggle fullscreen |
+| <kbd>super + m</kbd> | Toggle maximize |
+| <kbd>super + n</kbd> | Minimize |
+| <kbd>super + shift + n</kbd> | Restore minimized |
+| <kbd>super + c</kbd> | Center floating client |
+| <kbd>super + u</kbd> | Jump to urgent client (or back to last tag if there is no such client) |
+| <kbd>super + b</kbd> | Toggle bar |
+| <kbd>super + =</kbd> | Toggle tray |
 
-#### Mouse on desktop
-+ `left click` - Dismiss all notifications, close sidebar and main menu
-+ `double left click` - Jump to urgent client (or back to last tag if there is no such client)
-+ `right click` - App drawer
-+ `middle click` - Dashboard
-+ `scroll up/down` - Cycle through tags
-+ `move to left/right edge` - Show sidebar
+*... And many many more.*
 
-#### Mouse on titlebars
-+ `left click` - Focus and raise
-+ `left click (drag)` - Move
-+ `right click (drag)` - Resize
-+ `middle click` - Close
+#### Mouse on the desktop
+| Mousebind | Action |
+| --- | --- |
+| `left click` | Dismiss all notifications, close sidebar and main menu |
+| `double left click` | Jump to urgent client (or back to last tag if there is no such client) |
+| `right click` | App drawer |
+| `middle click` | Dashboard |
+| `scroll up/down` | Cycle through tags |
+| `move to screen edge` | Show sidebar |
+
+#### Mouse on window titlebars
+| Mousebind | Action |
+| --- | --- |
+| `left click` | Focus and raise |
+| `left click (drag)` | Move |
+| `right click (drag)` | Resize |
+| `middle click` | Close |
 
 ### Notes
 If you have any questions or issues, first check if you can find your answer in the [wiki](https://github.com/elenapan/dotfiles/wiki).
 Then you can search in the repository's [issues](https://github.com/elenapan/dotfiles/issues) or make a new issue.
+
+### Tipjar
+If you enjoy my themes and would like to show your appreciation, you may tip me here.
+
+It is never required but always appreciated.
+
+Thank you from the bottom of my heart! 💙
+
+- [**Patreon**](https://www.patreon.com/elenapan)
+- **Ethereum**: 0x831539d94155C797f786e99f1D061BEc7F11bD38
+- **Bitcoin**: 12j3D4KR94LY7Svvmp3KzGbfGC4YCZkCLe
