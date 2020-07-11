@@ -20,6 +20,7 @@ icons.text = {}
 -- Set up text symbols and accent colors to be used in tasklists or docks
 -- instead of awful.widget.clienticon
 -- Based on the client's `class` property
+-- TODO Ability to match using rules instead of just class
 icons.text.by_class = {
     -- Terminals
     ['kitty'] = { symbol = "", color = x.color5 },
@@ -37,26 +38,39 @@ icons.text.by_class = {
     ['TelegramDesktop'] = { symbol = "", color = x.color4 },
     ['Firefox'] = { symbol = "", color = x.color3 },
     ['firefox'] = { symbol = "", color = x.color3 },
+    ['Nightly'] = { symbol = "", color = x.color4 },
     ['Chromium'] = { symbol = "", color = x.color4 },
     ['Chromium-browser'] = { symbol = "", color = x.color4 },
     ['Steam'] = { symbol = "", color = x.color2 },
-    ['Lutris'] = { symbol = "", color = x.color6 },
+    ['Lutris'] = { symbol = "", color = x.color6 },
     ['editor'] = { symbol = "", color = x.color5 },
-    ['Emacs'] = { symbol = "", color = x.color5 },
+    ['Emacs'] = { symbol = "", color = x.color2 },
     ['email'] = { symbol = "", color = x.color6 },
-    ['music'] = { symbol = "", color = x.color6 },
+    ['music'] = { symbol = "", color = x.color6 },
     ['mpv'] = { symbol = "", color = x.color6 },
-    ['KeePassXC'] = { symbol = "", color = x.color1 },
+    ['KeePassXC'] = { symbol = "", color = x.color1 },
     ['Gucharmap'] = { symbol = "", color = x.color6 },
     ['Pavucontrol'] = { symbol = "", color = x.color4 },
     ['htop'] = { symbol = "", color = x.color2 },
     ['Screenruler'] = { symbol = "", color = x.color3 },
     ['Galculator'] = { symbol = "", color = x.color2 },
     ['Zathura'] = { symbol = "", color = x.color2 },
+    ['Qemu-system-x86_64'] = { symbol = "", color = x.color3 },
+    ['Wine'] = { symbol = "", color = x.color1 },
+    ['markdown_input'] = { symbol = "", color = x.color2 },
+    ['scratchpad'] = { symbol = "", color = x.color1 },
+    ['weechat'] = { symbol = "", color = x.color5 },
+    ['discord'] = { symbol = "", color = x.color5 },
+    ['6cord'] = { symbol = "", color = x.color3 },
+    ['libreoffice-writer'] = { symbol = "", color = x.color4 },
+    ['libreoffice-calc'] = { symbol = "", color = x.color2 },
+    ['libreoffice-impress'] = { symbol = "", color = x.color1 },
+    ['Godot'] = { symbol = "", color = x.color4 },
 
     -- File managers
     ['Thunar'] = { symbol = "", color = x.color3 },
     ['Nemo'] = { symbol = "", color = x.color3 },
+    ['files'] = { symbol = "", color = x.color3 },
 
     ['Gimp'] = { symbol = "", color = x.color4 },
     ['Inkscape'] = { symbol = "", color = x.color2 },
