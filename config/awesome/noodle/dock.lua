@@ -20,7 +20,7 @@ local indicator_spacing = dpi(8)
 local indicator_height = dpi(7)
 -- Custom arc shape
 local function draw_indicator_shape_unfocused(cr)
-    cr:arc(item_size / 2, indicator_height, 10, 0, 2 * math.pi)
+    cr:arc(item_size / 2, indicator_height, indicator_height, 0, 2 * math.pi)
     cr:close_path()
     cr:fill()
 end
