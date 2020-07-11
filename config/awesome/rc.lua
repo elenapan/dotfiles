@@ -79,10 +79,10 @@ user = {
     terminal = "kitty -1",
     floating_terminal = "kitty -1",
     browser = "firefox",
-    file_manager = "kitty -1 -e ranger",
+    file_manager = "kitty -1 --class files -e ranger",
     editor = "kitty -1 --class editor -e vim",
     email_client = "kitty -1 --class email -e neomutt",
-    music_client = "kitty -1 --class music -e ncmpcpp",
+    music_client = "kitty -o font_size=12 --class music -e ncmpcpp",
 
     -- >> Web Search <<
     web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
@@ -120,7 +120,7 @@ user = {
     -- >> Battery <<
     -- You will receive notifications when your battery reaches these
     -- levels.
-    battery_threshold_low = 15,
+    battery_threshold_low = 20,
     battery_threshold_critical = 5,
 
     -- >> Weather <<
@@ -196,7 +196,7 @@ end)
 
 -- Features
 -- ===================================================================
--- Initialize global icons variable and load icon theme
+-- Initialize icons array and load icon theme
 local icons = require("icons")
 icons.init(icon_theme)
 -- Keybinds and mousebinds
@@ -345,7 +345,9 @@ local floating_client_placement = function(c)
 end
 
 local centered_client_placement = function(c)
-    return awful.placement.centered(c, {honor_padding = true, honor_workarea=true})
+    return gears.timer.delayed_call(function ()
+        awful.placement.centered(c, {honor_padding = true, honor_workarea=true})
+    end)
 end
 
 -- Rules
@@ -427,6 +429,7 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "lt-love",
                 "portal2_linux",
                 "csgo_linux64",
                 "EtG.x86_64",
@@ -484,6 +487,9 @@ awful.rules.rules = {
     {
         rule_any = {
             instance = {
+                "install league of legends (riot client live).exe",
+                "gw2-64.exe",
+                "battle.net.exe",
                 "riotclientservices.exe",
                 "leagueclientux.exe",
                 "riotclientux.exe",
@@ -497,8 +503,8 @@ awful.rules.rules = {
                 "Subl3",
                 --"discord",
                 --"TelegramDesktop",
-                "Firefox",
                 "firefox",
+                "Nightly",
                 "Steam",
                 "Lutris",
                 "Chromium",
@@ -508,6 +514,9 @@ awful.rules.rules = {
             },
             type = {
               "splash"
+            },
+            name = {
+                "^discord.com is sharing your screen.$" -- Discord (running in browser) screen sharing popup
             }
         },
         callback = function(c)
@@ -535,6 +544,8 @@ awful.rules.rules = {
         rule_any = {
             class = {
                 "TelegramDesktop",
+                "firefox",
+                "Nightly",
             },
             type = {
                 "dialog",
@@ -809,7 +820,8 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
-                "[fF]irefox",
+                "firefox",
+                "Nightly",
                 -- "qutebrowser",
             },
         },
@@ -825,6 +837,7 @@ awful.rules.rules = {
     {
         rule_any = {
             class = {
+                "underlords",
                 "lt-love",
                 "portal2_linux",
                 "deadcells",
@@ -838,6 +851,7 @@ awful.rules.rules = {
                 "trove.exe"
             },
             instance = {
+                "love.exe",
                 "synthetik.exe",
                 "pathofexile_x64steam.exe",
                 "leagueclient.exe",
@@ -859,6 +873,8 @@ awful.rules.rules = {
                 "Slack",
                 "TeamSpeak 3",
                 "zoom",
+                "weechat",
+                "6cord",
             },
         },
         properties = { screen = 1, tag = awful.screen.focused().tags[3] }

@@ -9,7 +9,7 @@ awesome.connect_signal("evil::volume", function (percentage, muted)
     if first_time then
         first_time = false
     else
-        if sidebar.visible or (client.focus and client.focus.class == "Pavucontrol") then
+        if (sidebar and sidebar.visible) or (client.focus and client.focus.class == "Pavucontrol") then
             -- Sidebar and Pavucontrol already show volume, so
             -- destroy notification if it exists
             if notif then

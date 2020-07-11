@@ -31,11 +31,11 @@ theme.bg_normal     = x.color0
 theme.bg_focus      = x.color8
 theme.bg_urgent     = x.color8
 theme.bg_minimize   = x.color8
-theme.bg_systray    = x.color8
+theme.bg_systray    = x.background
 
 theme.fg_normal     = x.color8
 theme.fg_focus      = x.color4
-theme.fg_urgent     = x.color3
+theme.fg_urgent     = x.color9
 theme.fg_minimize   = x.color8
 
 -- Gaps
@@ -172,7 +172,7 @@ theme.sidebar_position = "left" -- left or right
 theme.sidebar_width = dpi(300)
 theme.sidebar_x = 0
 theme.sidebar_y = 0
-theme.sidebar_border_radius = 0
+theme.sidebar_border_radius = dpi(40)
 -- theme.sidebar_border_radius = theme.border_radius
 
 -- Dashboard

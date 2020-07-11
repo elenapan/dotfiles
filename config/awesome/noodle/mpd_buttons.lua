@@ -17,7 +17,7 @@ mpd_next_symbol.valign = "center"
 
 local note_symbol = ""
 local big_note = wibox.widget.textbox(note_symbol)
-big_note.font = "Material Icons Bold 16"
+big_note.font = "Material Icons Bold 15"
 big_note.align = "center"
 local small_note = wibox.widget.textbox()
 small_note.align = "center"
@@ -29,10 +29,10 @@ local double_note = wibox.widget {
     -- small_note,
     {
         small_note,
-        top = dpi(8),
+        top = dpi(11),
         widget = wibox.container.margin
     },
-    spacing = dpi(-10),
+    spacing = dpi(-9),
     layout = wibox.layout.fixed.horizontal
 }
 

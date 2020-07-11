@@ -16,8 +16,8 @@ local dotw_colors = {
     x.color9,
     x.color9,
     -- Different color for weekends ^_^
-    x.color12,
-    x.color12,
+    x.color13,
+    x.color13,
 }
 
 local dotw_textboxes = {}

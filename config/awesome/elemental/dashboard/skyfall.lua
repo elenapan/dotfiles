@@ -118,12 +118,7 @@ host_text.align = "center"
 host_text.valign = "center"
 local user_widget = wibox.widget {
     user_picture,
-    -- Dummy widget for spacing
-    {
-        forced_height = dpi(30),
-        -- forced_width = gen_button_margin,
-        layout = wibox.layout.fixed.vertical
-    },
+    helpers.vertical_pad(dpi(30)),
     user_text,
     host_text,
     layout = wibox.layout.fixed.vertical

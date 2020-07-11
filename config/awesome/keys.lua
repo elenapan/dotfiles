@@ -528,7 +528,7 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "grave", function() sidebar_toggle() end,
         {description = "show or hide sidebar", group = "awesome"}),
     -- Toggle wibar(s)
-    awful.key({ superkey, shiftkey }, "b", function() wibars_toggle() end,
+    awful.key({ superkey }, "b", function() wibars_toggle() end,
         {description = "show or hide wibar(s)", group = "awesome"}),
     -- Emacs (O for org mode)
     awful.key({ superkey }, "o", apps.org,
@@ -595,7 +595,7 @@ keys.clientkeys = gears.table.join(
                 helpers.float_and_resize(c, screen_width * 0.65, screen_height * 0.9)
             end)
     end),
-    
+
     -- Relative move client
     awful.key({ superkey, shiftkey, ctrlkey }, "j", function (c)
         c:relative_move(0,  dpi(20), 0, 0)
@@ -810,21 +810,15 @@ end
 -- Mouse buttons on the client (whole window, not just titlebar)
 keys.clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c) client.focus = c end),
-    -- awful.button({ }, 2, function (c)
-    --     if c.class == "mpv" then
-    --         -- mpv_osd_toggle(c:geometry())
-    --         decorations.cycle(c)
-    --     end
-    -- end),
     awful.button({ superkey }, 1, awful.mouse.client.move),
-    awful.button({ superkey }, 2, function (c) c:kill() end),
+    -- awful.button({ superkey }, 2, function (c) c:kill() end),
     awful.button({ superkey }, 3, function(c)
         client.focus = c
         awful.mouse.client.resize(c)
         -- awful.mouse.resize(c, nil, {jump_to_corner=true})
     end),
 
-    -- Superkey + scrolling = Change client opacity
+    -- Super + scroll = Change client opacity
     awful.button({ superkey }, 4, function(c)
         c.opacity = c.opacity + 0.1
     end),

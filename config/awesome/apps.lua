@@ -28,6 +28,9 @@ apps.discord = function ()
     -- Run or raise Discord app
     -- helpers.run_or_raise({class = 'discord'}, false, "discord")
 end
+apps.weechat = function ()
+    helpers.run_or_raise({instance = 'weechat'}, true, user.terminal.." --class weechat -e weechat")
+end
 apps.mail = function ()
     helpers.run_or_raise({instance = 'email'}, false, user.email_client, {switchtotag = true})
 end
@@ -57,9 +60,7 @@ apps.torrent = function ()
 end
 
 apps.editor = function ()
-    -- helpers.run_or_raise({class = 'Emacs'}, false, "emacs")
     helpers.run_or_raise({instance = 'editor'}, false, user.editor, { switchtotag = true })
-    -- helpers.run_or_raise({class = 'editor'}, false, user.editor, { switchtotag = true })
 end
 
 -- Toggle compositor

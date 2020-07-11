@@ -69,13 +69,8 @@ awful.screen.connect_for_each_screen(function(s)
             id = "bg_role",
             widget = wibox.container.background,
             create_callback = function(self, c, _, __)
-                local i
-                if class_icons[c.class] then
-                    i = c.class
-                else
-                    i = '_'
-                end
-                self:get_children_by_id('text_icon')[1].markup = helpers.colorize_text(class_icons[i].symbol, class_icons[i].color)
+                local i = class_icons[c.class] or class_icons['_']
+                self:get_children_by_id('text_icon')[1].markup = helpers.colorize_text(i.symbol, i.color)
             end,
         },
     }
