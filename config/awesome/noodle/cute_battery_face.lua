@@ -11,7 +11,7 @@ local transparent = "#00000000"
 local happy_color = x.color2
 local sad_color = x.color1
 local ok_color = x.color3
-local charging_color = x.color4
+local charging_color = x.color6
 
 -- Not great not terrible
 local ok_threshold = 45
@@ -27,7 +27,6 @@ local battery_bar = wibox.widget{
     value         = 50,
     forced_height = dpi(50),
     forced_width  = dpi(100),
-    shape         = gears.shape.rounded_bar,
     bar_shape     = gears.shape.rectangle,
     color         = happy_color,
     background_color = happy_color.."55",
@@ -37,12 +36,12 @@ local battery_bar = wibox.widget{
 local charging_icon = wibox.widget {
     font = "Material Icons 13",
     align = "right",
-    markup = helpers.colorize_text("", stroke..33),
+    markup = helpers.colorize_text("", stroke.."80"),
     widget = wibox.widget.textbox()
 }
 
-local eye_size = dpi(5) 
-local mouth_size = dpi(10) 
+local eye_size = dpi(5)
+local mouth_size = dpi(10)
 
 local mouth_shape = function()
     return function(cr, width, height)
@@ -116,7 +115,7 @@ local face = wibox.widget {
 local cute_battery_face = wibox.widget {
     {
         battery_bar,
-        shape = gears.shape.rounded_bar,
+        shape = helpers.rrect(dpi(16)),
         border_color = stroke,
         border_width = dpi(4),
         widget = wibox.container.background
