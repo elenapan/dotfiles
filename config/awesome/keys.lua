@@ -509,9 +509,9 @@ keys.globalkeys = gears.table.join(
         awful.spawn.with_shell("pomodoro")
                                      end,
         {description = "pomodoro", group = "launcher"}),
-    -- Spawn ranger in a terminal
-    awful.key({ superkey }, "F2", function() awful.spawn(user.terminal .. " -e ranger") end,
-        {description = "ranger", group = "launcher"}),
+    -- Spawn file manager
+    awful.key({ superkey }, "F2", apps.file_manager,
+        {description = "file manager", group = "launcher"}),
     -- Spawn music client
     awful.key({ superkey }, "F3", apps.music,
         {description = "music client", group = "launcher"}),

@@ -219,7 +219,11 @@ local search = wibox.widget{
     {
         {
             search_icon,
-            search_text,
+            {
+                search_text,
+                bottom = dpi(2),
+                widget = wibox.container.margin
+            },
             layout = wibox.layout.fixed.horizontal
         },
         left = dpi(15),

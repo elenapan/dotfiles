@@ -101,8 +101,6 @@ local eye = wibox.widget {
     widget = wibox.container.background()
 }
 
--- TODO arcs for smiling eyes
-
 -- 2 eyes 1 semicircle (smile or frown)
 local face = wibox.widget {
     eye,

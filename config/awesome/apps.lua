@@ -128,8 +128,6 @@ apps.scratchpad = function()
 end
 
 -- Screenshots
--- TODO: notification action buttons
--- https://github.com/awesomeWM/awesome/issues/3017
 local capture_notif = nil
 local screenshot_notification_app_name = "screenshot"
 function apps.screenshot(action, delay)
