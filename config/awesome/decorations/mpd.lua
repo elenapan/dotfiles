@@ -17,10 +17,10 @@ end
 
 -- 2x2 grid of little circles
 local toolbar_icon = wibox.widget {
-    create_little_circle(x.color1),
-    create_little_circle(x.color2),
-    create_little_circle(x.color3),
     create_little_circle(x.color4),
+    create_little_circle(x.color1),
+    create_little_circle(x.color3),
+    create_little_circle(x.color2),
     spacing = dpi(2),
     forced_num_cols = 2,
     forced_num_rows = 2,
@@ -28,9 +28,8 @@ local toolbar_icon = wibox.widget {
 }
 
 local toolbar_position = "left"
-local toolbar_size = dpi(50)
--- local toolbar_bg = x.color0
-local toolbar_bg = x.background
+local toolbar_size = dpi(60)
+local toolbar_bg = x.color0.."66"
 local toolbar_enabled_initially = true
 
 -- Note: Some terminals require moving the window after toggling
@@ -99,7 +98,8 @@ local create_toolbar_button = function(c)
     return toolbar_button
 end
 
-local control_button_bg = x.color0 .. "55"
+local control_button_bg = "#00000000"
+local control_button_bg_hover = x.color0
 local control_button = function(c, symbol, color, size, on_click, on_right_click)
     local icon = wibox.widget{
         markup = helpers.colorize_text(symbol, color),
@@ -128,7 +128,7 @@ local control_button = function(c, symbol, color, size, on_click, on_right_click
     ))
 
     container:connect_signal("mouse::enter", function ()
-        button.bg = x.color8.."55"
+        button.bg = control_button_bg_hover
     end)
     container:connect_signal("mouse::leave", function ()
         button.bg = control_button_bg
@@ -306,8 +306,7 @@ local mpd_create_decoration = function (c)
             },
             layout = wibox.layout.align.vertical
         },
-        bg = x.color0,
-        -- bg = toolbar_bg,
+        bg = toolbar_bg,
         shape = helpers.prrect(dpi(20), false, true, false, false),
         widget = wibox.container.background
     }
@@ -322,7 +321,14 @@ end
 
 -- Add the titlebar whenever a new music client is spawned
 table.insert(awful.rules.rules, {
-    rule = { instance = "music" },
+    rule_any = {
+        class = {
+            "music",
+        },
+        instance = {
+            "music",
+        },
+    },
     properties = {},
     callback = mpd_create_decoration
 })
