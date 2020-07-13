@@ -86,7 +86,7 @@ user = {
 
     -- >> Web Search <<
     web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
-    -- web_search_cmd = "xdg-open https://www.google.com/search?q="
+    -- web_search_cmd = "xdg-open https://www.google.com/search?q=",
 
     -- >> User profile <<
     profile_picture = os.getenv("HOME").."/.config/awesome/profile.png",
