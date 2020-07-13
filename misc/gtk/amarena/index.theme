@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=amarena-dark-compact
+Comment=A Material Design theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=amarena-dark-compact
+MetacityTheme=amarena-dark-compact
+IconTheme=Adwaita
+CursorTheme=Adwaita
+CursorSize=24
