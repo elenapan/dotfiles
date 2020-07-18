@@ -144,27 +144,36 @@ local function generate_dock_icon(c, bg, fg, symbol)
     cr:set_source(gears.color(fg))
     draw_indicator_shape_unfocused(cr)
 
+    local is_focused = client.focus and client.focus.class == c.class
+
     -- Put everything together
     local w = wibox.widget({
         {
             icon,
             {
                 {
+                    -- Dummy indicator
+                    -- Used to prevent the dock from moving downwards whenever
+                    -- both indicator_unfocused and indicator_focused are
+                    -- invisible
+                    widget = wibox.container.background
+                },
+                {
                     id = "indicator_unfocused",
                     bgimage = indicator_unfocused,
+                    visible = not is_focused and not c.ghost,
                     widget = wibox.container.background
                 },
                 {
                     id = "indicator_focused",
                     bg = fg,
                     shape = helpers.prrect(dpi(60), true, true, false, false),
-                    visible = false,
+                    visible = is_focused and true or false,
                     widget = wibox.container.background
                 },
                 forced_height = indicator_height,
                 forced_width = item_size - item_margin * 2,
                 id = "indicator",
-                visible = not c.ghost,
                 layout = wibox.layout.stack
             },
             spacing = indicator_spacing,
