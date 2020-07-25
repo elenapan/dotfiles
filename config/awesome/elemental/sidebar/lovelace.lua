@@ -195,28 +195,6 @@ fancy_date.align = "center"
 fancy_date.valign = "center"
 fancy_date.font = "sans italic 11"
 
-local fancy_time_widget = wibox.widget.textclock("%H%M")
-fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. x.color12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
-fancy_time_widget:connect_signal("widget::redraw_needed", function () 
-    fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. x.color12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
-end)
-fancy_time_widget.align = "center"
-fancy_time_widget.valign = "center"
-fancy_time_widget.font = "sans 55"
-local fancy_time_decoration = wibox.widget.textbox()
--- local decoration_string = "------------------------"
-local decoration_string = "──────  ──────"
-fancy_time_decoration.markup = "<span foreground='" .. x.color12 .."'>"..decoration_string.."</span>"
-fancy_time_decoration.font = "sans 18"
-fancy_time_decoration.align = "center"
-fancy_time_decoration.valign = "top"
-
-local fancy_time = {
-    fancy_time_widget,
-    fancy_time_decoration,
-    layout = wibox.layout.fixed.vertical,
-}
-
 local mpd_song = require("noodle.mpd_song")
 local mpd_widget_children = mpd_song:get_all_children()
 local mpd_title = mpd_widget_children[1]
@@ -393,7 +371,6 @@ end
 sidebar:setup {
     { ----------- TOP GROUP -----------
         helpers.vertical_pad(40),
-        -- fancy_time,
         time,
         date,
         helpers.vertical_pad(20),
