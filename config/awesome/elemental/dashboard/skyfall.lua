@@ -142,14 +142,10 @@ local hours = wibox.widget.textclock("%H  ")
 hours.font = "sans bold 30"
 hours.align = "center"
 hours.valign = "center"
-local minutes = wibox.widget.textclock("  %M")
+local minutes = wibox.widget.textclock("<span foreground='" .. x.color14 .."'>  %M</span>")
 minutes.font = "sans 30"
 minutes.align = "center"
 minutes.valign = "center"
-minutes.markup = "<span foreground='" .. x.color14 .."'>" .. minutes.text .. "</span>"
-minutes:connect_signal("widget::redraw_needed", function () 
-    minutes.markup = "<span foreground='" .. x.color14 .."'>" .. minutes.text .. "</span>"
-end)
 
 -- Time
 local time = wibox.widget {
@@ -167,22 +163,12 @@ day_of_the_week.align = "center"
 day_of_the_week.valign = "center"
 day_of_the_week.align = "center"
 day_of_the_week.valign = "center"
--- day_of_the_week.markup = "<span foreground='" .. x.color7 .."'>" .. day_of_the_week.text .. "</span>"
--- day_of_the_week:connect_signal("widget::redraw_needed", function () 
---     day_of_the_week.markup = "<span foreground='" .. x.color7 .."'>" .. day_of_the_week.text .. "</span>"
--- end)
-local day_of_the_month = wibox.widget.textclock("%d")
+
+local day_of_the_month = wibox.widget.textclock("<span foreground='" .. x.color1 .."'>%d</span>")
 day_of_the_month.font = "sans bold 30"
 day_of_the_month.fg = x.color0
 day_of_the_month.align = "center"
 day_of_the_month.valign = "center"
-
-day_of_the_month.align = "center"
-day_of_the_month.valign = "center"
-day_of_the_month.markup = "<span foreground='" .. x.color1 .."'>" .. day_of_the_month.text .. "</span>"
-day_of_the_month:connect_signal("widget::redraw_needed", function () 
-    day_of_the_month.markup = "<span foreground='" .. x.color1 .."'>" .. day_of_the_month.text .. "</span>"
-end)
 
 local date = wibox.widget {
     day_of_the_week,

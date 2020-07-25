@@ -62,16 +62,8 @@ local day_of_the_week = wibox.widget {
     forced_width = dpi(1000),
     align = "center",
     valign = "center",
-    widget = wibox.widget.textclock("%A")
+    widget = wibox.widget.textclock(helpers.colorize_text("%A", x.color3))
 }
-
-local function update_dotw()
-    day_of_the_week.markup = helpers.colorize_text(day_of_the_week.text, x.color3)
-end
-update_dotw()
-day_of_the_week:connect_signal("widget::redraw_needed", function ()
-    update_dotw()
-end)
 
 local month = wibox.widget {
     font = "San Francisco Display Heavy 100",
