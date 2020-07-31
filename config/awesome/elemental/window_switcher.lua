@@ -18,6 +18,13 @@ local item_width = dpi(500)
 local window_switcher_hide
 local get_num_clients
 awful.screen.connect_for_each_screen(function(s)
+    -- Helper function that sets/updates the icon of a task
+    -- according to its class
+    local function set_icon(item, c)
+        local i = class_icons[c.class] or class_icons['_']
+        item:get_children_by_id('text_icon')[1].markup = helpers.colorize_text(i.symbol, i.color)
+    end
+
     -- Tasklist
     s.window_switcher_tasklist = awful.widget.tasklist {
         screen   = s,
@@ -69,8 +76,9 @@ awful.screen.connect_for_each_screen(function(s)
             id = "bg_role",
             widget = wibox.container.background,
             create_callback = function(self, c, _, __)
-                local i = class_icons[c.class] or class_icons['_']
-                self:get_children_by_id('text_icon')[1].markup = helpers.colorize_text(i.symbol, i.color)
+                set_icon(self, c)
+                -- Handle clients which change their own class
+                c:connect_signal("property::class", function() set_icon(self, c) end)
             end,
         },
     }
