@@ -156,6 +156,7 @@ local function generate_dock_icon(c, bg, fg, symbol)
                     -- Used to prevent the dock from moving downwards whenever
                     -- both indicator_unfocused and indicator_focused are
                     -- invisible
+                    forced_height = indicator_height,
                     widget = wibox.container.background
                 },
                 {
