@@ -248,6 +248,11 @@ keys.globalkeys = gears.table.join(
             exit_screen_show()
         end,
         {description = "quit awesome", group = "awesome"}),
+    awful.key({ }, "XF86PowerOff",
+        function ()
+            exit_screen_show()
+        end,
+        {description = "quit awesome", group = "awesome"}),
 
     -- Number of master clients
     awful.key({ superkey, altkey }, "h",   
