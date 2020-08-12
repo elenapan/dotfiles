@@ -144,7 +144,7 @@ function apps.screenshot(action, delay)
     -- Screenshot capturing actions
     local cmd
     local timestamp = os.date("%Y.%m.%d-%H.%M.%S")
-    local filename = user.dirs.screenshots..timestamp..".screenshot.png"
+    local filename = user.dirs.screenshots.."/"..timestamp..".screenshot.png"
     local maim_args = "-u -b 3 -m 5"
     local icon = icons.image.screenshot
 
