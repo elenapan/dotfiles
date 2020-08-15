@@ -1,12 +1,17 @@
+#!/bin/sh
+# Launch ncmpcpp in a terminal with class "music"
 
-#!/bin/bash
-# Launch ncmpcpp in a terminal with class "music" or with name "Music Terminal"
+# Kitty
+kitty --class music -e ncmpcpp
+
+# Alacritty
+# alacritty --class music -e ncmpcpp
 
 # st / xst
-xst -c music -e ncmpcpp -c ~/.config/ncmpcpp/config_fancy
+# st -c music -e ncmpcpp
 
 # Termite
 # termite --class music --exec ncmpcpp
 
 # Urxvt
-# urxvt -T "Music Terminal" -e ncmpcpp -c ~/.config/ncmpcpp/config_fancy
+# urxvt -name music -e ncmpcpp
