@@ -1,5 +1,4 @@
 local awful = require("awful")
-local helpers = require("helpers")
 
 local lock_screen = {}
 
