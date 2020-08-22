@@ -724,6 +724,29 @@ awful.rules.rules = {
         end
     },
 
+    -- Dragon drag and drop utility
+    {
+        rule_any = {
+            class = {
+                "Dragon-drag-and-drop",
+                "Dragon",
+            },
+        },
+        properties = {
+            floating = true,
+            ontop = true,
+            sticky = true,
+            width = screen_width * 0.3,
+        },
+        callback = function (c)
+            awful.placement.bottom_right(c, {
+                honor_padding = true,
+                honor_workarea = true,
+                margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
+            })
+        end
+    },
+
     -- Magit window
     {
         rule = { instance = "Magit" },
