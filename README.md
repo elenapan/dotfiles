@@ -119,7 +119,9 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
 
    You can find the fonts required inside the fonts folder in misc
    ```shell
-   cp -r ./misc/fonts/* ~/.fonts/  [ or to ~/.local/share/fonts/]
+   cp -r ./misc/fonts/* ~/.fonts/
+   # Or to ~/.local/share/fonts
+   cp -r ./misc/fonts/* ~/.local/share/fonts/
    ```
    Finally, run the following in order for your system to detect the newly installed fonts.
    ```shell
