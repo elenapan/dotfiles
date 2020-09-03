@@ -117,6 +117,12 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
    - You will need to create the directory if it does not exist.
    - It does not matter that the actual font files (`.ttf`) are deep inside multiple directories. They will be detected as long as they can be accessed from `~/.fonts` or `~/.local/share/fonts`.
 
+   You can find the fonts required inside the `misc/fonts` folder of the repository.
+   ```shell
+   cp -r ./misc/fonts/* ~/.fonts/
+   # Or to ~/.local/share/fonts
+   cp -r ./misc/fonts/* ~/.local/share/fonts/
+   ```
    Finally, run the following in order for your system to detect the newly installed fonts.
    ```shell
    fc-cache -v
