@@ -176,7 +176,7 @@ local disk_hover_text = wibox.widget {
 
 awesome.connect_signal("evil::disk", function(used, total)
     disk_arc.value = used * 100 / total
-    disk_hover_text_value.markup = helpers.colorize_text(tostring(total - used).."G", x.color4)
+    disk_hover_text_value.markup = helpers.colorize_text(tostring(helpers.round(total - used, 1)).."G", x.color4)
 end)
 
 local disk_icon = wibox. widget {
