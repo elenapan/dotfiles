@@ -13,9 +13,6 @@ local disk_script = [[
     "
 ]]
 
-local function update_widget(disk_space)
-    disk.markup = disk_space .. "B free"
-end
 
 -- Periodically get disk space info
 awful.widget.watch(disk_script, update_interval, function(_, stdout)
