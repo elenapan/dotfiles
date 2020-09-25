@@ -35,10 +35,10 @@ local send_mpd_notif = function (artist, song, paused)
                         app_name = "mpd"
                     },
                     notif)
-                old_artist = artist
-                old_song = song
             end
         end
+        old_artist = artist
+        old_song = song
     end
 end
 
