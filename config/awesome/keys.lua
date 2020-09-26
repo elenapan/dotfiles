@@ -408,7 +408,7 @@ keys.globalkeys = gears.table.join(
     -- Microphone (V for voice)
     awful.key( { superkey }, "v",
         function()
-            awful.spawn.with_shell("amixer -D pulse sset Capture toggle &> /dev/null")
+            awful.spawn.with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
         end,
         {description = "(un)mute microphone", group = "volume"}),
 
