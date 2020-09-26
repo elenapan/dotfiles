@@ -228,6 +228,8 @@ lock_screen.init()
 require("elemental.app_drawer")
 -- Window switcher
 require("elemental.window_switcher")
+-- Toggle-able microphone overlay
+require("elemental.microphone_overlay")
 
 -- >> Daemons
 -- Most widgets that display system/external info depend on evil.
