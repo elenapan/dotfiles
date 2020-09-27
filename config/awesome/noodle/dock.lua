@@ -144,7 +144,7 @@ local function generate_dock_icon(c, bg, fg, symbol)
     cr:set_source(gears.color(fg))
     draw_indicator_shape_unfocused(cr)
 
-    local is_focused = client.focus and client.focus.class == c.class
+    local is_focused = client.focus and (client.focus.class == c.class) and true or false
 
     -- Put everything together
     local w = wibox.widget({
@@ -155,14 +155,14 @@ local function generate_dock_icon(c, bg, fg, symbol)
                     {
                         id = "indicator_unfocused",
                         bgimage = indicator_unfocused,
-                        visible = not is_focused and not c.ghost,
+                        visible = (dock_class_count[c.class] > 0) and not is_focused,
                         widget = wibox.container.background
                     },
                     {
                         id = "indicator_focused",
                         bg = fg,
                         shape = helpers.prrect(dpi(60), true, true, false, false),
-                        visible = is_focused and true or false,
+                        visible = is_focused,
                         widget = wibox.container.background
                     },
                     forced_height = indicator_height,
@@ -298,7 +298,8 @@ local dock = wibox.widget({
 for i = 1, #dock_pinned_classes do
     local class = dock_pinned_classes[i]
     local i = class_icons[class] or class_icons['_']
-    dock_items[class] = generate_dock_icon({ class = class, ghost = true }, item_bg, i.color, i.symbol)
+    dock_class_count[class] = dock_class_count[class] and (dock_class_count[class] + 1) or 0
+    dock_items[class] = generate_dock_icon({ class = class }, item_bg, i.color, i.symbol)
     dock:add(dock_items[class])
 end
 
@@ -321,8 +322,11 @@ add_client = function(c)
             if not item then
                 return
             end
-            local indicator = item:get_children_by_id("indicator")[1]
-            indicator.visible = true
+            item:get_children_by_id("indicator")[1].visible = true
+
+            -- Update the unfocused indicator (needed for pinned clients whose
+            -- icons are created on startup)
+            item:get_children_by_id("indicator_unfocused")[1].visible = true
         else
             -- Create a new item if it has not been created yet
             dock_items[c.class] = generate_dock_icon(c, item_bg, i.color, i.symbol)
