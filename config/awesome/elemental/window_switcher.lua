@@ -105,7 +105,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Center window switcher whenever its height changes
     s.window_switcher:connect_signal("property::height", function()
         awful.placement.centered(s.window_switcher, { honor_workarea = true, honor_padding = true })
-        if get_num_clients(s) == 0 then
+        if s.window_switcher.visible and get_num_clients(s) == 0 then
             window_switcher_hide()
         end
     end)
