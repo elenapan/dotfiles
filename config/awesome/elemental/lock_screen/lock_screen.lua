@@ -36,13 +36,13 @@ lock_screen_box.bg = beautiful.lock_screen_bg or beautiful.exit_screen_bg or bea
 lock_screen_box.fg = beautiful.lock_screen_fg or beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
 -- Add lockscreen to each screen
-for s in screen do
+awful.screen.connect_for_each_screen(function(s)
     if s == screen.primary then
         s.mylockscreen = lock_screen_box
     else
         s.mylockscreen = helpers.screen_mask(s, beautiful.lock_screen_bg or beautiful.exit_screen_bg or x.background)
     end
-end
+end)
 
 local function set_visibility(v)
     for s in screen do
