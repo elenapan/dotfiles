@@ -38,33 +38,41 @@ local dock_items = {}
 -- a dock icon.
 local dock_recently_focused = {}
 
--- In the `dock_pinned_classes` table, specify the classes of windows whose dock
--- items should always be visible. Order matters!
+-- >> Pinned apps based on their `class` property <<
+-- In the `dock_pinned_apps` table, specify the classes of windows whose dock
+-- items should always be visible, and the functions which launch them.
+-- Order matters!
+dock_pinned_apps = {
+    { class = "firefox", launcher = apps.browser },
+    { class = "Lutris", launcher = apps.lutris },
+    { class = "editor", launcher = apps.editor },
+    { class = "email", launcher = apps.mail },
+    { class = "Emacs", launcher = apps.org },
+}
+
 ----------------------------------------------------------------------------
--- Lua caveat: We need this to be a non-associative table, since tables with
--- string-based keys are not compatible with `ipairs`, meaning we cannot use
--- `ipairs` in order to loop through them.
+-- We want to be able to both iterate over the `dock_pinned_apps` table AND
+-- access the launcher function using only the class of the app. However, in
+-- Lua, tables with string-based keys are not compatible with `ipairs`, meaning
+-- we cannot use `ipairs` in order to loop through them.
 -- https://stackoverflow.com/a/60088452
 --
--- Sadly this means we have to declare the pinned classes twice, unless we want
--- to search for the launcher function sequentially :(
--- TODO (low priority): find a better way to initialize pinned items in order
--- to get rid of this redundancy
+-- In order not to have to declare the required information of our pinned apps
+-- in two different tables (an indexed table and an associative table) we
+-- declare them once in `dock_pinned_apps` and then programmatically create two
+-- helper tables: `dock_pinned_classes` and `dock_pinned_launchers`.
+-- > The indexed table `dock_pinned_classes` determines which app icons should
+--    be visible in the dock regardless of whether the app is open or not.
+-- > The associative table `dock_pinned_launchers` determines the function that
+--   should run when clicking the dock item of a class when there is no such
+--   window open.
 ----------------------------------------------------------------------------
-local dock_pinned_classes = {
-    "firefox",
-    "TelegramDesktop",
-    "editor",
-    "email"
-}
--- `dock_pinned_launchers` determines the function that should run when
--- clicking the dock item of a class when there is no such window open.
-local dock_pinned_launchers = {
-    ["firefox"] = apps.browser,
-    ["TelegramDesktop"] = apps.telegram,
-    ["editor"] = apps.editor,
-    ["email"] = apps.mail
-}
+local dock_pinned_classes = {}
+local dock_pinned_launchers = {}
+for _,v in ipairs(dock_pinned_apps) do
+    table.insert(dock_pinned_classes, v.class)
+    dock_pinned_launchers[v.class] = v.launcher
+end
 
 -- >> Helper functions
 local function class_window_exists(class)
