@@ -160,6 +160,12 @@ awful.screen.connect_for_each_screen(function(s)
     client.connect_signal("unfocus", no_dock_activator_ontop)
     client.connect_signal("property::fullscreen", no_dock_activator_ontop)
 
+    s:connect_signal("removed", function (s)
+        client.disconnect_signal("focus", no_dock_activator_ontop)
+        client.disconnect_signal("unfocus", no_dock_activator_ontop)
+        client.disconnect_signal("property::fullscreen", no_dock_activator_ontop)
+    end)
+
     s.dock_activator:buttons(
         gears.table.join(
             awful.button({ }, 4, function ()
