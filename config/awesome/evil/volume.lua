@@ -37,7 +37,7 @@ emit_volume_info()
 -- Sleeps until pactl detects an event (volume up/down/toggle mute)
 local volume_script = [[
     bash -c "
-    pactl subscribe 2> /dev/null | grep --line-buffered \"Event 'change' on sink #\"
+    LANG=C pactl subscribe 2> /dev/null | grep --line-buffered \"Event 'change' on sink #\"
     "]]
 
 
