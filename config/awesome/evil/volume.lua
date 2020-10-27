@@ -42,7 +42,7 @@ local volume_script = [[
 
 
 -- Kill old pactl subscribe processes
-awful.spawn.easy_async_with_shell("ps x | grep \"pactl subscribe\" | grep -v grep | awk '{print $1}' | xargs kill", function ()
+awful.spawn.easy_async({"pkill", "--full", "--uid", os.getenv("USER"), "^pactl subscribe"}, function ()
     -- Run emit_volume_info() with each line printed
     awful.spawn.with_line_callback(volume_script, {
         stdout = function(line)
