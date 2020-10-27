@@ -9,8 +9,8 @@ local active_color = x.color1
 
 local microphone_overlay = wibox({
     bg = x.color0.."99",
-    width = dpi(60),
-    height = dpi(60),
+    width = dpi(50),
+    height = dpi(50),
     visible = false,
     ontop = true,
     type = "dock",
@@ -18,7 +18,7 @@ local microphone_overlay = wibox({
     shape = helpers.rrect(beautiful.border_radius),
 })
 
-awful.placement.bottom_right(microphone_overlay, { margins = beautiful.useless_gap * 2 })
+awful.placement.top_left(microphone_overlay, { margins = beautiful.useless_gap * 2 })
 
 local indicator = wibox.widget {
     font = "icomoon 20",
