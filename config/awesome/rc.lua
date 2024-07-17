@@ -78,8 +78,8 @@ user = {
     -- Check apps.lua for more
     terminal = "kitty -1",
     browser = "firefox",
-    file_manager = "kitty -1 --class files -e ranger",
-    editor = "kitty -1 --class editor -e vim",
+    file_manager = "kitty -1 --class files -e nnn",
+    editor = "kitty -1 --class editor -e nvim",
     email_client = "kitty -1 --class email -e neomutt",
     music_client = "kitty -o font_size=12 --class music -e ncmpcpp",
 
@@ -464,7 +464,7 @@ awful.rules.rules = {
                 "dialog",
             },
             class = {
-                "Steam",
+                "steam",
                 "discord",
                 "music",
                 "markdown_input",
@@ -505,7 +505,7 @@ awful.rules.rules = {
                 --"TelegramDesktop",
                 "firefox",
                 "Nightly",
-                "Steam",
+                "steam",
                 "Lutris",
                 "Chromium",
                 "^editor$",
