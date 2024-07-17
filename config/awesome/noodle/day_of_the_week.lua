@@ -67,19 +67,11 @@ local day_of_the_week = wibox.widget {
 }
 
 local update_dotw = function ()
-    awful.spawn.easy_async_with_shell("date +%u", function (out)
-        local index = tonumber(out)
-        for i=1,7 do
-            dotw_containers[i].bg = "#00000000"
-            -- dotw_textboxes[i].markup = 
-            --     "<span foreground='" .. x.color8 .."'>"
-            --     .. dotw_initials[i] .. "</span>"
-        end
-        dotw_containers[index].bg = dotw_colors[index]
-        -- dotw_textboxes[index].markup = 
-        --     "<span foreground='" .. dotw_colors[index] .."'>"
-        --     .. dotw_initials[index] .. "</span>"
-    end)
+    local index = tonumber(os.date("%u"))
+    for i=1,7 do
+        dotw_containers[i].bg = "#00000000"
+    end
+    dotw_containers[index].bg = dotw_colors[index]
 end
 
 -- Initialize
