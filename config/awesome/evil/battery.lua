@@ -6,7 +6,7 @@
 
 local awful = require("awful")
 
-local update_interval = 30
+local update_interval = 10
 
 -- Subscribe to power supply status changes with acpi_listen
 local charger_script = [[
