@@ -84,7 +84,7 @@ naughty.connect_signal("request::display", function(n)
                             layout = wibox.layout.align.horizontal
                         },
                         {
-                            helpers.vertical_pad(dpi(10)),
+                            helpers.pad.vertical(dpi(10)),
                             {
                                 nil,
                                 actions,

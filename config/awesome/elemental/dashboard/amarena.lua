@@ -120,9 +120,9 @@ host_text.align = "center"
 host_text.valign = "center"
 local user_widget = wibox.widget {
     user_picture,
-    helpers.vertical_pad(dpi(24)),
+    helpers.pad.vertical(dpi(24)),
     user_text,
-    helpers.vertical_pad(dpi(4)),
+    helpers.pad.vertical(dpi(4)),
     host_text,
     layout = wibox.layout.fixed.vertical
 }

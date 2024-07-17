@@ -138,7 +138,7 @@ naughty.connect_signal("request::display", function(n)
                                 widget = naughty.widget.message,
                             },
                             {
-                                helpers.vertical_pad(dpi(10)),
+                                helpers.pad.vertical(dpi(10)),
                                 {
                                     actions,
                                     shape = helpers.rrect(dpi(4)),

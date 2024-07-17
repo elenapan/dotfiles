@@ -26,7 +26,7 @@ client.connect_signal("request::titlebars", function(c)
             awful.titlebar.widget.closebutton(c),
 
             -- Create some extra padding at the edge
-            helpers.horizontal_pad(dpi(3)),
+            helpers.pad.horizontal(dpi(3)),
 
             layout = wibox.layout.fixed.horizontal
         },

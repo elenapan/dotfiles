@@ -370,12 +370,12 @@ end
 -- Item placement
 sidebar:setup {
     { ----------- TOP GROUP -----------
-        helpers.vertical_pad(40),
+        helpers.pad.vertical(40),
         time,
         date,
-        helpers.vertical_pad(20),
+        helpers.pad.vertical(20),
         weather,
-        helpers.vertical_pad(40),
+        helpers.pad.vertical(40),
         layout = wibox.layout.fixed.vertical
     },
     { ----------- MIDDLE GROUP -----------
@@ -388,15 +388,15 @@ sidebar:setup {
             right = dpi(10),
             widget = wibox.container.margin
         },
-        helpers.vertical_pad(40),
+        helpers.pad.vertical(40),
         volume,
         cpu,
         temperature,
         ram,
         battery,
-        helpers.vertical_pad(20),
+        helpers.pad.vertical(20),
         disk,
-        helpers.vertical_pad(40),
+        helpers.pad.vertical(40),
         layout = wibox.layout.fixed.vertical
     },
     { ----------- BOTTOM GROUP -----------

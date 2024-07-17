@@ -171,14 +171,14 @@ end)
 
 local volume = wibox.widget {
     volume_bar,
-    helpers.horizontal_pad(dpi(3)),
+    helpers.pad.horizontal(dpi(3)),
     {
         align = "left",
         font = "icomoon 16",
         markup = helpers.colorize_text("", x.color1),
         widget = wibox.widget.textbox()
     },
-    helpers.horizontal_pad(dpi(2)),
+    helpers.pad.horizontal(dpi(2)),
     layout = wibox.layout.fixed.horizontal
 }
 

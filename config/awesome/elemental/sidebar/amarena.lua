@@ -456,7 +456,7 @@ sidebar:setup {
     {
         { ----------- TOP GROUP -----------
             {
-                helpers.vertical_pad(dpi(30)),
+                helpers.pad.vertical(dpi(30)),
                 {
                     nil,
                     {
@@ -467,23 +467,23 @@ sidebar:setup {
                     expand = "none",
                     layout = wibox.layout.align.horizontal
                 },
-                helpers.vertical_pad(dpi(20)),
+                helpers.pad.vertical(dpi(20)),
                 day_of_the_week,
-                helpers.vertical_pad(dpi(25)),
+                helpers.pad.vertical(dpi(25)),
                 {
                     nil,
                     cute_battery_face,
                     expand = "none",
                     layout = wibox.layout.align.horizontal,
                 },
-                helpers.vertical_pad(dpi(30)),
+                helpers.pad.vertical(dpi(30)),
                 layout = wibox.layout.fixed.vertical
             },
             layout = wibox.layout.fixed.vertical
         },
         { ----------- MIDDLE GROUP -----------
             {
-                helpers.vertical_pad(dpi(30)),
+                helpers.pad.vertical(dpi(30)),
                 weather,
                 {
                     {
@@ -513,7 +513,7 @@ sidebar:setup {
                     expand = "none",
                     layout = wibox.layout.align.horizontal
                 },
-                helpers.vertical_pad(dpi(25)),
+                helpers.pad.vertical(dpi(25)),
                 layout = wibox.layout.fixed.vertical
             },
             shape = helpers.prrect(beautiful.sidebar_border_radius, false, true, false, false),
@@ -529,7 +529,7 @@ sidebar:setup {
                         expand = "none",
                         layout = wibox.layout.align.horizontal,
                     },
-                    helpers.vertical_pad(dpi(30)),
+                    helpers.pad.vertical(dpi(30)),
                     {
                         nil,
                         search,

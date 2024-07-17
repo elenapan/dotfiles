@@ -65,14 +65,16 @@ function helpers.pango_escape(s)
     }))
 end
 
-function helpers.vertical_pad(height)
+helpers.pad = {}
+
+function helpers.pad.vertical(height)
     return wibox.widget{
         forced_height = height,
         layout = wibox.layout.fixed.vertical
     }
 end
 
-function helpers.horizontal_pad(width)
+function helpers.pad.horizontal(width)
     return wibox.widget{
         forced_width = width,
         layout = wibox.layout.fixed.horizontal
