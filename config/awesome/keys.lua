@@ -227,9 +227,10 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "Return", function () awful.spawn(user.terminal) end,
         {description = "open a terminal", group = "launcher"}),
     -- Spawn floating terminal
-    awful.key({ superkey, shiftkey }, "Return", function()
-        awful.spawn(user.floating_terminal, {floating = true})
-                                                end,
+    awful.key({ superkey, shiftkey }, "Return",
+        function()
+            awful.spawn(user.terminal, {floating = true})
+        end,
         {description = "spawn floating terminal", group = "launcher"}),
 
     -- Reload Awesome

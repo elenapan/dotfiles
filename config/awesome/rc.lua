@@ -77,7 +77,6 @@ user = {
     -- >> Default applications <<
     -- Check apps.lua for more
     terminal = "kitty -1",
-    floating_terminal = "kitty -1",
     browser = "firefox",
     file_manager = "kitty -1 --class files -e ranger",
     editor = "kitty -1 --class editor -e vim",
@@ -385,7 +384,6 @@ awful.rules.rules = {
             instance = {
                 "DTA",  -- Firefox addon DownThemAll.
                 "copyq",  -- Includes session name in class.
-                "floating_terminal",
                 "riotclientux.exe",
                 "leagueclientux.exe",
                 "Devtools", -- Firefox devtools
