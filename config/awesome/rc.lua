@@ -128,11 +128,6 @@ user = {
     openweathermap_city_id = "yyyyyy",
     -- > Use "metric" for Celcius, "imperial" for Fahrenheit
     weather_units = "metric",
-
-    -- >> Coronavirus <<
-    -- Country to check for corona statistics
-    -- Uses the https://corona-stats.online API
-    coronavirus_country = "germany",
 }
 -- ===================================================================
 
