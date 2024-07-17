@@ -3,35 +3,28 @@ local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local icons = require("icons")
--- local naughty = require("naughty")
+local exit_screen_obj = require("elemental.exit_screen")
+local commands = exit_screen_obj.commands
 
 local helpers = require("helpers")
+
+func_lock = function ()
+    commands["lock"]()
+    -- Kinda fixes the "white" (undimmed) flash that appears between
+    -- exit screen disappearing and lock screen appearing
+    gears.timer.delayed_call(function()
+        exit_screen_hide()
+    end)
+end
+
+func_suspend = function ()
+    commands["suspend"]()
+    exit_screen_hide()
+end
 
 -- Appearance
 local icon_size = beautiful.exit_screen_icon_size or dpi(140)
 local text_font = beautiful.exit_screen_font or "sans 14"
-
--- Commands
-local poweroff_command = function()
-    awful.spawn.with_shell("poweroff")
-    -- awful.keygrabber.stop(exit_screen_grabber)
-end
-local reboot_command = function()
-    awful.spawn.with_shell("reboot")
-    -- awful.keygrabber.stop(exit_screen_grabber)
-end
-local suspend_command = function()
-    exit_screen_hide()
-    lock_screen_show()
-    awful.spawn.with_shell("systemctl suspend")
-end
-local exit_command = function()
-    awesome.quit()
-end
-local lock_command = function()
-    lock_screen_show()
-    exit_screen_hide()
-end
 
 local username = os.getenv("USER")
 -- Capitalize username
@@ -62,9 +55,7 @@ local poweroff = wibox.widget{
     layout = wibox.layout.fixed.vertical
 }
 poweroff:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        poweroff_command()
-    end)
+    awful.button({ }, 1, commands["poweroff"])
 ))
 
 local reboot_icon = wibox.widget.imagebox(icons.image.reboot)
@@ -93,9 +84,7 @@ local reboot = wibox.widget{
     layout = wibox.layout.fixed.vertical
 }
 reboot:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        reboot_command()
-    end)
+    awful.button({ }, 1, commands["reboot"])
 ))
 
 local suspend_icon = wibox.widget.imagebox(icons.image.suspend)
@@ -124,11 +113,8 @@ local suspend = wibox.widget{
     layout = wibox.layout.fixed.vertical
 }
 suspend:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        suspend_command()
-    end)
+    awful.button({ }, 1, func_suspend)
 ))
-
 
 local exit_icon = wibox.widget.imagebox(icons.image.exit)
 exit_icon.resize = true
@@ -156,9 +142,7 @@ local exit = wibox.widget{
     layout = wibox.layout.fixed.vertical
 }
 exit:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        exit_command()
-    end)
+    awful.button({ }, 1, commands["exit"])
 ))
 
 local lock_icon = wibox.widget.imagebox(icons.image.lock)
@@ -185,9 +169,7 @@ local lock = wibox.widget{
     layout = wibox.layout.fixed.vertical
 }
 lock:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        lock_command()
-    end)
+    awful.button({ }, 1, func_lock)
 ))
 
 -- Create the widget
@@ -213,18 +195,11 @@ local keybinds = {
     ['escape'] = exit_screen_hide,
     ['q'] = exit_screen_hide,
     ['x'] = exit_screen_hide,
-    ['s'] = function () suspend_command(); exit_screen_hide() end,
-    ['e'] = exit_command,
-    ['p'] = poweroff_command,
-    ['r'] = reboot_command,
-    ['l'] = function ()
-        lock_command()
-        -- Kinda fixes the "white" (undimmed) flash that appears between
-        -- exit screen disappearing and lock screen appearing
-        gears.timer.delayed_call(function()
-            exit_screen_hide()
-        end)
-    end
+    ['s'] = func_suspend,
+    ['e'] = commands["exit"],
+    ['p'] = commands["poweroff"],
+    ['r'] = commands["reboot"],
+    ['l'] = func_lock
 }
 
 function exit_screen_show()
