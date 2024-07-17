@@ -29,6 +29,7 @@ awful.spawn.easy_async_with_shell("sh -c 'out=\"$(find /sys/class/power_supply/B
     end)
 end)
 
+local status_old = -1
 -- First get charger file path
 awful.spawn.easy_async_with_shell("sh -c 'out=\"$(find /sys/class/power_supply/*/online)\" && (echo \"$out\" | head -1) || false' ", function (charger_file, _, __, exit_code)
     -- No charger file found
@@ -39,7 +40,10 @@ awful.spawn.easy_async_with_shell("sh -c 'out=\"$(find /sys/class/power_supply/*
     local emit_charger_info = function()
         awful.spawn.easy_async_with_shell("cat "..charger_file, function (out)
             local status = tonumber(out) == 1
-            awesome.emit_signal("evil::charger", status)
+            if not (status == status_old) then
+                awesome.emit_signal("evil::charger", status)
+                status_old = status
+            end
         end)
     end
 
