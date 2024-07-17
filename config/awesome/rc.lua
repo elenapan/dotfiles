@@ -90,16 +90,14 @@ user = {
     -- >> User profile <<
     profile_picture = os.getenv("HOME").."/.config/awesome/profile.png",
 
-    -- Directories with fallback values
     dirs = {
-        downloads = os.getenv("XDG_DOWNLOAD_DIR") or "~/Downloads",
-        documents = os.getenv("XDG_DOCUMENTS_DIR") or "~/Documents",
-        music = os.getenv("XDG_MUSIC_DIR") or "~/Music",
-        pictures = os.getenv("XDG_PICTURES_DIR") or "~/Pictures",
-        videos = os.getenv("XDG_VIDEOS_DIR") or "~/Videos",
-        -- Make sure the directory exists so that your screenshots
-        -- are not lost
-        screenshots = os.getenv("XDG_SCREENSHOTS_DIR") or "~/Pictures/Screenshots",
+        downloads = os.getenv("HOME").."/dwn",
+        documents = os.getenv("HOME").."/dox",
+        music = os.getenv("HOME").."/mus",
+        pictures = os.getenv("HOME").."/pix",
+        videos = os.getenv("HOME").."/vid",
+        -- Make sure the directory exists so that your screenshots are not lost
+        screenshots = os.getenv("HOME").."/pix/screenshots",
     },
 
     -- >> Sidebar <<
