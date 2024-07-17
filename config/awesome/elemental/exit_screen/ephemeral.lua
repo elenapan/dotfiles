@@ -155,10 +155,6 @@ function exit_screen_show()
 end
 
 exit_screen:buttons(gears.table.join(
-    -- Left click - Hide exit_screen
-    awful.button({ }, 1, function ()
-        exit_screen_hide()
-    end),
     -- Middle click - Hide exit_screen
     awful.button({ }, 2, function ()
         exit_screen_hide()
