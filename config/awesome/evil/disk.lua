@@ -7,10 +7,10 @@ local helpers = require("helpers")
 
 local update_interval = 180 -- every 3 minutes
 
--- Use /dev/sdxY according to your setup
+-- To get disk space for any partition, replace '/' with the partition (e.g. '/dev/sda1')
 local disk_script = [[
     bash -c "
-    df -kH -B 1MB /dev/sda1 | tail -1 | awk '{printf \"%d@%d\", $4, $3}'
+    df -kH -B 1MB / | awk 'END {printf \"%d@%d\", $4, $3}'
     "
 ]]
 
