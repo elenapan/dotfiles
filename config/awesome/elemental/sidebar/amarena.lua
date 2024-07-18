@@ -98,15 +98,15 @@ brightness:buttons(
         awful.button({ }, 1, apps.night_mode),
         -- Right click - Reset brightness (Set to max)
         awful.button({ }, 3, function ()
-            awful.spawn.with_shell("light -S 100")
+            helpers.brightness_control.set(100)
         end),
         -- Scroll up - Increase brightness
         awful.button({ }, 4, function ()
-            awful.spawn.with_shell("light -A 10")
+            helpers.brightness_control.increase(10)
         end),
         -- Scroll down - Decrease brightness
         awful.button({ }, 5, function ()
-            awful.spawn.with_shell("light -U 10")
+            helpers.brightness_control.decrease(10)
         end)
 ))
 

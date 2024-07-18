@@ -359,12 +359,12 @@ keys.globalkeys = gears.table.join(
     -- Brightness
     awful.key( { }, "XF86MonBrightnessDown",
         function()
-            awful.spawn.with_shell("light -U 10")
+            helpers.brightness_control.decrease(10)
         end,
         {description = "decrease brightness", group = "brightness"}),
     awful.key( { }, "XF86MonBrightnessUp",
         function()
-            awful.spawn.with_shell("light -A 10")
+            helpers.brightness_control.increase(10)
         end,
         {description = "increase brightness", group = "brightness"}),
 

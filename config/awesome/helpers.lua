@@ -262,6 +262,18 @@ helpers.volume_control = {
     end
 }
 
+helpers.brightness_control = {
+    increase = function(value)
+        awful.spawn.with_shell("light -A "..tostring(value))
+    end,
+    decrease = function(value)
+        awful.spawn.with_shell("light -U "..tostring(value))
+    end,
+    set = function(value)
+        awful.spawn.with_shell("light -S "..tostring(value))
+    end
+}
+
 function helpers.send_key(c, key)
     awful.spawn.with_shell("xdotool key --window "..tostring(c.window).." "..key)
 end
