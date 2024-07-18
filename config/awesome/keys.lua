@@ -402,6 +402,23 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "raise volume", group = "volume"}),
 
+    -- Volume Control with super+[ super+] super+\
+    awful.key( { superkey }, "backslash",
+        function()
+            helpers.volume_control.toggle()
+        end,
+        {description = "(un)mute volume", group = "volume"}),
+    awful.key( { superkey }, "bracketleft",
+        function()
+            helpers.volume_control.decrease(5)
+        end,
+        {description = "lower volume", group = "volume"}),
+    awful.key( { superkey }, "bracketright",
+        function()
+            helpers.volume_control.increase(5)
+        end,
+        {description = "raise volume", group = "volume"}),
+
     -- Screenkey toggle
     awful.key( { superkey }, "F12", apps.screenkey,
         {description = "raise volume", group = "volume"}),
