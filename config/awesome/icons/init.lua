@@ -14,45 +14,88 @@ local icons = {}
 icons.image = {}
 icons.text = {}
 
--- 'Icomoon' font (filled variant)
-local sun_icon = ""
-local moon_icon = ""
-local dcloud_icon = ""
-local ncloud_icon = ""
-local cloud_icon = ""
-local rain_icon = ""
-local storm_icon = ""
-local snow_icon = ""
-local mist_icon = ""
-local whatever_icon = ""
-
--- Icon codes of openweathermap
-icons.text.weather = {
-    ["01d"] = { symbol = sun_icon, color = x.color3 },
-    ["01n"] = { symbol = moon_icon, color = x.color4 },
-    ["02d"] = { symbol = dcloud_icon, color = x.color3 },
-    ["02n"] = { symbol = ncloud_icon, color = x.color6 },
-    ["03d"] = { symbol = cloud_icon, color = x.color1 },
-    ["03n"] = { symbol = cloud_icon, color = x.color1 },
-    ["04d"] = { symbol = cloud_icon, color = x.color1 },
-    ["04n"] = { symbol = cloud_icon, color = x.color1 },
-    ["09d"] = { symbol = rain_icon, color = x.color4 },
-    ["09n"] = { symbol = rain_icon, color = x.color4 },
-    ["10d"] = { symbol = rain_icon, color = x.color4 },
-    ["10n"] = { symbol = rain_icon, color = x.color4 },
-    ["11d"] = { symbol = storm_icon, color = x.color1 },
-    ["11n"] = { symbol = storm_icon, color = x.color1 },
-    ["13d"] = { symbol = snow_icon, color = x.color6 },
-    ["13n"] = { symbol = snow_icon, color = x.color6 },
-    ["40d"] = { symbol = mist_icon, color = x.color5 },
-    ["40n"] = { symbol = mist_icon, color = x.color5 },
-    ["50d"] = { symbol = mist_icon, color = x.color5 },
-    ["50n"] = { symbol = mist_icon, color = x.color5 },
-    ["_"] = { symbol = whatever_icon, color = x.color2 }
+local symbols = {
+    -- 'Icomoon' font (filled variant)
+    filled = {
+        sun = "",
+        moon = "",
+        dcloud = "",
+        ncloud = "",
+        cloud = "",
+        rain = "",
+        storm = "",
+        snow = "",
+        mist = "",
+        whatever = ""
+    },
+    -- 'Icomoon' font (outline variant)
+    outline = {
+        sun = "",
+        moon = "",
+        dcloud = "",
+        ncloud = "",
+        cloud = "",
+        rain = "",
+        storm = "",
+        snow = "",
+        mist = "",
+        whatever = ""
+    }
 }
 
-icons.text.get_weather_icon = function(code)
-    return icons.text.weather[code] or icons.text.weather["_"]
+icons.text.weather = {}
+
+-- Icon codes of openweathermap
+icons.text.weather.outline = {
+    ["01d"] = { symbol = symbols.outline.sun, color = x.color3 },
+    ["01n"] = { symbol = symbols.outline.moon, color = x.color4 },
+    ["02d"] = { symbol = symbols.outline.dcloud, color = x.color3 },
+    ["02n"] = { symbol = symbols.outline.ncloud, color = x.color6 },
+    ["03d"] = { symbol = symbols.outline.cloud, color = x.color1 },
+    ["03n"] = { symbol = symbols.outline.cloud, color = x.color1 },
+    ["04d"] = { symbol = symbols.outline.cloud, color = x.color1 },
+    ["04n"] = { symbol = symbols.outline.cloud, color = x.color1 },
+    ["09d"] = { symbol = symbols.outline.rain, color = x.color4 },
+    ["09n"] = { symbol = symbols.outline.rain, color = x.color4 },
+    ["10d"] = { symbol = symbols.outline.rain, color = x.color4 },
+    ["10n"] = { symbol = symbols.outline.rain, color = x.color4 },
+    ["11d"] = { symbol = symbols.outline.storm, color = x.color1 },
+    ["11n"] = { symbol = symbols.outline.storm, color = x.color1 },
+    ["13d"] = { symbol = symbols.outline.snow, color = x.color6 },
+    ["13n"] = { symbol = symbols.outline.snow, color = x.color6 },
+    ["40d"] = { symbol = symbols.outline.mist, color = x.color5 },
+    ["40n"] = { symbol = symbols.outline.mist, color = x.color5 },
+    ["50d"] = { symbol = symbols.outline.mist, color = x.color5 },
+    ["50n"] = { symbol = symbols.outline.mist, color = x.color5 },
+    ["_"] = { symbol = symbols.outline.whatever, color = x.color2 }
+}
+
+icons.text.weather.filled = {
+    ["01d"] = { symbol = symbols.filled.sun, color = x.color3 },
+    ["01n"] = { symbol = symbols.filled.moon, color = x.color4 },
+    ["02d"] = { symbol = symbols.filled.dcloud, color = x.color3 },
+    ["02n"] = { symbol = symbols.filled.ncloud, color = x.color6 },
+    ["03d"] = { symbol = symbols.filled.cloud, color = x.color1 },
+    ["03n"] = { symbol = symbols.filled.cloud, color = x.color1 },
+    ["04d"] = { symbol = symbols.filled.cloud, color = x.color1 },
+    ["04n"] = { symbol = symbols.filled.cloud, color = x.color1 },
+    ["09d"] = { symbol = symbols.filled.rain, color = x.color4 },
+    ["09n"] = { symbol = symbols.filled.rain, color = x.color4 },
+    ["10d"] = { symbol = symbols.filled.rain, color = x.color4 },
+    ["10n"] = { symbol = symbols.filled.rain, color = x.color4 },
+    ["11d"] = { symbol = symbols.filled.storm, color = x.color1 },
+    ["11n"] = { symbol = symbols.filled.storm, color = x.color1 },
+    ["13d"] = { symbol = symbols.filled.snow, color = x.color6 },
+    ["13n"] = { symbol = symbols.filled.snow, color = x.color6 },
+    ["40d"] = { symbol = symbols.filled.mist, color = x.color5 },
+    ["40n"] = { symbol = symbols.filled.mist, color = x.color5 },
+    ["50d"] = { symbol = symbols.filled.mist, color = x.color5 },
+    ["50n"] = { symbol = symbols.filled.mist, color = x.color5 },
+    ["_"] = { symbol = symbols.filled.whatever, color = x.color2 }
+}
+
+icons.text.get_weather_icon = function(code, variant)
+    return icons.text.weather[variant][code] or icons.text.weather[variant]["_"]
 end
 
 -- Set up text symbols and accent colors to be used in tasklists or docks

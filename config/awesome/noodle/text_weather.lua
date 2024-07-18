@@ -44,7 +44,7 @@ local weather = wibox.widget{
 }
 
 awesome.connect_signal("evil::weather", function(temperature, description, icon_code)
-    local icon = get_weather_icon(icon_code)
+    local icon = get_weather_icon(icon_code, "filled")
     local symbol = icon.symbol
     local color = icon.color
 
