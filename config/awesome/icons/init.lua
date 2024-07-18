@@ -14,8 +14,46 @@ local icons = {}
 icons.image = {}
 icons.text = {}
 
--- TODO Set up weather text icons here instead of in ../noodle/text_weather.lua
--- icons.text.weather = {}
+-- 'Icomoon' font (filled variant)
+local sun_icon = ""
+local moon_icon = ""
+local dcloud_icon = ""
+local ncloud_icon = ""
+local cloud_icon = ""
+local rain_icon = ""
+local storm_icon = ""
+local snow_icon = ""
+local mist_icon = ""
+local whatever_icon = ""
+
+-- Icon codes of openweathermap
+icons.text.weather = {
+    ["01d"] = { symbol = sun_icon, color = x.color3 },
+    ["01n"] = { symbol = moon_icon, color = x.color4 },
+    ["02d"] = { symbol = dcloud_icon, color = x.color3 },
+    ["02n"] = { symbol = ncloud_icon, color = x.color6 },
+    ["03d"] = { symbol = cloud_icon, color = x.color1 },
+    ["03n"] = { symbol = cloud_icon, color = x.color1 },
+    ["04d"] = { symbol = cloud_icon, color = x.color1 },
+    ["04n"] = { symbol = cloud_icon, color = x.color1 },
+    ["09d"] = { symbol = rain_icon, color = x.color4 },
+    ["09n"] = { symbol = rain_icon, color = x.color4 },
+    ["10d"] = { symbol = rain_icon, color = x.color4 },
+    ["10n"] = { symbol = rain_icon, color = x.color4 },
+    ["11d"] = { symbol = storm_icon, color = x.color1 },
+    ["11n"] = { symbol = storm_icon, color = x.color1 },
+    ["13d"] = { symbol = snow_icon, color = x.color6 },
+    ["13n"] = { symbol = snow_icon, color = x.color6 },
+    ["40d"] = { symbol = mist_icon, color = x.color5 },
+    ["40n"] = { symbol = mist_icon, color = x.color5 },
+    ["50d"] = { symbol = mist_icon, color = x.color5 },
+    ["50n"] = { symbol = mist_icon, color = x.color5 },
+    ["_"] = { symbol = whatever_icon, color = x.color2 }
+}
+
+icons.text.get_weather_icon = function(code)
+    return icons.text.weather[code] or icons.text.weather["_"]
+end
 
 -- Set up text symbols and accent colors to be used in tasklists or docks
 -- instead of awful.widget.clienticon
