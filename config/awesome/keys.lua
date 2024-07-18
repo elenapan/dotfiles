@@ -60,8 +60,8 @@ keys.desktopbuttons = gears.table.join(
     awful.button({ }, 5, awful.tag.viewnext),
 
     -- Side buttons - Control volume
-    awful.button({ }, 9, function () helpers.volume_control(5) end),
-    awful.button({ }, 8, function () helpers.volume_control(-5) end)
+    awful.button({ }, 9, function () helpers.volume_control.increase(5) end),
+    awful.button({ }, 8, function () helpers.volume_control.decrease(5) end)
 
     -- Side buttons - Minimize and restore minimized client
     -- awful.button({ }, 8, function()
@@ -371,34 +371,34 @@ keys.globalkeys = gears.table.join(
     -- Volume Control with volume keys
     awful.key( { }, "XF86AudioMute",
         function()
-            helpers.volume_control(0)
+            helpers.volume_control.toggle()
         end,
         {description = "(un)mute volume", group = "volume"}),
     awful.key( { }, "XF86AudioLowerVolume",
         function()
-            helpers.volume_control(-5)
+            helpers.volume_control.decrease(5)
         end,
         {description = "lower volume", group = "volume"}),
     awful.key( { }, "XF86AudioRaiseVolume",
         function()
-            helpers.volume_control(5)
+            helpers.volume_control.increase(5)
         end,
         {description = "raise volume", group = "volume"}),
 
     -- Volume Control with alt+F1/F2/F3
     awful.key( { altkey }, "F1",
         function()
-            helpers.volume_control(0)
+            helpers.volume_control.toggle()
         end,
         {description = "(un)mute volume", group = "volume"}),
     awful.key( { altkey }, "F2",
         function()
-            helpers.volume_control(-5)
+            helpers.volume_control.decrease(5)
         end,
         {description = "lower volume", group = "volume"}),
     awful.key( { altkey }, "F3",
         function()
-            helpers.volume_control(5)
+            helpers.volume_control.increase(5)
         end,
         {description = "raise volume", group = "volume"}),
 

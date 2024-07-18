@@ -279,16 +279,16 @@ local volume = format_progress_bar(volume_bar)
 volume:buttons(gears.table.join(
     -- Left click - Mute / Unmute
     awful.button({ }, 1, function ()
-        helpers.volume_control(0)
+        helpers.volume_control.toggle()
     end),
     -- Right click - Run or raise pavucontrol
     awful.button({ }, 3, apps.volume),
     -- Scroll - Increase / Decrease volume
-    awful.button({ }, 4, function () 
-        helpers.volume_control(2)
+    awful.button({ }, 4, function ()
+        helpers.volume_control.increase(2)
     end),
-    awful.button({ }, 5, function () 
-        helpers.volume_control(-2)
+    awful.button({ }, 5, function ()
+        helpers.volume_control.decrease(2)
     end)
 ))
 

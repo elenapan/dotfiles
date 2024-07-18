@@ -53,16 +53,16 @@ local volume = create_button(volume_symbol, volume_unmuted_color, x.color8.."30"
 volume:buttons(gears.table.join(
     -- Left click - Mute / Unmute
     awful.button({ }, 1, function ()
-        helpers.volume_control(0)
+        helpers.volume_control.toggle()
     end),
     -- Right click - Run or raise volume control client
     awful.button({ }, 3, apps.volume),
     -- Scroll - Increase / Decrease volume
     awful.button({ }, 4, function ()
-        helpers.volume_control(5)
+        helpers.volume_control.increase(5)
     end),
     awful.button({ }, 5, function ()
-        helpers.volume_control(-5)
+        helpers.volume_control.decrease(5)
     end)
 ))
 

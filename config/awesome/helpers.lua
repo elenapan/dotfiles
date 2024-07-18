@@ -247,16 +247,20 @@ function helpers.round(number, decimals)
     return math.floor(number * power) / power
 end
 
-function helpers.volume_control(step)
-    local cmd
-    if step == 0 then
-        cmd = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-    else
-        sign = step > 0 and "+" or ""
-        cmd = "pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ "..sign..tostring(step).."%"
+helpers.volume_control = {
+    toggle = function()
+        awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    end,
+    increase = function(value)
+        awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +"..tostring(value).."%")
+    end,
+    decrease = function(value)
+        awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -"..tostring(value).."%")
+    end,
+    set = function(value)
+        awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ "..tostring(value).."%")
     end
-    awful.spawn.with_shell(cmd)
-end
+}
 
 function helpers.send_key(c, key)
     awful.spawn.with_shell("xdotool key --window "..tostring(c.window).." "..key)
