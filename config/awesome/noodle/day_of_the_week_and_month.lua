@@ -145,11 +145,11 @@ local update_dotw = function ()
     for i=1,7 do
         if index_today == i then
             dotw_containers[i].bg = x.color0
-            dotw_separators[i].bg = dotw_colors[i]
+            dotw_separators[i].color = dotw_colors[i]
             dotw_month_day[i].markup = helpers.colorize_text(month_days[i], x.foreground)
         else
             dotw_containers[i].bg = "#00000000"
-            dotw_separators[i].bg = x.color0
+            dotw_separators[i].color = x.color0
             dotw_month_day[i].markup = helpers.colorize_text(month_days[i], x.color8)
         end
     end

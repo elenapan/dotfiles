@@ -44,8 +44,8 @@ dotted_line.new = function(dot_number, dot_size, dot_spacing, orientation)
     table.insert(dots, dot)
     line:add(dot, helpers.pad[orientation](dot_spacing / 2))
 
-    -- This will allow to directly set bg like so `line.bg = some_color`
-    function line:set_bg(color)
+    -- This will allow to directly set bg like so `line.color = some_color`
+    function line:set_color(color)
         for index, dot in ipairs(dots) do
             dot.bg = color
         end
