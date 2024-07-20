@@ -53,7 +53,7 @@ local function decorate_cell(widget, flag, date)
     return ret
 end
 
-calendar_widget = wibox.widget {
+local calendar_widget = wibox.widget {
     date     = os.date('*t'),
     font     = "sans medium 13",
     long_weekdays = false,

@@ -126,7 +126,7 @@ local user_widget = wibox.widget {
 local user_box = create_boxed_widget(user_widget, dpi(300), dpi(340), x.background)
 
 -- Calendar
-local calendar = require("noodle.calendar")
+local calendar = require("noodle.calendar_native")
 -- Update calendar whenever dashboard is shown
 dashboard:connect_signal("property::visible", function ()
     if dashboard.visible then
