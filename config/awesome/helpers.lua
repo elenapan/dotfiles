@@ -461,4 +461,18 @@ function helpers.this_dir()
    return str:match("(.*/)")
 end
 
+function helpers.debounce(func, timeout)
+    local timer = nil
+    return function(...)
+        local args = { ... }
+        if timer then
+            timer:stop()
+        end
+        timer = gears.timer.start_new(timeout, function()
+            func(unpack(args))
+            return false -- Stop the timer
+        end)
+    end
+end
+
 return helpers
