@@ -70,6 +70,39 @@ local function pretty_print_date(input_date)
     end
 end
 
+local fields_to_compare = {
+    "file",
+    "title",
+    "type",
+    "date_obj",
+    "recurrence",
+    "time_start",
+    "time_end",
+}
+local function compare_tasks(task1, task2)
+    for _, field in ipairs(fields_to_compare) do
+        if task1[field] ~= task2[field] then
+            return false
+        end
+    end
+    return true
+end
+
+local function compare_task_arrays(array1, array2)
+    if #array1 ~= #array2 then
+        return false
+    end
+
+    for i = 1, #array1 do
+        if not compare_tasks(array1[i], array2[i]) then
+            return false
+        end
+    end
+
+    return true
+end
+
+local old_tasks = {}
 local function update_tasks()
     -- Search for the pattern and also print the line before it (task title)
     local search_entries_cmd = 'grep -B 1 -E "^(SCHEDULED|DEADLINE):" '..file_list_str..' | grep -v -E "^--$"'
@@ -143,7 +176,7 @@ local function update_tasks()
                     title = title,
                     type = event_type:lower(),
                     status = status and status:lower(),
-                    repeatable = entry.recurrence and true or false,
+                    recurrence = entry.recurrence,
                     overdue = date_obj < today,
                     date = os.date("%Y-%m-%d", date_obj),
                     date_obj = date_obj,
@@ -162,7 +195,10 @@ local function update_tasks()
             return a.date_obj < b.date_obj
         end)
 
-        awesome.emit_signal("evil::tasks", tasks)
+        if not compare_task_arrays(tasks, old_tasks) then
+            awesome.emit_signal("evil::tasks", tasks)
+            old_tasks = tasks
+        end
 
     end)
 end
