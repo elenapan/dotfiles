@@ -47,11 +47,6 @@ local function calculate_recurrence(date, recurrence)
     return nil
 end
 
-local function get_time_range()
-    local today = os.time()
-    return today, today
-end
-
 local function pretty_print_date(input_date)
     local today = os.time()
     local delta = os.difftime(input_date, today) / (24 * 3600)
@@ -74,7 +69,7 @@ local fields_to_compare = {
     "file",
     "title",
     "type",
-    "date_obj",
+    "date_timestamp",
     "recurrence",
     "time_start",
     "time_end",
@@ -129,11 +124,19 @@ local function update_tasks()
             end
 
             local event_type, date_str = event_line:match(":([A-Z]+): <(%d%d%d%d%-%d%d%-%d%d)")
-            local date_obj = os.time({year = tonumber(date_str:sub(1,4)), month = tonumber(date_str:sub(6,7)), day = tonumber(date_str:sub(9,10))})
+
             -- Match optional time and recurrence
             local time_start = event_line:match(" (%d%d:%d%d)")
             local time_end = event_line:match("-(%d%d:%d%d)")
             local recurrence = event_line:match("(%+[%d%w]*)>")
+
+            local date_timestamp = os.time({
+                year = tonumber(date_str:sub(1,4)),
+                month = tonumber(date_str:sub(6,7)),
+                day = tonumber(date_str:sub(9,10)),
+                hour = time_start and tonumber(time_start:sub(1,2)),
+                min = time_start and tonumber(time_start:sub(4,5))
+            })
 
             table.insert(entries, {
                 file = file,
@@ -141,7 +144,7 @@ local function update_tasks()
                 status = status,
                 event_type = event_type,
                 date = date_str,
-                date_obj = date_obj,
+                date_timestamp = date_timestamp,
                 time_start = time_start,
                 time_end = time_end,
                 recurrence = recurrence
@@ -150,25 +153,26 @@ local function update_tasks()
 
         -- Generate tasks array
         local tasks = {}
-        local time_range_start, time_range_end = get_time_range()
-        local today = os.time({year = os.date("*t").year, month = os.date("*t").month, day = os.date("*t").day})
+        local time_range_start = os.time()
+        local time_range_end = time_range_start -- Can be adjusted as needed
+        local now = os.time({year = os.date("*t").year, month = os.date("*t").month, day = os.date("*t").day})
 
         for _, entry in ipairs(entries) do
-            local date_obj = entry.date_obj
+            local date_timestamp = entry.date_timestamp
             local status = entry.status
             local event_type = entry.event_type
             local title = entry.title
             while true do
-                if not date_obj then break end
+                if not date_timestamp then break end
 
-                if (status == "DONE" or status == "KILL") and not (time_range_start <= date_obj and date_obj <= time_range_end) then
+                if (status == "DONE" or status == "KILL") and not (time_range_start <= date_timestamp and date_timestamp <= time_range_end) then
                     break
                 end
 
                 if event_type == "DEADLINE" then
-                    if date_obj > (today + org_deadline_warning_days * 24 * 3600) then break end
+                    if date_timestamp > (now + org_deadline_warning_days * 24 * 3600) then break end
                 else
-                    if date_obj > (today + org_schedule_warning_days * 24 * 3600) then break end
+                    if date_timestamp > (now + org_schedule_warning_days * 24 * 3600) then break end
                 end
 
                 table.insert(tasks, {
@@ -177,22 +181,22 @@ local function update_tasks()
                     type = event_type:lower(),
                     status = status and status:lower(),
                     recurrence = entry.recurrence,
-                    overdue = date_obj < today,
-                    date = os.date("%Y-%m-%d", date_obj),
-                    date_obj = date_obj,
-                    date_pretty = pretty_print_date(date_obj),
+                    overdue = date_timestamp < now,
+                    date = os.date("%Y-%m-%d", date_timestamp),
+                    date_timestamp = date_timestamp,
+                    date_pretty = pretty_print_date(date_timestamp),
                     time_start = entry.time_start,
                     time_end = entry.time_end
                 })
 
                 if status == "DONE" or status == "KILL" then break end
 
-                date_obj = calculate_recurrence(date_obj, entry.recurrence)
+                date_timestamp = calculate_recurrence(date_timestamp, entry.recurrence)
             end
         end
 
         table.sort(tasks, function(a, b)
-            return a.date_obj < b.date_obj
+            return a.date_timestamp < b.date_timestamp
         end)
 
         if not compare_task_arrays(tasks, old_tasks) then
