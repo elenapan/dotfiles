@@ -207,14 +207,21 @@ local function update_tasks()
     end)
 end
 
--- Update tasks periodically
-local update_interval = 60
+-- Update tasks when the day changes
+local old_day
 gears.timer {
     autostart = true,
-    timeout = update_interval,
+    timeout = 60,
     single_shot = false,
     call_now = true,
-    callback = update_tasks
+    callback = function()
+        today = os.date("*t").day
+        if not (old_day == today) then
+            update_tasks()
+            old_day = today
+        else
+        end
+    end
 }
 
 -- Also update tasks when related files change
