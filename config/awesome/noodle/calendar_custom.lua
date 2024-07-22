@@ -4,8 +4,6 @@ local wibox = require("wibox")
 local helpers = require("helpers")
 local dotted_line = require("noodle.dotted_line")
 
-local naughty = require("naughty")
-
 local font_family = "Kyok Medium"
 local font_family_bold = "Kyok Bold"
 
