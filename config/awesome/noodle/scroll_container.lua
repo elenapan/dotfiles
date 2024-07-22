@@ -14,6 +14,7 @@ scroll_container.new = function(orientation, max_visible_children, loop)
     }
 
     local scroll_start_index = 1
+    local scroll_start_index_old = scroll_start_index
 
     -- BUG(?): For some reason the layout_changed signal is fired twice when
     -- container children change. During the first event, container.children is
@@ -28,7 +29,11 @@ scroll_container.new = function(orientation, max_visible_children, loop)
     end)
 
 
-    local function update_scroll(scroll_start_index)
+    local function update_scroll()
+        if scroll_start_index == scroll_start_index_old then
+            return
+        end
+
         for i=1,(scroll_start_index - 1) do
             container.children[i].visible = false
         end
@@ -40,6 +45,8 @@ scroll_container.new = function(orientation, max_visible_children, loop)
         for i=(scroll_start_index + max_visible_children), #(container.children) do
             container.children[i].visible = false
         end
+
+        scroll_start_index_old = scroll_start_index
     end
 
     -- Number can be both positive (scroll forwards) or negative (scroll
@@ -47,7 +54,7 @@ scroll_container.new = function(orientation, max_visible_children, loop)
     if loop then
         function container:scroll(number)
             scroll_start_index = (scroll_start_index + number - 1) % (#(container.children) - max_visible_children + 1) + 1
-            update_scroll(scroll_start_index)
+            update_scroll()
         end
     else
         function container:scroll(number)
@@ -57,7 +64,7 @@ scroll_container.new = function(orientation, max_visible_children, loop)
             elseif scroll_start_index > (#(container.children) - max_visible_children + 1) then
                 scroll_start_index = #(container.children) - max_visible_children + 1
             end
-            update_scroll(scroll_start_index)
+            update_scroll()
         end
     end
 
