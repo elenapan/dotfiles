@@ -48,8 +48,18 @@ local function calculate_recurrence(date, recurrence)
 end
 
 local function pretty_print_date(input_date)
+    -- Get dates as objects and zero out hour, min and sec to get the timestamp
+    -- at midnight
     local today = os.time()
-    local delta = os.difftime(input_date, today) / (24 * 3600)
+    local today_obj = os.date("*t", today)
+    today_obj.hour, today_obj.min, today_obj.sec = 0, 0, 0
+    local today_midnight = os.time(today_obj)
+
+    local input_date_obj = os.date("*t", input_date)
+    input_date_obj.hour, input_date_obj.min, input_date_obj.sec = 0, 0, 0
+    local input_date_midnight = os.time(input_date_obj)
+
+    local delta = os.difftime(input_date_midnight, today_midnight) / (24 * 3600)
     if delta == 0 then
         return "today"
     elseif delta == 1 then
