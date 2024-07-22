@@ -21,7 +21,7 @@ local header_config = {
 
 -- Create invisible dummy clock that actually updates in order to
 -- connect to its redraw_needed signal
-local dummy_textclock = wibox.widget.textclock("%M")
+local dummy_textclock = wibox.widget.textclock("%d")
 dummy_textclock.visible = false
 
 local function get_month_calendar(year, month)
