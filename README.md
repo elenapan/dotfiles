@@ -186,7 +186,7 @@ Here are the instructions you should follow to replicate my AwesomeWM setup.
 
       Notes:
       - To see the new colors you should restart AwesomeWM with <kbd>super+shift+r</kbd> or by right-clicking the desktop and clicking the gear icon (bottom-right).
-      - In the [.xfiles](.xfiles) directory of the repository I provide you with a few of my own colorschemes, but you can also use your favorite one.
+      - In the [config/colorschemes](config/colorschemes) directory of the repository I provide you with a few of my own colorschemes, but you can also use your favorite one.
       - All of my AwesomeWM themes take their colors from `xrdb`. This also means that they play nice with tools like [pywal](https://github.com/dylanaraps/pywal).
 
 
