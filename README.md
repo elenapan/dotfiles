@@ -123,14 +123,14 @@ Features:
     Backup first:
     ```sh
     mkdir ~/config-backup
-    cp -r ~/.config/{sway,eww,dunst,fontconfig,kitty} ~/config-backup
+    cp -r ~/.config/{sway,eww,dunst,fontconfig,kitty,rofi} ~/config-backup
     ```
 
     Then clone the repo and install the relevant dotfiles:
     ```sh
     git clone https://github.com/elenapan/dotfiles
     cd dotfiles
-    cp -r config/{sway,eww,dunst,fontconfig,kitty} ~/.config
+    cp -r config/{sway,eww,dunst,fontconfig,kitty,rofi} ~/.config
     ```
 
 4. **Tweak the last few settings**
@@ -177,12 +177,12 @@ All keybinds are declared in the [sway configuration directory](config/sway) in 
 
   These keybinds, implemented using binding modes, are only active when the respective widget is visible.
 
-### Contributing
+## Contributing
 
 - **Bugs**: This desktop has only one consistent user (me) and there could be bugs I haven't run into yet. If you have the time to report a bug, please do so in the repository's [issues](https://github.com/elenapan/dotfiles/issues).
-- **Pull requests**: Before starting working on a pull request, open an issue so we can discuss first.
+- **Pull requests**: Pull requests for bug fixes or README improvements are welcome. However, before starting work on a pull request for a new feature, please open an issue so we can discuss about it first.
 
-### Tip Jar
+## Tip Jar
 If you enjoy using this desktop or parts of it and would like to show your appreciation, you may leave a tip here.
 
 It is never required but always appreciated.
