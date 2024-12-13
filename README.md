@@ -343,3 +343,9 @@ Thank you from the bottom of my heart! 💙
 - [**Patreon**](https://www.patreon.com/elenapan)
 - **Ethereum**: 0x831539d94155C797f786e99f1D061BEc7F11bD38
 - **Bitcoin**: 12j3D4KR94LY7Svvmp3KzGbfGC4YCZkCLe
+
+---
+
+<h3 align="center">
+    <a href="#"><tt>👆 Back to top</tt></a>
+</h3>
