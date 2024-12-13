@@ -1,0 +1,40 @@
+(defwindow workspaces
+  :monitor 0
+  :geometry (geometry :x 0
+                      :y 0
+                      :width "100%"
+                      :anchor "top center")
+  :stacking "bottom"
+  :exclusive true
+  (box :orientation "horizontal"
+       :class "workspaces"
+       :halign "fill"
+    (workspace-indicator
+      :i 1 :class "${ws1} ${ws2 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 2 :class "${ws2} ${ws1 == "empty" ? "round-left" : ""} ${ws3 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 3 :class "${ws3} ${ws2 == "empty" ? "round-left" : ""} ${ws4 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 4 :class "${ws4} ${ws3 == "empty" ? "round-left" : ""} ${ws5 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 5 :class "${ws5} ${ws4 == "empty" ? "round-left" : ""} ${ws6 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 6 :class "${ws6} ${ws5 == "empty" ? "round-left" : ""} ${ws7 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 7 :class "${ws7} ${ws6 == "empty" ? "round-left" : ""} ${ws8 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 8 :class "${ws8} ${ws7 == "empty" ? "round-left" : ""} ${ws9 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 9 :class "${ws9} ${ws8 == "empty" ? "round-left" : ""} ${ws10 == "empty" ? "round-right" : ""}")
+    (workspace-indicator :i 10 :class "${ws10} ${ws9 == "empty" ? "round-left" : ""}")))
+
+(defwidget workspace-indicator [i class]
+  (eventbox :cursor "hand2"
+            :onclick "swaymsg -q 'workspace $ws${i}; $post_workspace_switch'"
+            :onrightclick "swaymsg -q 'move --no-auto-back-and-forth container to workspace $ws${i}'"
+            :onscroll "[ '{}' = 'up' ] && swaymsg -q workspace prev || swaymsg -q workspace next"
+    (box :class "indicator ${class}")))
+
+(defvar ws1 "empty")
+(defvar ws2 "empty")
+(defvar ws3 "empty")
+(defvar ws4 "empty")
+(defvar ws5 "empty")
+(defvar ws6 "empty")
+(defvar ws7 "empty")
+(defvar ws8 "empty")
+(defvar ws9 "empty")
+(defvar ws10 "empty")

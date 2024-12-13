@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+# WIP
+import i3ipc
+
+i3 = i3ipc.Connection()
+
+awakened_poe_trade_class = "awakened-poe-trade"
+poe_class = "steam_app_238960"
+
+def fix_awakened_poe_trade():
+    # i3.command('[class="^awakened-poe-trade$"] focus, border none, floating enable, resize set 500 800, move position mouse')
+    i3.command('[class="^awakened-poe-trade$"] focus, border none, floating enable, move position 0 0')
+
+def focus_poe():
+    i3.command('[class="^steam_app_238960$"] focus')
+
+def on_urgent(i3, e):
+    current = e.container.window_class or ''
+    urgent = e.container.urgent
+
+    if urgent and current == awakened_poe_trade_class:
+        # print('awakened urgent, fixing window')
+        fix_awakened_poe_trade()
+
+    if urgent and current == poe_class:
+        focus_poe()
+
+def on_focus(i3, e):
+    current = e.container.window_class or ''
+    urgent = e.container.urgent
+
+    if current == awakened_poe_trade_class and (not urgent):
+        # print('awakened not urgent but focused, focusing poe')
+        focus_poe()
+
+i3.on("window::urgent", on_urgent)
+i3.on("window::focus", on_focus)
+
+i3.main()

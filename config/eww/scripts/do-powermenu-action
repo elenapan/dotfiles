@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+eww="$HOME/.config/eww/scripts"
+eww_powermenu_selected_action="$(eww get powermenu-button-selected)"
+
+if [[ -z "$1" ]]; then
+    echo You did not specify an action
+    exit 1
+fi
+
+action=$1
+
+poweroff() {
+    loginctl poweroff
+}
+
+reboot() {
+    loginctl reboot
+}
+
+suspend() {
+    "${eww}/manage" hide powermenu
+    loginctl suspend
+}
+
+hibernate() {
+    "${eww}/manage" hide powermenu
+    loginctl hibernate
+}
+
+exit() {
+    swaymsg exit
+}
+lock() {
+    builtin echo lockscreen > /tmp/eww-widget-input-active
+    swaymsg mode _eww_input
+    eww update \
+        screen-locked=true \
+        powermenu-button-selected= \
+        screen-lock-input= \
+        screen-lock-input-masked= \
+        screen-lock-input-last-action=clear \
+        screen-lock-auth-failed=false
+}
+clear_selection() {
+    eww update powermenu-button-selected=
+}
+
+if [[ "$action" == "$eww_powermenu_selected_action" || "$action" == "confirm" ]]; then
+    $eww_powermenu_selected_action
+elif [[ "$action" == "clear" ]]; then
+    clear_selection
+else
+    eww update powermenu-button-selected="$action"
+fi

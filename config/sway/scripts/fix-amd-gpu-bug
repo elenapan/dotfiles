@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# BUG: 100% GPU usage on idle
+# Relevant links:
+# - https://old.reddit.com/r/archlinux/comments/o7x5j8/psa_avoid_kernel_5121351046513rc7_if_using_amd/
+# - https://gitlab.freedesktop.org/drm/amd/-/issues/1632
+# - https://gitlab.freedesktop.org/drm/amd/-/issues/3549
+# The bug is triggered when an application that uses the discrete card is terminated.
+# GPU usage returns to normal when the discrete card is actually used again
+# (e.g. when an application with DRI_PRIME=1 is opened)
+# Workaround: Open a lightweight app (kitty terminal) that can use the GPU. If
+# the bug appears again, kill it and re-open it.
+while true; do
+    if [[ $(cat /sys/class/drm/card0/device/gpu_busy_percent) -gt 98 ]]; then
+        # I use this notification to know if the bug is still happening or not
+        # after kernel/driver updates.
+        notify-send.sh -R /tmp/amd_gpu_fix_idle_notification "GPU" "The kitty fix was applied"
+
+        pgrep -f "kitty --class MINIMIZE_ME" | xargs kill
+        DRI_PRIME=1 kitty --class MINIMIZE_ME &
+    fi
+    sleep 5
+done

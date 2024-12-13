@@ -1,0 +1,616 @@
+(defwindow sidebar
+  :monitor 0
+  :geometry (geometry :x 0
+                      :y 0
+                      ; Note: Setting width and height here causes certain
+                      ; animations to not display properly. Instead, we set
+                      ; width and height in *.scss or in the upppermost inner
+                      ; widget.
+                      :anchor "left bottom")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  (revealer
+    ; Would prefer a slideright animation here but it does not work
+    ; https://github.com/elkowar/eww/issues/1107
+    :transition "slideright"
+    :reveal "${sidebar-visible}"
+    :duration "300ms"
+    (eventbox
+      :width "${300 * get_env("EWW_SCALE")}"
+      :onmiddleclick "${eww-scripts}/manage hide sidebar &"
+      ; Enable this to hide the sidebar when cursor leaves
+      ; :onhoverlost "${eww-scripts}/manage hide sidebar &"
+      (box
+        :hexpand false
+        :valign "fill"
+        :orientation "vertical"
+        :space-evenly false
+        :class "sidebar"
+        ; >>> Pages
+        (overlay
+          ; Has to be large enough to make page indicators stable in each tab
+          ; Affects the whole sidebar height
+          :height "${554 * get_env("EWW_SCALE")}"
+          (box :class "main"
+            ; >> Home page
+            (box
+              :class "page home ${sidebar-page-index == 0 ? "visible" : ""}"
+              :visible "${sidebar-page-index == 0}"
+              :orientation "vertical"
+              :space-evenly false
+              :valign "baseline"
+              :vexpand true
+              (time)
+              (dotw)
+              (circular-symbol-with-text
+                :extra-class "weather"
+                :symbol "${weather-icon}"
+                :text-left "${weather-temperature}"
+                :text-right "${weather-description}")
+              (box :class "sliders"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :hexpand false
+                   :halign "center"
+                (slider-with-label
+                  :label ""
+                  :value "${volume}"
+                  :hover-value "${volume}"
+                  :class "volume ${volume-muted}"
+                  :onchange "default_sink=$(pactl get-default-sink) && pactl set-sink-volume $default_sink $(printf '%.0f\\n' {})%")
+                (slider-with-label
+                  :label "${charger ? ""
+                  : ""}"
+                  :value "${EWW_BATTERY.total_avg}"
+                  :hover-value "${round(EWW_BATTERY.total_avg, 0)}"
+                  :class "battery ${charger ? "charging" : ""}")
+                (slider-with-label
+                  :label ""
+                  :value "${EWW_CPU.avg}"
+                  :hover-value "${round(EWW_CPU.avg, 0)}"
+                  :class "cpu"))
+              (box :class "sliders"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :hexpand false
+                   :halign "center"
+                (slider-with-label
+                  :label ""
+                  :value "${brightness}"
+                  :hover-value "${round(brightness, 0)}"
+                  :class "brightness"
+                  :onchange "light -S {}")
+                (slider-with-label
+                  :label ""
+                  :value "${EWW_TEMPS.ACPITZ_TEMP1}"
+                  :hover-value "${EWW_TEMPS.ACPITZ_TEMP1}"
+                  :class "temperature")
+                (slider-with-label
+                  :label ""
+                  :value "${EWW_RAM.used_mem_perc}"
+                  :hover-value "${round(EWW_RAM.used_mem_perc, 0)}"
+                  :class "ram"))
+              (box :class "sliders"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   :hexpand false
+                   :halign "center"
+                (slider-with-label
+                  :label ""
+                  :value "${kdeconnect-battery}"
+                  :hover-value "${kdeconnect-reachable == 1 ? kdeconnect-battery : "owo"}"
+                  :class "kdeconnect ${kdeconnect-reachable == 1 ? "" : "unreachable"}")
+                (slider-with-label
+                  :label ""
+                  :value "${EWW_DISK["/"].used_perc}"
+                  :hover-value "${round((EWW_DISK["/"].total - EWW_DISK["/"].used) / 1000000000, 0)}G"
+                  :class "disk")
+                (slider-with-label
+                  :label ""
+                  :value "${gpu}"
+                  :hover-value "${round(gpu, 0)}"
+                  :class "gpu"))
+              (circular-symbol-with-text
+                :extra-class "hostname-uptime"
+                :symbol ""
+                :text-left "${hostname}"
+                :text-right "${uptime}")
+              )
+            ; >> Agenda page
+            (box
+              :class "page agenda ${sidebar-page-index == 1 ? "visible" : ""}"
+              :visible "${sidebar-page-index == 1}"
+              :orientation "vertical"
+              :space-evenly false
+              :valign "baseline"
+              :vexpand true
+              :spacing 20
+              (box
+                :halign "fill"
+                :space-evenly false
+                :class "task-info"
+                (box :class "counter"
+                  (box
+                    :orientation "vertical"
+                    :space-evenly false
+                    :valign "center"
+                    :halign "center"
+                    "${arraylength(tasks-json)}"
+                    (box :class "label" "${(arraylength(tasks-json) == 1) ? "task" : "tasks"}")
+                    )
+                  )
+                (box :class "calendar-controls"
+                     :orientation "horizontal"
+                     :space-evenly false
+                     :halign "fill"
+                     :valign "fill"
+                     :hexpand true
+                  (box :class "inner-container"
+                       :halign "fill"
+                       :hexpand true
+                    (box
+                      :class "controls-month"
+                      :orientation "vertical"
+                      :space-evenly true
+                      :valign "fill"
+                      :vexpand true
+                      (eventbox
+                        :class "month-next"
+                        :halign "fill"
+                        :valign "fill"
+                        :cursor "hand2"
+                        :onclick "${eww-scripts}/do-calendar-action month_next"
+                        (box :valign "end" ""))
+                      (eventbox
+                        :class "month-prev"
+                        :halign "fill"
+                        :valign "fill"
+                        :cursor "hand2"
+                        :onclick "${eww-scripts}/do-calendar-action month_prev"
+                        (box :valign "start" ""))
+                      )
+                    (box
+                      :class "month-year"
+                      :orientation "vertical"
+                      :halign "fill"
+                      :valign "fill"
+                      (box
+                        :class "month"
+                        :halign "center"
+                        :valign "end"
+                        "${calendar-selected-month-pretty}")
+                      (box
+                        :class "year"
+                        :halign "center"
+                        :valign "start"
+                        "${calendar-selected-year}"))
+                    (box
+                      :class "controls-year"
+                      :orientation "vertical"
+                      :space-evenly true
+                      :valign "fill"
+                      :vexpand true
+                      (eventbox
+                        :class "year-next"
+                        :halign "fill"
+                        :valign "fill"
+                        :cursor "hand2"
+                        :onclick "${eww-scripts}/do-calendar-action year_next"
+                        (box :valign "end" ""))
+                      (eventbox
+                        :class "year-prev"
+                        :halign "fill"
+                        :valign "fill"
+                        :cursor "hand2"
+                        :onclick "${eww-scripts}/do-calendar-action year_prev"
+                        (box :valign "start" ""))
+                      )
+                    )
+                  )
+                )
+              (calendar-custom)
+              (tasks))
+            ; >> Media page
+            (box
+              :class "page media ${sidebar-page-index == 2 ? "visible" : ""}"
+              :visible "${sidebar-page-index == 2}"
+              :orientation "vertical"
+              :space-evenly false
+              :valign "baseline"
+              :vexpand true
+              :hexpand false
+              (overlay
+                (box
+                  :class "art-and-progress"
+                  :hexpand false :vexpand false
+                  :valign "center" :halign "center"
+                  :space-evenly true
+                  (overlay
+                    (circular-progress
+                      :class "backdrop"
+                      :style "${(media-hover == "hover") ? "opacity: 0" : ""}"
+                      :thickness "${8 * get_env("EWW_SCALE")}"
+                      :value "50"
+                      :start-at 50
+                      :clockwise false)
+                    (circular-progress
+                      :thickness "${8 * get_env("EWW_SCALE")}"
+                      :style "${(media-hover == "hover") ? "opacity: 0" : ""}"
+                      ; Since we want only the bottom half-circle to be used for
+                      ; progress, we always divide progress by 2. Max value should
+                      ; be 50
+                      :value "${((media-json.length == "") ? 0 : media-progress) / 2}"
+                      :start-at 50
+                      :clockwise false)
+                    )
+                  )
+                (box
+                  :class "position"
+                  :hexpand false :vexpand false
+                  :valign "center" :halign "start"
+                  :space-evenly true
+                  "${((media-json.length == "") ? "" : media-json.position)}")
+                (box
+                  :class "length"
+                  :hexpand false :vexpand false
+                  :valign "center" :halign "end"
+                  :space-evenly true
+                  "${media-json.length}")
+                (eventbox
+                  :cursor "hand2"
+                  :onclick "${eww-scripts}/playerctl-current play-pause &"
+                  :onhover "eww update media-hover='hover' &"
+                  :onhoverlost "eww update media-hover='' &"
+                  (box
+                    :class "media-artbox ${media-hover}"
+                    :style "${(media-art == "") ? "" : "background-image: url(\"${media-art}\")"}"
+                    :valign "center" :halign "center"
+                    :vexpand false
+                    :hexpand false
+                    ))
+                )
+
+              ; Artist and title (truncated so that the eww window does not grow)
+              ; Character limit should be adjusted according to font family, font size,
+              ; and desired max length of the eww window
+              (circular-symbol-with-text
+                :extra-class "media-title"
+                :symbol ""
+                :text-left "${strlength(media-json.title) > 35 ? "${substring(media-json.title, 0, 32)}..." : media-json.title}"
+                :text-right "")
+
+              (circular-symbol-with-text
+                :extra-class "media-artist"
+                :symbol ""
+                :text-left "${strlength(media-json.artist) > 35 ? "${substring(media-json.artist, 0, 32)}..." : media-json.artist}"
+                :text-right "")
+
+              (media-progress-visualizer)
+
+              (box :class "media-buttons"
+                   :halign "center"
+                   :valign "center"
+                   :hexpand false
+                   :vexpand false
+                   :space-evenly false
+                   :spacing 35
+                (overlay
+                  (box :class "bottom-horizontal-buttons"
+                       :halign "center"
+                       :valign "center"
+                    (box
+                      :space-evenly false
+                      (eventbox
+                        :cursor "hand2"
+                        :onclick "${eww-scripts}/playerctl-current previous"
+                        :onrightclick "${eww-scripts}/playerctl-current position 10-"
+                        (box :class "button prev"
+                             :valign "center"
+                             :halign "start"
+                          (box :class "symbol" "")))
+                      (eventbox
+                        :cursor "hand2"
+                        :onclick "${eww-scripts}/playerctl-current next"
+                        :onrightclick "${eww-scripts}/playerctl-current position 10+"
+                        (box :class "button next"
+                             :valign "center"
+                             :halign "start"
+                          (box :class "symbol" "")))
+                      )
+                    )
+                  (box :class "bottom-vertical-buttons"
+                       :halign "center"
+                       :valign "center"
+                    (box
+                      :space-evenly false
+                      :orientation "vertical"
+                      (eventbox
+                        :cursor "hand2"
+                        :onclick "swaymsg -q 'exec $cmd_volume_raise'"
+                        :onrightclick "${eww-scripts}/playerctl-current volume 0.1+"
+                        (box :class "button volume-up"
+                             :valign "center"
+                             :halign "start"
+                          (box :class "symbol" "")))
+                      (eventbox
+                        :cursor "hand2"
+                        :onclick "swaymsg -q 'exec $cmd_volume_lower'"
+                        :onrightclick "${eww-scripts}/playerctl-current volume 0.1-"
+                        (box :class "button volume-down"
+                             :valign "center"
+                             :halign "start"
+                          (box :class "symbol" "")))))
+                  (box :class "top-buttons"
+                       :halign "center"
+                       :valign "center"
+                    (box
+                      :space-evenly false
+                      :orientation "vertical"
+                      (eventbox
+                        :cursor "hand2"
+                        :onclick "${eww-scripts}/playerctl-current play-pause &"
+                        :onrightclick "${eww-scripts}/rofi-playerctl-switch.sh &"
+                        :onscroll "[ '{}' = 'up' ] && ${eww-scripts}/playerctl-current volume 0.02+ || ${eww-scripts}/playerctl-current volume 0.02-"
+                        (overlay
+                          (box :class "button toggle ${media-json.status}"
+                               :valign "center"
+                               :halign "end"
+                            (box :class "symbol" ""))
+                          )
+                        )
+                      )
+                    )
+                  )
+                (box
+                  :class "side-buttons"
+                  :space-evenly false
+                  :valign "center"
+                  :spacing "${6 * get_env("EWW_SCALE")}"
+                  (box :class "container gameboy-b"
+                    (eventbox
+                      :cursor "hand2"
+                      :onclick "${eww-scripts}/playerctl-current stop"
+                      (box :class "button stop"
+                           :valign "center"
+                        (box :class "symbol" ""))))
+                  (box :class "container gameboy-a"
+                    (eventbox
+                      :cursor "hand2"
+                      :onclick "${eww-scripts}/media-add-to-favorites.sh"
+                      (box :class "button favorite"
+                           :valign "center"
+                        (box :class "symbol" "")))))))))
+        ; >>> Page indicators
+        (eventbox
+          :onscroll "[ '{}' = 'up' ] && ${eww-scripts}/set-sidebar-page prev || ${eww-scripts}/set-sidebar-page next"
+          (box
+            :orientation "vertical"
+            :space-evenly false
+            :class "page-indicators-section"
+            (page-indicators)))))))
+
+; Invisible widget for activating sidebar when mouse touches the screen edge
+(defwindow sidebar-activator
+  :monitor 0
+  :geometry (geometry :x 0
+  :y 0
+  :width 1
+  :height "100%"
+  :anchor "left bottom")
+  :stacking "fg"
+  :exclusive false
+  (box
+    :halign "fill"
+    :valign "fill"
+    (eventbox
+      :onhover "${eww-scripts}/manage show sidebar")))
+
+(defwidget page-indicators []
+  (box
+    :orientation "vertical"
+    :valign "center"
+    :vexpand false
+    :space-evenly false
+    (box :class "horizontal-separator")
+    (box :orientation "horizontal"
+         :class "page-indicators"
+         :space-evenly false
+         :vexpand false
+         :halign "center"
+      (page-indicator :index 0)
+      (page-indicator :index 1)
+      (page-indicator :index 2))))
+
+(defwidget page-indicator [index]
+  (eventbox
+    :onclick "eww update sidebar-page-index=${index}"
+    :cursor "hand2"
+    (box :class "indicator selected-page-index-is-${sidebar-page-index} ${sidebar-page-index == index ? "selected" : ""}")))
+
+(defwidget time []
+  (box :orientation "horizontal"
+       :class "time"
+       :hexpand false
+       :vexpand false
+       :halign "center"
+       :valign "center"
+       :space-evenly false
+    (box :class "hour"
+         :halign "end"
+      "${date-json?.hour}")
+    (box :class "minutes"
+         :halign "start"
+      "${date-json?.min}")))
+
+; Short for "days of the week"
+(defwidget dotw []
+  (box :orientation "horizontal"
+       :class "dotw"
+       :halign "center"
+    (for i in dotw-indexes
+      (dotw-indicator :i "${i}" :number "${dotw-numbers[i]}"))))
+
+(defwidget dotw-indicator [i number]
+  (box :orientation "vertical"
+       :class "dotw-indicator ${dotw-current-index == i ? "selected" : ""}"
+       :space-evenly false
+    (box :class "day" "${dotw-days[i]}")
+    (box :class "number" "${number}")))
+
+(defvar media-progress-visualizer-line-indexes "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]")
+(defwidget media-progress-visualizer []
+  (box :orientation "horizontal"
+       :class "visualizer ${media-json.status}"
+       :halign "center"
+       :hexpand true
+       :space-evenly true
+    (overlay
+      (box
+        (for i in media-progress-visualizer-line-indexes
+          (box :valign "center" :class "line ${((((media-json.length == "") ? 0 : media-progress) * 20 / 100) >= i) ? "reached" : ""}")))
+      (scale
+        :hexpand true
+        :halign "fill"
+        :min 0
+        :max 101
+        :orientation "horizontal"
+        :class "invisible-slider"
+        :value "${(media-json.length == "") ? 0 : media-progress}"
+        :onchange "position_seconds=$((${media-json.length_seconds} * {} / 100)); ${eww-scripts}/playerctl-current position \"$position_seconds\""))))
+
+(defwidget tasks []
+  (scroll
+    :vscroll true
+    :hscroll false
+    :class "tasks-scroll-container"
+    (box :class "tasks"
+         :orientation "vertical"
+         :halign "fill"
+      (box :class "no-tasks"
+           :orientation "vertical"
+           :space-evenly false
+           :valign "center"
+           :visible "${arraylength(tasks-json) == 0}"
+        (box :class "symbol" "")
+        "You have no tasks")
+      (for task in tasks-json
+        (box :class "task ${task.status} ${task.type} ${task.overdue ? "overdue" : ""}"
+             :halign "start"
+             :valign "fill"
+             :space-evenly false
+          (box :halign "center"
+               :valign "fill"
+               :class "type")
+          (circular-symbol-icon
+            :extra-class "status"
+            :symbol "${task.status == "done" ? "" :
+                       task.status == "kill" ? "" :
+                       task.file == "birthdays" ? "" :
+                       task.file == "home" ? "" :
+                       task.repeatable ? "" :
+                       ""}")
+          (box
+            :class "text"
+            :valign "center"
+            :space-evenly false
+            :orientation "vertical"
+            :spacing "${6 * get_env("EWW_SCALE")}"
+            (box :class "title" :halign "start" "${task.title}")
+            (box
+              :class "when"
+              :halign "start"
+              :valign "center"
+              :space-evenly false
+              :spacing "${6 * get_env("EWW_SCALE")}"
+              (box :valign "center" :class "date-pretty" "${task.date_pretty}")
+              (box
+                :space-evenly false
+                :spacing "${6 * get_env("EWW_SCALE")}"
+                :valign "center"
+                :visible "${task.time_start != "null"}"
+                (box :valign "center" :halign "center" :class "separator")
+                (box :class "time" "${task.time_end == "null" ? task.time_start : task.time_start + "-" + task.time_end}")))))))))
+
+(defwidget slider [value class onchange]
+  (box :class "slider ${class} ${(value == "" ? 0 : value) < 70 ? "no-round" : ""}"
+       :halign "center"
+       :space-evenly false
+    (overlay
+      (scale
+        :flipped true
+        :orientation "vertical"
+        :active {onchange != ""}
+        ; Use 101 as the limit instead of 100 to fix the bug where the
+        ; slider cannot go higher than 99
+        :min 0 :max 101
+        :value "${value == "" ? 0 : value}"
+        :onchange "${onchange}")
+      ; Dummy border is useful for when the slider highlight does not fit
+      ; within the slider trough. The border essentially hides the part of the
+      ; highlight that is sticking out. Also see sidebar.scss for how this is done
+      (box :halign "center" :valign "center" :hexpand true :vexpand true :class "dummy-border"))))
+
+(defwidget slider-with-label [value class label hover-value ?onchange]
+  (eventbox :class "slider-with-label ${class}"
+    (overlay
+      (slider :value "${value}" :class "${class}" :onchange "${onchange}")
+      (box :halign "end" :valign "end" :vexpand false :hexpand false :class "label"
+        (overlay
+          (circular-symbol-icon
+            :symbol "${label}")
+          (box :class "hover-value"
+               :halign "fill"
+               :valign "fill"
+            "${hover-value}"))))))
+
+
+(defwidget calendar-custom []
+  (box :class "calendar"
+       :orientation "vertical"
+       :space-evenly false
+       :halign "center"
+    (box :class "week-row labels"
+      (for label in dotw-days
+        (box
+          :class "day-cell"
+          :halign "center"
+          "${label}")))
+    (box
+      :orientation "vertical"
+      (for week in calendar-json
+        (box :class "week-row"
+          (for day in week
+            (box
+              :class "day-cell ${day.today ? "today" : ""} ${day.other_month ? "other-month" : ""}"
+              :halign "fill"
+              :valign "fill"
+              (box :class "text"
+                   :halign "center"
+                   :valign "center"
+                   :vexpand true
+                "${day.value}"))))))
+    (box :class "week-row placeholder"
+         :visible "${arraylength(calendar-json) < 6}"
+      (box :class "line" :hexpand true :halign "fill" :valign "center"))))
+
+(defvar media-art "") ; updated by media.sh script
+(defvar media-json '{ "status": "paused", "position": "", "length": "", "artist": "N/A", "title": "N/A" }') ; updated by media.sh script
+(defvar media-progress "0") ; updated by media.sh script
+(defvar media-hover "") ; updated when mouse moves in and our of the media art eventbox
+
+; Updated by agenda.sh and cal.py
+(defvar calendar-json "[]")
+(defvar tasks-json "[]")
+; Initialized by agenda.sh and updated by the user clicking on the calendar
+; controls.
+(defvar calendar-selected-month "")
+(defvar calendar-selected-month-pretty "")
+(defvar calendar-selected-year "")
+
+(defvar dotw-indexes "[0, 1, 2, 3, 4, 5, 6]")
+(defvar dotw-days "[\"m\", \"t\", \"w\", \"t\", \"f\", \"s\", \"s\"]")
+
+; Updated by days-of-the-week.sh
+(defvar dotw-current-index "")
+(defvar dotw-numbers "[]")

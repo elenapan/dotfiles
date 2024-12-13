@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# The daemons which are responsible for updating variables are started *once* on
+# login, independently of eww. Furthermore, whenever eww reloads, it resets the
+# values of all variables, and the daemons have no way of knowing that.
+# This leads to some widgets having null values right after eww reloading.
+# Solution: We request daemon updates from all relevant daemons in this script.
+# Sadly there is no known way (that is not a fugly hack) to automatically
+# run a script on eww reload, so we have to run this script manually or with a
+# keybind.
+eww="$HOME/.config/eww/scripts"
+
+"$eww/daemons/agenda.sh" oneshot &
+"$eww/daemons/alarms.sh" oneshot &
+"$eww/daemons/brightness.sh" oneshot &
+"$eww/daemons/charger.sh" oneshot &
+"$eww/daemons/days-of-the-week.sh" oneshot &
+"$eww/daemons/kdeconnect.sh" oneshot &
+"$eww/daemons/microphone.sh" oneshot &
+"$eww/daemons/uptime.sh" oneshot &
+"$eww/daemons/volume.sh" oneshot &
+"$eww/daemons/vpn.sh" oneshot &
+"$eww/daemons/weather.sh" oneshot &
+"$eww/daemons/sway-dock.py" oneshot &
+"$eww/daemons/sway-workspaces.py" oneshot &
+
+"$eww/networks.sh" update_networks &
+

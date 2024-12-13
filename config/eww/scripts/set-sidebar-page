@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+number_of_pages=3
+index="$(eww get sidebar-page-index)"
+
+if [ -z "$1" ]; then
+    echo Usage examples:
+    echo "$0" prev
+    echo "$0" next
+    echo "$0" 2
+    exit 1
+elif [[ "$1" == "next" ]]; then
+    eww update sidebar-page-index=$(((index + 1) % number_of_pages))
+elif [[ "$1" == "prev" ]]; then
+    eww update sidebar-page-index=$(((index - 1 + number_of_pages) % number_of_pages))
+else
+    eww update sidebar-page-index="$1"
+fi

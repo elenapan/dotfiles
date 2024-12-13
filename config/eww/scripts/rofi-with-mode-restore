@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# In this setup, we heavily use sway/i3 binding modes for controlling widgets
+# with the keyboard. There are times when we may open a rofi menu while a
+# binding mode is enabled. In this case, the binding mode has priority over
+# rofi, leading to missed keystrokes in rofi and accidental keypresses in the
+# active eww windows.
+# Solution:
+# Use this script as a rofi wrapper for these cases.
+# It will temporarily disable the current binding mode and optionally restore it
+# after rofi closes.
+# Note: The user is able to close the active eww window while rofi is open. In
+# this case we do not restore the mode.
+# Assumes that:
+# 1. the first argument is the widget name (e.g. mywidget).
+# 2. the sway/i3 binding mode used for this widget is called _mywidget
+# 3. there is an eww variable tracking whether the widget is visible called mywidget-visible
+#    Note: We also could use `eww active-windows | grep widget_name` instead of
+#    retrieving this variable.
+# Usage:
+#     rofi-with-mode-restore <widget name> <rofi args>
+#     rofi-with-mode-restore networks -dmenu -markup-rows -i -p "Choose network"
+
+if [ -z "$1" ]; then
+    exit 1
+fi
+
+widget_name="$1"
+shift
+
+swaymsg -q mode default 2>/dev/null
+rofi "$@"
+
+if [ "$(eww get "${widget_name}"-visible)" = "true" ]; then
+    swaymsg -q mode "_${widget_name}" 2>/dev/null
+fi

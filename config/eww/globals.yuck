@@ -1,0 +1,56 @@
+(defvar eww-scripts "~/.config/eww/scripts")
+
+; Set "constants" from commands by using a very long update interval
+(defpoll user :interval "9999h" `whoami`)
+(defpoll hostname :interval "9999h" `hostname`)
+
+; Status of various widgets (updated by manage script)
+(defvar sidebar-visible false)
+(defvar networks-visible false)
+(defvar alarms-visible false)
+
+; We are using eww to render a lockscreen and it would be unsafe to attempt to
+; authenticate as $USER since our password might leak. Thus, we are using a
+; separate password just for this lockscreen.
+; Use any ASCII printable characters (see characters 32-126 below)
+; https://theasciicode.com.ar/ascii-printable-characters/space-ascii-code-32.html
+; Limitations:
+; - The backslash "\" cannot be used
+; - Maximum 16 characters (for aesthetics: same length as flavor text)
+; - Caps Lock does not work while the lock screen input is active. You can use
+;   Shift for capitalizing characters instead.
+(defvar screen-lock-password "eww")
+(defvar screen-locked false)
+
+(defvar vpn-status "off") ; updated by vpn.sh script
+
+(defvar gpu "0") ; updated by gpu script
+
+(defvar brightness "0") ; updated by brightness.sh script
+
+(defvar kdeconnect-battery "") ; updated by kdeconnect.sh script
+(defvar kdeconnect-reachable "") ; updated by kdeconnect.sh script
+
+(defvar uptime "") ; updated by uptime.sh script
+
+; We use charger.sh instead of EWW_BATTERY because charger status updates
+; instantly in the former vs the maximum ~2 sec delay of the latter
+(defvar charger false) ; updated by charger.sh script
+
+(defvar weather-temperature "") ; updated by weather.sh script
+(defvar weather-description "") ; updated by weather.sh script
+(defvar weather-icon "") ; updated by weather.sh script
+
+(defvar volume "0") ; updated by volume.sh script
+(defvar volume-muted "") ; updated by volume.sh script
+
+(defvar networks-json "[]") ; updated by networks.sh
+
+(defvar alarms-json "[]") ; updated by alarms.sh script
+
+(defvar sidebar-page-index "0")
+
+(defpoll date-json
+  :interval "10s"
+  :initial "{}"
+  `date +'{"hour": "%H", "min": "%M", "week_day_name": "%A", "week_day_number": "%u", "month_day_number": "%d", "month_name": "%B", "year": "%Y"}'`)

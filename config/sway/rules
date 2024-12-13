@@ -1,0 +1,286 @@
+# >> Sticky windows
+for_window {
+    [app_id="^dragon$"] sticky enable
+}
+
+# >> Fullscreen windows
+for_window {
+    [class="^wow.exe"] fullscreen enable
+    [class="^steam_app_"] fullscreen enable
+    [class="^spelunky.exe$"] fullscreen enable
+    [class="^dotnet$"] fullscreen enable
+    [class="^tModLoader.bin.x86_64$"] fullscreen enable
+    [class="^Terraria.bin.x86_64$"] fullscreen enable
+    [class="^crawl$"] fullscreen enable
+    [class="^brogue$"] fullscreen enable
+    [class="^th07.exe$"] fullscreen enable
+    [class="^pd2launcher.exe$"] fullscreen enable
+    [class="^edopro$"] fullscreen enable
+    [app_id="^edopro$"] fullscreen enable
+}
+
+# >> Floating windows
+for_window {
+    [app_id="transmission-gtk" title="^Torrent Options$"] floating enable
+    [app_id="zenity"] floating enable
+    [app_id="vpn"] floating enable, resize set 950 550, move position center
+    [app_id="floating"] floating enable
+    [app_id="ncmpcpp"] floating enable
+    [app_id="^scratchpad$"] floating enable, resize set 1250 750, move position center
+    [app_id="^scratchpad_input$"] floating enable, resize set 900 700, move position center
+    [app_id="mpv" title=".* - mvi$"] floating enable, resize set 950 550, move position center
+    [app_id="org.kde.kdeconnect.daemon"] floating enable
+    [app_id="^zoom$" title="Zoom Cloud Meetings"] floating enable, resize set 850 650, move position center
+    # PiP - See: https://github.com/swaywm/sway/issues/3095
+    [app_id="firefox" title="Picture-in-Picture"] floating enable
+    [app_id="zoom" title="Zoom Cloud Meetings"] floating enable
+    [title=".* is sharing your screen."] floating enable
+    [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
+    [app_id="Signal Beta" title="^Signal Desktop Preferences$"] floating enable
+    [app_id="Signal" title="^Signal Desktop Preferences$"] floating enable
+    [app_id="gimp-2.99" title="New Layer"] floating enable
+    # Battle net mouse input bugs out when not in floating mode
+    [class="^battle.net.exe$"] floating enable, resize set 1680 900, move position center
+    [class="awakened-poe-trade"] border none, floating enable, resize set 500 800, move position mouse'
+    [class="^steam_app_0$" title="^Grim Dawn Community Launcher$"] fullscreen disable, floating enable
+    # The Flatpak Chromium "Open Files" dialog can only be identified by its
+    # "chrome" app_id
+    [app_id="^chrome$"] floating enable, resize set 1250 750, move position center
+}
+
+# >> Non-floating windows
+for_window {
+    [class="^riotclientux.exe$"] floating disable
+}
+
+# >> Dialogs
+set $handle_dialog floating enable, move container to workspace current
+for_window {
+    [app_id="soffice" title="Document Recovery$"] $handle_dialog
+    [app_id="chromium" title="Open File"] $handle_dialog
+    [app_id="firefox" title="^Enter name of file to save to…$"] $handle_dialog
+    [app_id="firefox" title="^Open File$"] $handle_dialog
+    [app_id="firefox" title="^Save As$"] $handle_dialog
+    [app_id="firefox" title="^Save Image$"] $handle_dialog
+    [app_id="firefox" title="File Upload"] $handle_dialog
+    [app_id="firefox" title="^Firefox - Choose User Profile$"] $handle_dialog
+    [app_id="firefox" title="^Developer Tools — "] $handle_dialog
+    [app_id="firefox" title="^Opening "] $handle_dialog
+    [app_id="firefox" title="^Extension: \(MetaMask\) - MetaMask Notification — Mozilla Firefox$"] $handle_dialog
+    [app_id="Chromium" title="^DevTools - "] $handle_dialog
+    [app_id="chromium-bin-browser" title="^Save File$"] $handle_dialog
+    [app_id="telegram-desktop" title="^Choose Files$"] $handle_dialog
+    [app_id="firefox" title="^Choose Application$"] $handle_dialog
+    [title="(?:Open|Save) (?:File|Folder|As)"] $handle_dialog
+    [app_id="pop-up,task_dialog,About"] $handle_dialog;
+    [app_id="zenity"] $handle_dialog
+    [window_role="pop-up,task_dialog,About"] $handle_dialog;
+    [window_type="dialog"] $handle_dialog;
+    [window_type="utility"] $handle_dialog;
+    [window_type="toolbar"] $handle_dialog;
+    [window_type="splash"] $handle_dialog;
+    [window_type="menu"] $handle_dialog;
+    [window_type="dropdown_menu"] $handle_dialog;
+    [window_type="popup_menu"] $handle_dialog;
+    [window_type="tooltip"] $handle_dialog;
+    [window_type="notification"] $handle_dialog;
+}
+
+# >> Automatically close these windows
+for_window {
+    [class="^steam$" title="^Steam - News$"] kill
+    # Fix for this bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1564839
+    # If you do not kill the window, discord is stuck.
+    [app_id="firefox" title="^Firefox — Sharing Indicator$"] kill
+    # [app_id="firefox" title="^Firefox — Sharing Indicator$"] kill, exec notify-send "Sharing enabled"
+}
+
+# >> Assign apps to workspaces
+assign {
+    # >> 1: Browser
+    [app_id="firefox"] $ws1
+
+    # >> 2: Games
+    [class="Wine"] $ws2
+    [class="^brogue$"] $ws2
+    [class="^Shattered Pixel Dungeon$"] $ws2
+    [class="live.na.exe"] $ws2
+    [class="^streaming_client$"] $ws2
+    [class="^jh$"] $ws2
+    [class="^elonaplus.exe$"] $ws2
+    [class="leagueclient.exe"] $ws2
+    [class="leagueclientux.exe"] $ws2
+    [class="veloren-voxygen"] $ws2
+    [class="noita.exe"] $ws2
+    [class="^wow.exe$"] $ws2
+    [class="overwatch.exe"] $ws2
+    [class="^th07.exe$"] $ws2
+    [class="^wow-64.exe$"] $ws2
+    [class="^dotnet$"] $ws2
+    [class="^Terraria.bin.x86_64$"] $ws2
+    [class="^riotclientservices.exe$"] $ws2
+    [class="^tModLoader.bin.x86_64$"] $ws2
+    [class="^league of legends.exe$"] $ws2
+    [class="^cockatrice$"] $ws2
+    [class="^EtG.x86_64$"] $ws2
+    [class="^CoreKeeper$"] $ws2
+    [class="^CrossCode$"] $ws2
+    [class="^ia$"] $ws2
+    [class="^t-engine64$"] $ws2
+    [class="^t-engine$"] $ws2
+    [class="^t-engine.exe$"] $ws2
+    [class="^sil.exe$"] $ws2
+    [class="^dota2$"] $ws2
+    [class="^steam_app_"] $ws2
+    [class="^steam_proton$"] $ws2
+    [class="^heroesofthestorm_x64.exe$"] $ws2
+    [class="^spelunky.exe$"] $ws2
+    [class="^spel2.exe$"] $ws2
+    [class="^ck2$"] $ws2
+    [class="gw2-64.exe"] $ws2
+    [class="gw2.exe"] $ws2
+    [class="^deadcells$"] $ws2
+    [class="^diablo iv.exe$"] $ws2
+    [class="^clonehero$"] $ws2
+    [class="^xanadu.exe$"] $ws2
+    [class="^game.exe$" title="^Diablo II$"] $ws2
+    [class="^d2r.exe$"] $ws2
+    [class="^crawl$"] $ws2
+    [title="^Chronicon$"] $ws2
+    [class="^Halls of Torment$"] $ws2
+    [class="^ChildrenOfMorta$"] $ws2
+    [class="^factorio$"] $ws2
+    [class="^ffxiv_dx11.exe$"] $ws2
+    [class="^Overcooked2.x86_64$"] $ws2
+    [class="^lt-love$"] $ws2
+    [class="^Last Epoch.x86_64$"] $ws2
+    [class="^war.exe$"] $ws2
+    [class="^torchlight2.exe$"] $ws2
+    [class="^CoQ.x86_64$"] $ws2
+    [class="^Stardew Valley$"] $ws2
+    [class="^pd2launcher.exe$"] $ws2
+    [app_id="^gamescope$"] $ws2
+    [class="^edopro$"] $ws2
+    [app_id="^edopro$"] $ws2
+
+    # >> 3: Chat
+    [app_id="chromium-bin-browser-chromium"] $ws3
+    [app_id="chrome-discordapp.com__channels_@me-Default"] $ws3
+    [app_id="chrome-chatgpt.com__-Default"] $ws3
+    [app_id="chrome-zoom.us__meeting-Default"] $ws3
+    [app_id="chrome-teams.microsoft.com__-Default"] $ws3
+    [app_id="chrome-facebook.com__-Default"] $ws3
+    [app_id="^chrome-meet.google.com__*-Default$"] $ws3
+    [app_id="telegramdesktop"] $ws3
+    [app_id="org.telegram.desktop"] $ws3
+    [app_id="-Telegram_Desktop$"] $ws3
+    [app_id="weechat"] $ws3
+    [app_id="zoom"] $ws3
+    [class="Signal"] $ws3
+    [app_id="Signal"] $ws3
+    [app_id="signal"] $ws3
+    [app_id="Signal Beta"] $ws3
+    [class="Skype"] $ws3
+    [app_id="^zoom$"] $ws3
+
+    # >> 4: Coding, notes and theorycrafting
+    [app_id="editor"] $ws4
+    [app_id="^org$"] $ws4
+    [class="^jetbrains-idea-ce$"] $ws4
+    [app_id="^codium-url-handler$"] $ws4
+    [class="^VSCodium$"] $ws4
+    [app_id="emacs"] $ws4
+    [class="^Emacs$"] $ws4
+    [class="^path of building.exe"] $ws4
+
+    # >> 5: System monitor
+    [app_id="htop"] $ws5
+    [app_id="btop"] $ws5
+
+    # >> 6: Image, audio and video editing
+    [app_id="com.github.maoschanz.drawing"] $ws6
+    [class="^Gimp$"] $ws6
+    [app_id="^Gimp$"] $ws6
+    [app_id="gimp-2.99"] $ws6
+    [class="audacity"] $ws6
+    [app_id="Inkscape"] $ws6
+    [app_id="org.kde.kdenlive"] $ws6
+
+    # >> 7: Email
+    [app_id="email"] $ws7
+    [app_id="chrome-mail.proton.me__-Default"] $ws7
+
+    # >> 8: Game launchers
+    [app_id="lutris"] $ws8
+    [class="Lutris"] $ws8
+    [class="^steam$"] $ws8
+    [title="^Steam$"] $ws8
+    [class="gw2launcher.exe"] $ws8
+    [class="airshipper"] $ws8
+    [class="battle.net-setup.exe"] $ws8
+    [class="^riotclientux.exe$"] $ws8
+    [class="^nclauncher.exe$"] $ws8
+    [class="^gfclient.exe$"] $ws8
+    [class="^ffxivlauncher.exe$"] $ws8
+    [class="^XIVLauncher.Core$"] $ws8
+    [class="^battle.net.exe$"] $ws8
+
+    # >> 9: Music
+    [app_id="chrome-open.spotify.com__-Default"] $ws9
+
+    # >> 10: Torrents and misc
+    [class="Xephyr"] $ws10
+    [class="Wine" title="Wine System Tray"] $ws10
+    [app_id="^vpn$"] $ws10
+    [app_id="deluge"] $ws10
+    [app_id="transmission-gtk"] $ws10
+    [class="explorer.exe"] $ws10
+    [app_id="^gamescope$" title="^Guild Wars 2$"] $ws10
+    # [app_id="^gamescope$"] $ws10
+}
+
+# The assign command does not work on Battle.net.
+# We can use "move container to workspace" as a workaround.
+# Could be a sway bug/regression
+# See: https://github.com/swaywm/sway/issues/6177#issuecomment-817962055
+for_window [class="^battle.net.exe$"] move --no-auto-back-and-forth container to workspace $ws8
+
+# >> Focus when launched
+for_window {
+    [app_id="^htop$"] focus
+    [app_id="^btop$"] focus
+    [app_id="^editor$"] focus
+    [app_id="^email$"] focus
+    [app_id="chrome-mail.proton.me__-Default"] focus
+    [app_id="^vpn$"] focus
+    [class="^pd2launcher.exe$"] focus
+}
+
+# >> Disable focus when launched
+no_focus [class="awakened-poe-trade"]
+
+# >> Scratchpads
+# On spawn, use `move scratchpad` to mark as scratchpad.
+# Then move window back to current workspace.
+# This is to avoid having to double tap their keybind (once to spawn, and once
+# more to focus).
+for_window {
+    [app_id="^scratchpad$"] move scratchpad, move container to workspace current
+    [app_id="^scratchpad_input$"] move scratchpad, move container to workspace current
+}
+
+# >> Popup during fullscreen
+# This refers to a popup that is a child of the fullscreen window.
+# Other unrelated popups will not trigger this.
+popup_during_fullscreen leave_fullscreen
+
+# >> Workspace rules
+workspace_layout tabbed
+workspace_auto_back_and_forth yes
+
+# >> Mouse rules
+focus_follows_mouse no
+
+# >> Laptop lid
+# Log a message when the laptop lid is opened or closed.
+# bindswitch lid:toggle exec echo "Lid moved"

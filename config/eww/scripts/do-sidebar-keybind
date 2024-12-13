@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+eww="$HOME/.config/eww/scripts"
+sway="$HOME/.config/sway/scripts"
+
+if [[ -z "$1" ]]; then
+  echo You did not specify a keybind
+  exit 1
+fi
+
+eww_sidebar_page="$(eww get sidebar-page-index)"
+keybind=$1
+
+org() {
+    "$sway/window-do" '[app_id=^org$] focus' "org"
+    "$eww/manage" hide sidebar
+}
+
+# These keys are passed from sway to this script
+# Add more keys in ~/.config/sway/modes.conf under the _sidebar mode and use
+# them here
+case "$eww_sidebar_page" in
+  0 )
+    declare -A keybinds=(
+        ["j"]="swaymsg exec \$cmd_volume_lower"
+        ["k"]="swaymsg exec \$cmd_volume_raise"
+        ["v"]="swaymsg exec \$cmd_volume_mute"
+        ["J"]="light -U 10"
+        ["K"]="light -A 10"
+    )
+    ;;
+  1 )
+    declare -A keybinds=(
+        ["o"]="org"
+        ["r"]="$eww/do-calendar-action reset"
+        ["j"]="$eww/do-calendar-action month_prev"
+        ["k"]="$eww/do-calendar-action month_next"
+        ["J"]="$eww/do-calendar-action year_prev"
+        ["K"]="$eww/do-calendar-action year_next"
+    )
+    ;;
+  2 )
+    declare -A keybinds=(
+        ["q"]="$eww/playerctl-current stop"
+        ["f"]="$eww/media-add-to-favorites.sh"
+        ["space"]="$eww/playerctl-current play-pause"
+        ["p"]="playerctl -a pause"
+        ["slash"]="$eww/rofi-playerctl-switch.sh"
+        ["h"]="$eww/playerctl-current previous"
+        ["l"]="$eww/playerctl-current next"
+        ["H"]="$eww/playerctl-current position 10-"
+        ["L"]="$eww/playerctl-current position 10+"
+        ["v"]="swaymsg exec \$cmd_volume_mute"
+        ["j"]="swaymsg exec \$cmd_volume_lower"
+        ["k"]="swaymsg exec \$cmd_volume_raise"
+        ["J"]="$eww/playerctl-current volume 0.1-"
+        ["K"]="$eww/playerctl-current volume 0.1+"
+    )
+    ;;
+esac
+
+${keybinds[$keybind]}
+

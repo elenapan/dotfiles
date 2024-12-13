@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+eww="$HOME/.config/eww/scripts"
+
+
+if [[ -z "$1" ]]; then
+    echo You did not specify an action
+    exit 1
+fi
+
+action=$1
+
+alarm-quick() {
+    builtin echo alarms > /tmp/eww-widget-input-active
+    swaymsg mode _eww_input
+    eww update \
+        alarms-state=select-time-quick \
+        alarms-total-minutes=0 \
+        alarms-input-hours= \
+        alarms-input-minutes= \
+        alarms-preview-hours=00 \
+        alarms-preview-minutes=00 \
+        alarms-input-selected-field=hours \
+        alarms-input-label= \
+        alarms-preview-label=
+}
+
+alarm-standard() {
+    builtin echo alarms > /tmp/eww-widget-input-active
+    swaymsg mode _eww_input
+    eww update \
+        alarms-state=select-time-standard \
+        alarms-total-minutes=0 \
+        alarms-input-hours= \
+        alarms-input-minutes= \
+        alarms-preview-hours=00 \
+        alarms-preview-minutes=00 \
+        alarms-input-selected-field=hours \
+        alarms-input-label= \
+        alarms-preview-label=
+}
+
+previous() {
+    index="$(eww get alarms-index)"
+    json_length="$(eww get alarms-json | jq 'length')"
+    if ((json_length <= 1)) || ((index == 0)); then
+        exit 1
+    fi
+    eww update alarms-index="$(( (index - 1 + json_length) % json_length ))"
+}
+
+
+next() {
+    index="$(eww get alarms-index)"
+    json_length="$(eww get alarms-json | jq 'length')"
+    if [[ $json_length -eq 0 || $index -eq $((json_length - 1)) ]]; then
+        exit 1
+    fi
+    eww update alarms-index="$(( (index + 1) % json_length ))"
+}
+
+delete() {
+    "${eww}/alarm.sh" delete "$(eww get alarms-index)";
+    eww update alarms-index=0
+}
+
+cancel() {
+    swaymsg mode _alarms
+    eww update \
+        alarms-state=select-type
+}
+
+confirm() {
+    state="$(eww get alarms-state)"
+    if [[ "$state" == "select-time-quick" ]]; then
+        total_minutes="$(eww get alarms-total-minutes)"
+        if [[ "$total_minutes" == "0" ]]; then
+            exit 1
+        fi
+        "${eww}/alarm.sh" in "${total_minutes}"m "$(eww get alarms-preview-label)" &
+    elif [[ "$state" == "select-time-standard" ]]; then
+        "${eww}/alarm.sh" at "$(eww get alarms-preview-hours)":"$(eww get alarms-preview-minutes)" "$(eww get alarms-preview-label)" &
+    else
+        exit 1
+    fi
+
+    swaymsg mode _alarms
+    # Normally we would also `eww update alarms-state=select-type` here but
+    # this can cause flickering since alarms-state may update before
+    # alarms-json changes in alarms.sh. Therefore, we have moved this update to
+    # alarms.sh.
+}
+
+$action

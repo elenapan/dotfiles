@@ -1,0 +1,16 @@
+include ~/.config/sway/globals
+include ~/.config/sway/colors
+include ~/.config/sway/output
+include ~/.config/sway/input
+include ~/.config/sway/idle
+include ~/.config/sway/modes
+include ~/.config/sway/keys
+include ~/.config/sway/rules
+include ~/.config/sway/autostart
+include ~/.config/sway/eww
+include ~/.config/sway/appearance
+include ~/.config/sway/bugfix
+
+include @sysconfdir@/sway/config.d/*
+
+# vim:set ft=conf:

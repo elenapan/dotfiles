@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+charger_file="$(find /sys/class/power_supply/A*/online)"
+battery_file="$(find /sys/class/power_supply/BAT?/capacity | head -1)"
+should_notify_full_file=/tmp/battery-notifications-should_notify_full
+should_notify_low_file=/tmp/battery-notifications-should_notify_low
+should_notify_critical_file=/tmp/battery-notifications-should_notify_critical
+level_full=97
+level_low=20
+level_critical=10
+
+notify() {
+  playsound "$HOME/.config/sounds/system-error-notice.mp3"
+  notify-send.sh -R /tmp/battery-notifications-file "$@"
+}
+
+wait_countdown_suspend() {
+  if ! zenity --icon-name battery-empty --question --timeout=10 --text="Keep machine on?\n\nIt will suspend if no answer is given in 10 seconds"; then
+    notify-send.sh -s "$(</tmp/countdown-notifications-file)"
+    loginctl suspend
+  fi
+}
+
+charger_loop() {
+  acpi_listen | grep --line-buffered ac_adapter | while read -r _ ; do
+  old_charger=$charger
+  read -r charger < "$charger_file"
+
+  # We need this since sometimes the charger event fires seemingly randomly
+  if [[ $charger -eq $old_charger ]]; then
+    continue
+  fi
+
+  if [[ $charger -eq 0 ]]; then
+    echo 1 > "$should_notify_low_file"
+    echo 1 > "$should_notify_critical_file"
+    notify -u low "Battery" "Discharging"
+  else
+    echo 1 > "$should_notify_full_file"
+    notify -u low "Battery" "Charging"
+  fi
+
+  done
+}
+
+battery_loop() {
+  while true; do
+    read -r battery < "$battery_file"
+    read -r charger < "$charger_file"
+    if [[ $charger -eq 0 ]]; then
+      read -r should_notify_critical < "$should_notify_critical_file"
+      read -r should_notify_low < "$should_notify_low_file"
+      if [[ $battery -le $level_critical ]] && [[ $should_notify_critical -eq 1 ]]; then
+        echo 0 > "$should_notify_low_file"
+        echo 0 > "$should_notify_critical_file"
+        notify -u critical "Battery" "Critically low"
+        wait_countdown_suspend
+      elif [[ $battery -le $level_low ]] && [[ $should_notify_low -eq 1 ]]; then
+        echo 0 > "$should_notify_low_file"
+        notify "Battery" "Low"
+      fi
+    else
+      read -r should_notify_full < "$should_notify_full_file"
+      if [[ $battery -ge $level_full ]] && [[ $should_notify_full -eq 1 ]]; then
+        echo 0 > "$should_notify_full_file"
+        notify -u low "Battery" "Full"
+      fi
+    fi
+    sleep 60
+  done
+}
+
+battery=""
+read -r charger < "$charger_file"
+
+echo 0 > "$should_notify_full_file"
+echo 1 > "$should_notify_low_file"
+echo 1 > "$should_notify_critical_file"
+
+charger_loop &
+battery_loop &
+

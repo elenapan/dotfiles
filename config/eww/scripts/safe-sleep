@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Continuously sleep for a small interval and stop if the current date passes
+# the given deadline.
+# Note: We could use the `at` utility instead of this script but it
+# does not have sub-minute resolution. It also requires a service to run.
+
+function help {
+    echo "Usage:"
+    echo "    safe-sleep <time in s,m,h,d>"
+    echo "    safe-sleep <time in s,m,h,d> with-interval <seconds>"
+    echo "    safe-sleep 2m"
+    echo "    safe-sleep 2m with-interval 5"
+    echo "    -------------"
+    echo "    safe-sleep until <unix timestamp>"
+    echo "    safe-sleep until <unix timestamp> with-interval <seconds>"
+    echo "    safe-sleep until 1731408501"
+    echo "    safe-sleep until 1731408501 with-interval 10"
+}
+
+declare -A symbols_to_seconds=(
+    ["d"]=86400
+    ["h"]=3600
+    ["m"]=60
+    ["s"]=1
+)
+
+function sleep_until {
+    deadline_timestamp="$1"
+    # Default interval is 1 second, unless argument $2 exists
+    sleep_interval=${2:-1}
+    while [[ "$(date +%s)" -lt "$deadline_timestamp" ]]; do
+        sleep "$sleep_interval"
+    done
+}
+
+if [[ -z "$1" ]]; then
+    help
+    exit 1
+elif [[ "$1" == "until" ]]; then
+    if [[ -z "$2" ]]; then
+        help
+        exit 1
+    fi
+    deadline_timestamp="$2"
+    shift
+else
+    deadline_time_input="$1"
+    last_character="${deadline_time_input: -1}"
+    case $last_character in
+        d|h|m|s )
+            multiplier=${symbols_to_seconds[$last_character]}
+            time="${deadline_time_input::-1}"
+            ;;
+        * )
+            multiplier=1
+            time="$deadline_time_input"
+    esac
+    now="$(date +%s)"
+    seconds_to_add=$((time * multiplier))
+    deadline_timestamp=$((now + seconds_to_add))
+fi
+
+
+if [[ "$2" == "with-interval" ]]; then
+    if [[ -z "$3" ]]; then
+        help
+        exit 1
+    fi
+    sleep_until "$deadline_timestamp" "$3"
+else
+    sleep_until "$deadline_timestamp"
+fi

@@ -1,0 +1,783 @@
+$slider_corner_radius: dpi(23px);
+$slider_corner_radius_sharper: dpi(3px);
+$slider_size: dpi(64px);
+$media_buttons_corner_radius: dpi(10px);
+$media_buttons_symbol_margin: dpi(18px);
+$media_buttons_size_big: dpi(50px);
+$media_buttons_size_small: dpi(40px);
+$time_decoration_piece_size: dpi(6px);
+$task_height: dpi(60px);
+
+window .sidebar {
+  background: $xbg;
+  margin: 0 0 dpi(7px) 0;
+  border-radius: 0 $sidebar_corner_radius $sidebar_corner_radius 0;
+
+  .page-indicators-section {
+    padding-bottom: dpi(34px);
+
+    .horizontal-separator {
+      background: $x0;
+      border-radius: $round_max;
+      padding-top: dpi(8px);
+      margin: dpi(20px) dpi(34px) dpi(30px) dpi(34px);
+    }
+
+    .page-indicators {
+      box {
+        margin: 0 dpi(6px);
+        min-width: dpi(14px);
+        min-height: dpi(14px);
+        border-radius: $round_max;
+        transition: 0.15s;
+        transition-timing-function: ease-out;
+        opacity: 0.3;
+
+        &.selected {
+          min-width: dpi(27px);
+          opacity: 1;
+        }
+        &.selected-page-index-is-0 {
+          background: $x1;
+        }
+        &.selected-page-index-is-1 {
+          background: $x2;
+        }
+        &.selected-page-index-is-2 {
+          background: $x5;
+        }
+      }
+    }
+  }
+
+  .main {
+    padding: dpi(40px) 0 0 0;
+    background: $xbg;
+    border-radius: 0 $sidebar_corner_radius $sidebar_corner_radius 0;
+  }
+
+  .page {
+    &.home {
+      .time {
+        margin: 0 0 dpi(10px) 0;
+        font-size: dpi(44pt);
+
+        .hour {
+          font-family: "Baro Plain";
+        }
+
+        .minutes {
+          font-family: "Baro LineThree";
+          color: $x1;
+        }
+      }
+
+      .slider {
+        scale {
+          margin: dpi(6px);
+        }
+        scale trough {
+          all: unset;
+          background-color: $x0;
+          min-height: $slider_size;
+          min-width: $slider_size;
+          border-radius: $slider_corner_radius;
+        }
+        scale trough highlight {
+          all: unset;
+          background-color: $x1;
+          border-radius: $slider_corner_radius_sharper;
+          transition: 0.3s;
+        }
+
+        .dummy-border {
+          min-height: $slider_size;
+          min-width: $slider_size;
+          // Border width and border radius offset should be the same
+          // Trial and error: if part of the slider highlight is visible on the
+          // corners, increase this
+          border: dpi(10px) solid $xbg;
+          border-radius: $slider_corner_radius + dpi(10px);
+        }
+
+        &.volume {
+          scale trough highlight {
+            background-color: $x5;
+          }
+          &.muted {
+            scale trough highlight {
+              background-color: $x8;
+            }
+          }
+        }
+
+        &.battery {
+          scale trough highlight {
+            background-color: $x6;
+          }
+        }
+
+        &.disk {
+          scale trough highlight {
+            background-color: $x13;
+          }
+        }
+
+        &.cpu {
+          scale trough highlight {
+            background-color: $x2;
+          }
+        }
+
+        &.gpu {
+          scale trough highlight {
+            background-color: $x9;
+          }
+        }
+
+        &.temperature {
+          scale trough highlight {
+            background-color: $x1;
+          }
+        }
+
+        &.kdeconnect {
+          scale trough highlight {
+            background-color: $x14;
+          }
+          &.unreachable {
+            scale trough {
+              background: repeating-linear-gradient(
+              -55deg,
+              $xbg,
+              $xbg dpi(7px),
+              $x0 dpi(7px),
+              $x0 dpi(14px)
+              );
+            }
+            scale trough highlight {
+              background: transparent;
+            }
+          }
+        }
+
+        &.ram {
+          scale trough highlight {
+            background-color: $x12;
+          }
+        }
+
+        &.brightness {
+          scale trough highlight {
+            background-color: $x11;
+          }
+        }
+      }
+    }
+
+
+    &.media {
+      .art-and-progress {
+        min-width: dpi(200px);
+        min-height: dpi(200px);
+
+        circular-progress {
+          transition-duration: 0.3s;
+          color: $x5;
+
+          &.backdrop {
+            opacity: 0.15;
+          }
+        }
+      }
+
+      .button-row {
+        margin: 0 dpi(40px) dpi(20px) dpi(40px);
+      }
+
+      .button {
+        color: $xbg;
+      }
+
+      .position,
+      .length {
+        min-width: dpi(67px);
+        font-family: $font_sans;
+        font-size: dpi(10pt);
+        color: $xfg;
+        margin-bottom: dpi(27px);
+      }
+      .position {
+        margin-left: dpi(18px);
+      }
+      .length {
+        margin-right: dpi(18px);
+      }
+
+      .media-artbox {
+        min-width: dpi(148px);
+        min-height: dpi(148px);
+        background: repeating-linear-gradient(
+        -55deg,
+        $xbg,
+        $xbg dpi(7px),
+        $x0 dpi(7px),
+        $x0 dpi(14px)
+        );
+        background-repeat: no-repeat;
+        border-radius: 50%;
+        background-size: contain;
+        transition-duration: 0.3s;
+
+        &.hover {
+          border-radius: dpi(14px);
+        }
+      }
+
+      .visualizer {
+        min-height: dpi(66px);
+        .invisible-slider {
+          background: unset;
+
+          trough {
+            all: unset;
+            background-color: unset;
+            // This will be automatically limited to the size of the
+            // invisible slider
+            min-height: dpi(66px);
+            min-width: dpi(66px);
+          }
+          trough highlight {
+            all: unset;
+            background-color: unset;
+          }
+        }
+
+        .line {
+          background: $x8;
+          margin: 0 dpi(3px);
+          padding: 0 dpi(2px);
+          min-height: dpi(40px);
+          border-radius: dpi(8px);
+          opacity: 0.15;
+          transition-duration: 0.2s;
+
+          &:nth-child(1)  { min-height: dpi(8px); }
+          &:nth-child(2)  { min-height: dpi(16px); }
+          &:nth-child(3)  { min-height: dpi(24px); }
+          &:nth-child(4)  { min-height: dpi(32px); }
+          &:nth-child(5)  { min-height: dpi(40px); }
+          &:nth-child(6)  { min-height: dpi(32px); }
+          &:nth-child(7)  { min-height: dpi(24px); }
+
+          &:nth-child(8)  { min-height: dpi(32px); }
+          &:nth-child(9)  { min-height: dpi(40px); }
+          &:nth-child(10) { min-height: dpi(32px); }
+          &:nth-child(11) { min-height: dpi(32px); }
+          &:nth-child(12) { min-height: dpi(40px); }
+          &:nth-child(13) { min-height: dpi(32px); }
+
+          &:nth-child(14) { min-height: dpi(24px); }
+          &:nth-child(15) { min-height: dpi(32px); }
+          &:nth-child(16) { min-height: dpi(40px); }
+          &:nth-child(17) { min-height: dpi(32px); }
+          &:nth-child(18) { min-height: dpi(24px); }
+          &:nth-child(19) { min-height: dpi(16px); }
+          &:nth-child(20) { min-height: dpi(8px); }
+
+          &:nth-child(1),
+          &:nth-child(7),
+          &:nth-child(13),
+          &:nth-child(19) {
+            background: $x1;
+          }
+          &:nth-child(2),
+          &:nth-child(8),
+          &:nth-child(14),
+          &:nth-child(20) {
+            background: $x3;
+          }
+          &:nth-child(3),
+          &:nth-child(9),
+          &:nth-child(15) {
+            background: $x2;
+          }
+          &:nth-child(4),
+          &:nth-child(10),
+          &:nth-child(16) {
+            background: $x6;
+          }
+          &:nth-child(5),
+          &:nth-child(11),
+          &:nth-child(17) {
+            background: $x4;
+          }
+          &:nth-child(6),
+          &:nth-child(12),
+          &:nth-child(18) {
+            background: $x5;
+          }
+
+          &.reached {
+            opacity: 1;
+          }
+        }
+      }
+
+      .media-buttons {
+        margin-top: dpi(20px);
+        font-size: dpi(10pt);
+        font-family: "icomoon";
+        min-height: $media_buttons_size_big * 2;
+        transition: font-size 0.3s;
+        transition-timing-function: ease-out;
+
+        .button {
+          background: $x0;
+        }
+
+        .bottom-horizontal-buttons {
+          .button {
+            min-width: $media_buttons_size_big;
+            min-height: $media_buttons_size_small;
+            color: $x5;
+
+            &.prev {
+              border-radius: $media_buttons_corner_radius 0 0 $media_buttons_corner_radius;
+              .symbol {
+                margin-right: $media_buttons_symbol_margin;
+              }
+            }
+            &.next {
+              border-radius: 0 $media_buttons_corner_radius $media_buttons_corner_radius 0;
+              .symbol {
+                margin-left: $media_buttons_symbol_margin;
+              }
+            }
+          }
+        }
+
+        .bottom-vertical-buttons {
+          .button {
+            min-width: $media_buttons_size_small;
+            min-height: $media_buttons_size_big;
+            color: $x5;
+
+            &.volume-up {
+              border-radius: $media_buttons_corner_radius $media_buttons_corner_radius 0 0;
+              .symbol {
+                margin-bottom: $media_buttons_symbol_margin;
+              }
+            }
+            &.volume-down {
+              border-radius: 0 0 $media_buttons_corner_radius $media_buttons_corner_radius;
+              .symbol {
+                margin-top: $media_buttons_symbol_margin;
+              }
+            }
+          }
+        }
+
+        .top-buttons {
+          .button {
+            min-width: $media_buttons_size_small - dpi(4px);
+            min-height: $media_buttons_size_small - dpi(4px);
+            background: $xbg;
+            border-radius: 50%;
+            color: $x8;
+            transition: color 0.2s;
+
+            &.playing {
+              color: $x6;
+            }
+          }
+        }
+
+        .side-buttons {
+          .container {
+            &.gameboy-b {
+              margin-top: dpi(20px);
+            }
+            &.gameboy-a {
+              margin-bottom: dpi(20px);
+            }
+          }
+          .button {
+            min-width: $media_buttons_size_small;
+            min-height: $media_buttons_size_small;
+            border-radius: 50%;
+
+            &.stop {
+              color: $x3;
+            }
+            &.favorite {
+              color: $x1;
+            }
+          }
+        }
+      }
+    }
+
+    &.agenda {
+      .tasks-separator {
+        .ball {
+          background: $x2;
+          border-radius: 50%;
+        }
+        margin-bottom: dpi(14px);
+      }
+
+      .tasks-scroll-container {
+        min-height: $task_height * 3;
+        background: $x0;
+        border-radius: dpi(8px);
+        margin: 0 dpi(34px);
+      }
+
+      .tasks {
+        font-family: $font_sans;
+        margin: 0 dpi(14px);
+        font-size: dpi(9pt);
+
+        .no-tasks {
+          color: $x8;
+          font-size: dpi(9pt);
+          .symbol {
+            font-size: dpi(37pt);
+            margin-bottom: dpi(14px);
+          }
+        }
+
+        .task {
+          min-height: $task_height;
+          .type {
+            margin-right: dpi(11px);
+          }
+          &.deadline {
+            .type {
+              border-left: dpi(6px) solid $x2;
+            }
+            .separator {
+              background: $x2;
+            }
+          }
+          &.scheduled {
+            .type {
+              border-left: dpi(6px) dotted $x2;
+            }
+            .separator {
+              background: $x2;
+            }
+          }
+          &.overdue {
+            .type {
+              border-color: $x1;
+            }
+            .separator {
+              background: $x1;
+            }
+          }
+
+          &.done,
+          &.kill {
+            color: $x15;
+            opacity: 0.5;
+            .type {
+              border-color: $x8;
+            }
+
+            .status {
+              color: $x8;
+            }
+
+            .separator {
+              background: $x8;
+            }
+          }
+
+          .status {
+            margin-right: dpi(11px);
+          }
+
+          .when {
+            font-size: dpi(7pt);
+            color: $x15;
+            .separator {
+              min-width: dpi(6px);
+              min-height: dpi(6px);
+              border-radius: 50%;
+            }
+
+            .time {
+              // Manually fix vertical alignment
+              margin-bottom: dpi(-2px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.slider-with-label {
+  .circular-symbol-icon {
+    transition-duration: 0.2s;
+  }
+
+  .hover-value {
+    color: $xbg;
+    opacity: 0;
+    font-family: $font_sans;
+    // Hack to make it take up no space
+    font-size: dpi(0pt);
+  }
+
+  .circular-symbol-icon,
+  .hover-value {
+    margin: 0 dpi(15px) dpi(15px) 0;
+  }
+
+  &:hover {
+    .circular-symbol-icon {
+      min-height: $slider_size + dpi(-18px);
+      min-width: $slider_size + dpi(-18px);
+      border-radius: 50%;
+      .symbol {
+        opacity: 0;
+      }
+    }
+
+    .hover-value {
+      opacity: 1;
+      font-size: dpi(11pt);
+      margin-top: dpi(3px);
+    }
+  }
+
+}
+
+.circular-symbol-with-text {
+  &.media-title {
+    margin-top: dpi(27px);
+    margin-bottom: dpi(17px);
+  }
+
+  &.media-artist {
+    margin-bottom: dpi(20px);
+  }
+}
+
+.weather {
+  margin-bottom: dpi(30px);
+}
+
+.hostname-uptime {
+  margin-top: dpi(18px);
+}
+
+.page-title {
+  font-family: $font_sans;
+  font-size: dpi(12pt);
+  margin-top: dpi(20px);
+
+  .icon {
+    font-family: "icomoon";
+    color: $x2;
+    margin-top: dpi(-4px);
+    margin-right: dpi(7px);
+  }
+}
+
+.calendar {
+  color: $xfg;
+  font-size: dpi(9pt);
+  font-family: $font_sans;
+  margin-bottom: dpi(14px);
+
+  .week-row {
+    &.labels {
+      font-size: dpi(14pt);
+      font-weight: bold;
+      .day-cell {
+        &:nth-child(1) {
+          color: $x1;
+        }
+        &:nth-child(2) {
+          color: $x3;
+        }
+        &:nth-child(3) {
+          color: $x2;
+        }
+        &:nth-child(4) {
+          color: $x6;
+        }
+        &:nth-child(5) {
+          color: $x4;
+        }
+        &:nth-child(6) {
+          color: $x5;
+        }
+        &:nth-child(7) {
+          color: $x1;
+        }
+      }
+    }
+
+    &.placeholder {
+      min-height: dpi(25px);
+      .line {
+        margin: 0 dpi(16px);
+        border-top: dpi(6px) solid $x0;
+      }
+    }
+  }
+
+  .day-cell {
+    min-width: dpi(25px);
+    min-height: dpi(25px);
+    border-radius: dpi(8px);
+
+    .text {
+      // Manually fix font vertical alignment
+      margin-bottom: dpi(-2.5px);
+      margin-left: dpi(1px);
+    }
+
+    &.other-month {
+      color: $x8;
+    }
+    &.today {
+      background: $xfg;
+      color: $xbg;
+    }
+  }
+}
+
+.task-info {
+  background: $x0;
+  border-radius: $round_max;
+  padding-right: dpi(14px);
+  margin: 0 dpi(34px) dpi(14px) dpi(34px);
+  font-family: $font_sans;
+
+  .counter {
+    min-height: dpi(70px);
+    min-width: dpi(70px);
+    border: dpi(6px) solid $x10;
+    background: $x0;
+    color: $xfg;
+    font-size: dpi(14pt);
+    font-weight: bold;
+    margin-right: dpi(4px);
+    border-radius: 50%;
+
+    .label {
+      font-size: dpi(9pt);
+      font-weight: normal;
+    }
+  }
+
+  .calendar-controls {
+    .inner-container {
+      margin: dpi(14px) 0 dpi(14px) dpi(8px);
+      border-radius: $round_max;
+      background: $xbg;
+
+      .controls-month,
+      .controls-year {
+        font-family: monospace;
+        font-weight: bold;
+        font-size: dpi(12pt);
+      }
+
+      .controls-month {
+        color: $x7;
+      }
+
+      .controls-year {
+        color: $x2;
+      }
+
+      .month-year {
+        font-size: dpi(9pt);
+        .month {
+          color: $x7;
+          margin-bottom: dpi(2px);
+        }
+        .year {
+          color: $x2;
+          margin-top: dpi(2px);
+        }
+      }
+    }
+
+    .time {
+      font-size: dpi(10pt);
+      margin-left: dpi(10px);
+      // Set a min width so that the container does not move when text changes
+      min-width: dpi(19px);
+      .hour {
+        color: $x7;
+        margin-bottom: dpi(6px);
+      }
+      .min {
+        color: $x2;
+      }
+      .sec {
+        color: $x8;
+      }
+    }
+  }
+}
+
+.dotw {
+  margin: 0 0 dpi(20px) 0;
+
+  .dotw-indicator {
+    border-radius: dpi(7px);
+    background: transparent;
+    font-family: $font_sans;
+    color: $xfg;
+    font-weight: bold;
+
+    .day {
+      font-size: dpi(14pt);
+      padding: dpi(8px) 0 dpi(6.5px) 0;
+    }
+
+    .number {
+      padding: dpi(4px) dpi(8px) dpi(10px) dpi(8px);
+      color: $x8;
+      font-size: dpi(9pt);
+    }
+
+    &:nth-child(1) { .day {color: $x1; }}
+    &:nth-child(2) { .day {color: $x3; }}
+    &:nth-child(3) { .day {color: $x2; }}
+    &:nth-child(4) { .day {color: $x6; }}
+    &:nth-child(5) { .day {color: $x4; }}
+    &:nth-child(6) { .day {color: $x5; }}
+    &:nth-child(7) { .day {color: $x1; }}
+
+    &.selected {
+      background: $x0;
+      .number {
+        color: $xfg;
+      }
+    }
+  }
+}
+
+.circle-button {
+  background-color: $x0;
+  border-radius: 50%;
+  min-height: dpi(23px);
+  min-width: dpi(23px);
+  color: $x6;
+  font-family: "icomoon";
+  font-size: dpi(10pt);
+
+  &.delete {
+    color: $x1;
+  }
+}

@@ -1,0 +1,19 @@
+(defwidget circular-symbol-with-text [extra-class symbol text-left text-right]
+  (box :class "circular-symbol-with-text ${extra-class}"
+       :orientation "horizontal"
+       :space-evenly false
+       :hexpand false
+       :halign "center"
+    (circular-symbol-icon :extra-class "" :symbol "${symbol}")
+    (box :class "text left"
+         :halign "end"
+         :space-evenly false
+      "${text-left}"
+      )
+    (box :class "text right"
+         :halign "start"
+         :visible "${text-right != ""}"
+         :space-evenly false
+      (box :valign "center" :halign "center" :class "separator")
+      "${text-right}")))
+

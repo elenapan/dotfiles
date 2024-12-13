@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+if [[ -z "$1" ]]; then
+    echo You did not specify an action
+    exit 1
+fi
+
+action="$1"
+dock_item_json="$2"
+
+# Get needed variables from dock item json.
+# Careful of empty string fields returned by jq, they will be skipped by `read`.
+# 'null' is fine though.
+read -r identifier launcher state recently_used_con_id \
+    < <(jq -r '.identifier, .launcher, .state, .recently_used_con_id' <<< "$dock_item_json" | tr '\n' ' ')
+
+# echo identifier="$identifier"
+# echo launcher="$launcher"
+# echo state="$state"
+# echo recently_used_con_id="$recently_used_con_id"
+
+activate() {
+    if [[ "$state" == "empty" ]]; then
+        $launcher
+    else
+        swaymsg -q "[con_id=${recently_used_con_id}] focus" 2>/dev/null \
+            || swaymsg -q "[app_id=${identifier}] focus" 2>/dev/null \
+            || swaymsg -q "[class=${identifier}] focus" 2>/dev/null
+    fi
+}
+
+close() {
+    swaymsg -q "[con_id=${recently_used_con_id}] kill" 2>/dev/null \
+        || swaymsg -q "[app_id=${identifier}] kill" 2>/dev/null \
+        || swaymsg -q "[class=${identifier}] kill" 2>/dev/null
+}
+
+$action

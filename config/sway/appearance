@@ -1,0 +1,152 @@
+# >> SwayFX settings
+shadows enable
+shadows_on_csd enable
+shadow_blur_radius 50
+shadow_color #0000007F
+corner_radius 10
+blur disable
+titlebar_separator disable
+# layer_effects 'rofi' 'shadows enable'
+
+# >> Wallpaper
+output * bg ~/.local/share/wallpaper fill
+
+# >> Titlebar and border configuration
+# SwayFX BUG: https://github.com/WillPower3309/swayfx/issues/201
+# Looks off if > 0
+titlebar_border_thickness 0
+
+# Setting border_width to 1 as a temporary workaround for the transparency bug
+# described below.
+set $border_width 1
+
+# All windows have a title bar by default
+for_window [app_id=".*"] border normal $border_width
+
+# Disable titlebar for certain windows
+for_window {
+    [app_id="^vpn$"] border pixel $border_width
+    [app_id="^editor$"] border pixel $border_width
+    [app_id="^org$"] border pixel $border_width
+    [app_id="firefox"] border pixel $border_width
+    [class="Chromium"] border pixel $border_width
+    [app_id="Chromium"] border pixel $border_width
+    [app_id="org.qutebrowser.qutebrowser"] border pixel $border_width
+    [title=".* is sharing your screen."] border pixel $border_width
+    [app_id="firefox" title="Firefox — Sharing Indicator"] border pixel $border_width
+    [app_id="gimp-2.99" title="GIMP Startup"] border pixel $border_width
+    [app_id="com.github.maoschanz.drawing"] border pixel $border_width
+    [class="^battle.net.exe$"] border pixel $border_width
+    [class="^steam$"] border pixel $border_width
+    [class="^leagueclient.exe$"] border pixel $border_width
+    [class="^leagueclientux.exe$"] border pixel $border_width
+    [app_id="^chrome$"] border pixel $border_width
+}
+
+# This font will only be visible in container titlebars, not window titlebars.
+# Window titlebar font is set manually with pango (see font_desc in $title_text)
+font Baro LineThree 33
+font pango:Baro LineThree 33
+# Due to the large size of the font above, we do not need more vertical padding
+# so we set it to 0.
+titlebar_padding 11 0
+title_align left
+
+# >> Icon inside pill shape configuration
+# > Pill section
+# Create a pill shape by smooshing together a bunch of circles using negative
+# letter_spacing
+set $pill_shape <span font_desc="icomoon 24" foreground="$x0" rise="1000" letter_spacing="-31000"></span>
+# > Icon section
+# Use an even larger negative letter_spacing to move the icon to the center of
+# the pill shape. Leave the tag open so that we can customize color and icon per
+# app.
+set $icon_pre $pill_shape <span letter_spacing="-80000" font_desc="icomoon 15" rise="6700" foreground=
+# > Title section
+# Add a large space using letter_spacing, then configure title font
+set $title_text <span letter_spacing="60000"> </span><span rise="9200" font_desc="Kyok Medium 14"> %title </span>
+set $icon_post </span>$title_text
+
+# >> Titlebar icons and colors per app
+for_window {
+    # Placeholder for apps that have not been configured yet
+    [app_id=".*"] title_format $icon_pre"$x10">$icon_post
+
+    [class="Wine"] title_format $icon_pre"$x1">$icon_post
+    [app_id="^kitty$"] title_format $icon_pre"$x5">$icon_post
+    [app_id="^htop$"] title_format $icon_pre"$x2">$icon_post
+    [app_id="^btop$"] title_format $icon_pre"$x2">$icon_post
+    [class="^Sxiv$"] title_format $icon_pre"$x1">$icon_post
+    [app_id="^nemo$"] title_format $icon_pre"$x3">$icon_post
+    [app_id="^pavucontrol$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^scratchpad$"] title_format $icon_pre"$x1">$icon_post
+    [app_id="^scratchpad_input$"] title_format $icon_pre"$x3">$icon_post
+    [app_id="^firefox$"] title_format $icon_pre"$x3">$icon_post
+    [class="^explorer.exe$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^soffice$"] title_format $icon_pre"$x7">$icon_post
+    [app_id="^mpv$"] title_format $icon_pre"$x6">$icon_post
+    [app_id="^chromium-browser$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^org.chromium.Chromium$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^org.pwmt.zathura$"] title_format $icon_pre"$x3">$icon_post
+    [app_id="^chrome-discordapp.com__channels_@me-Default$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^chrome-chatgpt.com__-Default$"] title_format $icon_pre"$x2">$icon_post
+    [app_id="-Telegram_Desktop$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^editor$"] title_format $icon_pre"$x5">$icon_post
+    [app_id="^lutris$"] title_format $icon_pre"$x6">$icon_post
+    [app_id="^org$"] title_format $icon_pre"$x2">$icon_post
+    [app_id="^emacs$"] title_format $icon_pre"$x2">$icon_post
+    [class="^Emacs$"] title_format $icon_pre"$x2">$icon_post
+    [app_id="^gucharmap$"] title_format $icon_pre"$x2">$icon_post
+    [class="^Gimp$"] title_format $icon_pre"$x4">$icon_post
+    [class="^steam$"] title_format $icon_pre"$x2">$icon_post
+    [app_id="^deluge$"] title_format $icon_pre"$x1">$icon_post
+    [app_id="^chrome-open.spotify.com__-Default$"] title_format $icon_pre"$x2">$icon_post
+    [app_id="chrome-mail.proton.me__-Default"] title_format $icon_pre"$x6">$icon_post
+}
+
+# >> Colors
+# SwayFX BUG workaround: When using corner_radius > 0, the edge of the titlebar
+# is slightly trasparent. I found that if you stick "BD" to the end of the child
+# border color (RGBA format), you get the same transparency.
+# Using this trick and border_width = 1, it looks consistent.
+# With shadows disabled
+# set $transparency_hex BD
+# With shadows (0000007F) enabled
+set $transparency_hex C0
+
+# class                   border  bg      text    ind     child_border
+client.focused            "$xbg"  "$xbg"  "$xfg"  "$xbg"  "$xbg"$transparency_hex
+client.focused_inactive   "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"$transparency_hex
+client.focused_tab_title  "$xbg"  "$xbg"  "$x8"
+client.unfocused          "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"$transparency_hex
+client.urgent             "$xbg"  "$xbg"  "$x1"   "$xbg"  "$xbg"$transparency_hex
+client.placeholder        "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"$transparency_hex
+client.background                 "$xbg"
+
+# >> Gaps
+gaps outer 0
+gaps inner 10
+
+# >> Cursor
+# Name of the cursor theme directory in ~/.icons
+set $cursor_theme Bibata-Modern-Ice
+set $cursor_size 40
+
+seat seat0 xcursor_theme $cursor_theme $cursor_size
+
+# >> GTK
+# https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland#setting-values-in-gsettings
+exec {
+    gsettings set org.gtk.Settings.FileChooser window-size '(1200, 700)'
+    gsettings set org.gnome.desktop.interface gtk-theme 'aphelion'
+    gsettings set org.gnome.desktop.interface icon-theme 'aphelion'
+    gsettings set org.gnome.desktop.interface font-name 'Google Sans Medium 14'
+    gsettings set org.gnome.desktop.interface cursor-theme $cursor_theme
+    gsettings set org.gnome.desktop.interface cursor-size $cursor_size
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+}
+
+# >> Misc
+show_marks no
+
+# vim:set ft=conf:

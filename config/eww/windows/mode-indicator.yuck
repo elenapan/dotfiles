@@ -1,0 +1,31 @@
+(defwindow mode-indicator
+  :monitor 0
+  :geometry (geometry :x 0
+                      :y 0
+                      ; Note: Setting width and height here causes certain
+                      ; animations to not display properly. Instead, we set
+                      ; width and height in *.scss or in the upppermost inner
+                      ; widget.
+                      :anchor "top center")
+  :stacking "overlay"
+  :exclusive false
+  (revealer
+    :transition "slidedown"
+    :reveal "${mode-indicator-visible}"
+    :duration "300ms"
+    (eventbox
+      ; On click, cancel active binding mode and hide widget
+      :onclick "swaymsg -q mode default & ${eww-scripts}/manage hide mode-indicator &"
+      :onmiddleclick "swaymsg -q mode default & ${eww-scripts}/manage hide mode-indicator &"
+      (box
+        :halign "center"
+        :valign "center"
+        :space-evenly false
+        :class "mode-indicator"
+        (box :class "hashtag" "#")
+        (box :class "text" "${mode-current}"))
+      )
+    ))
+
+(defvar mode-current "")
+(defvar mode-indicator-visible false)

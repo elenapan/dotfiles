@@ -1,0 +1,20 @@
+# Fix chromium + app mode inhibiting shortcuts:
+# Source: https://old.reddit.com/r/swaywm/comments/vkgfza/chromium_v103_application_mode_app_and_weird/
+# for_window [app_id="^chrome-.*__-.*$"] shortcuts_inhibitor disable
+for_window [app_id="^chrome-.*__.*$"] shortcuts_inhibitor disable
+
+# Fix Project Diablo 2 launcher bug:
+# Play button not visible at the bottom of the screen
+# The problem seems to be the existence of my eww bottom bar.
+# Solution: In Lutris, add ~/bin/fix-project-diablo-2-launcher as a pre-launch script to
+# Project Diablo 2. This closes the bar. Then, we use the following rule to
+# re-open the bar and close the launcher after the actual game has started.
+for_window [class="^game.exe$" title="^Diablo II$"] exec "eww open bottom-bar; swaymsg '[class=\"^pd2launcher.exe$\"] kill'"
+
+# Fix AMD GPU bug:
+# https://gitlab.freedesktop.org/drm/amd/-/issues/3549
+# See the fix-amd-gpu-bug script for an explanation.
+assign [app_id="^MINIMIZE_ME$"] $ws10
+exec $sway/fix-amd-gpu-bug
+
+# vim:set ft=conf:

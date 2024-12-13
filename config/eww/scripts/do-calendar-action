@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+eww="$HOME/.config/eww/scripts"
+
+if [[ -z "$1" ]]; then
+    echo You did not specify an action
+    exit 1
+fi
+
+action="$1"
+
+reset() {
+    eww update calendar-selected-year="$(date +%Y)" calendar-selected-month="$(date +%m)"
+    "$eww/cal.py"
+}
+
+month_prev() {
+    month="$(eww get calendar-selected-month | sed 's/^0*//')"
+    year="$(eww get calendar-selected-year | sed 's/^0*//')"
+    if [[ "$month" == 1 ]]; then
+        month=12
+        year=$((year - 1))
+    else
+        month=$((month - 1))
+    fi
+    eww update calendar-selected-month="$month" calendar-selected-year="$year"
+    "$eww/cal.py"
+}
+
+month_next() {
+    month="$(eww get calendar-selected-month | sed 's/^0*//')"
+    year="$(eww get calendar-selected-year | sed 's/^0*//')"
+    if [[ "$month" == 12 ]]; then
+        month=1
+        year=$((year + 1))
+    else
+        month=$((month + 1))
+    fi
+    eww update calendar-selected-month="$month" calendar-selected-year="$year"
+    "$eww/cal.py"
+}
+
+year_prev() {
+    year="$(eww get calendar-selected-year)"
+    eww update calendar-selected-year=$((year - 1))
+    "$eww/cal.py"
+}
+
+year_next() {
+    year="$(eww get calendar-selected-year)"
+    eww update calendar-selected-year=$((year + 1))
+    "$eww/cal.py"
+}
+
+$action

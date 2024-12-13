@@ -1,0 +1,25 @@
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+# >> Scroll speed
+input type:pointer scroll_factor 1.2
+
+# >> Touchpad
+input type:touchpad {
+    tap enabled
+    dwt enabled
+}
+
+# >> Keyboard
+input type:keyboard {
+    xkb_layout us,gr
+    xkb_numlock enabled
+    # xkb_variant ,nodeadkeys
+    xkb_options grp:alt_shift_toggle,ctrl:nocaps
+    # I am using keyd so I do not need caps:escape
+
+    repeat_delay 300
+    repeat_rate 50
+}
+
+# vim:set ft=conf:

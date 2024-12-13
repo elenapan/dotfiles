@@ -1,0 +1,17 @@
+; Invisible background widget to emulate mouse bindings on the desktop
+(defwindow background
+  :monitor 0
+  :geometry (geometry :x 0
+                      :y 0
+                      :width "100%"
+                      :height "100%"
+                      :anchor "top center")
+  :stacking "bottom"
+  :exclusive false
+  (box
+    :halign "fill"
+    :valign "fill"
+    (eventbox
+      :onscroll "[ '{}' = 'up' ] && swaymsg -q workspace prev || swaymsg -q workspace next"
+      :onclick "dunstctl close-all"
+      )))

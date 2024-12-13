@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+query="$1"
+cmd="$2"
+query_focused="${query//\]/ workspace\=__focused__ con_id=__focused__]}"
+
+# If focused, move to scratchpad
+if swaymsg "${query_focused} focus" >/dev/null; then
+    swaymsg "${query} move window to scratchpad"
+# If not focused, try to move to current workspace and focus
+elif ! swaymsg "${query} scratchpad show"; then
+    # If the "scratchpad show" fails, it means the scratchpad was not open.
+    # Run the command that spawns the scratchpad
+    ${cmd}
+fi

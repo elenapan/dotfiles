@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+import i3ipc
+
+i3 = i3ipc.Connection()
+
+# App ids or classes of the windows that should automatically switch to the
+# english layout on focus
+force_english_layout = {
+    'Sxiv': True,
+    'mpv': True,
+    'htop': True,
+    'btop': True,
+    'ncmpcpp': True,
+    'scratchpad': True,
+    'org.pwmt.zathura': True,
+    'org.qutebrowser.qutebrowser': True,
+}
+
+# Assumes that English is your first (and main) layout
+# Thus if index == 0 -> english
+# You can also check with its name (xkb_active_layout_name)
+
+def set_layout_index(index):
+    i3.command('input * xkb_switch_layout '+str(index))
+
+def get_layout_index():
+    for input in i3.get_inputs():
+        if input.type == 'keyboard':
+            return input.xkb_active_layout_index
+
+prev_focused = ''
+restore_index = get_layout_index()
+
+def on_window(i3, e):
+    global prev_focused
+    global restore_index
+    current = e.container.app_id or e.container.window_class or ''
+
+    index = get_layout_index()
+    if index != 0: # Not english
+        if current in force_english_layout:
+            set_layout_index(0)
+            if not (prev_focused in force_english_layout):
+                restore_index = index
+            else:
+                restore_index = 0
+        else:
+            restore_index = 0
+    else:
+        if prev_focused in force_english_layout and not (current in force_english_layout) and restore_index != 0:
+            set_layout_index(restore_index)
+            restore_index = 0
+
+    prev_focused = current
+
+i3.on("window::focus", on_window)
+
+i3.main()

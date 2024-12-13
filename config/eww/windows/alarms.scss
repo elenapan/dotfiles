@@ -1,0 +1,201 @@
+window.alarms {
+  background: $xbg;
+  border-radius: $sidebar_corner_radius 0 0 $sidebar_corner_radius;
+  font-family: $font_sans;
+
+  .alarms {
+    min-width: dpi(300px);
+    .inner {
+      margin: dpi(14px) 0 dpi(14px) dpi(14px);
+    }
+
+    .controls {
+      min-width: dpi(48px);
+      min-height: dpi(110px);
+      margin-right: dpi(14px);
+      .button {
+        font-size: dpi(10pt);
+        .symbol {
+          transition: color 0.3s;
+        }
+        &.dual {
+          background: $x0;
+          font-size: dpi(12pt);
+          font-family: icomoon;
+          color: $x3;
+          &.top {
+            border-radius: $round_max $round_max dpi(134px) dpi(134px);
+            .symbol {
+              // Manually fix icon alignment
+              margin-top: dpi(4px);
+            }
+          }
+          &.bottom {
+            border-radius: dpi(134px) dpi(134px) $round_max $round_max;
+            .symbol {
+              // Manually fix icon alignment
+              margin-bottom: dpi(4px);
+            }
+          }
+          &.disabled {
+            .symbol {
+              color: $x8;
+            }
+          }
+        }
+      }
+
+      .button-row-expandable {
+        padding: dpi(6px) 0;
+        min-height: dpi(7px);
+        transition: min-height 0.2s, color 0.2s;
+        color: $xbg;
+        .button {
+          border-radius: $round_max;
+          background: $x8;
+          &.cancel {
+            .symbol {
+              // Manually fix icon alignment
+              margin-bottom: dpi(-2px);
+            }
+          }
+          &.confirm {
+            .symbol {
+              // Manually fix icon alignment
+              margin-left: dpi(-0.6px);
+              margin-bottom: dpi(-2px);
+            }
+          }
+          .symbol {
+            transition: opacity 0.2s, font-size 0.2s;
+            font-size: 0;
+            opacity: 0;
+            font-weight: bold;
+          }
+        }
+
+        &.expanded {
+          min-height: dpi(20px);
+          .button {
+            &.confirm {
+              background: $x2;
+            }
+            &.cancel {
+              background: $x1;
+            }
+            .symbol {
+              opacity: 1;
+              font-size: dpi(11pt);
+            }
+          }
+        }
+      }
+    }
+
+    .container {
+      .side-controls {
+        color: $x6;
+        font-size: dpi(8pt);
+
+        .button {
+          border-radius: $round_max;
+          background: $x0;
+          min-width: dpi(34px);
+          font-weight: bold;
+          font-family: icomoon;
+
+          &.add-or-remove {
+            .symbol {
+              font-family: $font_sans;
+              // Manually fix font alignment
+              margin-bottom: dpi(-3.5px);
+              margin-left: dpi(-2px);
+            }
+          }
+
+          &.delete {
+            color: $x1;
+            .symbol {
+              // Manually fix font alignment
+              margin-bottom: dpi(-2px);
+            }
+          }
+
+          &.disabled {
+            color: $x8;
+          }
+        }
+
+        .nav {
+          font-size: dpi(10pt);
+          font-weight: normal;
+        }
+      }
+
+      .info {
+        .preview {
+          font-family: monospace;
+          font-weight: bold;
+          font-size: dpi(20pt);
+          .separator {
+            color: $x3;
+          }
+        }
+
+
+        .label {
+          font-family: $font_sans;
+          font-size: dpi(10pt);
+          &.top {
+            color: $x8;
+          }
+          &.bottom {
+            font-family: monospace;
+            font-weight: bold;
+            color: $x3;
+          }
+          .text {
+            color: $xfg;
+            .dummy {
+              opacity: 0;
+            }
+            .cursor {
+              color: $x3;
+              opacity: 0;
+            }
+            &.placeholder {
+              color: $x8;
+            }
+          }
+        }
+
+        .label.active .text {
+          color: $x3;
+          .cursor {
+            animation-name: blink;
+            animation-duration: 1s;
+            animation-timing-function: ease-out;
+            animation-iteration-count: infinite;
+          }
+        }
+        .hour.active,
+        .min.active {
+          color: $x3;
+        }
+
+        &.no-alarms {
+          .label.top {
+            color: $x8;
+            .text,
+            .separator {
+              color: $x8;
+            }
+          }
+          .preview {
+            color: $x8;
+          }
+        }
+      }
+    }
+  }
+}

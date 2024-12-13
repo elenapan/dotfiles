@@ -1,0 +1,157 @@
+$network_list_item_height: dpi(60px);
+window .networks {
+  background: $xbg;
+  border-radius: $sidebar_corner_radius 0 0 $sidebar_corner_radius;
+  font-family: $font_sans;
+
+  .toolbar {
+    margin: 0 dpi(14px) dpi(14px) dpi(14px);
+
+    .button {
+      min-width: dpi(64px);
+      background: $x0;
+      color: $xfg;
+      border-radius: dpi(14px);
+
+      .symbol {
+        margin: 0 dpi(6px);
+        border-radius: $round_max;
+        font-size: dpi(12pt);
+        padding: dpi(4px) 0;
+        font-family: icomoon;
+
+      }
+      .text {
+        font-size: dpi(8pt);
+      }
+
+      &.vpn {
+        .symbol {
+          color: $x8;
+        }
+        &.on {
+          .symbol {
+            color: $x4;
+          }
+        }
+      }
+
+      &.scan {
+        .symbol {
+          color: $x2;
+        }
+      }
+      &.speed {
+        .symbol {
+          color: $x5;
+        }
+      }
+      &.ping {
+        .symbol {
+          color: $x3;
+        }
+      }
+
+      &.loading .symbol {
+        animation: opacity-pulse 1.5s infinite;
+        color: $x8;
+      }
+    }
+  }
+
+  .bandwidth {
+    margin: 0 dpi(14px) dpi(14px) dpi(14px);
+    font-size: dpi(14pt);
+    font-family: monospace;
+
+    .symbol {
+      margin-right: dpi(3px);
+      font-family: "Material Icons";
+      font-size: dpi(17pt);
+    }
+    .bandwidth-down .symbol {
+      color: $x1;
+    }
+    .bandwidth-up .symbol {
+      color: $x2;
+    }
+  }
+
+  .networks-scroll-container {
+    min-height: $network_list_item_height * 4;
+    margin: dpi(14px);
+    background: $x0;
+    border-radius: dpi(8px);
+  }
+
+  .network-list {
+    font-size: dpi(8pt);
+
+    .no-networks {
+      color: $x8;
+      font-size: dpi(12pt);
+      .symbol {
+        font-size: dpi(50pt);
+        margin-bottom: dpi(14px);
+      }
+    }
+
+    .network {
+      min-height: $network_list_item_height;
+      transition-duration: 0.2s;
+
+      .status-and-signal {
+        margin-left: dpi(11px);
+
+        border-left-width: dpi(6px);
+        border-style: dotted;
+
+        &.excellent {
+          border-color: $x4;
+        }
+        &.good {
+          border-color: $x4;
+        }
+        &.ok {
+          border-color: $x3;
+        }
+        &.bad {
+          border-color: $x8;
+        }
+
+        &.selected {
+          border-style: solid;
+        }
+
+      }
+
+
+      .button {
+        background: $xbg;
+        margin-right: dpi(11px);
+        .symbol {
+          font-size: dpi(10pt);
+          font-family: icomoon;
+          padding: dpi(14px);
+        }
+
+        &.forget {
+          color: $x3;
+          border-radius: dpi(14px);
+        }
+        &.disconnect {
+          color: $x1;
+          border-radius: dpi(14px);
+        }
+        &.connect {
+          color: $x2;
+          border-radius: 50%;
+        }
+      }
+
+      .type {
+        margin: 0 dpi(11px);
+      }
+    }
+  }
+}

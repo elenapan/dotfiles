@@ -1,0 +1,33 @@
+.circular-symbol-with-text {
+  background-color: $x0;
+  border-radius: $round_max;
+  font-family: $font_sans;
+  font-size: dpi(9.5pt);
+  padding-right: dpi(7px);
+
+  .circular-symbol-icon {
+    margin-right: dpi(6px);
+  }
+
+  // Manually fix font vertical alignment (might need to change based on font used)
+  .text {
+    margin-top: dpi(2px);
+  }
+
+  .separator {
+    min-width: dpi(6px);
+    min-height: dpi(6px);
+    border-radius: 50%;
+    background: $x8;
+    margin: dpi(6px);
+  }
+
+  &.media-title {
+    margin-top: dpi(27px);
+    margin-bottom: dpi(17px);
+  }
+
+  &.media-artist {
+    margin-bottom: dpi(20px);
+  }
+}

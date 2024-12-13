@@ -1,0 +1,272 @@
+$powermenu_border_color: rgba($x8, 0.3);
+
+window.powermenu {
+  background: transparent;
+}
+
+.powermenu {
+  .container {
+    padding-left: dpi(40px);
+  }
+
+  .greeting {
+    .headline {
+      font-family: "Battle Andy";
+      font-size: dpi(80pt);
+      color: $x6;
+      // Adjust for the huge capitalized letter in the beginning
+      margin-right: dpi(27px);
+    }
+    .subtitle {
+      margin-top: dpi(-34px);
+      margin-right: dpi(-54px);
+      font-family: $font_sans;
+      font-size: dpi(17pt);
+      color: $x15;
+    }
+
+    .little-heart {
+      font-family: "icomoon";
+      font-size: dpi(10pt);
+      color: $x1;
+      margin-left: dpi(3px);
+      margin-bottom: dpi(8px);
+    }
+  }
+
+  .palette {
+    padding-left: dpi(4px) * 4;
+    .border {
+      border: dpi(4px) solid $xbg;
+      border-radius: $round_max;
+      margin-left: dpi(-15px);
+      &:nth-child(1) .color { background: $x1; }
+      &:nth-child(2) .color { background: $x3; }
+      &:nth-child(3) .color { background: $x2; }
+      &:nth-child(4) .color { background: $x6; }
+      &:nth-child(5) .color { background: $x4; }
+      &:nth-child(6) .color { background: $x5; }
+
+      .color {
+        font-size: dpi(34pt);
+        font-family: monospace;
+        font-weight: bold;
+        min-height: dpi(29px);
+        min-width: dpi(29px);
+        border-radius: $round_max;
+      }
+    }
+
+    .start {
+      min-width: dpi(40px);
+      min-height: dpi(6px);
+      border-radius: $round_max;
+      background: $x1;
+      margin-right: dpi(10px);
+      margin-left: dpi(-10px);
+    }
+
+    .end {
+      min-width: dpi(40px);
+      min-height: dpi(6px);
+      border-radius: $round_max;
+      background: $x5;
+    }
+  }
+
+  .quote {
+    font-style: italic;
+    font-family: $font_sans;
+    font-size: dpi(14pt);
+    .marks {
+      font-size: dpi(27pt);
+      color: $x11;
+    }
+
+    .author {
+      color: $x15;
+    }
+  }
+
+  .terminal {
+    font-weight: bold;
+    color: $x10;
+    font-family: "monospace";
+    font-size: dpi(17pt);
+    .bunny {
+      color: $xfg;
+    }
+    .blink {
+      animation-name: blink;
+      animation-duration: 1s;
+      animation-timing-function: steps(2);
+      animation-iteration-count: infinite;
+    }
+
+    &.flicker {
+      // 10 steps since we are using increments of 10% in the keyframes
+      animation: flicker 1.5s steps(10);
+      animation-delay: 0.3s;
+    }
+  }
+
+  .left-side {
+    // Bottom padding: to balance the space left at the top by the Battle Andy font
+    // Right padding: to extend the borders of left-side so that they meet with right-side
+    padding: dpi(27px) dpi(74px) dpi(54px) dpi(47px);
+    // To balance the right padding
+    margin-left: dpi(-27px);
+    border: dpi(6px) solid $powermenu_border_color;
+    border-right: none;
+    border-radius: dpi(27px) 0 0 dpi(27px);
+  }
+
+  .right-side {
+    margin-left: dpi(-27px);
+    border-radius: dpi(27px);
+    background: $xbg;
+    border: dpi(6px) dashed $powermenu_border_color;
+    padding: 0 dpi(47px);
+  }
+
+  .button-container {
+    .button {
+      font-family: icomoon;
+      min-width: dpi(54px);
+      min-height: dpi(54px);
+      font-size: dpi(30pt);
+      color: rgba($x8, 0.6);
+
+      &.poweroff {
+        transition: color 0.5s 0.2s;
+      }
+      &.reboot {
+        transition: color 0.5s 0.4s;
+      }
+      &.exit {
+        transition: color 0.5s 0.6s;
+      }
+      &.hibernate {
+        transition: color 0.5s 0.8s;
+      }
+      &.suspend {
+        transition: color 0.5s 1.0s;
+      }
+      &.lock {
+        transition: color 0.5s 1.2s;
+      }
+
+      &.nothing-selected {
+        opacity: 1;
+      }
+      &.this-selected {
+        opacity: 1;
+      }
+      &.not-selected {
+        opacity: 0.3;
+        border-color: transparent;
+      }
+
+    }
+
+    &.revealed {
+      .button {
+        &.poweroff {
+          transition: color 0.5s 0.1s, opacity 0.4s;
+          color: $x1;
+        }
+        &.reboot {
+          transition: color 0.5s 0.2s, opacity 0.4s;
+          color: $x2;
+        }
+        &.exit {
+          transition: color 0.5s 0.3s, opacity 0.4s;
+          color: $x4;
+        }
+        &.hibernate {
+          transition: color 0.5s 0.4s, opacity 0.4s;
+          color: $x6;
+        }
+        &.suspend {
+          transition: color 0.5s 0.5s, opacity 0.4s;
+          color: $x3;
+        }
+        &.lock {
+          transition: color 0.5s 0.6s, opacity 0.4s;
+          color: $x5;
+        }
+      }
+    }
+  }
+
+  .lock-container {
+    font-size: dpi(47pt);
+    color: $xfg;
+
+    .symbol {
+      padding: dpi(12px);
+    }
+
+    .symbol {
+      transition: border-color 0.3s;
+      border: dpi(6px) solid $powermenu_border_color;
+      border-radius: $round_max;
+    }
+
+    // Customization based on last action
+    &.clear .symbol {
+      border-color: $x0;
+    }
+    &.insert .symbol {
+      &.style1 {
+        border-color: $x1;
+      }
+      &.style2 {
+        border-color: $x3;
+      }
+      &.style3 {
+        border-color: $x2;
+      }
+      &.style4 {
+        border-color: $x6;
+      }
+      &.style5 {
+        border-color: $x4;
+      }
+      &.style6 {
+        border-color: $x5;
+      }
+    }
+    &.delete .symbol {
+      &.style1,
+      &.style3,
+      &.style5 {
+        border-color: $x8;
+      }
+
+      &.style2,
+      &.style4,
+      &.style6 {
+        border-color: $powermenu_border_color;
+      }
+    }
+  }
+}
+
+.powermenu,
+.powermenu-overlay {
+  background: rgba($xbg, 0.7);
+
+  &.locked {
+    background: $xbg;
+    animation-name: diagonal-fade;
+    animation-duration: 1.2s;
+    // A more violent "ease-in-out" timing function
+    // fast -> halt -> very fast
+    animation-timing-function: cubic-bezier(0.3,1,1,0);
+
+    .terminal {
+      color: $x1;
+    }
+  }
+}

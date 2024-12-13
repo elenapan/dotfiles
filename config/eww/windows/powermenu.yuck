@@ -1,0 +1,241 @@
+(defwindow powermenu [is-secondary]
+  :monitor 0
+  :geometry (geometry
+              :x 0
+              :y 0
+              :width "100%"
+              ; Note: We want the overlay to cover the whole screen.
+              ; Even when using x=0, y=0, width=100%, height=100%, the overlay
+              ; seems to respect any exclusive window with the same anchor
+              ; location which causes it to not cover that window.
+              ; Here we use a "left" anchor since we currently do not have any
+              ; exclusive widgets anchored to the left side of the screen.
+              ; While this does not fix the issue on its own (eww bug?), it
+              ; allows us to set a bigger height (e.g. 200%) to achieve this
+              ; without deforming the widget.
+              :height "200%"
+              :anchor "left center")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (revealer
+    :transition "crossfade"
+    :reveal "${powermenu-visible}"
+    :duration "300ms"
+    (eventbox
+      :halign "fill"
+      :valign "fill"
+      ; We want it to hide when unlocked, only when clicking outside the buttons
+      :onclick "${!powermenu-button-hovered} && ${!screen-locked} && ${eww-scripts}/manage hide powermenu &"
+      :onmiddleclick "${!screen-locked} && ${eww-scripts}/manage hide powermenu &"
+      :class "powermenu ${screen-locked ? "locked" : ""}"
+
+      (box :space-evenly false
+        :halign "center"
+        :valign "center"
+        :class "container"
+        :visible "${!is-secondary}"
+        (box
+          :class "left-side"
+          :orientation "vertical"
+          :space-evenly false
+          :halign "fill"
+          :hexpand true
+          :valign "center"
+          :spacing 40
+          (box
+            :orientation "vertical"
+            :space-evenly false
+            :class "greeting"
+            (box
+              :valign "start"
+              :class "headline"
+              :space-evenly false
+              "Hello"
+              (box :class "little-heart" ""))
+            (box :valign "start" :class "subtitle" "(again)"))
+          (box :class "quote"
+               :orientation "vertical"
+               :space-evenly false
+               :valign "center"
+               :spacing 2
+            (box :class "marks" "❝")
+            (box :halign "center"
+              :orientation "vertical"
+              :space-evenly false
+              :spacing "${6 * get_env("EWW_SCALE")}"
+              (box :halign "start" "“bnuuy is life”")
+              (box :class "author" :halign "end" "Karl Marx")))
+          (box :class "palette"
+               :space-evenly false
+               :halign "center"
+               :valign "start"
+            ; We use an external box to draw the border instead of CSS because
+            ; otherwise a 1px outline of the inner color is visible outside
+            ; the CSS border :(
+            (box :valign "center" :class "border"
+              (box :class "color"))
+            (box :valign "center" :class "border"
+              (box :class "color"))
+            (box :valign "center" :class "border"
+              (box :class "color"))
+            (box :valign "center" :class "border"
+              (box :class "color"))
+            (box :valign "center" :class "border"
+              (box :class "color"))
+            (box :valign "center" :class "border"
+              (box :class "color"))
+            ))
+        (box
+          :class "right-side"
+          :valign "fill"
+          (box
+            :orientation "vertical"
+            :valign "center"
+            :space-evenly false
+            :spacing 30
+            (box :class "terminal"
+                 :valign "end"
+                 :vexpand true
+                 :halign "center"
+                 :space-evenly false
+              (eventbox
+                :onhover "eww update bunny-head=\"${bunny-head-json.headpat}\""
+                :onhoverlost "eww update bunny-head=\"${bunny-head-json.default}\""
+                (box
+                 :halign "center"
+                 :class "bunny"
+                 :orientation "vertical"
+                 :space-evenly false
+                 :spacing 5
+                 "(\\x5C /)  "
+                  "${bunny-head}"
+                 (label :markup "c(<span foreground=\"${colors[1]}\">\"</span>)(<span foreground=\"${colors[1]}\">\"</span>)")
+                 )))
+            (overlay
+              ; We need a constant height here because the overlay children have
+              ; different heights
+              :height "${114 * get_env("EWW_SCALE")}"
+              (box :class "button-container ${powermenu-visible ? "revealed" : ""}"
+                   :visible "${!screen-locked}"
+                   :orientation "vertical"
+                   :hexpand true
+                   :vexpand true
+                   :halign "center"
+                   :valign "start"
+                   :space-evenly false
+                (box
+                  (powermenu-button
+                    :extra-class "poweroff"
+                    :text "poweroff"
+                    :symbol ""
+                    :onclick "${eww-scripts}/do-powermenu-action poweroff &"
+                    )
+                  (powermenu-button
+                    :extra-class "reboot"
+                    :text "reboot"
+                    :symbol ""
+                    :onclick "${eww-scripts}/do-powermenu-action reboot &"
+                    )
+                  (powermenu-button
+                    :extra-class "exit"
+                    :text "exit"
+                    :symbol ""
+                    :onclick "${eww-scripts}/do-powermenu-action exit &"
+                    )
+                  )
+
+                (box
+                  (powermenu-button
+                    :extra-class "hibernate"
+                    :text "hibernate"
+                    :symbol ""
+                    :onclick "${eww-scripts}/do-powermenu-action hibernate &"
+                    )
+                  (powermenu-button
+                    :extra-class "suspend"
+                    :text "suspend"
+                    :symbol ""
+                    :onclick "${eww-scripts}/do-powermenu-action suspend &"
+                    )
+                  (powermenu-button
+                    :extra-class "lock"
+                    :text "lock"
+                    :symbol ""
+                    :onclick "${eww-scripts}/do-powermenu-action lock &"
+                    )
+                  )
+
+                )
+              (box :class "lock-container ${screen-lock-input-last-action}"
+                   :visible "${screen-locked}"
+                (box :halign "center" :valign "center" :class "symbol style${((strlength(screen-lock-input) - 1) % 6) + 1}" "${screen-lock-auth-failed ? "" : ""}")
+                )
+              )
+
+            (box :class "terminal flicker"
+                 :visible "${screen-locked}"
+                 :valign "start"
+                 :vexpand true
+                 :halign "center"
+                 :orientation "vertical"
+                 :space-evenly false
+                 :spacing 5
+              (box :class "flavor" "[ L O C K D O W N ]")
+              (box :halign "start"
+                   :space-evenly false
+                "> "
+                "${screen-lock-input-masked}"
+                (box :class "blink" "_")
+                ))
+            
+            (box :class "terminal flicker"
+                 :visible "${!screen-locked}"
+                 :valign "start"
+                 :vexpand true
+                 :halign "center"
+                 :orientation "vertical"
+                 :space-evenly false
+                 :spacing 5
+              (box :class "flavor" "/ A P H E L I O N /")
+              (box :halign "start"
+                   :space-evenly false
+                "$ "
+                "${powermenu-button-selected}"
+                (box :class "blink" "_")))
+            )
+          )
+
+        ))))
+
+(defwidget powermenu-button [extra-class text symbol onclick]
+  (eventbox
+    ; Without the delay some events are frequently overwritten by the
+    ; onhoverlost command. We want onhoverlost to always finish before onhover.
+    ; The added delay is *not* a perfect solution (it sometimes causes a hovered
+    ; item to be active after mouse leaving) but it's the price we have to pay
+    ; for managing hover state with eww variables.
+    :onhover "(sleep 0.02 && eww update powermenu-button-hovered=true powermenu-button-selected=\"${extra-class}\") &"
+    :onhoverlost "eww update powermenu-button-hovered=false powermenu-button-selected= &"
+    :onclick "${onclick}"
+    :cursor "hand2"
+    (box
+      :vexpand false
+      :halign "center"
+      :hexpand false
+      :valign "start"
+      :class "button ${extra-class} ${(powermenu-button-selected == extra-class) ? "this-selected" : (powermenu-button-selected == "") ? "nothing-selected" : "not-selected"}"
+      (box :class "symbol" "${symbol}"))
+    )
+  )
+
+(defvar bunny-head-json "{ \"default\": \"( . .) \", \"headpat\": \"( ^ ^) \" }")
+(defvar bunny-head "( . .) ")
+(defvar powermenu-visible false)
+(defvar powermenu-button-hovered false)
+(defvar powermenu-button-selected "")
+(defvar screen-lock-input "")
+(defvar screen-lock-input-masked "")
+; "insert" or "delete" or "clear"
+(defvar screen-lock-input-last-action "clear")
+(defvar screen-lock-auth-failed false)

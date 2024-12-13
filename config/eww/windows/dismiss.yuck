@@ -1,0 +1,26 @@
+; Clickable invisible widget that takes up the whole screen and can be opened
+; along with toggleable widgets to achieve "close when clicking outside the
+; widget" functionality.
+(defwindow dismiss-overlay [widget-to-dismiss]
+  :monitor 0
+  :geometry (geometry
+              :x 0
+              :y 0
+              :width "100%"
+              :height "100%"
+              ; Using a "bottom" anchor on a fullscreen overlay makes it
+              ; so that the overlay does not cover any bottom-anchored
+              ; exclusive widgets (eww bug or feature?).
+              ; Our bottom bar is such a widget and we still want it to
+              ; be clickable while other widgets that use the
+              ; dismiss-overlay are open, so this is very convenient.
+              ; Note: When a fullscreen window is in focus, which means
+              ; no exclusive widgets are visible, the dismiss-overlay
+              ; unfortunately still respects a "phantom" bottom bar.
+              :anchor "bottom center")
+  :stacking "overlay"
+  :exclusive false
+  (eventbox
+    :halign "fill"
+    :valign "fill"
+    :onclick "pkill rofi || ${eww-scripts}/manage hide ${widget-to-dismiss} &"))

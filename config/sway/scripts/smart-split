@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -f
+swaymsg -t get_tree | jq -r 'recurse(
+    .focus[0] as $target
+    | (.nodes + .floating_nodes)[]
+    | select(.id == $target)
+    ) | "\(.rect.width) \(.rect.height) \(.deco_rect.height)"' | {
+
+    while read -r line; do
+        # shellcheck disable=2086
+        set -- $line
+        w=$1 h=$2 d=$3
+    done
+    : "${w?No container found}"
+    [ "$w" -ge "$((h+d))" ] && direction=horizontal || direction=vertical
+    swaymsg "split $direction"
+}

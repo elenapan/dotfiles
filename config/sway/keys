@@ -1,0 +1,239 @@
+# Main mod key
+set $mod Mod4
+
+# Floating modifier
+# - Drag floating windows by holding down $mod and left mouse button.
+# - Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right mouse
+# button for dragging.
+floating_modifier $mod normal
+
+# >> Global keybinds
+bindsym --to-code {
+    $mod+Return exec $term
+
+    # Reload sway only
+    $mod+Shift+r reload
+    # Reload sway and eww
+    # $mod+Shift+r reload, exec eww reload
+
+    # Force eww daemons to update their respective variables
+    $mod+Control+Shift+r exec '$eww/daemons-force-update'
+
+    # >> Workspaces
+    # Focus workspace
+    $mod+1 workspace $ws1; $post_workspace_switch
+    $mod+2 workspace $ws2; $post_workspace_switch
+    $mod+3 workspace $ws3; $post_workspace_switch
+    $mod+4 workspace $ws4; $post_workspace_switch
+    $mod+5 workspace $ws5; $post_workspace_switch
+    $mod+6 workspace $ws6; $post_workspace_switch
+    $mod+7 workspace $ws7; $post_workspace_switch
+    $mod+8 workspace $ws8; $post_workspace_switch
+    $mod+9 workspace $ws9; $post_workspace_switch
+    $mod+0 workspace $ws10; $post_workspace_switch
+
+    # Move focused container to workspace
+    $mod+Shift+1 move container to workspace $ws1
+    $mod+Shift+2 move container to workspace $ws2
+    $mod+Shift+3 move container to workspace $ws3
+    $mod+Shift+4 move container to workspace $ws4
+    $mod+Shift+5 move container to workspace $ws5
+    $mod+Shift+6 move container to workspace $ws6
+    $mod+Shift+7 move container to workspace $ws7
+    $mod+Shift+8 move container to workspace $ws8
+    $mod+Shift+9 move container to workspace $ws9
+    $mod+Shift+0 move container to workspace $ws10
+
+    # >> Directional focus
+    $mod+$left focus left
+    $mod+$down focus down
+    $mod+$up focus up
+    $mod+$right focus right
+
+    $mod+Left focus left
+    $mod+Down focus down
+    $mod+Up focus up
+    $mod+Right focus right
+
+    # Smart focus
+    # - Cycle focus right if current layout is tabbed / splith
+    # - Cycle focus down if current layout is stacked / splitv
+    # - change focus from floating to tiling layer otherwise
+    $mod+Tab exec $sway/smart-focus-change next
+    # Reverse direction with shift
+    $mod+Shift+Tab exec $sway/smart-focus-change prev
+
+    # Move the focused window to edge
+    $mod+Control+Shift+$left exec $sway/move-to-edge left
+    $mod+Control+Shift+$down exec $sway/move-to-edge down
+    $mod+Control+Shift+$up exec $sway/move-to-edge up
+    $mod+Control+Shift+$right exec $sway/move-to-edge right
+    $mod+Control+Shift+Left exec $sway/move-to-edge left
+    $mod+Control+Shift+Down exec $sway/move-to-edge down
+    $mod+Control+Shift+Up exec $sway/move-to-edge up
+    $mod+Control+Shift+Right exec $sway/move-to-edge right
+
+    # Move by pixels
+    $mod+Shift+$left move left $move_px
+    $mod+Shift+$down move down $move_px
+    $mod+Shift+$up move up $move_px
+    $mod+Shift+$right move right $move_px
+    $mod+Shift+Left move left $move_px
+    $mod+Shift+Down move down $move_px
+    $mod+Shift+Up move up $move_px
+    $mod+Shift+Right move right $move_px
+
+    # Resize with mod+control+direction
+    $mod+Control+$left resize shrink width "$resize_px"px
+    $mod+Control+$down resize grow height "$resize_px"px
+    $mod+Control+$up resize shrink height "$resize_px"px
+    $mod+Control+$right resize grow width "$resize_px"px
+    $mod+Control+Left resize shrink width "$resize_px"px
+    $mod+Control+Down resize grow height "$resize_px"px
+    $mod+Control+Up resize shrink height "$resize_px"px
+    $mod+Control+Right resize grow width "$resize_px"px
+
+    # >> Smart split
+    # Will either splith or splitv depending on which container side is largest.
+    $mod+x exec "$sway/smart-split", $post_split
+    # Toggle splitv/splith with the same key
+    $mod+s layout toggle split, $post_split
+    # Toggle tabbed/stacked with the same key
+    $mod+w layout toggle tabbed stacking, $post_split
+
+    # Make the current focus fullscreen
+    $mod+f fullscreen
+    # MMO mouse - F18 in ckb-next
+    XF86Launch9 fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    $mod+Shift+space floating toggle
+    # Swap focus between the tiling area and the floating area
+    $mod+space focus mode_toggle
+
+    # Scratchpad
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+    # Move the currently focused window to the scratchpad
+    $mod+Shift+minus move scratchpad
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    $mod+minus scratchpad show
+
+    # Move focus to the parent/child container
+    $mod+z focus parent
+    $mod+shift+z focus child
+
+    # Close
+    $mod+Shift+q kill
+    Mod1+F4 kill
+
+    # G for gaming
+    $mod+g exec smart-game-menu
+
+    # G for glue, glue is sticky :)
+    $mod+Shift+g sticky toggle
+
+    # Smart app activation - "run or focus"
+    $mod+e exec $sway/window-do "[app_id=^editor$] focus" $cmd_editor
+    $mod+p exec $sway/window-do "[app_id=^btop$] focus" "$term --class btop --title Monitor -e btop"
+    $mod+o exec $sway/window-do '[app_id=^org$] focus' "org"
+
+    # Scratchpads
+    $mod+i exec $sway/scratchpad-toggle "[app_id=^scratchpad_input$]" "$term --class scratchpad_input -e nvim /tmp/scratchpad.md"
+    $mod+q exec $sway/scratchpad-toggle "[app_id=^scratchpad$]" "$term --class scratchpad -e sway-scratchpad"
+
+    # Eww keybinds
+    # $mod+grave exec "$eww/manage show sidebar"
+    $mod+grave exec "$eww/toggle-sidebar-with-page 0"
+    $mod+t exec "$eww/toggle-sidebar-with-page 1"
+    $mod+m exec "$eww/toggle-sidebar-with-page 2"
+    $mod+Shift+v exec "$eww/manage toggle microphone-indicator"
+    $mod+Shift+x exec "$eww/manage show powermenu"
+
+    # Rofi
+    $mod+d exec $menu
+    $mod+y exec rofi_mpvtube
+
+    # Notifications
+    $mod+n exec "dunstctl close-all"
+    $mod+Shift+n exec "dunstctl close"
+    $mod+Control+n exec "dunstctl context"
+
+    # Microphone
+    $mod+v exec $cmd_microphone_mute
+
+    # Screenshots
+    Print exec "grimshot --notify save output"
+    Shift+Print exec "grimshot --notify save window"
+    Control+Print exec "grimshot --notify copy output"
+    $mod+Control+Print exec "grimshot --notify copy window"
+    # Open last screenshot with image viewer
+    $mod+Print exec "cd $screenshots_dir && iv $(ls -t)"
+    # Open last screenshot with Gimp
+    $mod+Shift+Print exec "cd $screenshots_dir && gimp $(ls -t | head -n1)"
+    # Alternative screenshot keybinds
+    $mod+Shift+c exec "grimshot --notify save window"
+    $mod+Control+c exec "grimshot --notify copy window"
+    # 60% keeb screenshots
+    $mod+backslash exec "grimshot --notify save output"
+    $mod+Shift+backslash exec "cd $screenshots_dir && iv $(ls -t)"
+    $mod+Control+backslash exec "cd $screenshots_dir && gimp $(ls -t | head -n1)"
+
+    # Binding Modes
+    $mod+r mode "resize"
+    $mod+b mode "brightness"
+    $mod+a mode "apps"
+    $mod+Shift+s mode "swap"
+
+    # Focus any urgent client. If no such client exists go back to last workspace
+    $mod+u exec "swaymsg [urgent='first'] focus || swaymsg workspace back_and_forth"
+
+    # Swap container with yank (copy) and paste
+    # Source: https://www.reddit.com/r/swaywm/comments/mmhvyf/swap_mode/
+    $mod+Shift+y [con_mark="_swapy"] unmark "_swapy"; mark --add "_swapy"
+    $mod+Shift+p swap container with mark "_swapy"; [con_mark="_swapy"] focus; unmark "_swapy"
+
+    # Workaround for BUG: https://github.com/swaywm/sway/issues/7228
+    $mod+Control+s exec "swaymsg output eDP-1 disable; swaymsg output eDP-1 enable"
+}
+
+# >> Lockscreen keybinds
+# TODO For now, these work when locking with swaylock not with eww lockscreen
+bindsym --locked {
+    # Volume
+    Mod1+F1 exec $cmd_volume_mute
+    Mod1+F2 exec $cmd_volume_lower
+    Mod1+F3 exec $cmd_volume_raise
+
+    XF86AudioLowerVolume exec $cmd_volume_lower
+    XF86AudioRaiseVolume exec $cmd_volume_raise
+    XF86AudioMute exec $cmd_volume_mute
+
+    XF86AudioMicMute exec $cmd_microphone_mute
+
+    XF86MonBrightnessDown exec $cmd_brightness_lower
+    XF86MonBrightnessUp exec $cmd_brightness_raise
+}
+
+# >> Mousebinds
+# Middle button - close
+bindsym --border button2 kill
+bindsym --whole-window $mod+button2 kill
+# BUG(?): `--release` does not work for mouse binds
+# bindsym --release --border button2 kill
+# bindsym --release --whole-window $mod+button2 kill
+
+# Side button - toggle floating
+bindsym --border button9 floating toggle
+bindsym --whole-window $mod+button9 floating toggle
+
+# Scroll - cycle focus
+bindsym --border button4 $sway/smart-focus-change prev
+bindsym --border button5 $sway/smart-focus-change next
+bindsym --whole-window $mod+button4 $sway/smart-focus-change prev
+bindsym --whole-window $mod+button5 $sway/smart-focus-change next
+
+# vim:set ft=conf:

@@ -1,0 +1,23 @@
+window.split-indicator {
+  background: transparent;
+}
+box.split-indicator {
+  background: $xbg;
+  border: dpi(6px) dashed rgba($x8, 0.3);
+  color: $x5;
+  border-radius: dpi(27px);
+  font-size: dpi(60pt);
+  font-weight: bold;
+  transition: color 0.3s;
+  animation: rainbow-fg 12s infinite;
+  font-family: "Material Icons";
+
+  min-width: dpi(134px);
+  min-height: dpi(134px);
+
+  .symbol {
+    // Manually fix icon alignment
+    margin-top: dpi(4px);
+    margin-right: dpi(3px);
+  }
+}

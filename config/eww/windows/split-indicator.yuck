@@ -1,0 +1,27 @@
+(defwindow split-indicator
+  :monitor 0
+  :geometry (geometry :x 0
+                      :y 0
+                      :anchor "center")
+  :stacking "fg"
+  :exclusive false
+  (revealer
+    :transition "crossfade"
+    :reveal "${split-indicator-visible}"
+    :duration "300ms"
+    (eventbox
+      :onclick "${eww-scripts}/manage hide split-indicator &"
+      :onmiddleclick "${eww-scripts}/manage hide split-indicator &"
+      (box
+        :halign "fill"
+        :valign "fill"
+        :orientation "vertical"
+        :space-evenly true
+        :class "split-indicator ${split-direction}"
+        (box :class "symbol" "${split-direction-icons-json[split-direction]}"))
+      )
+    ))
+
+(defvar split-indicator-visible false)
+(defvar split-direction-icons-json "{ \"splith\": \"\", \"splitv\": \"\", \"tabbed\": \"\", \"stacked\": \"\" }")
+(defvar split-direction "splith") ; updated by sway-split-indicator.py

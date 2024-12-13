@@ -1,0 +1,200 @@
+(defwindow bottom-bar
+  :monitor 0
+  :geometry (geometry :x 0
+                      :y 0
+                      :width "100%"
+                      :anchor "bottom center")
+  :stacking "bottom"
+  :exclusive true
+  (bottom-bar))
+
+(defwidget bottom-bar []
+  (box :orientation "horizontal"
+       :class "bottom-bar"
+       :halign "fill"
+       :hexpand true
+       :space-evenly true
+    (centerbox
+      (box
+        :space-evenly false
+        :class "left-buttons"
+        :halign "start"
+        :hexpand true
+        :space-evenly true
+        :width "${300 * get_env("EWW_SCALE")}"
+        (eventbox
+          :halign "baseline"
+          :class "button glance"
+          :cursor "hand2"
+          :onclick "${eww-scripts}/toggle-sidebar-with-page 0 &"
+          :onrightclick "swaymsg 'exec $menu' &"
+          (box
+            :space-evenly false
+            :halign "center"
+            :valign "center"
+            (box :class "symbol" "")
+            (box :class "value clock"
+              (box :class "text"
+              "${date-json.hour}${date-json.min}"))
+            ))
+        (eventbox
+          :halign "baseline"
+          :class "button tasks"
+          :cursor "hand2"
+          :onclick "${eww-scripts}/toggle-sidebar-with-page 1 &"
+          (box
+            :space-evenly false
+            :halign "center"
+            :valign "center"
+            (box :class "symbol" "")
+            (box :class "value date"
+              (box :class "text"
+              "${date-json.month_day_number}"))
+            )
+          )
+        (eventbox
+          :halign "baseline"
+          :class "button media ${media-json.status}"
+          :cursor "hand2"
+          :onclick "${eww-scripts}/toggle-sidebar-with-page 2 &"
+          :onscroll "[ '{}' = 'up' ] && swaymsg -q 'exec $cmd_volume_raise' || swaymsg -q 'exec $cmd_volume_lower'"
+          :onmiddleclick "swaymsg -q 'exec $cmd_volume_mute'"
+          (box
+            :space-evenly false
+            :halign "center"
+            :valign "center"
+            (box :class "symbol" "")
+            (box :class "volume ${volume-muted}"
+              (overlay
+                (circular-progress
+                  :class "backdrop"
+                  :thickness "${5 * get_env("EWW_SCALE")}"
+                  :value 100)
+                (circular-progress
+                  :thickness "${5 * get_env("EWW_SCALE")}"
+                  :value "${volume}"
+                  :start-at 75
+                  :clockwise false)
+                )
+              )
+            )
+          ))
+      (box
+      :class "dock"
+      :halign "center"
+      :valign "end"
+      :vexpand false
+      :hexpand false
+      :space-evenly false
+      (for dock-item in dock-items-json
+        (eventbox
+          :cursor "hand2"
+          :onclick "${eww-scripts}/do-dock-action activate '${dock-item}' &"
+          :onmiddleclick "${eww-scripts}/do-dock-action close '${dock-item}' &"
+          (box :class "dock-item ${dock-item.state}"
+               :style "${(dock-item.state == "empty") ? "" : "color: ${colors[dock-item.color]}"}"
+            (box
+              :valign "end"
+              :vexpand false
+              :orientation "vertical"
+              :space-evenly false
+              :spacing "${6 * get_env("EWW_SCALE")}"
+              "${dock-item.symbol}"
+              (box
+                :halign "center"
+                :valign "end"
+                :vexpand false
+                :hexpand true
+                :halign "center"
+                :class "focus-indicator"
+                :style "background: ${colors[dock-item.color]}"
+                )
+              )
+            )
+          )
+        ))
+
+      (box
+        :class "right-buttons"
+        :halign "end"
+        :hexpand true
+        :space-evenly true
+        :width "${300 * get_env("EWW_SCALE")}"
+      (eventbox
+        :halign "baseline"
+        :class "button network"
+        :cursor "hand2"
+        :onclick "${eww-scripts}/manage toggle networks &"
+        (box
+          :space-evenly false
+          :halign "center"
+          :valign "center"
+          (box :class "symbol" "${vpn-status == "on" ? "" : ""}")
+          (box :class "signal-strength"
+               :spacing 4
+               :valign "center"
+            (signal-strength-part :min 1)
+            (signal-strength-part :min 2)
+            (signal-strength-part :min 3)
+            (signal-strength-part :min 4)
+            )
+          )
+        )
+      (eventbox
+        :halign "baseline"
+        :class "button alarms"
+        :cursor "hand2"
+        :onclick "${eww-scripts}/manage toggle alarms &"
+        (box
+          :space-evenly false
+          :halign "center"
+          :valign "center"
+          (box :class "symbol" "")
+          (box :class "value alarms-number"
+            (box :class "text"
+              :visible "${arraylength(alarms-json) > 0}"
+              "${arraylength(alarms-json)}")
+            (transform
+              :transform-origin-x "50%"
+              :transform-origin-y "50%"
+              :translate-y "-1px"
+              :rotate 38
+              :visible "${arraylength(alarms-json) == 0}"
+              (box :valign "center" :class "line")
+              )
+            )
+          )
+        )
+      (eventbox
+        :halign "baseline"
+        :class "button logout"
+        :cursor "hand2"
+        :onclick "${eww-scripts}/manage show powermenu"
+        (box
+          :space-evenly false
+          :halign "center"
+          :valign "center"
+          (box :class "symbol" "${charger ? "" : ""}")
+          (box :class "battery"
+               :orientation "vertical"
+               :spacing 4
+            (battery-progress-bar-part :min 66 :half 83)
+            (battery-progress-bar-part :min 33 :half 49)
+            (battery-progress-bar-part :min 0 :half 16))
+          )
+        ))
+      )
+    ))
+
+(defwidget battery-progress-bar-part [min half]
+  (box
+    :class "battery-progress-bar-part ${(round(EWW_BATTERY.total_avg, 0) > "${min}") ? "${(round(EWW_BATTERY.total_avg, 0) > "${half}") ? "full" : "half"}" : ""}"
+    ))
+
+(defwidget signal-strength-part [min]
+  (box
+    :valign "center"
+    :class "signal-strength-part ${(arraylength(networks-json) > 0 && networks-json[0].selected == true) ? (networks-json[0].signal_strength >= "${min}" ? "active" : "") : "disconnected"}"
+    ))
+
+(defvar dock-items-json "[]") ; Updated by sway-dock.py

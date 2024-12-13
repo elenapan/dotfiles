@@ -1,0 +1,63 @@
+set {
+    # Vi-keys
+    $left h
+    $down j
+    $up k
+    $right l
+
+    # Sway scripts directory
+    $sway ~/.config/sway/scripts
+    # Eww scripts directory
+    $eww ~/.config/eww/scripts
+
+    $screenshots_dir ~/pix/screenshots
+
+    # Terminal emulator
+    $term kitty
+
+    # Combined application launcher + window switcher
+    $menu $sway/rofi-sway
+
+    # Nightmode
+    $nightmode_temp 3700
+    $cmd_nightmode pkill gammastep; gammastep -O $nightmode_temp
+    $cmd_nightmode_toggle pgrep gammastep >/dev/null && pkill gammastep || gammastep -O $nightmode_temp
+
+    $cmd_volume_lower "pactl set-sink-volume @DEFAULT_SINK@ -2%"
+    $cmd_volume_raise "pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ +2%"
+    $cmd_volume_mute "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    $cmd_microphone_mute "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+
+    $cmd_brightness_lower "light -U 10"
+    $cmd_brightness_raise "light -A 10"
+
+    $cmd_editor "$term --class editor -e -- sh -c 'NVIM_LISTEN_ADDRESS=/tmp/nvim-listen-address-sway nvr -s'"
+
+    # Move and resize steps
+    $move_px 20
+    $resize_px 20
+
+    # Workspace names
+    $ws1 1
+    $ws2 2
+    $ws3 3
+    $ws4 4
+    $ws5 5
+    $ws6 6
+    $ws7 7
+    $ws8 8
+    $ws9 9
+    $ws10 10
+
+    # >> Misc
+    # Send tick to trigger a split indicator update.
+    # The $post_split command is added as a suffix to all split keybinds.
+    $post_split exec "swaymsg -t send_tick split"
+
+    # Switch to workspace (and focus any urgent clients in it, if they exist)
+    # The $post_workspace_switch command is added as a suffix to all workspace
+    # switching keybinds.
+    $post_workspace_switch [workspace="__focused__" urgent="first"] focus
+}
+
+# vim:set ft=conf:

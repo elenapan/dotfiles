@@ -1,0 +1,55 @@
+# >> Run with every reload
+exec_always {
+    # Xwayland app settings
+    xrdb ~/.Xdefaults
+}
+
+# >> Run once on login
+exec {
+    # Sway does not set DISPLAY/WAYLAND_DISPLAY in the systemd user environment
+    # See FS#63021
+    # Adapted from xorg's 50-systemd-user.sh, which achieves a similar goal.
+    # - systemd
+    # systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+    # - non-systemd
+    hash dbus-update-activation-environment 2>/dev/null && \
+         dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+    # Prevents GTK apps from hanging for 15-20 sec before launching
+    dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+
+    # TODO: Until the pipewire/wireplumber crash is fixed, use pulseaudio
+    pulseaudio
+
+    # Enable screensharing
+    # Gentoo
+    gentoo-pipewire-launcher
+    /usr/libexec/xdg-desktop-portal -r
+    /usr/libexec/xdg-desktop-portal-wlr -r
+
+    # Notifications
+    dunst
+
+    # kdeconnect
+    # - Gentoo
+    /usr/bin/kdeconnectd
+    # - Arch
+    # /usr/lib/kdeconnectd
+
+    # Eww stuff
+    $eww/init
+
+    # Other daemons
+    $sway/battery-notifications
+    $sway/xkb-layout-notifications
+    # Smart english layout
+    # Switch to english keyboard layout for some windows and restore the old
+    # layout afterwards. Configuration is in the script itself.
+    $sway/smart-english-layout
+    # Fix Awakened PoE Trade (somewhat)
+    # $sway/fix-awakened-poe-trade
+
+    $cmd_nightmode
+}
+
+# vim:set ft=conf:

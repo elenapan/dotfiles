@@ -1,0 +1,284 @@
+#!/usr/bin/env bash
+# This script:
+# - Changes the visibility of an eww widget, by also setting its state variable
+#   and accounting for a delay to allow the hiding animation to complete.
+#   Related: https://github.com/elkowar/eww/issues/196
+# - Manages pre-show, post-show, pre-hide and post-hide commands.
+# - Automatically enables or disables the respective sway binding mode when
+#   needed.
+# - Automatically opens the dismiss-overlay widget when needed which can be used
+#   to achieve "close when clicking outside the widget" functionality.
+# - Before showing the selected widget, it automatically hides all other widgets
+#   if needed.
+#
+# The script assumes that:
+# - The widget state variable is in the format ${widget_name}-visible
+#   (e.g. variable `sidebar-visible` refers to the visibility state of the
+#   `sidebar` widget)
+#   Value: true/false
+# - Windows that need overlays in secondary monitors declare an `is-secondary`
+#   argument.
+#
+# Usage:
+#    manage (show|hide|toggle|hide_all_except) widget_name
+
+eww="$HOME/.config/eww/scripts"
+
+# Fullscreen widgets will be shown in the primary monitor, and if needed,
+# overlays will be shown in the following secondary monitors.
+# You can find OUTPUT_NAME with `swaymsg -t get_outputs`
+secondary_monitors=(
+    "HEADLESS-3"
+    "HDMI-A-1"
+)
+
+# Overlay widgets are spawned in all monitors (using the `is-secondary` argument
+# to customize their appearance or functionality depending on monitor type)
+declare -A overlay_widgets
+overlay_widgets[powermenu]=true
+
+# How long to wait for the revealer animation to complete. This should be
+# match the revealer delay in the respective *.yuck files.
+declare -A revealer_delay
+revealer_delay[sidebar]=0.3
+revealer_delay[powermenu]=0.3
+revealer_delay[split-indicator]=0.3
+revealer_delay[mode-indicator]=0.3
+revealer_delay[microphone-indicator]=0.2
+revealer_delay[networks]=0.3
+revealer_delay[alarms]=0.3
+
+# Only one of these should be visible at a time
+mutually_exclusive_widgets=(
+    "sidebar"
+    "networks"
+    "alarms"
+    "powermenu"
+)
+
+# These widgets capture keys while they are visible (through sway binding
+# modes). The convention currently is that for every such widget there exists a
+# sway binding mode with the same name that starts with an underscore.
+declare -A mode_widget
+mode_widget[sidebar]="_sidebar"
+mode_widget[networks]="_networks"
+mode_widget[alarms]="_alarms"
+mode_widget[powermenu]="_powermenu"
+
+# Clicking out of these widgets should close them
+dismiss_when_clicking_outside_widgets=(
+    "sidebar"
+    "networks"
+    "alarms"
+)
+
+declare -A pre_show_cmds
+# shellcheck disable=2016
+pre_show_cmds[networks]='[ "$(eww get networks-ping-loading)" = "true" ] || eww update networks-ping-result=ping'
+
+declare -A post_show_cmds
+post_show_cmds[networks]="($eww/networks.sh update_networks &)"
+
+declare -A pre_hide_cmds
+
+declare -A post_hide_cmds
+post_hide_cmds[powermenu]='eww update powermenu-button-selected= screen-lock-input='
+post_hide_cmds[alarms]='eww update alarms-state=select-type'
+
+# ------------------------------------------------------------
+
+cmd="$1"
+widget_name="$2"
+active_windows="$(eww active-windows 2>/dev/null)"
+active_monitors="$(swaymsg -t get_outputs | jq -r '.[] | .name')"
+
+# Helpers
+_is_secondary_monitor() {
+    mon="$1"
+    grep -q "^${mon}$" <<< "$(printf '%s\n' "${secondary_monitors[@]}")"
+}
+
+_open() {
+    widget_name="$1"
+
+    if [[ -v overlay_widgets["$widget_name"] ]]; then
+        extra_args="--arg ${widget_name}:is-secondary=false"
+        for mon in ${active_monitors}; do
+            if _is_secondary_monitor "$mon"; then
+                extra_args+=" ${widget_name}:${widget_name}-${mon} --arg ${widget_name}-${mon}:screen=${mon} --arg ${widget_name}-${mon}:is-secondary=true"
+            fi
+        done
+    fi
+
+    # shellcheck disable=2086
+    eww open-many "$widget_name" $extra_args >/dev/null
+}
+
+_close() {
+    widget_name="$1"
+
+    if [[ -v overlay_widgets["$widget_name"] ]]; then
+        for mon in ${active_monitors}; do
+            if _is_secondary_monitor "$mon"; then
+                extra_args+=" ${widget_name}-${mon}"
+            fi
+        done
+    fi
+
+    # shellcheck disable=2086
+    eww close "$widget_name" $extra_args >/dev/null
+}
+
+_mode_enable() {
+    widget_name="$1"
+    if [[ -v mode_widget["$widget_name"] ]]; then
+        swaymsg -q mode "${mode_widget[$widget_name]}"
+    fi
+}
+_mode_disable() {
+    widget_name="$1"
+    if [[ -v mode_widget["$widget_name"] ]]; then
+        swaymsg -q mode default
+    fi
+}
+
+_pre_show() {
+    widget_name="$1"
+    if [[ -v pre_show_cmds["$widget_name"] ]]; then
+        sh <<< "${pre_show_cmds[$widget_name]}"
+    fi
+    if [[ ${mutually_exclusive_widgets[*]} =~ $widget_name ]]; then
+        hide_all_except "$widget_name"
+    fi
+}
+
+_post_show() {
+    widget_name="$1"
+    if [[ -v post_show_cmds["$widget_name"] ]]; then
+        sh <<< "${post_show_cmds[$widget_name]}"
+    fi
+    if [[ ${dismiss_when_clicking_outside_widgets[*]} =~ $widget_name ]]; then
+        secondary_overlays=''
+        # Show an overlay for all active secondary monitors
+        for mon in ${active_monitors}; do
+            if _is_secondary_monitor "$mon"; then
+                secondary_overlays+=" dismiss-overlay:dismiss-overlay-${mon} --arg dismiss-overlay-${mon}:screen=${mon}"
+            fi
+        done
+
+        # shellcheck disable=2086
+        eww open-many \
+            dismiss-overlay:dismiss-overlay \
+            $secondary_overlays \
+            --arg widget-to-dismiss="${widget_name}" \
+            >/dev/null;
+    fi
+}
+
+_pre_hide() {
+    widget_name="$1"
+    if [[ -v pre_hide_cmds["$widget_name"] ]]; then
+        sh <<< "${pre_hide_cmds[$widget_name]}"
+    fi
+    if [[ ${dismiss_when_clicking_outside_widgets[*]} =~ $widget_name ]]; then
+        secondary_overlays=''
+        # Hide the overlay for all active secondary monitors
+        for mon in ${active_monitors}; do
+            if _is_secondary_monitor "$mon"; then
+                secondary_overlays+=" dismiss-overlay-${mon}"
+            fi
+        done
+
+        # shellcheck disable=2086
+        eww close \
+            dismiss-overlay \
+            $secondary_overlays \
+            >/dev/null;
+    fi
+}
+
+_post_hide() {
+    widget_name="$1"
+    if [[ -v post_hide_cmds["$widget_name"] ]]; then
+        sh <<< "${post_hide_cmds[$widget_name]}"
+    fi
+}
+
+_show() {
+    widget_name="$1"
+    _pre_show "$widget_name"
+    _mode_enable "$widget_name"
+    _open "$widget_name"
+    eww update "${widget_name}"-visible=true
+    _post_show "$widget_name"
+}
+
+_hide() {
+    widget_name="$1"
+    delay="${revealer_delay[$widget_name]:-0}" # default delay is 0
+    _pre_hide "$widget_name"
+    _mode_disable "$widget_name"
+    eww update "${widget_name}"-visible=false
+    sleep "$delay"
+    _close "$widget_name"
+    _post_hide "$widget_name"
+}
+
+# Available commands
+toggle() {
+    widget_name="$1"
+    if [ "$(eww get "${widget_name}-visible")" = "false" ]; then
+        _show "$widget_name"
+    else
+        _hide "$widget_name"
+    fi
+}
+
+show() {
+    if [ "$(eww get "${widget_name}-visible")" = "false" ]; then
+        _show "$widget_name"
+    fi
+}
+
+hide() {
+    if [ "$(eww get "${widget_name}-visible")" = "true" ]; then
+        _hide "$widget_name"
+    fi
+}
+
+hide_all_except() {
+    widget_except="$1"
+
+    for widget in "${mutually_exclusive_widgets[@]}"; do
+        if [[ ! "$widget" == "$widget_except" ]] && grep -e "^${widget}:" >/dev/null <<< "$active_windows"; then
+            delay="${revealer_delay[$widget]:-0}" # default delay is 0
+            # We do not call the `hide` helper because we do not necessarily
+            # want to mess with the sway modes.
+            # The widget to be activated will set its own mode through the
+            # `show` function if needed.
+            # If:
+            # - Widget to be hidden uses a mode AND
+            # - Widget to stay active does not use any mode
+            # -> We need to disable the mode.
+            # We need to do this outside the subshell running in the background
+            # to avoid a race condition causing the mode that was enabled in
+            # `show` to be disabled right after.
+            if [[ -v mode_widget["$widget"] && ! -v mode_widget["$widget_except"] ]]; then
+                swaymsg -q mode default
+            fi
+
+            # Run in the background to avoid delaying the next command while
+            # waiting for the animation
+            (
+                _pre_hide "$widget"
+                eww update "${widget}-visible"=false
+                sleep "$delay"
+                _close "$widget"
+                _post_hide "$widget"
+            )&
+        fi
+    done
+}
+
+# Run selected cmd
+$cmd "$widget_name"

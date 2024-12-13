@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+# This script is useful if you want to find out the starting app_id / class /
+# name of a window to create rules. Run it in a terminal and open the app(s) you
+# are interested in.
+import i3ipc
+
+i3 = i3ipc.Connection()
+
+def on_new_window(i3, e):
+    app_id = e.container.app_id or '[NONE]'
+    window_class = e.container.window_class or '[NONE]'
+    name = e.container.name or '[NONE]'
+    print('--------------')
+    print('app_id', app_id)
+    print('window_class', window_class)
+    print('name', name)
+
+i3.on("window::new", on_new_window)
+i3.main()

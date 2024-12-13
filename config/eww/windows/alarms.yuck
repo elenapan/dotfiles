@@ -1,0 +1,217 @@
+(defwindow alarms
+  :monitor 0
+  :geometry (geometry :x 0
+                      ; Same as sway gaps (we cannot use EWW_SCALE here)
+                      :y 10
+                      ; Note: Setting width and height here causes certain
+                      ; animations to not display properly. Instead, we set
+                      ; width and height in *.scss or in the upppermost inner
+                      ; widget.
+                      :anchor "right bottom")
+  :stacking "overlay"
+  :exclusive false
+  (revealer
+    :transition "slideleft"
+    :reveal "${alarms-visible}"
+    :duration "300ms"
+    (eventbox
+      :onmiddleclick "${eww-scripts}/manage hide alarms"
+      :halign "fill"
+      :valign "fill"
+      (box :class "alarms"
+        (box :class "inner"
+             :halign "fill"
+             :hexpand true
+             :vexpand true
+             :valign "fill"
+             :space-evenly false
+          (box
+            :class "controls"
+            :orientation "vertical"
+            :halign "start"
+            :hexpand false
+            :valign "fill"
+            :vexpand true
+            :space-evenly false
+            (alarms-button-dual
+              :extra-class "top ${alarms-state == "select-time-standard" ? "disabled" : ""}"
+              :symbol ""
+              :onclick "${eww-scripts}/do-alarms-action alarm-quick &")
+            ; Expandable buttons
+            (box :class "button-row-expandable ${alarms-state =~ "select-time-*" ? "expanded" : ""}"
+                 :spacing "${6 * get_env("EWW_SCALE")}"
+              (eventbox
+                :cursor "${alarms-state =~ "select-time-*" ? "hand2" : "default"}"
+                :onclick "${eww-scripts}/do-alarms-action cancel &"
+                (box :class "button cancel"
+                  (box :class "symbol" "")))
+              (eventbox
+                :cursor "${alarms-state =~ "select-time-*" ? "hand2" : "default"}"
+                :onclick "${eww-scripts}/do-alarms-action confirm &"
+                (box :class "button confirm"
+                  (box :class "symbol" "")))
+              )
+
+            (alarms-button-dual
+              :extra-class "bottom ${alarms-state == "select-time-quick" ? "disabled" : ""}"
+              :symbol ""
+              :onclick "${eww-scripts}/do-alarms-action alarm-standard &"))
+          (box
+            :class "container"
+            :hexpand true
+            :halign "fill"
+            :vexpand false
+            :space-evenly false
+            (box :class "side-controls"
+                 :space-evenly false
+                 :valign "fill"
+                 :vexpand true
+              (box :class "nav"
+                   :visible "${alarms-state == "select-type"}"
+                   :valign "fill"
+                   :halign "center"
+                   :space-evenly true
+                   :orientation "vertical"
+                   :spacing "${4 * get_env("EWW_SCALE")}"
+                (alarms-button-time
+                  :extra-class "${(arraylength(alarms-json) <= 1 || alarms-index == 0) ? "disabled" : ""}"
+                  :onclick "${eww-scripts}/do-alarms-action previous"
+                  :text "")
+                (alarms-button-time
+                  :extra-class "delete ${(arraylength(alarms-json) == 0) ? "disabled" : ""}"
+                  :onclick "${eww-scripts}/do-alarms-action delete"
+                  :text "")
+                (alarms-button-time
+                  :extra-class "${(arraylength(alarms-json) <= 1 || (alarms-index == arraylength(alarms-json) - 1)) ? "disabled" : ""}"
+                  :onclick "${eww-scripts}/do-alarms-action next"
+                  :text ""))
+              (box :class "quick"
+                   :visible "${alarms-state == "select-time-quick"}"
+                   :valign "fill"
+                   :halign "center"
+                   :space-evenly true
+                   :orientation "vertical"
+                   :spacing "${6 * get_env("EWW_SCALE")}"
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh plus 1"
+                  :text "+1")
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh plus 5"
+                  :text "+5")
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh plus 10"
+                  :text "+10")
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh plus 60"
+                  :text "+60"))
+              (box :class "standard"
+                   :visible "${alarms-state == "select-time-standard"}"
+                   :valign "fill"
+                   :halign "center"
+                   :space-evenly true
+                   :orientation "vertical"
+                   :spacing "${6 * get_env("EWW_SCALE")}"
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh minus 60"
+                  :text "-h")
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh plus 60"
+                  :text "+h")
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh minus 1"
+                  :text "-m")
+                (alarms-button-time
+                  :extra-class "add-or-remove"
+                  :onclick "${eww-scripts}/alarm-set-minutes.sh plus 1"
+                  :text "+m"))
+              )
+            (box
+              :class "info ${arraylength(alarms-json) == 0 && !(alarms-state =~ "select-time-*") ? "no-alarms" : ""}"
+              :orientation "vertical"
+              :space-evenly false
+              :valign "center"
+              :hexpand true
+              :spacing "${6 * get_env("EWW_SCALE")}"
+              (box
+                :class "label top"
+                :halign "center"
+                "${alarms-state == "select-time-standard" ? "ring at" :
+                   alarms-state == "select-time-quick" ? "ring in" :
+                   arraylength(alarms-json) == 0 ? "no alarms" :
+                   "next up"}")
+              (box :class "preview"
+                   :space-evenly false
+                   :halign "center"
+                   :valign "center"
+                   :vexpand false
+                   :hexpand true
+                (eventbox
+                  :onscroll "[ '{}' = 'up' ] && eww update alarms-total-minutes=${alarms-total-minutes - 60} && ${eww-scripts}/alarm-minutes-to-hhmm.sh || eww update alarms-total-minutes=${alarms-total-minutes + 60} && ${eww-scripts}/alarm-minutes-to-hhmm.sh"
+                  (box
+                    :class "hour ${alarms-state =~ "select-time-*" && alarms-input-selected-field == "hours" ? "active" : ""}"
+                    "${alarms-state =~ "select-time-*" ? "${alarms-preview-hours}" : arraylength(alarms-json) == 0 ? "--" : "${alarms-json[alarms-index].hour}"}"))
+                (box :class "separator" "${alarms-state == "select-time-quick" ? "h" : ":"}")
+                (eventbox
+                  :onscroll "[ '{}' = 'up' ] && eww update alarms-total-minutes=${alarms-total-minutes - 1} && ${eww-scripts}/alarm-minutes-to-hhmm.sh || eww update alarms-total-minutes=${alarms-total-minutes + 1} && ${eww-scripts}/alarm-minutes-to-hhmm.sh"
+                  (box
+                    :class "min ${alarms-state =~ "select-time-*" && alarms-input-selected-field == "minutes" ? "active" : ""}"
+                    "${alarms-state =~ "select-time-*" ? "${alarms-preview-minutes}" : arraylength(alarms-json) == 0 ? "--" : "${alarms-json[alarms-index].min}"}")))
+              (box
+                :class "label bottom ${alarms-state =~ "select-time-*" && alarms-input-selected-field == "label" ? "active" : ""}"
+                :halign "center"
+                (box
+                  :class "text ${alarms-state =~ "select-time-*" && strlength(alarms-preview-label) == 0 && alarms-input-selected-field != "label" ? "placeholder" : ""}"
+                  :space-evenly false
+                  ; We use this dummy character to keep the label centered due to
+                  ; the cursor character taking up one space after the label.
+                  ; Making the cursor conditionally visible with `:visible` would
+                  ; cause the text to go back and forth due to its width changing.
+                  (box :class "dummy" "w")
+                  "${alarms-state =~ "select-time-*" ? "${strlength(alarms-preview-label) == 0 && alarms-input-selected-field != "label" ? "e.g. gym" : alarms-preview-label}" : arraylength(alarms-json) == 0 ? "all clear" : "${alarms-json[alarms-index].label}"}"
+                  (box :class "cursor" "|"))))))))))
+
+(defwidget alarms-button-time [text extra-class onclick]
+  (eventbox
+    :cursor "hand2"
+    :onclick "${onclick}"
+    (box :class "button ${extra-class}"
+      (box :class "symbol" "${text}"))))
+
+(defwidget alarms-button-dual [extra-class symbol onclick]
+  (eventbox
+    :vexpand true
+    :valign "fill"
+    :cursor "hand2"
+    :onclick "${onclick}"
+    (box
+      :class "button dual ${extra-class}"
+      (box :class "symbol" "${symbol}"))))
+
+
+; Updated when clicking buttons related to alarm
+; alarms-state valid values
+; - select-type
+; - select-time-quick
+; - select-time-standard
+(defvar alarms-state "select-type")
+(defvar alarms-total-minutes "0")
+; alarms-input-selected-field valid values
+; - hours
+; - minutes
+; - label
+(defvar alarms-input-selected-field "hours")
+(defvar alarms-input-hours "")
+(defvar alarms-input-minutes "")
+(defvar alarms-input-label "")
+(defvar alarms-preview-hours "")
+(defvar alarms-preview-minutes "")
+(defvar alarms-preview-label "")
+
+(defvar alarms-index 0)

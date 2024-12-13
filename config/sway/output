@@ -1,0 +1,49 @@
+# >> Output configuration
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+# Old laptop (4K)
+# output eDP-1 {
+#     # Normal (4K) res, PPI 286
+#     # scale should be PPI / 100 = 2.86 -> (round to nearest integer) 3
+#     # NOTE: Fractional scaling makes xwayland apps extremely blurry and has
+#     # performance issues
+#     # scale 2.86
+#     scale 3
+#
+#     # Low res, PPI 143
+#     # mode --custom 1920x1080@48Hz
+#     # scale 1.5
+# }
+
+# 300 Hz monitor
+output eDP-1 {
+    max_render_time 3
+
+    # Temporarily turning VRR off due to this bug:
+    # https://gitlab.freedesktop.org/drm/amd/-/issues/2186
+    # Also relevant: https://github.com/swaywm/sway/issues/7411
+    adaptive_sync off
+}
+
+# Use monitor defaults for all apps
+# for_window [app_id=".*"] max_render_time off
+# for_window [class=".*"] max_render_time off
+
+# Per app max_render_time
+# Lower max_render_time for more responsive typing
+for_window {
+    [app_id="^alacritty$"] max_render_time 2
+    [app_id="^scratchpad$"] max_render_time 2
+    [app_id="^floating$"] max_render_time 2
+    [app_id="^emacs$"] max_render_time 2
+    [app_id="^email$"] max_render_time 2
+    [app_id="^scratchpad_input$"] max_render_time 2
+    [app_id="^kitty$"] max_render_time 2
+    [app_id="^foot$"] max_render_time 2
+    [app_id="^editor$"] max_render_time 2
+    [app_id="^org$"] max_render_time 2
+    [app_id="^codium$"] max_render_time 2
+    [app_id="^Rofi$"] max_render_time 2
+}
+
+# vim:set ft=conf:

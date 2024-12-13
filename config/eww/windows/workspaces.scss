@@ -1,0 +1,60 @@
+.workspaces {
+  min-height: dpi(3px);
+  widget {
+    .indicator {
+      opacity: 0.3;
+      transition-duration: 0.2s;
+
+      &.focused {
+        opacity: 1;
+      }
+      &.empty {
+        opacity: 0;
+      }
+      &.round-right {
+        border-bottom-right-radius: dpi(10px);
+      }
+      &.round-left {
+        border-bottom-left-radius: dpi(10px);
+      }
+
+      &:not(.focused):hover {
+        opacity: 0.6;
+      }
+      &.empty:hover {
+        opacity: 0.2;
+      }
+    }
+
+    &:nth-child(1) .indicator {
+      background: $x1;
+    }
+    &:nth-child(2) .indicator {
+      background: $x3;
+    }
+    &:nth-child(3) .indicator {
+      background: $x2;
+    }
+    &:nth-child(4) .indicator {
+      background: $x6;
+    }
+    &:nth-child(5) .indicator {
+      background: $x4;
+    }
+    &:nth-child(6) .indicator {
+      background: $x5;
+    }
+    &:nth-child(7) .indicator {
+      background: $x1;
+    }
+    &:nth-child(8) .indicator {
+      background: $x3;
+    }
+    &:nth-child(9) .indicator {
+      background: $x2;
+    }
+    &:nth-child(10) .indicator {
+      background: $x6;
+    }
+  }
+}

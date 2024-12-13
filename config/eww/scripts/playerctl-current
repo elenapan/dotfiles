@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Controls the player currently visible in eww widgets
+# To control the correct player we need to find its instance name.
+# We cannot just use the player name reported by `playerctl --follow` because
+# there can be for example multiple mpv players, all reporting "mpv" as the
+# player name, while their instance name could be something like
+# "mpv.instance12345".
+# Thus, instead:
+# We can retrieve all player instance names with `playerctl --list-all` and
+# filter by player name.
+# Then we can use the media title shown in eww and compare it with the title of
+# all matching players to find the correct player name instance.
+
+eww_media_json="$(eww get media-json)"
+current_name="$(jq -r .player_name <<< "$eww_media_json")"
+all_matching="$(playerctl --list-all | grep "^${current_name}")"
+
+# When comparing strings, remove all whitespace and ellipsis that was used to
+# truncate the title in eww
+current_title="$(jq -r .title <<< "$eww_media_json" | tr -d "[:space:]" | sed 's/\.\.\.$//')"
+player_name=''
+for match in $all_matching ; do
+  actual_player_title="$(playerctl --player="$match" --format='{{title}}' metadata | tr -d "[:space:]")"
+  if [[ "$actual_player_title" == *"$current_title"* ]]; then
+    player_name="$match"
+    break;
+  fi
+done
+
+if [[ "$player_name" == '' ]]; then
+  # If we could not find it, let playerctl handle it
+  playerctl "$@"
+else
+  playerctl --player="$player_name" "$@"
+fi

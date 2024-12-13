@@ -1,0 +1,19 @@
+(defwindow microphone-indicator
+  :monitor 0
+  :geometry (geometry :x 0
+                      ; We cannot use get_env(EWW_SCALE) here
+                      :y -4.5
+                      :anchor "top center")
+  :stacking "overlay"
+  :exclusive false
+  (revealer
+    :transition "slidedown"
+    :reveal "${microphone-indicator-visible}"
+    :duration "200ms"
+    (eventbox :cursor "hand2"
+              :onclick "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+              :onmiddleclick "${eww-scripts}/manage hide microphone-indicator &"
+      (box :class "microphone-indicator ${microphone}"))))
+
+(defvar microphone-indicator-visible false)
+(defvar microphone "")

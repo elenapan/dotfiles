@@ -1,0 +1,14 @@
+box.microphone-indicator {
+  background: $x8;
+  opacity: 0.4;
+  border-radius: 0 0 $round_max $round_max;
+  transition: opacity 0.2s, background 0.2s;
+  font-family: icomoon;
+  min-width: dpi(18px);
+  min-height: dpi(10px);
+
+  &.on {
+    opacity: 1;
+    background: $x1;
+  }
+}

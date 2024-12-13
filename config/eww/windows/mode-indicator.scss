@@ -1,0 +1,20 @@
+window.mode-indicator {
+  background: transparent;
+  min-width: dpi(130px);
+  min-height: dpi(55px);
+}
+box.mode-indicator {
+  margin-top: dpi(20px);
+  background: $xbg;
+  border: dpi(6px) dashed rgba($x8, 0.3);
+  color: $x8;
+  border-radius: dpi(27px);
+  font-size: dpi(20pt);
+  font-weight: bold;
+  padding: dpi(20px);
+  .text {
+    transition: color 0.3s;
+    animation: rainbow-fg 12s infinite;
+  }
+}
+

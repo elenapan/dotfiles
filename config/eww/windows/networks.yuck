@@ -1,0 +1,150 @@
+(defwindow networks
+  :monitor 0
+  :geometry (geometry :x 0
+                      ; Same as sway gaps (we cannot use EWW_SCALE here)
+                      :y 10
+                      ; Note: Setting width and height here causes certain
+                      ; animations to not display properly. Instead, we set
+                      ; width and height in *.scss or in the upppermost inner
+                      ; widget.
+                      :anchor "right bottom")
+  :stacking "overlay"
+  :exclusive false
+  (revealer
+    :transition "slideleft"
+    :reveal "${networks-visible}"
+    :duration "300ms"
+    (eventbox
+      :onmiddleclick "${eww-scripts}/manage hide networks"
+      :halign "fill"
+      :valign "fill"
+      :class "networks"
+      :width "${300 * get_env("EWW_SCALE")}"
+      (box
+        :orientation "vertical"
+        :space-evenly false
+        (network-list)
+        (box :class "bandwidth"
+             :valign "fill"
+          (box :class "info bandwidth-down"
+               :space-evenly false
+               :halign "center"
+            (box :hexpand false :class "symbol" "")
+            (box :hexpand false :class "text" "${round(EWW_NET.wlan0.NET_DOWN / 1000000, 2)}MB/s"))
+          (box :class "info bandwidth-up"
+               :space-evenly false
+               :halign "center"
+            (box :hexpand false :class "symbol" "")
+            (box :hexpand false :class "text" "${round(EWW_NET.wlan0.NET_UP / 1000000, 2)}MB/s")))
+        (box :class "toolbar"
+             :height "${66 * get_env("EWW_SCALE")}"
+             :hexpand true
+             :halign "center"
+             :space-evenly false
+             :spacing "${6 * get_env("EWW_SCALE")}"
+          (network-toolbar-button :extra-class "vpn ${vpn-status} ${networks-vpn-loading ? "loading" : ""}"
+                                  :onclick "${eww-scripts}/rofi-vpn.sh &"
+                                  :symbol ""
+                                  :text "vpn ${vpn-status}")
+          (network-toolbar-button :extra-class "scan ${networks-scan-loading ? "loading" : ""}"
+                                  :onclick "${eww-scripts}/networks.sh scan &"
+                                  :symbol ""
+                                  :text "${arraylength(networks-json)} net${arraylength(networks-json) != 1 ? "s" : ""}")
+          (network-toolbar-button :extra-class "speed"
+                                  :onclick "${eww-scripts}/networks.sh speedtest &"
+                                  :symbol ""
+                                  :text "speedtest")
+          (network-toolbar-button :extra-class "ping ${networks-ping-loading ? "loading" : ""}"
+                                  :onclick "${eww-scripts}/networks.sh ping &"
+                                  :symbol ""
+                                  :text "${networks-ping-result}"))))))
+
+(defwidget network-toolbar-button [extra-class symbol text onclick]
+  (eventbox
+    :onclick "${onclick}"
+    :cursor "hand2"
+    (box
+      :class "button ${extra-class}"
+      (box
+        :orientation "vertical"
+        :space-evenly false
+        :valign "center"
+        (box :class "symbol" "${symbol}")
+        (box :class "text" "${text}")))))
+
+(defwidget network-list []
+  (scroll
+    :vscroll true
+    :hscroll false
+    :class "networks-scroll-container"
+    (box :class "network-list"
+         :orientation "vertical"
+         :halign "fill"
+      (box :class "no-networks"
+           :orientation "vertical"
+           :space-evenly false
+           :valign "center"
+           :visible "${arraylength(networks-json) == 0}"
+        (box :class "symbol" "")
+        "No networks found"
+        )
+      (for network in networks-json
+        (box :class "network"
+             :space-evenly false
+          (box 
+            :space-evenly false
+            :hexpand true
+            (box
+              :halign "center"
+              :valign "fill"
+              :class "status-and-signal ${network.selected ? "selected" : ""} ${network.signal_strength == 4 ? "excellent" : network.signal_strength == 3 ? "good" : network.signal_strength == 2 ? "ok" : "bad"}")
+            (circular-symbol-icon
+              :extra-class "type"
+              :symbol "${network.saved ? "" : ""}")
+            (box
+              :class "text"
+              :valign "center"
+              :space-evenly false
+              :orientation "vertical"
+              (box :class "name" :halign "start"
+                "${strlength(network.name) > 22 ? "${substring(network.name, 0, 19)}..." : network.name}"))
+            (box
+              :halign "end"
+              :hexpand true
+              :space-evenly false
+              (eventbox
+                :hexpand true
+                :halign "end"
+                :valign "center"
+                :class "button forget"
+                :visible "${network.saved}"
+                :onclick "${eww-scripts}/networks.sh forget ${network.name} &"
+                :cursor "hand2"
+                (box :class "symbol" ""))
+              (box :style "padding-right: ${11 * get_env("EWW_SCALE")}px" :visible "${network.selected}")
+              (eventbox
+                :hexpand true
+                :halign "end"
+                :valign "center"
+                :class "button disconnect"
+                :visible "${network.selected}"
+                :onclick "${eww-scripts}/networks.sh disconnect ${network.name} &"
+                :cursor "hand2"
+                (box :class "symbol" ""))
+              (box :style "padding-right: ${11 * get_env("EWW_SCALE")}" :visible "${!(network.selected)}")
+              (eventbox
+                :hexpand true
+                :halign "end"
+                :valign "center"
+                :class "button connect"
+                :visible "${!(network.selected)}"
+                :onclick "${eww-scripts}/networks.sh connect '${network.name}' &"
+                :cursor "hand2"
+                (box :class "symbol" ""))
+              )
+            (box :style "padding-right: ${13 * get_env("EWW_SCALE")}px")))))))
+
+(defvar networks-vpn-loading false)
+(defvar networks-scan-loading false)
+(defvar networks-ping-loading false)
+(defvar networks-ping-result "ping")

@@ -1,0 +1,20 @@
+set $xbg #101319
+set $xfg #f4f3ee
+set $x0  #171b24
+set $x1  #E34F4F
+set $x2  #69bfce
+set $x3  #e37e4f
+set $x4  #5679E3
+set $x5  #956dca
+set $x6  #5599E2
+set $x7  #f4f3ee
+set $x8  #3A435A
+set $x9  #DE2B2B
+set $x10 #56B7C8
+set $x11 #DE642B
+set $x12 #3E66E0
+set $x13 #885AC4
+set $x14 #3F8CDE
+set $x15 #DDDBCF
+
+# vim:set ft=conf:

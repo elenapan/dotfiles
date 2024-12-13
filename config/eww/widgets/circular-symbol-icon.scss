@@ -1,0 +1,15 @@
+.circular-symbol-icon {
+  font-size: dpi(9.5pt);
+  font-family: "icomoon";
+  background-color: $xfg;
+  color: $xbg;
+  border-radius: 50%;
+  min-height: dpi(23px);
+  min-width: dpi(23px);
+
+  // Manually fix font icon alignment
+  .symbol {
+    margin-top: dpi(0.1px);
+    margin-left: dpi(0.1px);
+  }
+}

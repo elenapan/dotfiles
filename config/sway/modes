@@ -1,0 +1,120 @@
+mode "resize" {
+    bindsym --to-code {
+        $left resize shrink width $resize_px
+        $down resize grow height $resize_px
+        $up resize shrink height $resize_px
+        $right resize grow width $resize_px
+
+        Left resize shrink width $resize_px
+        Down resize grow height $resize_px
+        Up resize shrink height $resize_px
+        Right resize grow width $resize_px
+
+        # Return to default mode
+        Return mode "default"
+        Escape mode "default"
+        space mode "default"
+        r mode "default"
+    }
+}
+
+mode "move" {
+    bindsym --to-code {
+        $left move left $move_px
+        $down move down $move_px
+        $up move up $move_px
+        $right move right $move_px
+        Left move left $move_px
+        Down move down $move_px
+        Up move up $move_px
+        Right move right $move_px
+
+        Shift+$left exec $sway/move-to-edge left
+        Shift+$down exec $sway/move-to-edge down
+        Shift+$up exec $sway/move-to-edge up
+        Shift+$right exec $sway/move-to-edge right
+        Shift+Left exec $sway/move-to-edge left
+        Shift+Down exec $sway/move-to-edge down
+        Shift+Up exec $sway/move-to-edge up
+        Shift+Right exec $sway/move-to-edge right
+
+        1 move container to workspace $ws1
+        2 move container to workspace $ws2
+        3 move container to workspace $ws3
+        4 move container to workspace $ws4
+        5 move container to workspace $ws5
+        6 move container to workspace $ws6
+        7 move container to workspace $ws7
+        8 move container to workspace $ws8
+        9 move container to workspace $ws9
+        0 move container to workspace $ws10
+
+        Return mode "default"
+        Escape mode "default"
+        space mode "default"
+        m mode "default"
+    }
+}
+
+mode "apps" {
+    bindsym --to-code {
+        w exec $sway/window-do "[app_id=firefox] focus" "firefox"; mode default
+        m exec $sway/window-do "[app_id=chrome-mail.proton.me__-Default] focus" "protonmail"; mode default
+        # m exec $sway/window-do "[app_id=email] focus" "$term --class email -e neomutt"; mode default
+        d exec $sway/window-do "[app_id=chrome-discordapp.com__channels_@me-Default] focus" "chromium --app='https://discordapp.com/channels/@me'"; mode default
+        c exec $sway/window-do "[app_id=chrome-chatgpt.com__-Default] focus" "chatgpt"; mode default
+        # c exec $sway/window-do "[app_id=weechat] focus" "$term --class weechat -e weechat"; mode default
+        t exec $sway/window-do "[app_id=telegramdesktop] focus" "telegram"; mode default
+        l exec $sway/window-do "[app_id=lutris] focus" "lutris"; mode default
+        s exec $sway/window-do '[class="^steam$"] focus' "steam"; mode default
+        # s exec $sway/window-do '[app_id="Signal Beta"] focus' "signal-desktop"; mode default
+        # s exec $sway/window-do '[app_id="Signal"] focus' "signal-desktop"; mode default
+        g exec $sway/window-do '[class="^Gimp$"] focus' "gimp"; mode default
+        n exec "$eww/manage show networks"
+        a exec "$eww/manage show alarms"
+        p exec rofi-pass-wayland; mode default
+        x exec $cmd_nightmode_toggle; mode default
+        f exec nemo; mode default
+
+        # PoE trade
+        # c exec "poe-copy"; mode default
+
+        # Return to default mode
+        Return mode "default"
+        Escape mode "default"
+        space mode "default"
+    }
+}
+
+# Swaps focused window with window in direction in order to move it
+# around a layout without altering the layout.
+# Source: https://www.reddit.com/r/swaywm/comments/mmhvyf/swap_mode/
+mode "swap" {
+    bindsym --to-code {
+        $left mark --add "_swap", focus left, swap container with mark "_swap", focus left, unmark "_swap"
+        $down mark --add "_swap", focus down, swap container with mark "_swap", focus down, unmark "_swap"
+        $up mark --add "_swap", focus up, swap container with mark "_swap", focus up, unmark "_swap"
+        $right mark --add "_swap", focus right, swap container with mark "_swap", focus right, unmark "_swap"
+
+        Left mark --add "_swap", focus left, swap container with mark "_swap", focus left, unmark "_swap"
+        Down mark --add "_swap", focus down, swap container with mark "_swap", focus down, unmark "_swap"
+        Up mark --add "_swap", focus up, swap container with mark "_swap", focus up, unmark "_swap"
+        Right mark --add "_swap", focus right, swap container with mark "_swap", focus right, unmark "_swap"
+
+        # Return to default mode
+        s mode "default"
+        Return mode "default"
+        Escape mode "default"
+    }
+}
+
+mode "brightness" {
+    bindsym --to-code {
+        k exec $cmd_brightness_raise
+        j exec $cmd_brightness_lower
+        b mode "default"
+        Escape mode "default"
+    }
+}
+
+# vim: set ft=conf:

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Usage: toggle-sidebar-with-page <sidebar-page-index>
+# Example: toggle-sidebar-with-page 1
+eww=$HOME/.config/eww/scripts
+
+if [ "$(eww get sidebar-visible)" == 'false' ]; then
+    eww update sidebar-page-index="$1"
+    "${eww}/manage" show sidebar
+else
+    if [ "$(eww get sidebar-page-index)" == "$1" ]; then
+        "${eww}/manage" hide sidebar
+    else
+        eww update sidebar-page-index="$1"
+    fi
+fi
+

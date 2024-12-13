@@ -1,0 +1,202 @@
+$button_content_size: dpi(23px);
+$button_content_spacing: dpi(10px);
+
+window .bottom-bar {
+  background: transparent;
+  min-height: dpi(43px);
+
+  .left-buttons {
+    background: $xbg;
+    border-radius: 0 $sidebar_corner_radius 0 0;
+
+    .button {
+      &:last-child {
+        border-top-right-radius: $sidebar_corner_radius;
+      }
+    }
+
+    .clock {
+      padding: 0 dpi(6px);
+      .text {
+        min-width: dpi(34px);
+      }
+    }
+  }
+
+  .right-buttons {
+    background: $xbg;
+    border-radius: $sidebar_corner_radius 0 0 0;
+
+    .button {
+      &:first-child {
+        border-top-left-radius: $sidebar_corner_radius;
+      }
+    }
+  }
+
+  .button {
+    min-width: dpi(67px);
+    font-size: dpi(12pt);
+    transition-duration: 0.3s;
+    font-family: icomoon;
+    border-bottom: dpi(3px) solid transparent;
+
+    .value {
+      font-family: $font_sans;
+      font-size: dpi(8pt);
+      min-height: $button_content_size;
+      min-width: $button_content_size;
+      background: $x0;
+      border-radius: $round_max;
+      margin-left: $button_content_spacing;
+
+      .text {
+        // Manually fix font vertical alignment
+        margin-top: dpi(3px);
+      }
+    }
+
+    .battery {
+      margin-left: $button_content_spacing;
+      min-height: $button_content_size;
+      .battery-progress-bar-part {
+        min-width: dpi(14px);
+        border-radius: $round_max;
+        background: $x0;
+        transition: background 0.2s, opacity 0.2s;
+        &.full {
+          background: $x6;
+        }
+        &.half {
+          background: $x6;
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .signal-strength {
+      margin-left: $button_content_spacing;
+
+      .signal-strength-part {
+        min-width: dpi(5px);
+        border-radius: $round_max;
+        background: $x0;
+        transition: background 0.2s, min-height 0.2s;
+        &.active {
+          background: $x4;
+        }
+        &:nth-child(1) {
+          min-height: $button_content_size - dpi(16px);
+        }
+        &:nth-child(2) {
+          min-height: $button_content_size - dpi(10.5px);
+        }
+        &:nth-child(3) {
+          min-height: $button_content_size - dpi(5.5px);
+        }
+        &:nth-child(4) {
+          min-height: $button_content_size;
+        }
+        &.disconnected {
+          background: $x8;
+          min-height: $button_content_size - dpi(17px);
+        }
+      }
+    }
+
+    .volume {
+      margin-left: $button_content_spacing;
+      min-height: $button_content_size;
+      min-width: $button_content_size;
+      circular-progress {
+        transition: color 0.2s;
+
+        &.backdrop {
+          color: $x0;
+        }
+      }
+
+      &.muted {
+        circular-progress:not(.backdrop) {
+          color: $x8;
+        }
+      }
+    }
+
+    .alarms-number {
+      .line {
+        min-height: dpi(4px);
+        background: $x3;
+      }
+    }
+
+    &.glance {
+      color: $x1;
+      &:hover {
+        border-color: $x1;
+      }
+    }
+    &.tasks {
+      color: $x2;
+      &:hover {
+        border-color: $x2;
+      }
+    }
+    &.media {
+      color: $x5;
+      &:hover {
+        border-color: $x5;
+      }
+    }
+    &.network {
+      color: $x4;
+      &:hover {
+        border-color: $x4;
+      }
+    }
+    &.alarms {
+      color: $x3;
+      &:hover {
+        border-color: $x3;
+      }
+    }
+    &.logout {
+      color: $x6;
+      &:hover {
+        border-color: $x6;
+      }
+    }
+  }
+
+  .dock {
+    .dock-item {
+      min-width: dpi(35px);
+      min-height: dpi(26px);
+      background: transparent;
+      transition-duration: 0.2s;
+      font-size: dpi(16pt);
+      font-family: icomoon;
+
+      .focus-indicator {
+        transition: min-width 0.2s;
+        min-width: dpi(6px);
+        min-height: dpi(3px);
+        border-radius: $round_max $round_max 0 0;
+        opacity: 0;
+      }
+
+      &.focused {
+        .focus-indicator {
+          opacity: 1;
+        }
+      }
+
+      &.empty {
+        color: $x8;
+        .focus-indicator {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

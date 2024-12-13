@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# This was written by "GammaFn" in the #sway IRC when I asked for help with
+# speeding up my original version of the script. Thank you GammaFn!
+set -f
+op=$1
+swaymsg -t get_tree | jq -r 'recurse(
+    .focus[0] as $target
+    | (.nodes + .floating_nodes)[]
+    | select(.id == $target)
+    ) | "\(.type) \(.rect.x) \(.rect.y) \(.rect.width) \(.rect.height) \(.deco_rect.height)"' | {
+
+    while read -r line; do
+        # shellcheck disable=2086
+        set -- $line
+        case $1 in
+            workspace)
+                ws_x=$2 ws_y=$3 ws_w=$4 ws_h=$5
+                ;;
+            floating_con)
+                x=$2 y=$3 w=$4 h=$5 d=$6
+        esac
+    done
+    : "${x?No floating container found}"
+    case $op in
+        l*) x=0 y=$((y - d - ws_y));;
+        d*) x=$((x - ws_x)) y=$((ws_h - h - d));;
+        u*) x=$((x - ws_x)) y=0;;
+        r*) x=$((ws_w - w)) y=$((y - d - ws_y));;
+        *) exit 1
+    esac
+    swaymsg "move position $x $y"
+}

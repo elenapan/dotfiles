@@ -1,0 +1,108 @@
+@keyframes fade-in {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fade-out {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+@keyframes rainbow {
+    0% {border-color: $x1;color: $x1;}
+   20% {border-color: $x3;color: $x3;}
+   40% {border-color: $x2;color: $x2;}
+   60% {border-color: $x6;color: $x6;}
+   80% {border-color: $x4;color: $x4;}
+   99% {border-color: $x5;color: $x5;}
+  100% {border-color: $x1;color: $x1;}
+}
+
+@keyframes rainbow-bg {
+    0% {background: $x1;}
+   20% {background: $x3;}
+   40% {background: $x2;}
+   60% {background: $x6;}
+   80% {background: $x4;}
+   99% {background: $x5;}
+  100% {background: $x1;}
+}
+
+@keyframes rainbow-fg {
+    0% {color: $x1;}
+   20% {color: $x3;}
+   40% {color: $x2;}
+   60% {color: $x6;}
+   80% {color: $x4;}
+   99% {color: $x5;}
+  100% {color: $x1;}
+}
+
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.3;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  20% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacity-pulse {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+$diagonal_fade_stripe_size: 56px;
+$diagonal_fade_opacity: 0.7;
+@keyframes diagonal-fade {
+    0% {
+      background: repeating-linear-gradient(
+      -55deg,
+      rgba($xbg, $diagonal_fade_opacity),
+      rgba($xbg, $diagonal_fade_opacity) dpi($diagonal_fade_stripe_size),
+      rgba($xbg, $diagonal_fade_opacity) dpi($diagonal_fade_stripe_size),
+      rgba($xbg, $diagonal_fade_opacity) dpi($diagonal_fade_stripe_size * 2)
+      );
+    }
+    50% {
+      background: repeating-linear-gradient(
+      -55deg,
+      rgba($xbg, $diagonal_fade_opacity),
+      rgba($xbg, $diagonal_fade_opacity) dpi($diagonal_fade_stripe_size),
+      rgba($xbg, 1) dpi($diagonal_fade_stripe_size),
+      rgba($xbg, 1) dpi($diagonal_fade_stripe_size * 2)
+      );
+    }
+    100% {
+      background: repeating-linear-gradient(
+      -55deg,
+      rgba($xbg, 1),
+      rgba($xbg, 1) dpi($diagonal_fade_stripe_size),
+      rgba($xbg, 1) dpi($diagonal_fade_stripe_size),
+      rgba($xbg, 1) dpi($diagonal_fade_stripe_size * 2)
+      );
+    }
+}

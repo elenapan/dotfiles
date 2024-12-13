@@ -1,0 +1,208 @@
+# >> Eww widget keybinds
+mode "_alarms" {
+    bindsym --to-code {
+        q exec '$eww/do-alarms-action alarm-quick'
+        s exec '$eww/do-alarms-action alarm-standard'
+        d exec '$eww/do-alarms-action delete'
+        j exec '$eww/do-alarms-action next'
+        k exec '$eww/do-alarms-action previous'
+        Tab exec "$eww/do-alarms-action next"
+        Shift+Tab exec "$eww/do-alarms-action previous"
+        Down exec '$eww/do-alarms-action next'
+        Up exec '$eww/do-alarms-action previous'
+
+        Escape exec "$eww/manage hide alarms"
+    }
+}
+
+mode "_networks" {
+    bindsym --to-code {
+        r exec '$eww/networks.sh scan'
+        F5 exec '$eww/networks.sh scan'
+        p exec '$eww/networks.sh ping'
+        s exec '$eww/networks.sh speedtest'
+        space exec '$eww/networks.sh rofi_select'
+        slash exec '$eww/networks.sh rofi_select'
+        v exec '$eww/rofi-vpn.sh'
+
+        Escape exec "$eww/manage hide networks"
+    }
+}
+
+mode "_powermenu" {
+    bindsym --to-code {
+        p exec '$eww/do-powermenu-action poweroff'
+        r exec '$eww/do-powermenu-action reboot'
+        s exec '$eww/do-powermenu-action suspend'
+        h exec '$eww/do-powermenu-action hibernate'
+        e exec '$eww/do-powermenu-action exit'
+        l exec '$eww/do-powermenu-action lock'
+
+        Return exec '$eww/do-powermenu-action confirm'
+        Backspace exec '$eww/do-powermenu-action clear'
+
+        Escape exec "$eww/manage hide powermenu"
+    }
+}
+
+mode "_sidebar" {
+    bindsym --to-code {
+        Tab exec "$eww/set-sidebar-page next"
+        Shift+Tab exec "$eww/set-sidebar-page prev"
+        $mod+Tab exec "$eww/set-sidebar-page next"
+        $mod+Shift+Tab exec "$eww/set-sidebar-page prev"
+
+        # >> Conditional keybinds depending on sidebar page
+        # We simply pass the key to ~/.config/eww/scripts/do-sidebar-keybind
+        # Edit that script to configure actions
+        p exec "$eww/do-sidebar-keybind p"
+        space exec "$eww/do-sidebar-keybind space"
+        slash exec "$eww/do-sidebar-keybind slash"
+        j exec "$eww/do-sidebar-keybind j"
+        k exec "$eww/do-sidebar-keybind k"
+        Shift+j exec "$eww/do-sidebar-keybind J"
+        Shift+k exec "$eww/do-sidebar-keybind K"
+        Down exec "$eww/do-sidebar-keybind j"
+        Up exec "$eww/do-sidebar-keybind k"
+        Shift+Down exec "$eww/do-sidebar-keybind J"
+        Shift+Up exec "$eww/do-sidebar-keybind K"
+        h exec "$eww/do-sidebar-keybind h"
+        l exec "$eww/do-sidebar-keybind l"
+        Shift+h exec "$eww/do-sidebar-keybind H"
+        Shift+l exec "$eww/do-sidebar-keybind L"
+        Left exec "$eww/do-sidebar-keybind h"
+        Right exec "$eww/do-sidebar-keybind l"
+        Shift+Left exec "$eww/do-sidebar-keybind H"
+        Shift+Right exec "$eww/do-sidebar-keybind L"
+        u exec "$eww/do-sidebar-keybind u"
+        i exec "$eww/do-sidebar-keybind i"
+        r exec "$eww/do-sidebar-keybind r"
+        o exec "$eww/do-sidebar-keybind o"
+        q exec "$eww/do-sidebar-keybind q"
+        f exec "$eww/do-sidebar-keybind f"
+        m exec "$eww/do-sidebar-keybind m"
+        v exec "$eww/do-sidebar-keybind v"
+
+        grave exec "$eww/manage hide sidebar"
+        $mod+grave exec "$eww/manage hide sidebar"
+        Escape exec "$eww/manage hide sidebar"
+    }
+}
+
+
+# We are using this mode to pass input to eww e.g. when typing the password when
+# the screen is locked or setting an alarm label in the alarm widget.
+# We had to resort to this because the eww input field cannot be auto-focused
+# and customized in a meaningful way.
+# Don't ask me where I'm going (I'm going insane)
+mode "_eww_input" {
+    bindsym --to-code {
+        space exec $eww/input-controller.sh " "
+        exclam exec $eww/input-controller.sh "!"
+        quotedbl exec $eww/input-controller.sh '"'
+        numbersign exec $eww/input-controller.sh "#"
+        Shift+4 exec $eww/input-controller.sh "$"
+        percent exec $eww/input-controller.sh "%"
+        ampersand exec $eww/input-controller.sh "&"
+        apostrophe exec $eww/input-controller.sh "'"
+        Shift+9 exec $eww/input-controller.sh "("
+        Shift+0 exec $eww/input-controller.sh ")"
+        asterisk exec $eww/input-controller.sh "*"
+        plus exec $eww/input-controller.sh "+"
+        comma exec $eww/input-controller.sh ","
+        minus exec $eww/input-controller.sh "-"
+        period exec $eww/input-controller.sh "."
+        slash exec $eww/input-controller.sh "/"
+        colon exec $eww/input-controller.sh ":"
+        semicolon exec $eww/input-controller.sh ";"
+        Shift+comma exec $eww/input-controller.sh "<"
+        equal exec $eww/input-controller.sh "="
+        greater exec $eww/input-controller.sh ">"
+        question exec $eww/input-controller.sh "?"
+        at exec $eww/input-controller.sh "@"
+        braceleft exec $eww/input-controller.sh "{"
+        bar exec $eww/input-controller.sh "|"
+        braceright exec $eww/input-controller.sh "}"
+        asciitilde exec $eww/input-controller.sh "~"
+        bracketleft exec $eww/input-controller.sh "["
+        bracketright exec $eww/input-controller.sh "]"
+        asciicircum exec $eww/input-controller.sh "^"
+        underscore exec $eww/input-controller.sh "_"
+        grave exec $eww/input-controller.sh '\`'
+        0 exec $eww/input-controller.sh 0
+        1 exec $eww/input-controller.sh 1
+        2 exec $eww/input-controller.sh 2
+        3 exec $eww/input-controller.sh 3
+        4 exec $eww/input-controller.sh 4
+        5 exec $eww/input-controller.sh 5
+        6 exec $eww/input-controller.sh 6
+        7 exec $eww/input-controller.sh 7
+        8 exec $eww/input-controller.sh 8
+        9 exec $eww/input-controller.sh 9
+        Shift+A exec $eww/input-controller.sh A
+        Shift+B exec $eww/input-controller.sh B
+        Shift+C exec $eww/input-controller.sh C
+        Shift+D exec $eww/input-controller.sh D
+        Shift+E exec $eww/input-controller.sh E
+        Shift+F exec $eww/input-controller.sh F
+        Shift+G exec $eww/input-controller.sh G
+        Shift+H exec $eww/input-controller.sh H
+        Shift+I exec $eww/input-controller.sh I
+        Shift+J exec $eww/input-controller.sh J
+        Shift+K exec $eww/input-controller.sh K
+        Shift+L exec $eww/input-controller.sh L
+        Shift+M exec $eww/input-controller.sh M
+        Shift+N exec $eww/input-controller.sh N
+        Shift+O exec $eww/input-controller.sh O
+        Shift+P exec $eww/input-controller.sh P
+        Shift+Q exec $eww/input-controller.sh Q
+        Shift+R exec $eww/input-controller.sh R
+        Shift+S exec $eww/input-controller.sh S
+        Shift+T exec $eww/input-controller.sh T
+        Shift+U exec $eww/input-controller.sh U
+        Shift+V exec $eww/input-controller.sh V
+        Shift+W exec $eww/input-controller.sh W
+        Shift+X exec $eww/input-controller.sh X
+        Shift+Y exec $eww/input-controller.sh Y
+        Shift+Z exec $eww/input-controller.sh Z
+        a exec $eww/input-controller.sh a
+        b exec $eww/input-controller.sh b
+        c exec $eww/input-controller.sh c
+        d exec $eww/input-controller.sh d
+        e exec $eww/input-controller.sh e
+        f exec $eww/input-controller.sh f
+        g exec $eww/input-controller.sh g
+        h exec $eww/input-controller.sh h
+        i exec $eww/input-controller.sh i
+        j exec $eww/input-controller.sh j
+        k exec $eww/input-controller.sh k
+        l exec $eww/input-controller.sh l
+        m exec $eww/input-controller.sh m
+        n exec $eww/input-controller.sh n
+        o exec $eww/input-controller.sh o
+        p exec $eww/input-controller.sh p
+        q exec $eww/input-controller.sh q
+        r exec $eww/input-controller.sh r
+        s exec $eww/input-controller.sh s
+        t exec $eww/input-controller.sh t
+        u exec $eww/input-controller.sh u
+        v exec $eww/input-controller.sh v
+        w exec $eww/input-controller.sh w
+        x exec $eww/input-controller.sh x
+        y exec $eww/input-controller.sh y
+        z exec $eww/input-controller.sh z
+
+        # Backslash is a bit tricky to handle and we generally do not need to
+        # type it in our widgets
+        # backslash exec $eww/input-controller.sh 'backslash'
+
+        Shift+Tab exec $eww/input-controller.sh 's-tab'
+        Tab exec $eww/input-controller.sh 'tab'
+        Backspace exec $eww/input-controller.sh 'backspace'
+        Control+Backspace exec $eww/input-controller.sh 'c-backspace'
+        Escape exec $eww/input-controller.sh 'escape'
+        Return exec $eww/input-controller.sh 'return'
+    }
+}
+
+# vim: set ft=conf:
