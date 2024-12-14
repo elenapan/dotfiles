@@ -79,6 +79,7 @@ Features:
    | [`notify-send.sh`](https://github.com/vlevit/notify-send.sh) | `notify-send` wrapper for notification replacement |
    | `jq` | `json` parsing in various scripts |
    | `inotify-tools` | Reaction to file changes in various scripts |
+   | `light` | Brightness control |
    | `wget` | Making HTTP requests in various scripts |
    | `acpid` | Battery charger state information |
    | `pulseaudio` | Sound daemon |
