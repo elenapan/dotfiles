@@ -197,5 +197,5 @@ Thank you from the bottom of my heart! 💙
 ---
 
 <h3 align="center">
-    <a href="#"><tt>👆 Back to top</tt></a>
+    <a href="#----setup-----wiki-----gallery-----tip-jar"><tt>👆 Back to top</tt></a>
 </h3>
