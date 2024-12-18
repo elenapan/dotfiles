@@ -5,16 +5,9 @@ local awful = require("awful")
 
 local update_interval = 15
 
--- Intel CPU
--- local temp_script = [[
---   sh -c "
---   sensors | grep Package | awk '{print $4}' | cut -c 2-3
---   "]]
-
--- AMD CPU
 local temp_script = [[
   sh -c "
-  sensors | sed -n 'x;$p' | awk '{printf(\"%0.1f\", $2)}'
+  head -c -4 /sys/devices/virtual/thermal/thermal_zone0/temp
   "]]
 
 -- Periodically get temperature info
