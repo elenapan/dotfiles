@@ -2,13 +2,7 @@
 # Network widget controls
 # Intended for IWD not NetworkManager.
 interface=wlan0
-networks_dir=/var/lib/iwd/
 rofi="$HOME/.config/eww/scripts/rofi-with-mode-restore networks"
-
-is_saved_network() {
-  local key="$1"
-  [[ -v saved_networks_assoc["$key"] ]]
-}
 
 update_networks() {
     iwctl station $interface scan
@@ -40,10 +34,11 @@ update_networks() {
 
     # Find saved networks
     # We can connect to those without entering a password
-    saved_networks="$(find "$networks_dir" -maxdepth 1 -name "*.psk" | sed 's@/var/lib/iwd/@@; s@\.psk$@@')"
+    saved_networks="$(iwctl known-networks list | sed -e '1,4d;s/\x1b\[[0-9;]*m//g')"
     declare -A saved_networks_assoc
-    while IFS= read -r network; do
-        saved_networks_assoc["$network"]=true
+    while read -r line; do
+        name="$(awk '{for (i=1; i<=NF-5; i++) printf $i " "}' <<< "$line" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//')"
+        saved_networks_assoc["$name"]=true
     done <<< "$saved_networks"
 
     json='['
@@ -58,7 +53,11 @@ update_networks() {
             name="$(awk '{for (i=1; i<=NF-2; i++) printf $i " "}' <<< "$line" | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//')"
         fi
 
-        saved="$(is_saved_network "$name" && echo "true" || echo "false")"
+        if [[ -v saved_networks_assoc["$name"] ]]; then
+            saved="true"
+        else
+            saved="false"
+        fi
 
         signal_strength="$(awk '{ last_col = $NF; star_count = gsub("\\*", "", last_col); print star_count }' <<< "$line")"
 
