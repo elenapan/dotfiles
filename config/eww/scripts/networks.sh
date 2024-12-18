@@ -78,10 +78,9 @@ scan() {
         exit 1
     fi
     eww update networks-scan-loading=true
-    iwctl station $interface scan
     for (( i = 0; i < 5; i++ )); do
-        sleep 1
         update_networks
+        sleep 1
     done
     eww update networks-scan-loading=false
 }
