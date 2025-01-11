@@ -8,6 +8,11 @@ level_full=97
 level_low=20
 level_critical=10
 
+if [ ! -f "$battery_file" ]; then
+    echo No battery found. Exiting.
+    exit 1
+fi
+
 notify() {
   playsound "$HOME/.config/sounds/system-error-notice.mp3"
   notify-send.sh -R /tmp/battery-notifications-file "$@"
