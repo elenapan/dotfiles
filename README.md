@@ -82,7 +82,6 @@ Features:
    | `light` | Brightness control |
    | `wget` | Making HTTP requests in various scripts |
    | `acpid` | Battery charger state information |
-   | `pulseaudio` | Sound daemon |
    | `slurp` | Screen region selection (Wayland) |
    | `grim` | Screenshot tool (Wayland) |
    | `grimshot` | `grim` and `slurp` wrapper |

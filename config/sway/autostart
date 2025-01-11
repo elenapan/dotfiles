@@ -18,9 +18,6 @@ exec {
     # Prevents GTK apps from hanging for 15-20 sec before launching
     dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
-    # TODO: Until the pipewire/wireplumber crash is fixed, use pulseaudio
-    pulseaudio
-
     # Enable screensharing
     # Gentoo
     gentoo-pipewire-launcher
