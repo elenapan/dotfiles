@@ -200,9 +200,10 @@ assign {
     # >> 6: Image, audio and video editing
     [app_id="com.github.maoschanz.drawing"] $ws6
     [class="^Gimp$"] $ws6
-    [app_id="^Gimp$"] $ws6
+    [app_id="^[gG]imp$"] $ws6
     [app_id="gimp-2.99"] $ws6
     [class="audacity"] $ws6
+    [app_id="audacity"] $ws6
     [app_id="Inkscape"] $ws6
     [app_id="org.kde.kdenlive"] $ws6
 

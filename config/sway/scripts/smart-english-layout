@@ -7,6 +7,7 @@ i3 = i3ipc.Connection()
 # english layout on focus
 force_english_layout = {
     'Sxiv': True,
+    'Nsxiv': True,
     'mpv': True,
     'htop': True,
     'btop': True,

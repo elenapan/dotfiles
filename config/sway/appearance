@@ -77,6 +77,7 @@ for_window {
     [app_id="^htop$"] title_format $icon_pre"$x2">$icon_post
     [app_id="^btop$"] title_format $icon_pre"$x2">$icon_post
     [class="^Sxiv$"] title_format $icon_pre"$x1">$icon_post
+    [class="^Nsxiv$"] title_format $icon_pre"$x1">$icon_post
     [app_id="^nemo$"] title_format $icon_pre"$x3">$icon_post
     [app_id="^pavucontrol$"] title_format $icon_pre"$x4">$icon_post
     [app_id="^scratchpad$"] title_format $icon_pre"$x1">$icon_post
@@ -98,6 +99,7 @@ for_window {
     [class="^Emacs$"] title_format $icon_pre"$x2">$icon_post
     [app_id="^gucharmap$"] title_format $icon_pre"$x2">$icon_post
     [class="^Gimp$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^[gG]imp$"] title_format $icon_pre"$x4">$icon_post
     [class="^steam$"] title_format $icon_pre"$x2">$icon_post
     [app_id="^deluge$"] title_format $icon_pre"$x1">$icon_post
     [app_id="^chrome-open.spotify.com__-Default$"] title_format $icon_pre"$x2">$icon_post
