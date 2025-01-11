@@ -13,7 +13,8 @@ set {
     $screenshots_dir ~/pix/screenshots
 
     # Terminal emulator
-    $term kitty
+    # Use `-1` for the single-instance feature of kitty to reduce startup time
+    $term kitty -1
 
     # Combined application launcher + window switcher
     $menu $sway/rofi-sway
