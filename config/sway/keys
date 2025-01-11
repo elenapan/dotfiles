@@ -152,6 +152,13 @@ bindsym --to-code {
     $mod+m exec "$eww/toggle-sidebar-with-page 2"
     $mod+Shift+v exec "$eww/manage toggle microphone-indicator"
     $mod+Shift+x exec "$eww/manage show powermenu"
+    # For the power off button to work like this instead of shutting down the
+    # computer instantly, it should be ignored by both logind and ACPID.
+    # Relevant links:
+    # - https://www.freedesktop.org/software/systemd/man/latest/logind.conf.html
+    # - https://wiki.archlinux.org/title/Acpid#Alternative_configuration
+    # - https://wiki.gentoo.org/wiki/Elogind#Service
+    XF86PowerOff exec "$eww/manage show powermenu"
 
     # Rofi
     $mod+d exec $menu
