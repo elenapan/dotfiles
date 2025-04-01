@@ -16,9 +16,7 @@ output * bg ~/.local/share/wallpaper fill
 # Looks off if > 0
 titlebar_border_thickness 0
 
-# Setting border_width to 1 as a temporary workaround for the transparency bug
-# described below.
-set $border_width 1
+set $border_width 0
 
 # All windows have a title bar by default
 for_window [app_id=".*"] border normal $border_width
@@ -107,22 +105,13 @@ for_window {
 }
 
 # >> Colors
-# SwayFX BUG workaround: When using corner_radius > 0, the edge of the titlebar
-# is slightly trasparent. I found that if you stick "BD" to the end of the child
-# border color (RGBA format), you get the same transparency.
-# Using this trick and border_width = 1, it looks consistent.
-# With shadows disabled
-# set $transparency_hex BD
-# With shadows (0000007F) enabled
-set $transparency_hex C0
-
 # class                   border  bg      text    ind     child_border
-client.focused            "$xbg"  "$xbg"  "$xfg"  "$xbg"  "$xbg"$transparency_hex
-client.focused_inactive   "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"$transparency_hex
+client.focused            "$xbg"  "$xbg"  "$xfg"  "$xbg"  "$xbg"
+client.focused_inactive   "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"
 client.focused_tab_title  "$xbg"  "$xbg"  "$x8"
-client.unfocused          "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"$transparency_hex
-client.urgent             "$xbg"  "$xbg"  "$x1"   "$xbg"  "$xbg"$transparency_hex
-client.placeholder        "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"$transparency_hex
+client.unfocused          "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"
+client.urgent             "$xbg"  "$xbg"  "$x1"   "$xbg"  "$xbg"
+client.placeholder        "$xbg"  "$xbg"  "$x8"   "$xbg"  "$xbg"
 client.background                 "$xbg"
 
 # >> Gaps
