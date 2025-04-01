@@ -23,6 +23,7 @@ for_window [app_id=".*"] border normal $border_width
 
 # Disable titlebar for certain windows
 for_window {
+    [app_id="^zenity$"] border pixel $border_width
     [app_id="^vpn$"] border pixel $border_width
     [app_id="^editor$"] border pixel $border_width
     [app_id="^org$"] border pixel $border_width
