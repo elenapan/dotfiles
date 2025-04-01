@@ -78,6 +78,7 @@ for_window {
     [class="^Nsxiv$"] title_format $icon_pre"$x1">$icon_post
     [app_id="^nemo$"] title_format $icon_pre"$x3">$icon_post
     [app_id="^pavucontrol$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^org.pulseaudio.pavucontrol$"] title_format $icon_pre"$x4">$icon_post
     [app_id="^scratchpad$"] title_format $icon_pre"$x1">$icon_post
     [app_id="^scratchpad_input$"] title_format $icon_pre"$x3">$icon_post
     [app_id="^firefox$"] title_format $icon_pre"$x3">$icon_post
@@ -92,12 +93,14 @@ for_window {
     [app_id="-Telegram_Desktop$"] title_format $icon_pre"$x4">$icon_post
     [app_id="^editor$"] title_format $icon_pre"$x5">$icon_post
     [app_id="^lutris$"] title_format $icon_pre"$x6">$icon_post
+    [app_id="^net.lutris.Lutris$"] title_format $icon_pre"$x6">$icon_post
     [app_id="^org$"] title_format $icon_pre"$x2">$icon_post
     [app_id="^emacs$"] title_format $icon_pre"$x2">$icon_post
     [class="^Emacs$"] title_format $icon_pre"$x2">$icon_post
     [app_id="^gucharmap$"] title_format $icon_pre"$x2">$icon_post
     [class="^Gimp$"] title_format $icon_pre"$x4">$icon_post
     [app_id="^[gG]imp$"] title_format $icon_pre"$x4">$icon_post
+    [app_id="^org.inkscape.Inkscape$"] title_format $icon_pre"$x2">$icon_post
     [class="^steam$"] title_format $icon_pre"$x2">$icon_post
     [app_id="^deluge$"] title_format $icon_pre"$x1">$icon_post
     [app_id="^chrome-open.spotify.com__-Default$"] title_format $icon_pre"$x2">$icon_post
