@@ -80,6 +80,7 @@ mode "_sidebar" {
         o exec "$eww/do-sidebar-keybind o"
         q exec "$eww/do-sidebar-keybind q"
         f exec "$eww/do-sidebar-keybind f"
+        Shift+f exec "$eww/do-sidebar-keybind F"
         m exec "$eww/do-sidebar-keybind m"
         v exec "$eww/do-sidebar-keybind v"
 

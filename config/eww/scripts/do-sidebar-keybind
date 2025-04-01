@@ -42,6 +42,7 @@ case "$eww_sidebar_page" in
     declare -A keybinds=(
         ["q"]="$eww/playerctl-current stop"
         ["f"]="$eww/media-add-to-favorites.sh"
+        ["F"]="$eww/media-add-to-favorites.sh select-playlist"
         ["space"]="$eww/playerctl-current play-pause"
         ["p"]="playerctl -a pause"
         ["slash"]="$eww/rofi-playerctl-switch.sh"

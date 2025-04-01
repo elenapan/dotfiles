@@ -377,7 +377,8 @@
                   (box :class "container gameboy-a"
                     (eventbox
                       :cursor "hand2"
-                      :onclick "${eww-scripts}/media-add-to-favorites.sh"
+                      :onclick "${eww-scripts}/media-add-to-favorites.sh &"
+                      :onrightclick "${eww-scripts}/media-add-to-favorites.sh select-playlist &"
                       (box :class "button favorite"
                            :valign "center"
                         (box :class "symbol" "")))))))))
