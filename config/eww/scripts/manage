@@ -155,16 +155,11 @@ _pre_show() {
     if [[ -v pre_show_cmds["$widget_name"] ]]; then
         sh <<< "${pre_show_cmds[$widget_name]}"
     fi
+
     if [[ ${mutually_exclusive_widgets[*]} =~ $widget_name ]]; then
         hide_all_except "$widget_name"
     fi
-}
 
-_post_show() {
-    widget_name="$1"
-    if [[ -v post_show_cmds["$widget_name"] ]]; then
-        sh <<< "${post_show_cmds[$widget_name]}"
-    fi
     if [[ ${dismiss_when_clicking_outside_widgets[*]} =~ $widget_name ]]; then
         secondary_overlays=''
         # Show an overlay for all active secondary monitors
@@ -180,6 +175,13 @@ _post_show() {
             $secondary_overlays \
             --arg widget-to-dismiss="${widget_name}" \
             >/dev/null;
+    fi
+}
+
+_post_show() {
+    widget_name="$1"
+    if [[ -v post_show_cmds["$widget_name"] ]]; then
+        sh <<< "${post_show_cmds[$widget_name]}"
     fi
 }
 
