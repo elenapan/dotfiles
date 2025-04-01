@@ -1,9 +1,10 @@
-window.alarms {
-  background: $xbg;
+window > .alarms {
   border-radius: $sidebar_corner_radius 0 0 $sidebar_corner_radius;
   font-family: $font_sans;
 
   .alarms {
+    background: $xbg;
+    border-radius: $sidebar_corner_radius 0 0 $sidebar_corner_radius;
     min-width: dpi(300px);
     .inner {
       margin: dpi(14px) 0 dpi(14px) dpi(14px);
