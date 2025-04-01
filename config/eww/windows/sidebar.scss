@@ -234,6 +234,21 @@ window .sidebar {
         }
       }
 
+      .media-info-text {
+        margin: 0 40px;
+      }
+
+      .circular-symbol-with-text {
+        &.media-title {
+          margin-top: dpi(27px);
+          margin-bottom: dpi(17px);
+        }
+
+        &.media-artist {
+          margin-bottom: dpi(20px);
+        }
+      }
+
       .visualizer {
         min-height: dpi(66px);
         .invisible-slider {
@@ -554,17 +569,6 @@ window .sidebar {
     }
   }
 
-}
-
-.circular-symbol-with-text {
-  &.media-title {
-    margin-top: dpi(27px);
-    margin-bottom: dpi(17px);
-  }
-
-  &.media-artist {
-    margin-bottom: dpi(20px);
-  }
 }
 
 .weather {

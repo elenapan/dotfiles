@@ -269,20 +269,28 @@
                     ))
                 )
 
-              ; Artist and title (truncated so that the eww window does not grow)
-              ; Character limit should be adjusted according to font family, font size,
-              ; and desired max length of the eww window
-              (circular-symbol-with-text
-                :extra-class "media-title"
-                :symbol ""
-                :text-left "${strlength(media-json.title) > 35 ? "${substring(media-json.title, 0, 32)}..." : media-json.title}"
-                :text-right "")
-
-              (circular-symbol-with-text
-                :extra-class "media-artist"
-                :symbol ""
-                :text-left "${strlength(media-json.artist) > 35 ? "${substring(media-json.artist, 0, 32)}..." : media-json.artist}"
-                :text-right "")
+              ; Artist and title inside scroll containers to prevent the sidebar
+              ; from growing when the text is too long
+              (box :class "media-info-text"
+                :orientation "vertical"
+                :space-evenly false
+                (scroll
+                  :hscroll true
+                  :vscroll false
+                  (circular-symbol-with-text
+                    :extra-class "media-title"
+                    :symbol ""
+                    :text-left "${media-json.title}"
+                    :text-right ""))
+                (scroll
+                  :hscroll true
+                  :vscroll false
+                  (circular-symbol-with-text
+                    :extra-class "media-artist"
+                    :symbol ""
+                    :text-left "${media-json.artist}"
+                    :text-right ""))
+                )
 
               (media-progress-visualizer)
 
