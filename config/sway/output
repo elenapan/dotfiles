@@ -23,6 +23,8 @@ output eDP-1 {
     # https://gitlab.freedesktop.org/drm/amd/-/issues/2186
     # Also relevant: https://github.com/swaywm/sway/issues/7411
     adaptive_sync off
+
+    allow_tearing yes
 }
 
 # Use monitor defaults for all apps
