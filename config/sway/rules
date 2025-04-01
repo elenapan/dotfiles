@@ -29,7 +29,8 @@ for_window {
     [app_id="^scratchpad$"] floating enable, resize set 1250 750, move position center
     [app_id="^scratchpad_input$"] floating enable, resize set 900 700, move position center
     [app_id="mpv" title=".* - mvi$"] floating enable, resize set 950 550, move position center
-    [app_id="org.kde.kdeconnect.daemon"] floating enable
+    [app_id="^org.kde.kdeconnect.daemon$"] floating enable
+    [app_id="^org.kde.kdeconnect.handler$"] floating enable
     [app_id="^zoom$" title="Zoom Cloud Meetings"] floating enable, resize set 850 650, move position center
     # PiP - See: https://github.com/swaywm/sway/issues/3095
     [app_id="firefox" title="Picture-in-Picture"] floating enable
@@ -101,7 +102,12 @@ assign {
     [app_id="firefox"] $ws1
 
     # >> 2: Games
-    [class="Wine"] $ws2
+    [class="^Wine$"] $ws2
+    [class="^sacred.exe$"] $ws2
+    [class="^psobb.exe$"] $ws2
+    [class="^nwmain-linux$"] $ws2
+    [class="^lisa.x86_64$"] $ws2
+    [class="^rpg_rt.exe$"] $ws2
     [class="^brogue$"] $ws2
     [class="^Shattered Pixel Dungeon$"] $ws2
     [class="live.na.exe"] $ws2
@@ -172,7 +178,7 @@ assign {
     [app_id="chrome-facebook.com__-Default"] $ws3
     [app_id="^chrome-meet.google.com__*-Default$"] $ws3
     [app_id="telegramdesktop"] $ws3
-    [app_id="org.telegram.desktop"] $ws3
+    [app_id="^org.telegram.desktop$"] $ws3
     [app_id="-Telegram_Desktop$"] $ws3
     [app_id="weechat"] $ws3
     [app_id="zoom"] $ws3
@@ -206,13 +212,15 @@ assign {
     [app_id="audacity"] $ws6
     [app_id="Inkscape"] $ws6
     [app_id="org.kde.kdenlive"] $ws6
+    [app_id="^blender-"] $ws6
 
     # >> 7: Email
     [app_id="email"] $ws7
     [app_id="chrome-mail.proton.me__-Default"] $ws7
 
     # >> 8: Game launchers
-    [app_id="lutris"] $ws8
+    [app_id="^lutris$"] $ws8
+    [app_id="^net.lutris.Lutris$"] $ws8
     [class="Lutris"] $ws8
     [class="^steam$"] $ws8
     [title="^Steam$"] $ws8
