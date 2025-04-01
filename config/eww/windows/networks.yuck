@@ -1,4 +1,4 @@
-(defwindow networks
+(defwindow networks [revealer-duration]
   :monitor 0
   :geometry (geometry :x 0
                       ; Same as sway gaps (we cannot use EWW_SCALE here)
@@ -13,7 +13,7 @@
   (revealer
     :transition "slideleft"
     :reveal "${networks-visible}"
-    :duration "300ms"
+    :duration "${revealer-duration}"
     (eventbox
       :onmiddleclick "${eww-scripts}/manage hide networks"
       :halign "fill"

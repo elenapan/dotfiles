@@ -1,4 +1,4 @@
-(defwindow mode-indicator
+(defwindow mode-indicator [revealer-duration]
   :monitor 0
   :geometry (geometry :x 0
                       :y 0
@@ -12,7 +12,7 @@
   (revealer
     :transition "slidedown"
     :reveal "${mode-indicator-visible}"
-    :duration "300ms"
+    :duration "${revealer-duration}"
     (eventbox
       ; On click, cancel active binding mode and hide widget
       :onclick "swaymsg -q mode default & ${eww-scripts}/manage hide mode-indicator &"

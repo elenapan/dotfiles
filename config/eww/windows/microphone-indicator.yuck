@@ -1,4 +1,4 @@
-(defwindow microphone-indicator
+(defwindow microphone-indicator [revealer-duration]
   :monitor 0
   :geometry (geometry :x 0
                       ; We cannot use get_env(EWW_SCALE) here
@@ -9,7 +9,7 @@
   (revealer
     :transition "slidedown"
     :reveal "${microphone-indicator-visible}"
-    :duration "200ms"
+    :duration "${revealer-duration}"
     (eventbox :cursor "hand2"
               :onclick "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
               :onmiddleclick "${eww-scripts}/manage hide microphone-indicator &"

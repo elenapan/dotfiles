@@ -1,4 +1,4 @@
-(defwindow split-indicator
+(defwindow split-indicator [revealer-duration]
   :monitor 0
   :geometry (geometry :x 0
                       :y 0
@@ -8,7 +8,7 @@
   (revealer
     :transition "crossfade"
     :reveal "${split-indicator-visible}"
-    :duration "300ms"
+    :duration "${revealer-duration}"
     (eventbox
       :onclick "${eww-scripts}/manage hide split-indicator &"
       :onmiddleclick "${eww-scripts}/manage hide split-indicator &"

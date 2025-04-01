@@ -1,4 +1,4 @@
-(defwindow powermenu [is-secondary]
+(defwindow powermenu [is-secondary revealer-duration]
   :monitor 0
   :geometry (geometry
               :x 0
@@ -21,7 +21,7 @@
   (revealer
     :transition "crossfade"
     :reveal "${powermenu-visible}"
-    :duration "300ms"
+    :duration "${revealer-duration}"
     (eventbox
       :halign "fill"
       :valign "fill"
