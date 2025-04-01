@@ -59,6 +59,7 @@
           :onclick "${eww-scripts}/toggle-sidebar-with-page 2 &"
           :onscroll "[ '{}' = 'up' ] && swaymsg -q 'exec $cmd_volume_raise' || swaymsg -q 'exec $cmd_volume_lower'"
           :onmiddleclick "swaymsg -q 'exec $cmd_volume_mute'"
+          :onrightclick "swaymsg '[app_id=\"org.pulseaudio.pavucontrol$\"] focus' || pavucontrol &"
           (box
             :space-evenly false
             :halign "center"
