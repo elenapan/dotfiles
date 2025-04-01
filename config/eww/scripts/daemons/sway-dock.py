@@ -115,8 +115,8 @@ def on_new(i3, e):
 def on_close(i3, e):
     global focused
     window_identifier = e.container.app_id or e.container.window_class
-    window_counter[window_identifier] = window_counter.get(window_identifier) - 1
-    if (window_counter[window_identifier] == 0):
+    window_counter[window_identifier] = (window_counter.get(window_identifier) or 1) - 1
+    if (window_counter[window_identifier] == 0 and window_identifier in dock_items):
         dock_items.remove(window_identifier)
 
     # If the container was focused before it died
