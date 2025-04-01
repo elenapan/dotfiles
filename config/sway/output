@@ -19,8 +19,8 @@
 output eDP-1 {
     max_render_time 3
 
-    # Temporarily turning VRR off due to this bug:
-    # https://gitlab.freedesktop.org/drm/amd/-/issues/2186
+    # Set to off if affected by https://gitlab.freedesktop.org/drm/amd/-/issues/2186
+    # Problems were reported with the vulkan renderer
     # Also relevant: https://github.com/swaywm/sway/issues/7411
     adaptive_sync off
 

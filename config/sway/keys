@@ -60,7 +60,7 @@ bindsym --to-code {
     # Smart focus
     # - Cycle focus right if current layout is tabbed / splith
     # - Cycle focus down if current layout is stacked / splitv
-    # - change focus from floating to tiling layer otherwise
+    # - Change focus from floating to tiling layer otherwise
     $mod+Tab exec $sway/smart-focus-change next
     # Reverse direction with shift
     $mod+Shift+Tab exec $sway/smart-focus-change prev
