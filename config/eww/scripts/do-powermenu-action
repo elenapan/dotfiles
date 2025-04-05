@@ -9,22 +9,28 @@ fi
 
 action=$1
 
+if command -v systemctl >/dev/null; then
+    ctl=systemctl
+else
+    ctl=loginctl
+fi
+
 poweroff() {
-    loginctl poweroff
+    "$ctl" poweroff
 }
 
 reboot() {
-    loginctl reboot
+    "$ctl" reboot
 }
 
 suspend() {
     "${eww}/manage" hide powermenu
-    loginctl suspend
+    "$ctl" suspend
 }
 
 hibernate() {
     "${eww}/manage" hide powermenu
-    loginctl hibernate
+    "$ctl" hibernate
 }
 
 exit() {

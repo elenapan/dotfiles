@@ -21,7 +21,11 @@ notify() {
 wait_countdown_suspend() {
   if ! zenity --icon-name battery-empty --question --timeout=10 --text="Keep machine on?\n\nIt will suspend if no answer is given in 10 seconds"; then
     notify-send.sh -s "$(</tmp/countdown-notifications-file)"
-    loginctl suspend
+    if command -v systemctl >/dev/null; then
+        systemctl suspend
+    else
+        loginctl suspend
+    fi
   fi
 }
 
