@@ -82,6 +82,7 @@ Features:
    | `light` | Brightness control |
    | `wget` | Making HTTP requests in various scripts |
    | `acpid` | Battery charger state information |
+   | `swaybg` | Wallpaper tool (Wayland) |
    | `slurp` | Screen region selection (Wayland) |
    | `grim` | Screenshot tool (Wayland) |
    | `grimshot` | `grim` and `slurp` wrapper |
