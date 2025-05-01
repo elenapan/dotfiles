@@ -6,11 +6,11 @@ set {
     $right l
 
     # Sway scripts directory
-    $sway ~/.config/sway/scripts
+    $sway $HOME/.config/sway/scripts
     # Eww scripts directory
-    $eww ~/.config/eww/scripts
+    $eww $HOME/.config/eww/scripts
 
-    $screenshots_dir ~/pix/screenshots
+    $screenshots_dir $HOME/pix/screenshots
 
     # Terminal emulator
     # Use `-1` for the single-instance feature of kitty to reduce startup time
