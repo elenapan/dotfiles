@@ -88,18 +88,19 @@ restart_awesome:buttons(gears.table.join(
     awful.button({ }, 1, awesome.restart)
 ))
 
--- Create the widget
-app_drawer = wibox({visible = false, ontop = true, type = "dock"})
-awful.placement.maximize(app_drawer)
-
-app_drawer.bg = "#00000000"
--- app_drawer.bg = beautiful.app_drawer_bg or x.background or "#111111"
-app_drawer.fg = beautiful.app_drawer_fg or x.foreground or "#FEFEFE"
+function app_drawer_create(s)
+    app_drawer = wibox({visible = false, ontop = true, type = "dock", screen = s})
+    awful.placement.maximize(app_drawer)
+    app_drawer.bg = "#00000000"
+    -- app_drawer.bg = beautiful.app_drawer_bg or x.background or "#111111"
+    app_drawer.fg = beautiful.app_drawer_fg or x.foreground or "#FEFEFE"
+    return app_drawer
+end
 
 -- Add app drawer or mask to each screen
 for s in screen do
     if s == screen.primary then
-        s.app_drawer = app_drawer
+        s.app_drawer = app_drawer_create(s)
     else
         s.app_drawer = helpers.screen_mask(s, beautiful.lock_screen_bg or beautiful.exit_screen_bg or x.background)
     end
