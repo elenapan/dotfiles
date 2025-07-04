@@ -13,7 +13,7 @@ ignore_leading_the = "yes"
 allow_for_physical_item_deletion = "no"
 
 ### Visualizer ###
-visualizer_fifo_path = /tmp/mpd.fifo
+visualizer_data_source = /tmp/mpd.fifo
 visualizer_output_name = "mpd_visualizer"
 visualizer_in_stereo = "yes"
 visualizer_sync_interval = 30
