@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+import os
+
+# This script needs to run inside a kitty terminal for the gif to be displayed.
+gif_path="~/pix/emoji/fat-cat.gif"
+
+# ANSI escape codes for text styling
+RED = '\033[91m'
+GREEN = '\033[92m'
+YELLOW = '\033[93m'
+BLUE = '\033[94m'
+MAGENTA = '\033[95m'
+CYAN = '\033[96m'
+BOLD = '\033[1m'
+ITALIC = '\033[3m'
+RESET = '\033[0m'
+
+def print_centered(text, color='', bold=False, italic=False):
+    terminal_width = os.get_terminal_size().columns
+
+    style = ""
+    if bold:
+        style += BOLD
+    if italic:
+        style += ITALIC
+
+    print(f"{style}{color}"+('{:^'+str(terminal_width)+'}').format(text)+RESET)
+
+os.system('tput clear')
+
+os.system(f'kitty +kitten icat {gif_path}')
+print_centered('aphelion', bold=True)
+# Each kanji character is displayed as a double width character in kitty. We are
+# trying to print 3 kanji so we add 3 spaces at the end in order to make the
+# text look centered. (Sorry, I am not going to make a function that
+# automatically detects the number of double width characters for an aesthetics
+# only script)
+# BUG: For some reason a new line is printed after this
+print_centered('遠日点   ', color=CYAN)
+print_centered('από ("away") + ήλιος ("sun")', color=YELLOW)
+print()
+print_centered('The point in a celestial body\'s orbit')
+print_centered('farthest from the Sun.')
+print()
+print_centered('farthest from light', color=MAGENTA, italic=True)
+print_centered('closest to void', color=MAGENTA, italic=True)
+print()
+
+
