@@ -5,8 +5,7 @@
 <h1 align="center">
     <a href="#setup">Setup</a> ･
     <a href="https://github.com/elenapan/dotfiles/wiki">Wiki</a> ･
-    <a href="https://github.com/elenapan/dotfiles/wiki/Gallery">Gallery</a> ･
-    <a href="#tip-jar">Tip Jar</a>
+    <a href="https://github.com/elenapan/dotfiles/wiki/Gallery">Gallery</a>
 </h1>
 <br>
 
@@ -183,19 +182,8 @@ All keybinds are declared in the [sway configuration directory](config/sway) in 
 - **Bugs**: This desktop has only one consistent user (me) and there could be bugs I haven't run into yet. If you have the time to report a bug, please do so in the repository's [issues](https://github.com/elenapan/dotfiles/issues).
 - **Pull requests**: Pull requests for bug fixes or README improvements are welcome. However, before starting work on a pull request for a new feature, please open an issue so we can discuss about it first.
 
-## Tip Jar
-If you enjoy using this desktop or parts of it and would like to show your appreciation, you may leave a tip here.
-
-It is never required but always appreciated.
-
-Thank you from the bottom of my heart! 💙
-
-- [**Patreon**](https://www.patreon.com/elenapan)
-- **Ethereum**: 0x831539d94155C797f786e99f1D061BEc7F11bD38
-- **Bitcoin**: 12j3D4KR94LY7Svvmp3KzGbfGC4YCZkCLe
-
 ---
 
 <h3 align="center">
-    <a href="#----setup-----wiki-----gallery-----tip-jar"><tt>👆 Back to top</tt></a>
+    <a href="#----setup-----wiki-----gallery"><tt>👆 Back to top</tt></a>
 </h3>
