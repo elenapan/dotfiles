@@ -1,0 +1,2 @@
+# Ignore generated GTK themes
+misc/gtk/** linguist-generated
