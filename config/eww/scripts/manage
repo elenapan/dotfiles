@@ -228,6 +228,7 @@ _hide() {
     _pre_hide "$widget_name"
     _mode_disable "$widget_name"
     eww update "${widget_name}"-visible=false
+    swaymsg -q mode default
     sleep "$(_get_revealer_duration_seconds "$widget_name")"
     _close "$widget_name"
     _post_hide "$widget_name"
