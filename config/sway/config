@@ -14,3 +14,9 @@ include ~/.config/sway/bugfix
 include @sysconfdir@/sway/config.d/*
 
 # vim:set ft=conf:
+
+
+mode "_powermenu" {
+    bindsym Escape mode "default"
+    # Add other powermenu keybindings here if needed
+}
