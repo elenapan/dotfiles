@@ -72,7 +72,7 @@ Features:
    | [`eww`](https://github.com/elkowar/eww) | Widgets |
    | `bash` | Various scripts |
    | `python` | Various scripts |
-   | [`rofi-wayland`](https://github.com/lbonn/rofi) | Launchers and menus |
+   | `rofi` | Launchers and menus |
    | `dunst` | Notification daemon |
    | `libnotify` | Notification creation with `notify-send` |
    | [`notify-send.sh`](https://github.com/vlevit/notify-send.sh) | `notify-send` wrapper for notification replacement |
