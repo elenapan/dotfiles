@@ -443,9 +443,9 @@ local icon_size = dpi(40)
 
 -- Uptime
 local uptime_text = wibox.widget.textbox()
-awful.widget.watch("uptime -p | sed 's/^...//'", 60, function(_, stdout)
-    -- Remove trailing whitespaces
-    local out = stdout:gsub('^%s*(.-)%s*$', '%1')
+awful.widget.watch("uptime -p", 60, function(_, stdout)
+    -- Remove trailing whitespaces and the "up" prefix
+    local out = stdout:gsub('^%s*up%s(.-)%s*$', '%1')
     uptime_text.text = out
 end)
 local uptime = wibox.widget {
